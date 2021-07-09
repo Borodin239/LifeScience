@@ -5,8 +5,11 @@ import Container from "@material-ui/core/Container";
 import {makeStyles} from "@material-ui/core/styles";
 import EmailTextField from "./text-fields/EmailTextField";
 import PasswordTextField from "./text-fields/PasswordTextField";
+import {useHistory} from "react-router-dom";
 
 const SignUpForm = () => {
+
+    const history = useHistory()
 
     const useStyles = makeStyles((theme) => ({
         paper: {
@@ -22,9 +25,20 @@ const SignUpForm = () => {
         submit: {
             margin: theme.spacing(3, 0, 2),
         },
+        signIn: {
+            cursor: "pointer",
+            color: theme.palette.primary.main,
+            '&:hover': {
+                textDecoration: "underline",
+            },
+        }
     }));
 
     const classes = useStyles();
+
+    const handleSignInClick = () => {
+        history.push("/sign-in")
+    }
 
     return <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
@@ -45,6 +59,9 @@ const SignUpForm = () => {
                     Sign Up
                 </Button>
             </form>
+            <Typography onClick={handleSignInClick} className={classes.signIn}>
+                {"Already have an account? Sign In"}
+            </Typography>
         </div>
     </Container>
 }
