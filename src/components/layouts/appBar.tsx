@@ -64,6 +64,9 @@ const useStyles = makeStyles((theme: Theme) =>
             fontWeight: 500,
             lineHeight: 1.5,
             marginRight: theme.spacing(1),
+        },
+        homeLink: {
+            cursor: "pointer",
         }
     }),
 );
@@ -82,6 +85,10 @@ const Header = (props: any) => {
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
+
+    const handleHomeClick = () => {
+        //go to home page
+    }
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -112,7 +119,7 @@ const Header = (props: any) => {
         </IconButton>
     );
 
-    const unloggedProfile = (
+    const loggedOutProfile = (
         <div>
             <Button className={classes.signButton}>
                 Sign in
@@ -135,7 +142,10 @@ const Header = (props: any) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap>
+                    <Typography className={classes.homeLink}
+                                variant="h6"
+                                noWrap
+                                onClick={handleHomeClick}>
                         JetScience
                     </Typography>
                     <div className={classes.search}>
@@ -153,7 +163,7 @@ const Header = (props: any) => {
                     </div>
                     <div className={classes.grow}/>
                     <div>
-                        {props.logged ? loggedProfile : unloggedProfile}
+                        {props.logged ? loggedProfile : loggedOutProfile}
                     </div>
                 </Toolbar>
             </AppBar>
