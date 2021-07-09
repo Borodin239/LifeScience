@@ -15,7 +15,7 @@ import {Button} from "@material-ui/core";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         main: {
-            width: "900px",
+            width: "1100px",
             margin: "auto",
         },
         menuButton: {
@@ -42,6 +42,17 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         inputRoot: {
             color: 'inherit',
+            width: "100%",
+        },
+        inputInput: {
+            padding: theme.spacing(1, 1, 1, 0),
+            // vertical padding + font size from searchIcon
+            paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+            transition: theme.transitions.create('width'),
+            width: '100%',
+            [theme.breakpoints.up('md')]: {
+                width: '20ch',
+            },
         },
         grow: {
             flexGrow: 1,
@@ -135,6 +146,7 @@ const PrimarySearchAppBar = (props: any) => {
                             placeholder="Search…"
                             classes={{
                                 root: classes.inputRoot,
+                                input: classes.inputInput,
                             }}
                             inputProps={{ 'aria-label': 'search' }}
                         />
