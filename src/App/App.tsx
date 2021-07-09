@@ -6,6 +6,7 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import HandledErrorBoundary from "../components/boundary/HandledErrorBoundary";
 import HomePage from "../pages/HomePage/HomePage";
 import Header from "../components/layouts/appBar";
+import SignIn from "../components/layouts/signInForm";
 // import {useAppDispatch} from "../redux/hooks";
 // import {setError} from "../redux/error/actions";
 
@@ -35,6 +36,7 @@ function App() {
                         <Route exact path="/home" component={HomePage}/>
                         <Route exact path="/app-bar"
                                 render={() => <Header logged={true}/>}/>
+                        <Route exact path="/sign-in" render={() => <SignIn/>}/>
                         <Route exact path="/errorPage"
                                render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 
