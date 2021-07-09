@@ -5,6 +5,7 @@ import styles from './App.module.css';
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import HandledErrorBoundary from "../components/boundary/HandledErrorBoundary";
 import HomePage from "../pages/HomePage/HomePage";
+import PrimarySearchAppBar from "../components/layouts/appBar";
 // import {useAppDispatch} from "../redux/hooks";
 // import {setError} from "../redux/error/actions";
 
@@ -32,6 +33,9 @@ function App() {
                         </Route>
 
                         <Route exact path="/home" component={HomePage}/>
+                        <Route exact path="/app-bar">
+                            <PrimarySearchAppBar logged={true}/>
+                        </Route>
                         <Route exact path="/errorPage"
                                render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 
