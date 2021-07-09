@@ -1,8 +1,8 @@
-import {ApiErrorDto} from "../dto/ApiErrorDto";
+import {ApiErrorView} from "../view/ApiErrorView";
 import {apiErrorsInfo} from "../apiErrorsInfo";
 import apiConstants from "../apiConstants";
 
-export const createApiErrorMessage = (dto: ApiErrorDto) => {
+export const createApiErrorMessage = (dto: ApiErrorView) => {
     let pattern = apiErrorsInfo.get(dto.systemCode)?.messagePattern ?? apiConstants.DEFAULT_ERROR_MESSAGE
 
     return dto.arguments.reduce((resultMsg, argBlock, ind) =>
