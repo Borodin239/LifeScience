@@ -121,7 +121,12 @@ const Header = (props: any) => {
     );
 
     const handleSignInClick = () => {
-        history.push("/sign-in")
+        history.push("/sign-in") // TODO use global constants
+    }
+
+
+    const handleSignUpClick = () => {
+        history.push("/sign-up") // TODO use global constants
     }
 
     const loggedOutProfile = (
@@ -130,7 +135,8 @@ const Header = (props: any) => {
                     onClick={handleSignInClick}>
                 Sign in
             </Button>
-            <Button className={classes.signButton}>
+            <Button className={classes.signButton}
+                    onClick={handleSignUpClick}>
                 Sign up
             </Button>
         </div>

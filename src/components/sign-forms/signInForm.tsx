@@ -1,10 +1,12 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import EmailTextField from "./text-fields/EmailTextField";
+import PasswordTextField from "./text-fields/PasswordTextField";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -20,10 +22,18 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    signUp: {
+        cursor: "pointer",
+    }
 }));
 
-export default function SignIn() {
+const SignInForm = () => {
+    const history = useHistory()
     const classes = useStyles();
+
+    const handleSignUpClick = () => {
+        history.push("/sign-up")
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -32,28 +42,8 @@ export default function SignIn() {
                     Sign in
                 </Typography>
                 <form className={classes.form} noValidate>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                    />
+                    <EmailTextField/>
+                    <PasswordTextField repeat={false}/>
                     <Button
                         type="submit"
                         fullWidth
@@ -63,7 +53,7 @@ export default function SignIn() {
                     >
                         Sign In
                     </Button>
-                    <Link href="/sign-up">
+                    <Link onClick={handleSignUpClick} className={classes.signUp}>
                         {"Don't have an account? Sign Up"}
                     </Link>
                 </form>
@@ -71,3 +61,4 @@ export default function SignIn() {
         </Container>
     );
 }
+export default SignInForm
