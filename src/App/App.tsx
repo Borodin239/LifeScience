@@ -24,6 +24,7 @@ function App() {
         <div className={styles.App}>
             <BrowserRouter>
                 <HandledErrorBoundary>
+                    <Header logged={false}/>
                     <Switch>
                         {/*<Route exact path="/login"*/}
                         {/*       component={AuthPage}*/}
@@ -34,8 +35,6 @@ function App() {
                         </Route>
 
                         <Route exact path="/home" component={HomePage}/>
-                        <Route exact path="/app-bar"
-                                render={() => <Header logged={true}/>}/>
                         <Route exact path="/sign-in" render={() => <SignIn/>}/>
                         <Route exact path="/errorPage"
                                render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>

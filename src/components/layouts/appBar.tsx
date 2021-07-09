@@ -7,10 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import {Button} from "@material-ui/core";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -19,14 +19,14 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: "auto",
         },
         appbar: {
-            borderRadius: "10px",
+            borderRadius: "7px",
         },
         search: {
             position: 'relative',
             borderRadius: theme.shape.borderRadius,
-            backgroundColor: alpha(theme.palette.primary.light, 0.35),
+            backgroundColor: alpha(theme.palette.primary.light, 0.55),
             '&:hover': {
-                backgroundColor: alpha(theme.palette.primary.light, 0.45),
+                backgroundColor: alpha(theme.palette.primary.light, 0.75),
             },
             marginLeft: "50px",
             width: '500px',
@@ -73,6 +73,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Header = (props: any) => {
     const classes = useStyles();
+    const history = useHistory()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const isMenuOpen = Boolean(anchorEl);
@@ -87,7 +88,7 @@ const Header = (props: any) => {
     };
 
     const handleHomeClick = () => {
-        //go to home page
+        history.push("/home")
     }
 
     const menuId = 'primary-search-account-menu';
@@ -119,9 +120,14 @@ const Header = (props: any) => {
         </IconButton>
     );
 
+    const handleSignInClick = () => {
+        history.push("/sign-in")
+    }
+
     const loggedOutProfile = (
         <div>
-            <Button className={classes.signButton}>
+            <Button className={classes.signButton}
+                    onClick={handleSignInClick}>
                 Sign in
             </Button>
             <Button className={classes.signButton}>
