@@ -33,9 +33,8 @@ function App() {
                         </Route>
 
                         <Route exact path="/home" component={HomePage}/>
-                        <Route exact path="/app-bar">
-                            <PrimarySearchAppBar logged={true}/>
-                        </Route>
+                        <Route exact path="/app-bar"
+                                render={() => <PrimarySearchAppBar logged={true}/>}/>
                         <Route exact path="/errorPage"
                                render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 
