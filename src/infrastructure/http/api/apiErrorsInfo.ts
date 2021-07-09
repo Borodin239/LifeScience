@@ -12,12 +12,16 @@ export const apiErrorsInfo: ReadonlyMap<number, ApiErrorInfoSetup> = new Map([
         argumentsNumber: 0,
         messagePattern: "Expired refresh token"
     }],
-    [401011, {
+    [401003, {
         argumentsNumber: 0,
         messagePattern: "Invalid access token"
     }],
-    [401012, {
+    [401004, {
         argumentsNumber: 0,
         messagePattern: "Expired access token"
+    }],
+    [401005, {
+        argumentsNumber: 0,
+        messagePattern: "Wrong login/password"
     }],
 ]);
