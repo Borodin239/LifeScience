@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme: Theme) =>
             width: "1100px",
             margin: "auto",
         },
-        menuButton: {
-            marginRight: theme.spacing(2),
+        appbar: {
+            borderRadius: "10px",
         },
         search: {
             position: 'relative',
@@ -132,16 +132,8 @@ const Header = (props: any) => {
 
     return (
         <div className={classes.main}>
-            <AppBar position="static">
+            <AppBar position="static" className={classes.appbar}>
                 <Toolbar>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="open drawer"
-                    >
-                        <MenuIcon />
-                    </IconButton>
                     <Typography className={classes.homeLink}
                                 variant="h6"
                                 noWrap
