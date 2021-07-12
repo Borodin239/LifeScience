@@ -6,8 +6,7 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import HandledErrorBoundary from "../components/boundary/HandledErrorBoundary";
 import HomePage from "../pages/HomePage/HomePage";
 import Header from "../components/layouts/appBar";
-import SignInForm from "../components/sign-forms/signInForm";
-import SignUpForm from "../components/sign-forms/signUpForm";
+import {SignInForm, SignUpForm} from "../components/sign-forms/signForms";
 // import {useAppDispatch} from "../redux/hooks";
 // import {setError} from "../redux/error/actions";
 
