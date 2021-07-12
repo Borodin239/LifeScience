@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: "auto",
         },
         appbar: {
-            borderRadius: "7px",
+            borderRadius: theme.shape.borderRadius,
         },
         search: {
             position: 'relative',

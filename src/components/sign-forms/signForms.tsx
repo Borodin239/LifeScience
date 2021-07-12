@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         padding: '10px',
         border: '1px solid ' + theme.palette.primary.main,
-        borderRadius: "10px",
+        borderRadius: theme.shape.borderRadius,
     },
     form: {
         width: '100%',
@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
             textDecoration: "underline",
         },
         margin: theme.spacing(1, 0, 0, 0),
+        textAlign: "center",
     }
 }));
 

@@ -17,6 +17,10 @@ let theme = createTheme({
             fontSize: 26,
             letterSpacing: 0.5,
         },
+        subtitle1: {
+            fontWeight: 600,
+            color: "rgb(80, 80, 80)",
+        }
     },
     shape: {
         borderRadius: 8,

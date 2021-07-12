@@ -7,6 +7,7 @@ import HandledErrorBoundary from "../components/boundary/HandledErrorBoundary";
 import HomePage from "../pages/HomePage/HomePage";
 import Header from "../components/layouts/appBar";
 import {SignInForm, SignUpForm} from "../components/sign-forms/signForms";
+import CategoryPage from "../pages/CategoryPage/categoryPage";
 // import {useAppDispatch} from "../redux/hooks";
 // import {setError} from "../redux/error/actions";
 
@@ -34,7 +35,7 @@ function App() {
                             <Redirect to='/home'/>
                         </Route>
 
-                        <Route exact path="/home" component={HomePage}/>
+                        <Route exact path="/home" render={() => <CategoryPage/>}/>
                         <Route exact path="/sign-in" render={() => <SignInForm alertText={"Some error"}/>}/>
                         <Route exact path="/sign-up" render={() => <SignUpForm/>}/>
                         <Route exact path="/errorPage"
