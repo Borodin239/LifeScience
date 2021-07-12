@@ -1,17 +1,20 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import {alpha, makeStyles} from "@material-ui/core/styles";
 import {ICatalogNode} from "./catalogNodeList";
 import {Box, Typography} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     container: {
         display: "flex",
-        border: "1px solid " + theme.palette.common.black,
+        border: "1px solid " + alpha(theme.palette.common.black, 0.30),
         borderRadius: theme.shape.borderRadius,
-        margin: theme.spacing(1, 0, 0, 1)
+        margin: theme.spacing(1, 0, 0, 1),
+        padding: theme.spacing(0.5),
+        cursor: "pointer",
     },
     icon: {
         color: theme.palette.primary.main,
+        paddingRight: theme.spacing(1),
     },
 }));
 

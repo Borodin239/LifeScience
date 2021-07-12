@@ -1,7 +1,8 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import {Typography} from "@material-ui/core";
+import {Breadcrumbs, Typography} from "@material-ui/core";
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -34,21 +35,17 @@ export interface ILocationProps {
 
 const Location = ({locationList}: ILocationProps) => {
     const classes = useStyles()
+
     return (
-        <div className={classes.container}>
+        <Breadcrumbs separator={<NavigateNextIcon className={classes.arrow}/>} className={classes.container}>
             {
-                locationList.map((unit, index) => (
-                    <>
-                        <Typography onClick={unit.handleClick} variant="subtitle1" className={classes.locationUnit}>
-                            {unit.text}
-                        </Typography>
-                        {index !== locationList.length - 1 &&
-                            <ArrowRightIcon className={classes.arrow}/>
-                        }
-                    </>
+                locationList.map(unit => (
+                    <Typography onClick={unit.handleClick} variant="subtitle1" className={classes.locationUnit}>
+                        {unit.text}
+                    </Typography>
                 ))
             }
-        </div>
+        </Breadcrumbs>
     )
 }
 

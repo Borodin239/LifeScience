@@ -3,9 +3,9 @@ import Location, {ILocationUnit} from "../../components/categories/location";
 import {useHistory} from "react-router-dom";
 import {Box} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import FolderIcon from '@material-ui/icons/Folder';
 import CatalogNodeList, {ICatalogNode} from "../../components/categories/catalogNodeList";
 import SubjectIcon from "@material-ui/icons/Subject";
+import {FolderOutlined} from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
     location: {
@@ -60,7 +60,7 @@ const CategoryPage = () => {
             <Box className={classes.location}>
                 <Location locationList={[firstLocation, secondLocation, thirdLocation]}/>
             </Box>
-            <CatalogNodeList list={categoryList} icon={<FolderIcon/>} type={"Categories"}/>
+            <CatalogNodeList list={categoryList} icon={<FolderOutlined/>} type={"Categories"}/>
             <CatalogNodeList type={"Methods"} icon={<SubjectIcon/>} list={methodList}/>
         </Box>
 

@@ -4,7 +4,6 @@ import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
 import styles from './App.module.css';
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import HandledErrorBoundary from "../components/boundary/HandledErrorBoundary";
-import HomePage from "../pages/HomePage/HomePage";
 import Header from "../components/layouts/appBar";
 import {SignInForm, SignUpForm} from "../components/sign-forms/signForms";
 import CategoryPage from "../pages/CategoryPage/categoryPage";
