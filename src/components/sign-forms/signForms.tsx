@@ -31,40 +31,36 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const classes = useStyles();
-
-const history = useHistory()
-
-interface IStringProps {
-    text: string,
-}
-
-const SubmitButton = ({text} : IStringProps) => {
+const SubmitButton = (props: any) => {
     return (
         <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            className={props.className}
         >
-            {text}
+            {props.text}
         </Button>
     )
 }
 
-const Title = ({text} : IStringProps) => {
+const Title = (props : any) => {
     return (
         <Typography component="h1" variant="h5">
-            {text}
+            {props.text}
         </Typography>
     )
 }
 
 export const SignUpForm = () => {
+    const classes = useStyles();
+    const history = useHistory()
+
     const handleSignInClick = () => {
         history.push("/sign-in")
     }
+
     return <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
             <Title text={"Sign Up"}/>
@@ -72,7 +68,7 @@ export const SignUpForm = () => {
                 <EmailTextField/>
                 <PasswordTextField repeat={false}/>
                 <PasswordTextField repeat={true}/>
-                <SubmitButton text={"Sign Up"}/>
+                <SubmitButton text={"Sign Up"} className={classes.submit}/>
             </form>
             <Typography onClick={handleSignInClick} className={classes.redirect}>
                 {"Already have an account? Sign In"}
@@ -82,6 +78,9 @@ export const SignUpForm = () => {
 }
 
 export const SignInForm = () => {
+    const classes = useStyles();
+    const history = useHistory()
+
     const handleSignUpClick = () => {
         history.push("/sign-up")
     }
@@ -93,7 +92,7 @@ export const SignInForm = () => {
                 <form className={classes.form} noValidate>
                     <EmailTextField/>
                     <PasswordTextField repeat={false}/>
-                    <SubmitButton text={"Sign In"}/>
+                    <SubmitButton text={"Sign In"} className={classes.submit}/>
                     <Typography onClick={handleSignUpClick} className={classes.redirect}>
                         {"Don't have an account? Sign Up"}
                     </Typography>
