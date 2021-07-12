@@ -6,11 +6,16 @@ import {Box, Typography} from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
     container: {
         display: "flex",
+        alignItems: "center",
         border: "1px solid " + alpha(theme.palette.common.black, 0.30),
         borderRadius: theme.shape.borderRadius,
         margin: theme.spacing(1, 0, 0, 1),
-        padding: theme.spacing(0.5),
+        padding: theme.spacing(1),
         cursor: "pointer",
+        "&:hover": {
+            border: "1px solid " + theme.palette.primary.main,
+            backgroundColor: alpha(theme.palette.primary.main, 0.03)
+        }
     },
     icon: {
         color: theme.palette.primary.main,
@@ -31,7 +36,7 @@ const NodeBox = ({node, icon}: INodeBoxProps) => {
                 {icon}
             </Box>
             <Box onClick={node.handleClick}>
-                <Typography>
+                <Typography style={{verticalAlign: "middle"}}>
                     {node.name}
                 </Typography>
             </Box>
