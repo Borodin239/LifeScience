@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        padding: '10px',
+        border: '1px solid ' + theme.palette.primary.main,
+        borderRadius: "10px",
     },
     form: {
         width: '100%',
