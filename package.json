@@ -51,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.60",
     "@types/react-router-dom": "^5.1.8",
     "@types/redux-logger": "^3.0.9"
   }

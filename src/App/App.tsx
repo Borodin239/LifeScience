@@ -35,7 +35,7 @@ function App() {
                         </Route>
 
                         <Route exact path="/home" component={HomePage}/>
-                        <Route exact path="/sign-in" render={() => <SignInForm/>}/>
+                        <Route exact path="/sign-in" render={() => <SignInForm alertText={"Some error"}/>}/>
                         <Route exact path="/sign-up" render={() => <SignUpForm/>}/>
                         <Route exact path="/errorPage"
                                render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
