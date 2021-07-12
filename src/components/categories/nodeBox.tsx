@@ -1,6 +1,6 @@
 import React from "react";
 import {alpha, makeStyles} from "@material-ui/core/styles";
-import {ICatalogNode} from "./catalogNodeList";
+import {CatalogNode} from "./catalogNodeList";
 import {Box, Typography} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -23,12 +23,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-interface INodeBoxProps {
-    node: ICatalogNode,
+type NodeBoxProps = {
+    node: CatalogNode,
     icon: JSX.Element
 }
 
-const NodeBox = ({node, icon}: INodeBoxProps) => {
+const NodeBox = ({node, icon}: NodeBoxProps) => {
     const classes = useStyles()
     return (
         <Box className={classes.container}>

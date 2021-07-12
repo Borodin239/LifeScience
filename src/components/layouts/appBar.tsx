@@ -71,7 +71,11 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const Header = (props: any) => {
+type HeaderProps = {
+    logged: boolean,
+}
+
+const Header = ({logged}: HeaderProps) => {
     const classes = useStyles();
     const history = useHistory()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -167,7 +171,7 @@ const Header = (props: any) => {
                     </div>
                     <div className={classes.grow}/>
                     <div>
-                        {props.logged ? loggedProfile : loggedOutProfile}
+                        {logged ? loggedProfile : loggedOutProfile}
                     </div>
                 </Toolbar>
             </AppBar>

@@ -12,18 +12,18 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export interface ICatalogNode {
+export type CatalogNode = {
     name: string,
     handleClick: () => void,
 }
 
-export interface ICatalogNodeListProps {
+export type CatalogNodeListProps = {
     type: string,
     icon: JSX.Element,
-    list: ICatalogNode[]
+    list: CatalogNode[]
 }
 
-const CatalogNodeList = ({type, icon, list}: ICatalogNodeListProps) => {
+const CatalogNodeList = ({type, icon, list}: CatalogNodeListProps) => {
     const classes = useStyles()
     return (
         <Box className={classes.container}>

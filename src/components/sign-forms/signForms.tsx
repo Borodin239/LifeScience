@@ -59,7 +59,11 @@ const Title = (props: any) => {
     )
 }
 
-export const SignUpForm = ({alertText}: any) => {
+type SignProps = {
+    alertText?: string
+}
+
+export const SignUpForm = ({alertText}: SignProps) => {
     const classes = useStyles();
     const history = useHistory()
 
@@ -87,7 +91,7 @@ export const SignUpForm = ({alertText}: any) => {
     </Container>
 }
 
-export const SignInForm = ({alertText}: any) => {
+export const SignInForm = ({alertText}: SignProps) => {
     const classes = useStyles();
     const history = useHistory()
 

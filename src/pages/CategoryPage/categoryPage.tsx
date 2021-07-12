@@ -1,9 +1,9 @@
 import React from "react";
-import Location, {ILocationUnit} from "../../components/categories/location";
+import Location, {LocationUnit} from "../../components/categories/location";
 import {useHistory} from "react-router-dom";
 import {Box} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import CatalogNodeList, {ICatalogNode} from "../../components/categories/catalogNodeList";
+import CatalogNodeList, {CatalogNode} from "../../components/categories/catalogNodeList";
 import SubjectIcon from "@material-ui/icons/Subject";
 import {FolderOutlined} from "@material-ui/icons";
 
@@ -17,15 +17,15 @@ const CategoryPage = () => {
     const history = useHistory()
     const handleClick = () => history.push("/sign-in")
     const classes = useStyles()
-    const firstLocation: ILocationUnit = {
+    const firstLocation: LocationUnit = {
         text: "First",
         handleClick: handleClick,
     }
-    const secondLocation: ILocationUnit = {
+    const secondLocation: LocationUnit = {
         text: "Second",
         handleClick: handleClick,
     }
-    const thirdLocation: ILocationUnit = {
+    const thirdLocation: LocationUnit = {
         text: "Third",
         handleClick: handleClick,
     }
@@ -33,7 +33,7 @@ const CategoryPage = () => {
 
     const emptyCallback = () => {
     }
-    const categoryList: ICatalogNode[] = [
+    const categoryList: CatalogNode[] = [
         {
             name: "Proteins",
             handleClick: emptyCallback,
@@ -48,7 +48,7 @@ const CategoryPage = () => {
         }
     ]
 
-    const methodList: ICatalogNode[] = [
+    const methodList: CatalogNode[] = [
         {
             name: "Bradford assay",
             handleClick: emptyCallback,

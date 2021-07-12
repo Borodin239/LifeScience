@@ -23,17 +23,17 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export interface ILocationUnit {
+export type LocationUnit = {
     text: string,
     handleClick: (event: any) => void
 }
 
 
-export interface ILocationProps {
-    locationList: ILocationUnit[]
+export type LocationProps = {
+    locationList: LocationUnit[]
 }
 
-const Location = ({locationList}: ILocationProps) => {
+const Location = ({locationList}: LocationProps) => {
     const classes = useStyles()
 
     return (
