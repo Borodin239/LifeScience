@@ -6,7 +6,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import CatalogNodeList, {CatalogNode} from "../../components/categories/catalogNodeList";
 import SubjectIcon from "@material-ui/icons/Subject";
 import {FolderOutlined} from "@material-ui/icons";
-import AdminSettings from "../../components/categories/AdminSettings/AdminSettings";
+import AdminSettings from "../../components/categories/admin/AdminSettings/AdminSettings";
 
 const useStyles = makeStyles((theme) => ({
     upperBar: {
