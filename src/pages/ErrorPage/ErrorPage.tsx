@@ -1,7 +1,7 @@
 import React, {useMemo} from "react";
 import {useHistory} from "react-router-dom";
 import {useAppDispatch} from "../../redux/hooks";
-import {hideError} from "../../redux/error/actions";
+import {hideError} from "../../redux/error/slice"
 
 import styles from "./ErrorPage.module.css";
 import {httpErrorCodesInfo} from "../../infrastructure/http/httpErrorCodesInfo";

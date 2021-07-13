@@ -1,5 +1,5 @@
 import {configureStore} from "@reduxjs/toolkit";
-import {errorReducer} from "../error/reducer";
+import errorReducer from "../error/slice";
 
 import thunk from "redux-thunk";
 import logger from "redux-logger";
