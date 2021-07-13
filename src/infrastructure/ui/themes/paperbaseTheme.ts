@@ -4,8 +4,8 @@ let theme = createTheme({
     palette: {
         primary: {
             light: '#63ccff',
-            main: '#009be5',
-            dark: '#006db3',
+            main: '#005ce5',
+            dark: '#0033b3',
             // light: '#0eff14',
             // main: '#e50049',
             // dark: '#006db3',
@@ -17,6 +17,10 @@ let theme = createTheme({
             fontSize: 26,
             letterSpacing: 0.5,
         },
+        subtitle1: {
+            fontWeight: 600,
+            color: "rgb(80, 80, 80)",
+        }
     },
     shape: {
         borderRadius: 8,
