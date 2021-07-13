@@ -1,70 +1,20 @@
-import {makeStyles} from "@material-ui/core/styles";
 import {useHistory} from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
-import EmailTextField from "./text-fields/EmailTextField";
-import PasswordTextField from "./text-fields/PasswordTextField";
-import Button from "@material-ui/core/Button";
+import EmailTextField from "../../elements/text-fields/EmailTextField";
+import PasswordTextField from "../../elements/text-fields/PasswordTextField";
 import Alert from '@material-ui/lab/Alert';
 import React from "react";
-
-
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: '10px',
-        border: '1px solid ' + theme.palette.primary.main,
-        borderRadius: theme.shape.borderRadius,
-    },
-    form: {
-        width: '100%',
-        marginTop: theme.spacing(1),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
-    redirect: {
-        cursor: "pointer",
-        color: theme.palette.primary.main,
-        '&:hover': {
-            textDecoration: "underline",
-        },
-        margin: theme.spacing(1, 0, 0, 0),
-        textAlign: "center",
-    }
-}));
-
-const SubmitButton = (props: any) => {
-    return (
-        <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={props.className}
-        >
-            {props.text}
-        </Button>
-    )
-}
-
-const Title = (props: any) => {
-    return (
-        <Typography component="h1" variant="h5">
-            {props.text}
-        </Typography>
-    )
-}
+import useAuthFormStyles from "./useAuthFormStyles";
+import SubmitButton from "../../elements/buttons/SubmitButton";
+import FormTitle from "../../elements/typographies/FormTitle";
 
 type SignProps = {
     alertText?: string
 }
 
 export const SignUpForm = ({alertText}: SignProps) => {
-    const classes = useStyles();
+    const classes = useAuthFormStyles();
     const history = useHistory()
 
     const handleSignInClick = () => {
@@ -73,11 +23,11 @@ export const SignUpForm = ({alertText}: SignProps) => {
 
     return <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
-            <Title text={"Sign Up"}/>
+            <FormTitle text={"Sign Up"}/>
             <form className={classes.form} noValidate>
-                <EmailTextField/>
-                <PasswordTextField repeat={false}/>
-                <PasswordTextField repeat={true}/>
+                <EmailTextField handleChange={() => {}}/>
+                <PasswordTextField isRepeat={false} handleChange={() => {}}/>
+                <PasswordTextField isRepeat={true} handleChange={() => {}}/>
                 <SubmitButton text={"Sign Up"} className={classes.submit}/>
                 {alertText &&
                 <Alert severity="error">
@@ -92,20 +42,20 @@ export const SignUpForm = ({alertText}: SignProps) => {
 }
 
 export const SignInForm = ({alertText}: SignProps) => {
-    const classes = useStyles();
+    const classes = useAuthFormStyles();
     const history = useHistory()
 
     const handleSignUpClick = () => {
-        history.push("/sign-up")
+        history.push("/sign-up");
     }
 
     return (
         <Container component="main" maxWidth="xs">
             <div className={classes.paper}>
-                <Title text={"Sign In"}/>
+                <FormTitle text={"Sign In"}/>
                 <form className={classes.form} noValidate>
-                    <EmailTextField/>
-                    <PasswordTextField repeat={false}/>
+                    <EmailTextField handleChange={() => {}}/>
+                    <PasswordTextField isRepeat={false} handleChange={() => {}}/>
                     <SubmitButton text={"Sign In"} className={classes.submit}/>
                     {alertText &&
                     <Alert severity="error">

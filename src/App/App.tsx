@@ -5,7 +5,7 @@ import styles from './App.module.css';
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import HandledErrorBoundary from "../components/boundary/HandledErrorBoundary";
 import Header from "../components/layouts/appBar";
-import {SignInForm, SignUpForm} from "../components/sign-forms/signForms";
+import {SignInForm, SignUpForm} from "../components/auth-forms/signForms";
 import CategoryPage from "../pages/CategoryPage/categoryPage";
 // import {useAppDispatch} from "../redux/hooks";
 // import {setError} from "../redux/error/actions";
@@ -24,7 +24,7 @@ function App() {
         <div className={styles.App}>
             <BrowserRouter>
                 <HandledErrorBoundary>
-                    <Header logged={false}/>
+                    <Header logged={true}/>
                     <Switch>
                         {/*<Route exact path="/login"*/}
                         {/*       component={AuthPage}*/}

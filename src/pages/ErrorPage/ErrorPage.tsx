@@ -5,7 +5,7 @@ import {hideError} from "../../redux/error/slice"
 
 import styles from "./ErrorPage.module.css";
 import {httpErrorCodesInfo} from "../../infrastructure/http/httpErrorCodesInfo";
-import DescriptionBlock from "../../components/temporary/DescriptionBlock/DescriptionBlock";
+import DescriptionBlock from "../../elements/temporary/DescriptionBlock/DescriptionBlock";
 import {Button} from "@material-ui/core";
 
 const ErrorPage: React.FC<{ errorCode?: string, message?: string }> = (props) => {
