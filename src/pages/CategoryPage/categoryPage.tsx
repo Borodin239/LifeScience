@@ -6,11 +6,15 @@ import {makeStyles} from "@material-ui/core/styles";
 import CatalogNodeList, {CatalogNode} from "../../components/categories/catalogNodeList";
 import SubjectIcon from "@material-ui/icons/Subject";
 import {FolderOutlined} from "@material-ui/icons";
+import AdminSettings from "../../components/categories/AdminSettings/AdminSettings";
 
 const useStyles = makeStyles((theme) => ({
-    location: {
-        margin: theme.spacing(3, 0, 2)
-    }
+    upperBar: {
+        margin: theme.spacing(3, 0, 2),
+        width: '100%',
+        display: "flex",
+        justifyContent: 'space-between',
+    },
 }));
 
 const CategoryPage = () => {
@@ -57,8 +61,9 @@ const CategoryPage = () => {
 
     return (
         <Box>
-            <Box className={classes.location}>
+            <Box className={classes.upperBar}>
                 <Location locationList={[firstLocation, secondLocation, thirdLocation]}/>
+                <AdminSettings/> {/*todo only visible to admins*/}
             </Box>
             <CatalogNodeList list={categoryList} icon={<FolderOutlined/>} type={"Categories"}/>
             <CatalogNodeList type={"Methods"} icon={<SubjectIcon/>} list={methodList}/>
