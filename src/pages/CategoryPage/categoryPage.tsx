@@ -8,28 +8,30 @@ import SubjectIcon from "@material-ui/icons/Subject";
 import {FolderOutlined} from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
-    location: {
+    breadCrumbs: {
         margin: theme.spacing(3, 0, 2)
     }
 }));
+const handleClick = () => console.log("Breadcrumb clicked")
+const firstLocation: LocationUnit = {
+    text: "First",
+    handleClick: handleClick,
+}
+const secondLocation: LocationUnit = {
+    text: "Second",
+    handleClick: handleClick,
+}
+const thirdLocation: LocationUnit = {
+    text: "Third",
+    handleClick: handleClick,
+}
+export const locationList = [firstLocation, secondLocation, thirdLocation]
+//for demonstration purposes
 
 const CategoryPage = () => {
-    const history = useHistory()
-    const handleClick = () => history.push("/sign-in")
+
     const classes = useStyles()
-    const firstLocation: LocationUnit = {
-        text: "First",
-        handleClick: handleClick,
-    }
-    const secondLocation: LocationUnit = {
-        text: "Second",
-        handleClick: handleClick,
-    }
-    const thirdLocation: LocationUnit = {
-        text: "Third",
-        handleClick: handleClick,
-    }
-    //for demonstration purposes
+
 
     const emptyCallback = () => {
     }
@@ -57,8 +59,8 @@ const CategoryPage = () => {
 
     return (
         <Box>
-            <Box className={classes.location}>
-                <Location locationList={[firstLocation, secondLocation, thirdLocation]}/>
+            <Box className={classes.breadCrumbs}>
+                <Location locationList={locationList}/>
             </Box>
             <CatalogNodeList list={categoryList} icon={<FolderOutlined/>} type={"Categories"}/>
             <CatalogNodeList type={"Methods"} icon={<SubjectIcon/>} list={methodList}/>
