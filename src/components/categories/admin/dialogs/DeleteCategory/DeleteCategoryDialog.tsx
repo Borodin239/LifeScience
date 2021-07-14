@@ -8,13 +8,19 @@ const DeleteCategoryDialog: React.FC<DialogProps> = ({open, onClose}) => {
 
     const classes = useStyles()
 
+    const handleDeleteButton = () => {
+        //preloader
+        //dispatch
+        onClose()
+    }
+
     return (
         <Dialog open={open} onClose={onClose} classes={{paper: classes.paper}}>
             <DialogTitle>
                 Are you sure you want to delete this category?
             </DialogTitle>
             <Box className={classes.twoButtonsPanel}>
-                <Button className={classes.yesButton}>
+                <Button className={classes.yesButton} onClick={handleDeleteButton}>
                     Yes
                 </Button>
                 <Button onClick={onClose} className={classes.noButton}>
