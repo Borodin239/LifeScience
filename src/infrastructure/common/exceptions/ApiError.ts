@@ -5,11 +5,11 @@ export type ApiErrorDescription = {
 }
 
 export class ApiError extends Error {
-    readonly descriptor: ApiErrorDescription;
+    readonly description: ApiErrorDescription;
 
-    constructor(descriptor: ApiErrorDescription) {
-        super(descriptor.message);
+    constructor(description: ApiErrorDescription) {
+        super(description.message);
         this.name = 'ApiError';
-        this.descriptor = descriptor;
+        this.description = description;
     }
 }
