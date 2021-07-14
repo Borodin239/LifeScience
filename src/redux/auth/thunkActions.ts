@@ -5,15 +5,24 @@ import {SignInDto} from "../../infrastructure/http/api/dto/auth/SignInDto";
 import {onThunkError} from "../utils/onThunkError";
 import {SignUpDto} from "../../infrastructure/http/api/dto/auth/SignUpDto";
 import {loggedIn} from "./slice";
+import {AppDispatch} from "../store/store";
+import {ApiError} from "../../infrastructure/common/exceptions/ApiError";
 
 export enum AuthActionThunkTypes {
     SIGN_IN = "/signIn",
     SIGN_UP = "/signUp"
 }
 
-export const signInThunk = createAsyncThunk(
+export const signInThunk = createAsyncThunk<
+    any,
+    SignInDto,
+    {
+        dispatch: AppDispatch,
+        rejectValue: ApiError
+    }
+    >(
     `${AUTH_ACTION_TYPE_PREFIX}${AuthActionThunkTypes.SIGN_IN}`,
-    async (dto: SignInDto, thunkAPI) => {
+    async (dto, thunkAPI) => {
         try {
             const response = await authApi.signIn(dto);
             thunkAPI.dispatch(loggedIn(response.data.accessToken));

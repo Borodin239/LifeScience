@@ -4,9 +4,11 @@ import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
 import styles from './App.module.css';
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import HandledErrorBoundary from "../components/boundary/HandledErrorBoundary";
-import Header from "../components/layouts/appBar";
-import {SignInForm, SignUpForm} from "../components/auth-forms/signForms";
+import MainAppBar from "../components/layouts/MainAppBar/MainAppBar";
 import CategoryPage from "../pages/CategoryPage/categoryPage";
+import {SignInForm} from "../components/auth-forms/SignInForm/SignInForm";
+import {SignUpForm} from "../components/auth-forms/SignUpForm/SignUpForm";
+import appRoutesNames from "../infrastructure/common/appRoutesNames";
 // import {useAppDispatch} from "../redux/hooks";
 // import {setError} from "../redux/error/actions";
 
@@ -24,19 +26,19 @@ function App() {
         <div className={styles.App}>
             <BrowserRouter>
                 <HandledErrorBoundary>
-                    <Header logged={true}/>
+                    <MainAppBar/>
                     <Switch>
                         {/*<Route exact path="/login"*/}
                         {/*       component={AuthPage}*/}
                         {/*/>*/}
 
                         <Route exact path="/">
-                            <Redirect to='/home'/>
+                            <Redirect to={appRoutesNames.HOME}/>
                         </Route>
 
-                        <Route exact path="/home" render={() => <CategoryPage/>}/>
-                        <Route exact path="/sign-in" render={() => <SignInForm alertText={"Some error"}/>}/>
-                        <Route exact path="/sign-up" render={() => <SignUpForm/>}/>
+                        <Route exact path={appRoutesNames.HOME} render={() => <CategoryPage/>}/>
+                        <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
+                        <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
                         <Route exact path="/errorPage"
                                render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 

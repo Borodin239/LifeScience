@@ -11,7 +11,12 @@ describe('Pattern validation', () => {
 
     it('Correct validation error', () => {
         expect(() =>
-            validateWithPattern("email", "@@@", RegexpPatternVariants.EMAIL)
+            validateWithPattern([{fieldName: "email", fieldValue: "@@@", patternVariant: RegexpPatternVariants.EMAIL}])
         ).toThrowError(new ValidationError('Field email must be valid'));
+    });
+    it('Correct validation pass', () => {
+        expect(() =>
+            validateWithPattern([{fieldName: "email", fieldValue: "khabib@gmail.com", patternVariant: RegexpPatternVariants.EMAIL}])
+        ).not.toThrowError();
     });
 });

@@ -5,3 +5,4 @@ export type ApiResultWrapper<TData> = {
     data: TData | null,
     errorDescription: ApiErrorDescription | null
 }
+

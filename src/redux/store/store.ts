@@ -1,12 +1,15 @@
-import {configureStore} from "@reduxjs/toolkit";
+import {configureStore, getDefaultMiddleware} from "@reduxjs/toolkit";
 import errorReducer from "../error/slice";
+import authReducer from "../auth/slice";
 
-import thunk from "redux-thunk";
 import logger from "redux-logger";
 
+
 export const store = configureStore({
-    reducer: {errorReducer},
-    middleware: process.env.REACT_APP_MODE === `development` ? [thunk, logger] : [thunk]
+    reducer: {errorReducer, authReducer},
+    middleware: process.env.REACT_APP_MODE === `development` ?
+        getDefaultMiddleware().concat(logger)
+        : getDefaultMiddleware()
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -11,7 +11,7 @@ const PasswordTextField: React.FC<{ isRepeat: boolean, handleChange: (newValue: 
             name="password"
             label={(isRepeat ? "Repeat " : "") + "Password"}
             type="password"
-            id={(isRepeat ? "repeat-" : "") + "password"}
+            // id={(isRepeat ? "repeat-" : "") + "password"}
             autoComplete="current-password"
             onChange={(event) => handleChange(event.target.value)}
         />
