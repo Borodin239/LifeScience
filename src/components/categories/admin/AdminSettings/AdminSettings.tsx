@@ -39,6 +39,7 @@ const AdminSettings = () => {
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             open={isMenuOpen}
             onClose={handleMenuClose}
+            classes={{paper: classes.menu}}
         >
             <MenuItem onClick={handleMenuItemClick(setCreateDialogOpen)}>Create new category</MenuItem>
             <MenuItem onClick={handleMenuItemClick(setDeleteDialogOpen)}>Delete this category</MenuItem>
