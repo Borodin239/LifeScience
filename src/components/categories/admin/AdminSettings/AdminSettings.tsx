@@ -42,6 +42,7 @@ const AdminSettings = () => {
             classes={{paper: classes.menu}}
         >
             <MenuItem onClick={handleMenuItemClick(setCreateDialogOpen)}>Create new category</MenuItem>
+            {/*todo add check that this category is empty*/}
             <MenuItem onClick={handleMenuItemClick(setDeleteDialogOpen)}>Delete this category</MenuItem>
             <MenuItem onClick={handleMenuItemClick(setRenameDialogOpen)}>Rename this category</MenuItem>
         </Menu>

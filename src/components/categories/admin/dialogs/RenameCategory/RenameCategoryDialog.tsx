@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 import {DialogProps} from "../CreateCategory/CreateCategoryDialog";
 import {Dialog, DialogTitle, TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
@@ -8,8 +8,9 @@ const RenameCategoryDialog: React.FC<DialogProps> = ({open, onClose}) => {
 
     const classes = useStyles()
 
-    const handleRenameClick = () => {
-        // preloader than close
+    const handleRenameClick = (e: MouseEvent<HTMLButtonElement>) => {
+        //preloader
+        //dispatch
         onClose()
     }
 

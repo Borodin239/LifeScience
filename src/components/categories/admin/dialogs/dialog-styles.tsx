@@ -1,10 +1,8 @@
-import {makeStyles} from "@material-ui/core/styles";
+import {alpha, makeStyles} from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
     paper: {
       padding: theme.spacing(3),
-        border: "1px solid " + theme.palette.primary.main,
-        borderRadius: theme.shape.borderRadius,
     },
     submit: {
         margin: theme.spacing(1, 0, 0, 0),
@@ -12,6 +10,26 @@ export const useStyles = makeStyles((theme) => ({
         color: theme.palette.common.white,
         '&:hover' : {
             backgroundColor: theme.palette.primary.dark,
+        }
+    },
+    twoButtonsPanel: {
+      display: "flex",
+      justifyContent: "space-between",
+    },
+    yesButton: {
+        border: "1px solid #00aa00",
+        backgroundColor: alpha("#00aa00", 0.10),
+        width: '45%',
+        '&:hover' : {
+            backgroundColor: alpha("#00aa00", 0.20),
+        }
+    },
+    noButton: {
+        border: "1px solid #aa0000",
+        backgroundColor: alpha("#aa0000", 0.10),
+        width: '45%',
+        '&:hover' : {
+            backgroundColor: alpha("#aa0000", 0.20),
         }
     }
 }));
