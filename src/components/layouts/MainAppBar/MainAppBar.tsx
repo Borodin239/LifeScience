@@ -23,7 +23,7 @@ const MainAppBar: React.FC = () => {
 
     const handleHomeClick = useCallback(() => {
         history.push(appRoutesNames.HOME);
-    }, []);
+    }, [history]);
 
 
     const handleProfileMenuOpen = useCallback((event: React.MouseEvent<HTMLElement>) => {

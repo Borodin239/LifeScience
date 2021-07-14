@@ -7,7 +7,7 @@ export const apiErrorsInfo: ReadonlyMap<number, ApiErrorInfoSetup> = new Map([
         messagePattern: "Field $1 is missing"
     }],
     [400003, {
-        messagePattern: "Field $1 has unrecognizable value \'$2\'"
+        messagePattern: "Field $1 has unrecognizable value '$2'"
     }],
     [400004, {
         messagePattern: "Email $1 is already in use"
