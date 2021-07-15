@@ -55,7 +55,7 @@ export const SignInForm: React.FC = () => {
 
     return <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
-            <FormTitle text={"Sign Up"}/>
+            <FormTitle text={"Sign In"}/>
             <form className={classes.form} onSubmit={onFormSubmit} noValidate>
                 <EmailTextField handleChange={setEmail}/>
                 <PasswordTextField isRepeat={false} handleChange={setPassword}/>
