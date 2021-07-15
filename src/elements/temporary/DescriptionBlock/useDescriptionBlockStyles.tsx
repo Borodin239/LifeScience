@@ -17,10 +17,9 @@ export const useDescriptionBlockStyles = makeStyles((theme) => ({
     },
     smallInfo: {
         fontSize: smallFontSize,
-
         backgroundColor: 'black',
         color: 'white',
-    }
+    },
 
 
 }));

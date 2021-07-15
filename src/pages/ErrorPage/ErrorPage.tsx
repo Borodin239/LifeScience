@@ -28,7 +28,7 @@ const ErrorPage: React.FC<{ errorCode?: string, message?: string }> = (props) =>
         <div className={classes.container}>
             <DescriptionBlock type="info" message={props.errorCode || "Something went wrong"}/>
             <DescriptionBlock type="warning" message={subtitle}/>
-            <Button onClick={() => {
+            <Button className={classes.toHomeButton} onClick={() => {
                 dispatch(hideError());
                 history.push("/");
             }}>To Home Page</Button>
