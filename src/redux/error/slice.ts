@@ -7,6 +7,8 @@ const initState: {errorOccurred: AppErrorDescription | null} = {
     errorOccurred: null
 };
 
+// prefix/setError
+
 const errorSlice = createSlice({
     name: ERROR_ACTION_TYPE_PREFIX,
     initialState: initState,

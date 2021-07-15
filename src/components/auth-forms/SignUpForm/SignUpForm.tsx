@@ -13,8 +13,9 @@ import BaseTextField from "../../../elements/text-fields/BaseTextField";
 import validateSignUpForm from "./validateSignUpForm";
 import {useAppDispatch} from "../../../redux/hooks";
 import {signUpThunk} from "../../../redux/auth/thunkActions";
-import {setError} from "../../../redux/error/slice";
 import FormSubmitLoader from "../../../elements/Loaders/FormSubmitLoader";
+import handleThunkErrorBase from "../../../redux/utils/handleThunkErrorBase";
+import splitThunkPayload from "../../../redux/utils/splitThunkPayload";
 
 export const SignUpForm: React.FC = () => {
     const classes = useAuthFormStyles();
@@ -50,17 +51,18 @@ export const SignUpForm: React.FC = () => {
 
         dispatch(signUpThunk({firstName, lastName, email, password}))
             .unwrap()
+            .then(payload => splitThunkPayload(payload))
             .then(() => history.push(appRoutesNames.HOME))
-            .catch(apiErrorDescription => {
+            .catch(thunkError => {
                 setIsPending(false);
 
-                if (apiErrorDescription.httpCode === 400) {
-                    setAlertText(apiErrorDescription.message);
+                if (thunkError.name === 'ApiError' && thunkError.description.httpCode === 400) {
+                    setAlertText(thunkError.description.message);
                 } else {
-                    dispatch(setError({code: apiErrorDescription.httpCode, message: apiErrorDescription.message}));
+                    handleThunkErrorBase(thunkError, history, dispatch);
                 }
             })
-        // тк редирект тут без finaally, потому что компонент уже unmounted
+        // тк редирект тут без finally, потому что компонент уже unmounted
         // .finally(() => setIsPending(false));
     }
 

@@ -19,7 +19,10 @@ const authSlice = createSlice({
             setAccessToken(action.payload);
             state.isAuthorized = true;
         }
-    }
+    },
+    /* extraReducers: {
+        ['fetchUser/fulfilled']
+    }*/
 })
 
 export const {loggedIn, loggedOut} = authSlice.actions
