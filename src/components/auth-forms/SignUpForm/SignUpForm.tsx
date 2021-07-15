@@ -68,8 +68,8 @@ export const SignUpForm: React.FC = () => {
         <div className={classes.paper}>
             <FormTitle text={"Sign Up"}/>
             <form className={classes.form} onSubmit={onFormSubmit} noValidate>
-                <BaseTextField label="firstName" name="First Name" handleChange={setFirstName}/>
-                <BaseTextField label="lastName" name="Last Name" handleChange={setLastName}/>
+                <BaseTextField label="First Name" name="First Name" handleChange={setFirstName}/>
+                <BaseTextField label="Last Name" name="Last Name" handleChange={setLastName}/>
                 <EmailTextField handleChange={setEmail}/>
                 <PasswordTextField isRepeat={false} handleChange={setPassword}/>
                 <PasswordTextField isRepeat={true} handleChange={setRepeat}/>
