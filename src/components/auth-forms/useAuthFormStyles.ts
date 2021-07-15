@@ -25,6 +25,10 @@ const useAuthFormStyles = makeStyles((theme) => ({
         },
         margin: theme.spacing(1, 0, 0, 0),
         textAlign: "center",
+    },
+    loader: {
+        display: "flex",
+        justifyContent: "space-around",
     }
 }));
 
