@@ -3,10 +3,10 @@ import {useHistory} from "react-router-dom";
 import {useAppDispatch} from "../../redux/hooks";
 import {hideError} from "../../redux/error/slice"
 
-import styles from "./ErrorPage.module.css";
 import {httpErrorCodesInfo} from "../../infrastructure/http/httpErrorCodesInfo";
-import DescriptionBlock from "../../elements/temporary/DescriptionBlock/DescriptionBlock";
 import {Button} from "@material-ui/core";
+import {useErrorPageStyles} from "./useErrorPageStyles";
+import DescriptionBlock from "../../elements/temporary/DescriptionBlock/DescriptionBlock";
 
 const ErrorPage: React.FC<{ errorCode?: string, message?: string }> = (props) => {
     const history = useHistory();
@@ -23,9 +23,9 @@ const ErrorPage: React.FC<{ errorCode?: string, message?: string }> = (props) =>
 
     const dispatch = useAppDispatch();
 
-
+    const classes = useErrorPageStyles()
     return (
-        <div className={styles.ErrorPage}>
+        <div className={classes.container}>
             <DescriptionBlock type="info" message={props.errorCode || "Something went wrong"}/>
             <DescriptionBlock type="warning" message={subtitle}/>
             <Button onClick={() => {

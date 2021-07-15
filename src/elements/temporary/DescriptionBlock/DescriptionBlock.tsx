@@ -1,26 +1,26 @@
 import React from "react";
-import styles from './DescriptionBlock.module.css';
-import cn from 'classnames';
+import {useDescriptionBlockStyles} from "./useDescriptionBlockStyles";
 
 type DescriptionProps = {
     message: string,
     type?: 'info' | 'warning' | 'smallInfo'
 }
 
-const getClassName = (type?: 'info' | 'warning' | 'smallInfo') => {
+const getClassName = (classes: any, type?: 'info' | 'warning' | 'smallInfo') => {
     switch (type) {
         case 'smallInfo':
-            return cn(styles.description, styles.smallInfo);
+            return classes.smallInfo
         case 'warning':
-            return cn(styles.description, styles.warning);
+            return classes.warning
         default:
-            return cn(styles.description, styles.info);
+            return classes.info
     }
 }
 
 const DescriptionBlock: React.FC<DescriptionProps> = (props) => {
+    const classes = useDescriptionBlockStyles()
     return (
-        <div className={getClassName(props.type)}>
+        <div className={getClassName(classes, props.type)}>
             {props.message}
         </div>
     );

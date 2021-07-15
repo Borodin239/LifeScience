@@ -1,7 +1,8 @@
 const appRoutesNames = {
     SIGN_IN: '/sign-in',
     SIGN_UP: '/sign-up',
-    HOME: '/home'
+    HOME: '/home',
+    ERROR: '/error'
 }
 
 Object.freeze(appRoutesNames);
