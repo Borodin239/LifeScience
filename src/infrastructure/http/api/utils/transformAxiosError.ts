@@ -7,11 +7,16 @@ import {developmentLog} from "../../../common/developmentLog";
 
 const transformAxiosError = (error: AxiosError) => {
     if (error.response) {
-        return new ApiError({
+        developmentLog(`AxiosError response: ${JSON.stringify(error.response)}`);
+        const apiError = new ApiError({
             httpCode: error.response.status,
             systemCode: error.response.data.systemCode,
             message: createApiErrorMessage(error.response.data as ApiErrorView)
         } as ApiErrorDescription)
+
+        developmentLog(`Created ApiError: ${apiError}. Desription: ${JSON.stringify(apiError.description)}`);
+
+        return apiError;
     }
 
     if (error.request) {

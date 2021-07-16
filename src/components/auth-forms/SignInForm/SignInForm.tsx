@@ -11,8 +11,9 @@ import FormTitle from "../../../elements/typographies/FormTitle";
 import {useAppDispatch} from "../../../redux/hooks";
 import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
 import {signInThunk} from "../../../redux/auth/thunkActions";
-import {setError} from "../../../redux/error/slice";
 import FormSubmitLoader from "../../../elements/Loaders/FormSubmitLoader";
+import splitThunkPayload from "../../../redux/utils/splitThunkPayload";
+import handleThunkErrorBase from "../../../redux/utils/handleThunkErrorBase";
 
 
 export const SignInForm: React.FC = () => {
@@ -39,16 +40,18 @@ export const SignInForm: React.FC = () => {
 
         dispatch(signInThunk({email, password}))
             .unwrap()
+            .then((payload) => splitThunkPayload(payload))
             .then(() => history.push(appRoutesNames.HOME))
-            .catch(apiErrorDescription => {
+            .catch(thunkError => {
                 setIsPending(false);
 
-                if (apiErrorDescription.httpCode === 400 || apiErrorDescription.systemCode === 401005) {
-                    setAlertText(apiErrorDescription.message);
+                if (thunkError.name === 'ApiError' && (thunkError.description.httpCode === 400 || thunkError.description.systemCode === 401005)) {
+                    setAlertText(thunkError.description.message);
                 } else {
-                    dispatch(setError({code: apiErrorDescription.httpCode, message: apiErrorDescription.message}));
+                    handleThunkErrorBase(thunkError, history, dispatch);
                 }
             })
+        // || err.description.systemCode === 401005
         // тк редирект тут без finaally, потому что компонент уже unmounted
         // .finally(() => setIsPending(false));
     }
