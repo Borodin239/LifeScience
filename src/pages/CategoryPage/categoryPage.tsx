@@ -14,15 +14,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 const handleClick = () => console.log("Breadcrumb clicked")
 const firstLocation: LocationUnit = {
-    text: "First",
+    text: "Root",
     handleClick: handleClick,
 }
 const secondLocation: LocationUnit = {
-    text: "Second",
+    text: "Molecules",
     handleClick: handleClick,
 }
 const thirdLocation: LocationUnit = {
-    text: "Third",
+    text: "Quantitative analysis",
     handleClick: handleClick,
 }
 export const locationList = [firstLocation, secondLocation, thirdLocation]
