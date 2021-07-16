@@ -93,7 +93,7 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
                         </ListItem>
                     </List>
                 </Box>
-                <Divider orientation="vertical" flexItem light/>
+                <Divider orientation="vertical" flexItem  className={classes.divider}/>
                 <Box className={classes.contentContainer}>
                     <Box>
                         <Typography className={classes.contentTitle}>
@@ -104,14 +104,14 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
                         </Typography>
                     </Box>
                 </Box>
-                <Divider orientation="vertical" flexItem light/>
+                <Divider orientation="vertical" flexItem className={classes.divider}/>
                 <Box style={rightSideBarStyles}>
                     <Box>
                         <Typography>
                             Go to protocols
                         </Typography>
                     </Box>
-                    <Divider light/>
+                    <Divider className={classes.divider}/>
                 </Box>
             </Box>
         </Box>

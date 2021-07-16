@@ -40,6 +40,9 @@ export const useStyles = makeStyles((theme) => ({
     },
     content: {
         marginTop: theme.spacing(1),
+    },
+    divider: {
+        backgroundColor: theme.palette.primary.main,
     }
 
 }));
