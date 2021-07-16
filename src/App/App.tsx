@@ -39,7 +39,7 @@ function App() {
                         <Route exact path={appRoutesNames.HOME} render={() => <CategoryPage/>}/>
                         <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                         <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
-                        <Route exact path="/errorPage"
+                        <Route exact path="/error"
                                render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 
                         <Route render={() => <ErrorPage errorCode="404" message="Page doesn't exist"/>}/>

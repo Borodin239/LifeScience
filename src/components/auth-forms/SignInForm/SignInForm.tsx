@@ -58,11 +58,11 @@ export const SignInForm: React.FC = () => {
 
     return <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
-            <FormTitle text={"Sign Up"}/>
+            <FormTitle text={"Sign In"}/>
             <form className={classes.form} onSubmit={onFormSubmit} noValidate>
                 <EmailTextField handleChange={setEmail}/>
                 <PasswordTextField isRepeat={false} handleChange={setPassword}/>
-                {isPending ? <FormSubmitLoader/> : <SubmitButton text={"Sign Up"} className={classes.submit}/>}
+                {isPending ? <FormSubmitLoader/> : <SubmitButton text={"Sign In"} className={classes.submit}/>}
                 {alertText &&
                 <Alert severity="error">
                     {alertText}
