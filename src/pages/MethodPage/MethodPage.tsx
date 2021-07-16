@@ -4,6 +4,7 @@ import Location from "../../components/categories/location";
 import {locationList} from "../CategoryPage/categoryPage";
 import {useStyles} from "./method-page-styles";
 import Typography from "@material-ui/core/Typography";
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 type SectionTitle = {
     id: number,
@@ -20,7 +21,7 @@ type MethodPageProps = {
     sections?: SectionTitle[],
     protocols?: ProtocolTitle[],
 }
-
+// this is a layout - real method page is not going to be so dumbly written
 const MethodPage: React.FC<MethodPageProps> = (props) => {
     const classes = useStyles()
 
@@ -31,10 +32,6 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
     const mainContainerStyles = {
         display: 'flex',
         justifyContent: 'space-between',
-    }
-
-    const leftSidebarStyles = {
-        width: '20%',
     }
 
     const mainContentStyles = {
@@ -56,62 +53,81 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
                 </Typography>
             </Box>
             <Box className={classes.mainContainer}>
-                <Box style={leftSidebarStyles}>
+                <Box className={classes.leftSideBar}>
                     <Typography className={classes.sectionsTitle}>
                         Sections
                     </Typography>
-                    <List>
-                        <ListItem>
-                            <Box className={classes.notSelectedSectionSpace}/>
-                            <Typography>
-                                Unselected value
-                            </Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Box className={classes.selectedSectionSpace}/>
-                            <Typography>
-                                Selected value
-                            </Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Box className={classes.notSelectedSectionSpace}/>
-                            <Typography>
-                                General information
-                            </Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Box className={classes.notSelectedSectionSpace}/>
-                            <Typography>
-                                Application
-                            </Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Box className={classes.notSelectedSectionSpace}/>
-                            <Typography>
-                                Find collaboration
-                            </Typography>
-                        </ListItem>
-                    </List>
+                    <Divider className={classes.divider}/>
+                    <Box className={classes.sectionList}>
+                        <List>
+                            <ListItem>
+                                <Box className={classes.notSelectedSectionSpace}/>
+                                <Typography className={classes.sectionName}>
+                                    Unselected value
+                                </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <Box className={classes.selectedSectionSpace}/>
+                                <Typography  className={classes.sectionName}>
+                                    Selected value
+                                </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <Box className={classes.notSelectedSectionSpace}/>
+                                <Typography  className={classes.sectionName}>
+                                    General information
+                                </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <Box className={classes.notSelectedSectionSpace}/>
+                                <Typography  className={classes.sectionName}>
+                                    Application
+                                </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <Box className={classes.notSelectedSectionSpace}/>
+                                <Typography className={classes.sectionName}>
+                                    Find collaboration
+                                </Typography>
+                            </ListItem>
+                        </List>
+                    </Box>
                 </Box>
-                <Divider orientation="vertical" flexItem  className={classes.divider}/>
                 <Box className={classes.contentContainer}>
                     <Box>
-                        <Typography className={classes.contentTitle}>
-                            General information
-                        </Typography>
+                        <Box>
+                            <Typography className={classes.contentTitle}>
+                                General information
+                            </Typography>
+                            <Divider style={{width: '35%'}} className={classes.divider}/>
+                        </Box>
                         <Typography className={classes.content}>
                             {generalInfoText}
                         </Typography>
                     </Box>
                 </Box>
-                <Divider orientation="vertical" flexItem className={classes.divider}/>
-                <Box style={rightSideBarStyles}>
-                    <Box>
-                        <Typography>
+                <Box className={classes.rightSideBar}>
+                    <Box className={classes.goToProtocols}>
+                        <Typography className={classes.goProtocolsText}>
                             Go to protocols
                         </Typography>
+                        <ArrowForwardIcon fontSize={"small"} style={{marginLeft: '10px'}}/>
                     </Box>
                     <Divider className={classes.divider}/>
+                    <Box className={classes.hiddenSectionList}>
+                        <List>
+                            <ListItem>
+                                <Typography className={classes.sectionName}>
+                                    Article 1
+                                </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <Typography className={classes.sectionName}>
+                                    Article 2
+                                </Typography>
+                            </ListItem>
+                        </List>
+                    </Box>
                 </Box>
             </Box>
         </Box>
