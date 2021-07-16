@@ -1,14 +1,12 @@
 import React from "react";
-import {Button} from "@material-ui/core";
-import styles from "./HomePage.module.css"
+import {Box} from "@material-ui/core";
+import WelcomePanel from "../../components/landing-page/WelcomePanel";
 
 const HomePage: React.FC = () => {
     return (
-        <header /*className={styles.AppHeader}*/>
-            <p>
-                Edit <Button className={styles.buttonTest} color="primary">src/App.tsx</Button> and save to reload.
-            </p>
-        </header>
+        <Box>
+            <WelcomePanel/>
+        </Box>
     )
 }
 

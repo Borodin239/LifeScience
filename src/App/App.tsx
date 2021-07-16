@@ -9,8 +9,7 @@ import CategoryPage from "../pages/CategoryPage/categoryPage";
 import {SignInForm} from "../components/auth-forms/SignInForm/SignInForm";
 import {SignUpForm} from "../components/auth-forms/SignUpForm/SignUpForm";
 import appRoutesNames from "../infrastructure/common/appRoutesNames";
-// import {useAppDispatch} from "../redux/hooks";
-// import {setError} from "../redux/error/actions";
+import HomePage from "../pages/HomePage/HomePage";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -36,7 +35,8 @@ function App() {
                             <Redirect to={appRoutesNames.HOME}/>
                         </Route>
 
-                        <Route exact path={appRoutesNames.HOME} render={() => <CategoryPage/>}/>
+                        <Route exact path={appRoutesNames.HOME} render={() => <HomePage/>}/>
+                        <Route exact path={appRoutesNames.ROOT} render={() => <CategoryPage/>}/>
                         <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                         <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
                         <Route exact path="/error"
