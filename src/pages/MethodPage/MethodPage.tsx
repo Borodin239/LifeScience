@@ -29,28 +29,24 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
 
     const generalInfoText = "Method for quantify the protein content in sample. This method has multiple applications in experimental sciences. Chemical basis of the Bradford method (1976) is based on the absorbance shift observed in an acidic solution of dye Coomassie® Brilliant Blue G-250. When added to a solution of protein, the dye binds to the protein resulting in a colour change from a reddish brown to blue. References: 1.Bradford MM A rapid and sensitive method for the quantitation of microgram quantities of protein utilizing the principle of protein-dye binding. // Analytical Biochemistry. 1976. № 72. С. 248-254. 2.Pedrol, Nuria & Tamayo, Pilar. (2001). Protein Content Quantification by Bradford Method. 10.1007/0-306-48057-3_19."
 
-    const mainContainerStyles = {
-        display: 'flex',
-        justifyContent: 'space-between',
-    }
-
-    const mainContentStyles = {
-        width: '50%',
-    }
-
-    const rightSideBarStyles = {
-        width: '20%',
-    }
-
     return (
         <Box>
             <Box className={classes.breadCrumbs}>
                 <Location locationList={locationList}/>
             </Box>
-            <Box>
+            <Box className={classes.methodTitleContainer}>
                 <Typography variant={"h5"}>
                     Bradford assay
                 </Typography>
+                <Box>
+                    <Box className={classes.goToProtocols}>
+                        <Typography className={classes.goProtocolsText}>
+                            Go to protocols
+                        </Typography>
+                        <ArrowForwardIcon fontSize={"small"} className={classes.protocolsArrow}/>
+                    </Box>
+                    {/*<Divider className={classes.divider}/>*/}
+                </Box>
             </Box>
             <Box className={classes.mainContainer}>
                 <Box className={classes.leftSideBar}>
@@ -104,29 +100,6 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
                         <Typography className={classes.content}>
                             {generalInfoText}
                         </Typography>
-                    </Box>
-                </Box>
-                <Box className={classes.rightSideBar}>
-                    <Box className={classes.goToProtocols}>
-                        <Typography className={classes.goProtocolsText}>
-                            Go to protocols
-                        </Typography>
-                        <ArrowForwardIcon fontSize={"small"} style={{marginLeft: '10px'}}/>
-                    </Box>
-                    <Divider className={classes.divider}/>
-                    <Box className={classes.hiddenSectionList}>
-                        <List>
-                            <ListItem>
-                                <Typography className={classes.sectionName}>
-                                    Article 1
-                                </Typography>
-                            </ListItem>
-                            <ListItem>
-                                <Typography className={classes.sectionName}>
-                                    Article 2
-                                </Typography>
-                            </ListItem>
-                        </List>
                     </Box>
                 </Box>
             </Box>
