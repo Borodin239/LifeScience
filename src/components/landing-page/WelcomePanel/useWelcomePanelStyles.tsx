@@ -2,8 +2,6 @@ import {alpha, makeStyles} from "@material-ui/core/styles";
 
 export const useWelcomePanelStyles = makeStyles((theme) => ({
     mainContainer: {
-        width: '100vw',
-        marginLeft: 'calc(550px - 50vw)',
         background: 'linear-gradient(270deg, rgba(0, 0, 255, 0.7), rgba(0, 0, 255, 0)),' +
             '            linear-gradient(90deg, rgba(42, 116, 245, 0.9), rgba(0, 0, 255, 0))',
         height: '530px',

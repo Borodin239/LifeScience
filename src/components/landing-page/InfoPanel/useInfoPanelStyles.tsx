@@ -2,7 +2,7 @@ import {makeStyles} from "@material-ui/core/styles";
 
 export const useInfoPanelStyles = makeStyles((theme) => ({
     mainContainer: {
-        height: "600px",
+        height: "1600px",
         width: '100%',
     },
     divider: {

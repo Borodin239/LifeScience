@@ -4,8 +4,6 @@ const useMainAppBarStyles = makeStyles((theme: Theme) =>
     createStyles({
         main: {
             backgroundColor: theme.palette.primary.main,
-            width: '100vw',
-            marginLeft: 'calc(550px - 50vw)',
         },
         appbar: {
             width: "1100px",
