@@ -4,9 +4,7 @@ const spaceWidth = 0.3
 const spaceHeight = 2.5
 
 const middleFontSize = '20px'
-const smallerFontSize = '18px'
-
-const sideBarWidth = '17%'
+const sideBarWidth = '20%'
 
 const sectionSelectionMark = (theme: any) => {
     return {
