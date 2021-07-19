@@ -6,12 +6,10 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import HandledErrorBoundary from "../components/boundary/HandledErrorBoundary";
 import MainAppBar from "../components/layouts/MainAppBar/MainAppBar";
 import CategoryPage from "../pages/CategoryPage/categoryPage";
-import MethodPage from "../pages/MethodPage/MethodPage";
 import {SignInForm} from "../components/auth-forms/SignInForm/SignInForm";
 import {SignUpForm} from "../components/auth-forms/SignUpForm/SignUpForm";
 import appRoutesNames from "../infrastructure/common/appRoutesNames";
-// import {useAppDispatch} from "../redux/hooks";
-// import {setError} from "../redux/error/actions";
+import MethodPage from "../pages/MethodPage/MethodPage";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -40,6 +38,7 @@ function App() {
                         <Route exact path={appRoutesNames.HOME} render={() => <CategoryPage/>}/>
                         <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                         <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
+                        <Route exact path={"/method-layout"} render={() => <MethodPage/>}/>
                         <Route exact path="/error"
                                render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 
