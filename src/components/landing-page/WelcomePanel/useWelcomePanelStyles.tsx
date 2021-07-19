@@ -6,7 +6,7 @@ export const useWelcomePanelStyles = makeStyles((theme) => ({
         marginLeft: 'calc(550px - 50vw)',
         background: 'linear-gradient(270deg, rgba(0, 0, 255, 0.7), rgba(0, 0, 255, 0)),' +
             '            linear-gradient(90deg, rgba(42, 116, 245, 0.9), rgba(0, 0, 255, 0))',
-        height: '500px',
+        height: '530px',
         display: 'flex',
         justifyContent: "space-around",
         alignItems: 'center',
@@ -32,11 +32,11 @@ export const useWelcomePanelStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1),
         display: 'flex',
         alignItems: 'center',
-        width: 400,
+        width: '500px',
     },
     iconButton: {
         padding: theme.spacing(1),
-        color: theme.palette.primary.dark,
+        color: alpha(theme.palette.primary.dark, 0.85),
     },
     input: {
         flex: 1,
@@ -47,8 +47,6 @@ export const useWelcomePanelStyles = makeStyles((theme) => ({
     orText: {
         marginTop: theme.spacing(1),
     }
-
-
 
 
 }));

@@ -4,7 +4,7 @@ import {useWelcomePanelStyles} from "./useWelcomePanelStyles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router-dom";
-import appRoutesNames from "../../infrastructure/common/appRoutesNames";
+import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
 import SearchIcon from "@material-ui/icons/Search";
 
 const WelcomePanel = () => {
@@ -22,7 +22,7 @@ const WelcomePanel = () => {
                 </Typography>
                 <Typography variant={'h5'}>
                     is a simple and easy-to-use
-                    catalog of research protocols.
+                    catalog of research methods.
                 </Typography>
                 <Button onClick={handleBrowseClick} className={classes.browseButton}>
                     Browse the catalog
