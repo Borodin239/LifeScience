@@ -1,6 +1,6 @@
 import React, {ErrorInfo} from "react";
 import {developmentLog} from "../../infrastructure/common/developmentLog";
-import DescriptionBlock from "../temporary/DescriptionBlock/DescriptionBlock";
+import DescriptionBlock from "../../elements/temporary/DescriptionBlock/DescriptionBlock";
 
 class UnhandledErrorBoundary extends React.Component<any, {hasError: boolean}> {
     constructor(props: any) {

@@ -6,32 +6,34 @@ import {makeStyles} from "@material-ui/core/styles";
 import CatalogNodeList, {CatalogNode} from "../../components/categories/catalogNodeList";
 import SubjectIcon from "@material-ui/icons/Subject";
 import {FolderOutlined} from "@material-ui/icons";
+import AdminSettings from "../../components/categories/admin/AdminSettings/AdminSettings";
 
 const useStyles = makeStyles((theme) => ({
-    breadCrumbs: {
-        margin: theme.spacing(3, 0, 2)
-    }
+    upperBar: {
+        margin: theme.spacing(3, 0, 2),
+        width: '100%',
+        display: "flex",
+        justifyContent: 'space-between',
+    },
 }));
-const handleClick = () => console.log("Breadcrumb clicked")
-const firstLocation: LocationUnit = {
-    text: "Root",
-    handleClick: handleClick,
-}
-const secondLocation: LocationUnit = {
-    text: "Molecules",
-    handleClick: handleClick,
-}
-const thirdLocation: LocationUnit = {
-    text: "Quantitative analysis",
-    handleClick: handleClick,
-}
-export const locationList = [firstLocation, secondLocation, thirdLocation]
-//for demonstration purposes
 
 const CategoryPage = () => {
-
+    const history = useHistory()
+    const handleClick = () => history.push("/sign-in")
     const classes = useStyles()
-
+    const firstLocation: LocationUnit = {
+        text: "First",
+        handleClick: handleClick,
+    }
+    const secondLocation: LocationUnit = {
+        text: "Second",
+        handleClick: handleClick,
+    }
+    const thirdLocation: LocationUnit = {
+        text: "Third",
+        handleClick: handleClick,
+    }
+    //for demonstration purposes
 
     const emptyCallback = () => {
     }
@@ -59,8 +61,9 @@ const CategoryPage = () => {
 
     return (
         <Box>
-            <Box className={classes.breadCrumbs}>
-                <Location locationList={locationList}/>
+            <Box className={classes.upperBar}>
+                <Location locationList={[firstLocation, secondLocation, thirdLocation]}/>
+                <AdminSettings/> {/*todo only visible to admins*/}
             </Box>
             <CatalogNodeList list={categoryList} icon={<FolderOutlined/>} type={"Categories"}/>
             <CatalogNodeList type={"Methods"} icon={<SubjectIcon/>} list={methodList}/>

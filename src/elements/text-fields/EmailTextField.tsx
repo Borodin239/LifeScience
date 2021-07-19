@@ -1,19 +1,20 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 
-const EmailTextField = () => {
+const EmailTextField: React.FC<{ handleChange: (newValue: string) => void }> = ({handleChange}) => {
     return (
         <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="email"
+            // id="email"
             label="Email Address"
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={(event) => handleChange(event.target.value)}
         />
     )
 }
-export default EmailTextField
+export default React.memo(EmailTextField);
