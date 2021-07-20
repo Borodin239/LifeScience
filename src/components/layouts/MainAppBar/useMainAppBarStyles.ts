@@ -3,11 +3,12 @@ import {alpha, createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 const useMainAppBarStyles = makeStyles((theme: Theme) =>
     createStyles({
         main: {
-            width: "1100px",
-            margin: "auto",
+            backgroundColor: theme.palette.primary.main,
         },
         appbar: {
-            borderRadius: theme.shape.borderRadius,
+            width: "1100px",
+            margin: "auto",
+            boxShadow: 'none',
         },
         search: {
             position: 'relative',
