@@ -7,7 +7,15 @@ const apiConstants = {
             SIGN_IN: '/auth/signin',
             SIGN_UP: '/auth/register',
             REFRESH: '/auth/refresh'
+        },
+        categories: {
+            INITIAL: '/categories',
+            ROOT: '/categories/root'
         }
+    },
+
+    common: {
+        ROOT_ID: -1
     }
 }
 
