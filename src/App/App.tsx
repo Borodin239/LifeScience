@@ -10,6 +10,7 @@ import {SignInForm} from "../components/auth-forms/SignInForm/SignInForm";
 import {SignUpForm} from "../components/auth-forms/SignUpForm/SignUpForm";
 import appRoutesNames from "../infrastructure/common/appRoutesNames";
 import HomePage from "../pages/HomePage/HomePage";
+import MethodPage from "../pages/MethodPage/MethodPage";
 
 function App() {
     // const dispatch = useAppDispatch();
