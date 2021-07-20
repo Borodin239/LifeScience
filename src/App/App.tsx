@@ -39,6 +39,7 @@ function App() {
                         <Route exact path={appRoutesNames.ROOT} render={() => <CategoryPage/>}/>
                         <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                         <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
+                        <Route exact path={"/method-layout"} render={() => <MethodPage/>}/>
                         <Route exact path="/error"
                                render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 
