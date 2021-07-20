@@ -1,4 +1,4 @@
-import {alpha, createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
 const useMainAppBarStyles = makeStyles((theme: Theme) =>
     createStyles({
