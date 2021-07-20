@@ -1,6 +1,6 @@
 import React from "react";
 import {alpha, makeStyles} from "@material-ui/core/styles";
-import {CatalogNode} from "./catalogNodeList";
+import {CatalogNode} from "./CatalogNodeList";
 import {Box, Typography} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({

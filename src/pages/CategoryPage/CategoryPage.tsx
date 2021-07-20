@@ -1,9 +1,9 @@
 import React from "react";
-import Location, {LocationUnit} from "../../components/categories/location";
+import Location, {LocationUnit} from "../../components/categories/Location";
 import {useHistory} from "react-router-dom";
 import {Box} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import CatalogNodeList, {CatalogNode} from "../../components/categories/catalogNodeList";
+import CatalogNodeList, {CatalogNode} from "../../components/categories/CatalogNodeList";
 import SubjectIcon from "@material-ui/icons/Subject";
 import {FolderOutlined} from "@material-ui/icons";
 import AdminSettings from "../../components/categories/admin/AdminSettings/AdminSettings";

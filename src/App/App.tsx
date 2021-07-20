@@ -5,7 +5,7 @@ import styles from './App.module.css';
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import HandledErrorBoundary from "../components/boundary/HandledErrorBoundary";
 import MainAppBar from "../components/layouts/MainAppBar/MainAppBar";
-import CategoryPage from "../pages/CategoryPage/categoryPage";
+import CategoryPage from "../pages/CategoryPage/CategoryPage";
 import {SignInForm} from "../components/auth-forms/SignInForm/SignInForm";
 import {SignUpForm} from "../components/auth-forms/SignUpForm/SignUpForm";
 import appRoutesNames from "../infrastructure/common/appRoutesNames";

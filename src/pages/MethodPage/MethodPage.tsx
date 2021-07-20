@@ -1,6 +1,6 @@
 import React from "react";
 import {Box, Divider, List, ListItem} from "@material-ui/core";
-import Location, {LocationUnit} from "../../components/categories/location";
+import Location, {LocationUnit} from "../../components/categories/Location";
 import {useStyles} from "./method-page-styles";
 import Typography from "@material-ui/core/Typography";
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
