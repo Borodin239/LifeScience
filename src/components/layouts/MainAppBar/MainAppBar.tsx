@@ -7,8 +7,8 @@ import {useAppSelector} from "../../../redux/hooks";
 import useMainAppBarStyles from "./useMainAppBarStyles";
 import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
 import MainAppBarProfileMenu from "./MainAppBarProfileMenu";
-import MainSearch from "./MainSearch";
-import UnauthorizedProfile from "./profile/UnauthorizedProfile";
+import MainSearch from "./MainSearch/MainSearch";
+import UnauthorizedProfile from "./profile/UnauthorizedProfile/UnauthorizedProfile";
 import AuthorizedProfilePreview from "./profile/AuthorizedProfilePreview";
 import {
     getFullWidthStyling
@@ -52,10 +52,11 @@ const MainAppBar: React.FC = () => {
 
                     <div className={classes.grow}/>
 
-                    {isAuthorized ? <AuthorizedProfilePreview handleProfileMenuOpen={handleProfileMenuOpen}/> : <UnauthorizedProfile/>}
+                    {isAuthorized ? <AuthorizedProfilePreview handleProfileMenuOpen={handleProfileMenuOpen}/> :
+                        <UnauthorizedProfile/>}
                 </Toolbar>
             </AppBar>
-            <MainAppBarProfileMenu anchorEl={anchorEl} handleMenuClose={handleMenuClose} />
+            <MainAppBarProfileMenu anchorEl={anchorEl} handleMenuClose={handleMenuClose}/>
         </div>
     );
 }
