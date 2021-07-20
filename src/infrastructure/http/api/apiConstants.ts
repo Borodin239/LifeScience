@@ -7,6 +7,9 @@ const apiConstants = {
             SIGN_IN: '/auth/signin',
             SIGN_UP: '/auth/register',
             REFRESH: '/auth/refresh'
+        },
+        approach: {
+            GET: '/approaches/public'
         }
     }
 }
