@@ -30,7 +30,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint ./src/**.tsx ./src/**.ts"
+    "lint": "eslint ./src/**.tsx ./src/**.ts",
+    "mock-server": "json-server --watch db.json --port 5000 --routes routes.json"
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +54,7 @@
   "devDependencies": {
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@types/react-router-dom": "^5.1.8",
-    "@types/redux-logger": "^3.0.9"
+    "@types/redux-logger": "^3.0.9",
+    "json-server": "^0.16.3"
   }
 }

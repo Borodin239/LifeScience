@@ -50,7 +50,7 @@ export enum ApproachActionThunkTypes {
 
 export const getApproachThunk = createAsyncThunk<
     Approach, // что возвращает при fulfilled
-    number, // что принимает как аргумент при dispatch
+    string, // что принимает как аргумент при dispatch
     { // деструктуризация thunkAPI
         dispatch: AppDispatch,
         rejectValue: ApiError

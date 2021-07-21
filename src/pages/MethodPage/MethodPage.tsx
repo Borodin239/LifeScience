@@ -28,9 +28,13 @@ type MethodPageProps = {
     sections?: SectionTitle[],
     protocols?: ProtocolTitle[],
 }
+
+interface ParamType {
+    id: string
+}
 // this is a layout - real method page is not going to be so dumbly written
 const MethodPage: React.FC<MethodPageProps> = (props) => {
-    const id = useParams<number>()
+    const { id } = useParams<ParamType>()
     const history = useHistory()
     const classes = useStyles()
     const dispatch = useAppDispatch();
