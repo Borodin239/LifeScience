@@ -8,9 +8,13 @@ const apiConstants = {
             SIGN_UP: '/auth/register',
             REFRESH: '/auth/refresh'
         },
-        approach: {
+        publicApproach: {
             GET: '/approaches/public'
+        },
+        section: {
+            GET: '/sections'
         }
+
     }
 }
 
