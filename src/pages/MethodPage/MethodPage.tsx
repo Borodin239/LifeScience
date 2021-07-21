@@ -59,7 +59,7 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
     const approach = useAppSelector(state => state.approachReducer.approach)
 
     if (isPending) {
-        return <CenteredLoader/>
+        return <CenteredLoader className={classes.mainLoader}/>
     }
 
     return (

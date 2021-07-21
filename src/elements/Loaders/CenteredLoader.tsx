@@ -2,12 +2,17 @@ import React from "react";
 import {Box, CircularProgress} from "@material-ui/core";
 import useAuthFormStyles from "../../components/auth-forms/useAuthFormStyles";
 
-const CenteredLoader: React.FC = () => {
+type LoaderProps = {
+    className?: string,
+}
+
+const CenteredLoader: React.FC<LoaderProps> = ({className}) => {
     return (
-        <Box style={{
-            display: "flex",
-            justifyContent: "space-around",
-        }}>
+        <Box className={className}
+             style={{
+                 display: "flex",
+                 justifyContent: "space-around",
+             }}>
             <CircularProgress color="primary"/>
         </Box>
     )

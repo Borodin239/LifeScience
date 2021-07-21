@@ -98,6 +98,9 @@ export const useStyles = makeStyles((theme) => ({
         marginLeft: theme.spacing(1),
         transitionProperty: 'transform',
         transitionDuration: '0.3s',
+    },
+    mainLoader: {
+        marginTop: theme.spacing(2),
     }
 
 }));
