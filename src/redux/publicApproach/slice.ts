@@ -7,7 +7,7 @@ import onThunkError from "../utils/onThunkError";
 export const APPROACH_ACTION_TYPE_PREFIX = 'approaches'
 
 export type SectionTitle = {
-    id: number,
+    id: string,
     name: string,
 }
 

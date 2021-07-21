@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {Box, Divider} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import Location from "../../components/categories/location";
 import {useMethodPageStyles} from "./method-page-styles";
 import Typography from "@material-ui/core/Typography";
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {useHistory, useParams} from "react-router-dom";
-import {generalInfoText, locationList} from "./temporaryConstants";
+import {locationList} from "./temporaryConstants";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
@@ -26,11 +26,11 @@ type MethodPageProps = {
 }
 
 interface ParamType {
-    id: string
+    approachId: string
 }
 
 const MethodPage: React.FC<MethodPageProps> = (props) => {
-    const {id} = useParams<ParamType>()
+    const {approachId} = useParams<ParamType>()
     const history = useHistory()
     const classes = useMethodPageStyles()
     const dispatch = useAppDispatch();
@@ -40,7 +40,7 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
 
     useEffect(() => {
         setIsLoading(true)
-        dispatch(getPublicApproachThunk(id))
+        dispatch(getPublicApproachThunk(approachId))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then(() => {
@@ -51,7 +51,7 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
 
                 handleThunkErrorBase(thunkError, history, dispatch);
             })
-    }, [id]);
+    }, [approachId]);
 
     const handleSectionTitleClick = (index: number) => () => {
         setSelectedSection(index);
@@ -85,7 +85,9 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
                 <SectionList sections={approach.sections}
                              selectedSection={selectedSection}
                              handleSectionTitleClick={handleSectionTitleClick}/>
-                <ContentContainer title={approach.sections[selectedSection].name}/>
+                <ContentContainer title={approach.sections[selectedSection].name}
+                                  approachId={approachId}
+                                  sectionId={approach.sections[selectedSection].id}/>
             </Box>
         </Box>
     )

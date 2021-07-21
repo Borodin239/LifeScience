@@ -41,7 +41,7 @@ export const getSectionThunk = createAsyncThunk<
     `${SECTION_ACTION_TYPE_PREFIX}${SectionActionThunkTypes.GET}`,
     async ({approachId, sectionId}, thunkAPI) => {
         try {
-            const response = await sectionApi.getSection(approachId, sectionId)
+            const response = await sectionApi.getSection(approachId, sectionId);
 
             return response.data as Section
         } catch (err) {
