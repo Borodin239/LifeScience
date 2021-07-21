@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {getApproachThunk} from "./thunkActions";
 
 export const APPROACH_ACTION_TYPE_PREFIX = 'approaches'
 
@@ -44,11 +45,14 @@ const approachSlice = createSlice({
     name: APPROACH_ACTION_TYPE_PREFIX,
     initialState: initState,
     reducers: {},
-    extraReducers: {
-
-    }
+    extraReducers: (builder) => {
+      builder.addCase(getApproachThunk.fulfilled, (state, action) => {
+          state.approach = {
+              name: action.payload.name,
+              sections: action.payload.sections,
+          }
+      })
+    },
 })
-
-// export const {receivedApproach} = approachSlice.actions
 
 export default approachSlice.reducer
