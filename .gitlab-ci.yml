@@ -22,6 +22,10 @@ build site:
   script:
     - yarn install --progress=false
     - yarn run build
+  only:
+    - production
+    - test
+    - dev
   artifacts:
     expire_in: 1 week
     paths:
