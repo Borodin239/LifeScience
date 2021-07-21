@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {Box, Divider, List, ListItem} from "@material-ui/core";
+import {Box, Divider} from "@material-ui/core";
 import Location from "../../components/categories/location";
-import {useStyles} from "./method-page-styles";
+import {useMethodPageStyles} from "./method-page-styles";
 import Typography from "@material-ui/core/Typography";
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {useHistory, useParams} from "react-router-dom";
@@ -10,10 +10,10 @@ import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {getApproachThunk} from "../../redux/approach/slice";
-import FormSubmitLoader from "../../elements/Loaders/CenteredLoader";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
+import SectionList from "../../components/approach/SectionList/SectionList";
 
-type SectionTitle = {
+export type SectionTitle = {
     id: number,
     name: string,
 }
@@ -32,35 +32,43 @@ type MethodPageProps = {
 interface ParamType {
     id: string
 }
+
 // this is a layout - real method page is not going to be so dumbly written
 const MethodPage: React.FC<MethodPageProps> = (props) => {
-    const { id } = useParams<ParamType>()
+    const {id} = useParams<ParamType>()
     const history = useHistory()
-    const classes = useStyles()
+    const classes = useMethodPageStyles()
     const dispatch = useAppDispatch();
 
-    const [isPending, setIsPending] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [selectedSection, setSelectedSection] = useState(0);
 
     useEffect(() => {
-        setIsPending(true)
+        setIsLoading(true)
         dispatch(getApproachThunk(id))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then(() => {
-                setIsPending(false)
+                setIsLoading(false)
             })
             .catch(thunkError => {
-                setIsPending(false);
+                setIsLoading(false);
 
                 handleThunkErrorBase(thunkError, history, dispatch);
             })
-    }, [id])
+    }, [id]);
+
+    const handleSectionTitleClick = (index: number) => () => {
+        setSelectedSection(index);
+    }
 
     const approach = useAppSelector(state => state.approachReducer.approach)
 
-    if (isPending) {
+    if (isLoading) {
         return <CenteredLoader className={classes.mainLoader}/>
     }
+
+    console.log(approach.sections)
 
     return (
         <Box>
@@ -78,55 +86,17 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
                         </Typography>
                         <ArrowForwardIcon fontSize={"small"} className={classes.protocolsArrow}/>
                     </Box>
-                    {/*<Divider className={classes.divider}/>*/}
                 </Box>
             </Box>
             <Box className={classes.mainContainer}>
-                <Box className={classes.leftSideBar}>
-                    <Typography className={classes.sectionsTitle}>
-                        Sections
-                    </Typography>
-                    <Divider className={classes.divider}/>
-                    <Box className={classes.sectionList}>
-                        <List>
-                            <ListItem>
-                                <Box className={classes.notSelectedSectionSpace}/>
-                                <Typography className={classes.sectionName}>
-                                    Unselected value
-                                </Typography>
-                            </ListItem>
-                            <ListItem>
-                                <Box className={classes.selectedSectionSpace}/>
-                                <Typography className={classes.sectionName}>
-                                    Selected value
-                                </Typography>
-                            </ListItem>
-                            <ListItem>
-                                <Box className={classes.notSelectedSectionSpace}/>
-                                <Typography className={classes.sectionName}>
-                                    General information
-                                </Typography>
-                            </ListItem>
-                            <ListItem>
-                                <Box className={classes.notSelectedSectionSpace}/>
-                                <Typography className={classes.sectionName}>
-                                    Application
-                                </Typography>
-                            </ListItem>
-                            <ListItem>
-                                <Box className={classes.notSelectedSectionSpace}/>
-                                <Typography className={classes.sectionName}>
-                                    Find collaboration
-                                </Typography>
-                            </ListItem>
-                        </List>
-                    </Box>
-                </Box>
+                <SectionList sections={approach.sections}
+                             selectedSection={selectedSection}
+                             handleSectionTitleClick={handleSectionTitleClick}/>
                 <Box className={classes.contentContainer}>
                     <Box>
                         <Box>
                             <Typography className={classes.contentTitle}>
-                                General information
+                                {approach.sections[selectedSection].name}
                             </Typography>
                             <Divider style={{width: '35%'}} className={classes.divider}/>
                         </Box>

@@ -14,7 +14,7 @@ const sectionSelectionMark = (theme: any) => {
     }
 }
 
-export const useStyles = makeStyles((theme) => ({
+export const useMethodPageStyles = makeStyles((theme) => ({
     breadCrumbs: {
         margin: theme.spacing(3, 0, 2)
     },

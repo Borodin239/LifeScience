@@ -4,11 +4,11 @@ import {generalInfoText, locationList} from "./temporaryConstants";
 import Typography from "@material-ui/core/Typography";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import React from "react";
-import {useStyles} from "./method-page-styles";
+import {useMethodPageStyles} from "./method-page-styles";
 
 
 const MethodLayoutPage = () => {
-    const classes = useStyles()
+    const classes = useMethodPageStyles()
 
     return  (
         <Box>
