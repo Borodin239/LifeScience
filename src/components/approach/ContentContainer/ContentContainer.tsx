@@ -40,22 +40,22 @@ const ContentContainer: React.FC<ContentContainerProps> = ({title, approachId, s
 
     const section = useAppSelector(state => state.sectionReducer)
 
-    if (isLoading) {
-        return <CenteredLoader/>
-    }
-
     return (
         <Box className={classes.contentContainer}>
             <Box>
                 <Box>
                     <Typography className={classes.contentTitle}>
-                        {section.name}
+                        {title}
                     </Typography>
                     <Divider style={{width: '35%'}} className={classes.divider}/>
                 </Box>
-                <Typography className={classes.content}>
-                    {section.content}
-                </Typography>
+                {
+                    isLoading ? <CenteredLoader/> :
+                        <Typography className={classes.content}>
+                            {section.content}
+                        </Typography>
+                }
+
             </Box>
         </Box>
     )
