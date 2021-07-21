@@ -10,6 +10,8 @@ import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {getApproachThunk} from "../../redux/approach/slice";
+import FormSubmitLoader from "../../elements/Loaders/CenteredLoader";
+import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 
 type SectionTitle = {
     id: number,
@@ -52,6 +54,10 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
 
     const approach = useAppSelector(state => state.approachReducer.approach)
 
+    if (isPending) {
+        return <CenteredLoader/>
+    }
+
     return (
         <Box>
             <Box className={classes.breadCrumbs}>
@@ -59,7 +65,7 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
             </Box>
             <Box className={classes.methodTitleContainer}>
                 <Typography variant={"h5"}>
-                    Bradford assay
+                    {approach.name}
                 </Typography>
                 <Box>
                     <Box className={classes.goToProtocols}>
