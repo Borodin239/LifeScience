@@ -1,5 +1,8 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {getApproachThunk} from "./thunkActions";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {AppDispatch} from "../store/store";
+import {ApiError} from "../../infrastructure/common/exceptions/ApiError";
+import {approachApi} from "../../infrastructure/http/api/methods/approachApi";
+import onThunkError from "../utils/onThunkError";
 
 export const APPROACH_ACTION_TYPE_PREFIX = 'approaches'
 
@@ -40,6 +43,31 @@ const initState: ApproachState = {
         sections: [],
     }
 }
+
+export enum ApproachActionThunkTypes {
+    GET= "/getApproach",
+}
+
+export const getApproachThunk = createAsyncThunk<
+    Approach, // что возвращает при fulfilled
+    number, // что принимает как аргумент при dispatch
+    { // деструктуризация thunkAPI
+        dispatch: AppDispatch,
+        rejectValue: ApiError
+    }
+    >(
+    `${APPROACH_ACTION_TYPE_PREFIX}${ApproachActionThunkTypes.GET}`,
+    async (id, thunkAPI) => {
+        try {
+            const response = await approachApi.getApproach(id)
+
+            return response.data as Approach
+        } catch (err) {
+            return onThunkError(err, thunkAPI);
+        }
+
+    }
+)
 
 const approachSlice = createSlice({
     name: APPROACH_ACTION_TYPE_PREFIX,
