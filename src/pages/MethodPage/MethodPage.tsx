@@ -9,14 +9,10 @@ import {generalInfoText, locationList} from "./temporaryConstants";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
-import {getApproachThunk} from "../../redux/approach/slice";
+import {getPublicApproachThunk, SectionTitle} from "../../redux/publicApproach/slice";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import SectionList from "../../components/approach/SectionList/SectionList";
-
-export type SectionTitle = {
-    id: number,
-    name: string,
-}
+import ContentContainer from "../../components/approach/ContentContainer/ContentContainer";
 
 type ProtocolTitle = {
     id: number,
@@ -33,7 +29,6 @@ interface ParamType {
     id: string
 }
 
-// this is a layout - real method page is not going to be so dumbly written
 const MethodPage: React.FC<MethodPageProps> = (props) => {
     const {id} = useParams<ParamType>()
     const history = useHistory()
@@ -45,7 +40,7 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
 
     useEffect(() => {
         setIsLoading(true)
-        dispatch(getApproachThunk(id))
+        dispatch(getPublicApproachThunk(id))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then(() => {
@@ -67,8 +62,6 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
     if (isLoading) {
         return <CenteredLoader className={classes.mainLoader}/>
     }
-
-    console.log(approach.sections)
 
     return (
         <Box>
@@ -92,19 +85,7 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
                 <SectionList sections={approach.sections}
                              selectedSection={selectedSection}
                              handleSectionTitleClick={handleSectionTitleClick}/>
-                <Box className={classes.contentContainer}>
-                    <Box>
-                        <Box>
-                            <Typography className={classes.contentTitle}>
-                                {approach.sections[selectedSection].name}
-                            </Typography>
-                            <Divider style={{width: '35%'}} className={classes.divider}/>
-                        </Box>
-                        <Typography className={classes.content}>
-                            {generalInfoText}
-                        </Typography>
-                    </Box>
-                </Box>
+                <ContentContainer title={approach.sections[selectedSection].name}/>
             </Box>
         </Box>
     )

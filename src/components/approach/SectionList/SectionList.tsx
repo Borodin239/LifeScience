@@ -2,7 +2,7 @@ import {useMethodPageStyles} from "../../../pages/MethodPage/method-page-styles"
 import Typography from "@material-ui/core/Typography";
 import {Box, Divider, List, ListItem} from "@material-ui/core";
 import React from "react";
-import {SectionTitle} from "../../../pages/MethodPage/MethodPage";
+import {SectionTitle} from "../../../redux/publicApproach/slice";
 
 
 type SectionListProps = {

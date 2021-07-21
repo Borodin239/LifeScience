@@ -6,7 +6,7 @@ import onThunkError from "../utils/onThunkError";
 
 export const APPROACH_ACTION_TYPE_PREFIX = 'approaches'
 
-export type Section = {
+export type SectionTitle = {
     id: number,
     name: string,
 }
@@ -14,26 +14,33 @@ export type Section = {
 export type Category = {
     id: number,
     name: string,
+    creationDate: string,
 }
 
-export type Participant = {
+export type CoAuthor = {
     "id": number,
     "fullName": string,
 }
 
+export type Protocol = {
+    "id": number,
+    "name": string,
+}
+
 export type Approach = {
+    id: string,
     name: string,
-    sections: Section[],
+    sections: SectionTitle[],
     categories: Category[],
-    participants: Participant[],
+    coAuthors: CoAuthor[],
 }
 
 type ShortenedApproach = {
     name: string,
-    sections: Section[],
+    sections: SectionTitle[],
 }
 
-export type ApproachState = {
+type ApproachState = {
     approach: ShortenedApproach,
 }
 
@@ -44,11 +51,11 @@ const initState: ApproachState = {
     }
 }
 
-export enum ApproachActionThunkTypes {
+enum ApproachActionThunkTypes {
     GET= "/getApproach",
 }
 
-export const getApproachThunk = createAsyncThunk<
+export const getPublicApproachThunk = createAsyncThunk<
     Approach, // что возвращает при fulfilled
     string, // что принимает как аргумент при dispatch
     { // деструктуризация thunkAPI
@@ -74,7 +81,7 @@ const approachSlice = createSlice({
     initialState: initState,
     reducers: {},
     extraReducers: (builder) => {
-      builder.addCase(getApproachThunk.fulfilled, (state, action) => {
+      builder.addCase(getPublicApproachThunk.fulfilled, (state, action) => {
           state.approach = {
               name: action.payload.name,
               sections: action.payload.sections,

@@ -1,7 +1,7 @@
 import {configureStore, getDefaultMiddleware} from "@reduxjs/toolkit";
 import errorReducer from "../error/slice";
 import authReducer from "../auth/slice";
-import approachReducer from "../approach/slice"
+import approachReducer from "../publicApproach/slice"
 
 import logger from "redux-logger";
 
