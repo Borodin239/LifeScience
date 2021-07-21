@@ -10,6 +10,7 @@ import {SignInForm} from "../components/auth-forms/SignInForm/SignInForm";
 import {SignUpForm} from "../components/auth-forms/SignUpForm/SignUpForm";
 import appRoutesNames from "../infrastructure/common/appRoutesNames";
 import MethodPage from "../pages/MethodPage/MethodPage";
+import MethodLayoutPage from "../pages/MethodPage/MethodLayoutPage";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -39,6 +40,7 @@ function App() {
                         <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                         <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
                         <Route exact path={"/approach/:id"} render={() => <MethodPage/>}/>
+                        <Route exact path={"/method-layout"} render={() => <MethodLayoutPage/>}/>
                         <Route exact path="/error"
                                render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 

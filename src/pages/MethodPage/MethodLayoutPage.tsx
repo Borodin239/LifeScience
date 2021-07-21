@@ -1,58 +1,16 @@
-import React, {useEffect, useState} from "react";
 import {Box, Divider, List, ListItem} from "@material-ui/core";
-import Location, {LocationUnit} from "../../components/categories/location";
-import {useStyles} from "./method-page-styles";
-import Typography from "@material-ui/core/Typography";
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import {useHistory, useParams} from "react-router-dom";
+import Location from "../../components/categories/location";
 import {generalInfoText, locationList} from "./temporaryConstants";
-import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {getApproachThunk} from "../../redux/approach/thunkActions";
-import splitThunkPayload from "../../redux/utils/splitThunkPayload";
-import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
+import Typography from "@material-ui/core/Typography";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import React from "react";
+import {useStyles} from "./method-page-styles";
 
-type SectionTitle = {
-    id: number,
-    name: string,
-}
 
-type ProtocolTitle = {
-    id: number,
-    name: string,
-}
-
-type MethodPageProps = {
-    name?: string,
-    sections?: SectionTitle[],
-    protocols?: ProtocolTitle[],
-}
-// this is a layout - real method page is not going to be so dumbly written
-const MethodPage: React.FC<MethodPageProps> = (props) => {
-    const id = useParams<number>()
-    const history = useHistory()
+const MethodLayoutPage = () => {
     const classes = useStyles()
-    const dispatch = useAppDispatch();
 
-    const [isPending, setIsPending] = useState(false);
-
-    useEffect(() => {
-        setIsPending(true)
-        dispatch(getApproachThunk(id))
-            .unwrap()
-            .then(payload => splitThunkPayload(payload))
-            .then(() => {
-                setIsPending(false)
-            })
-            .catch(thunkError => {
-                setIsPending(false);
-
-                handleThunkErrorBase(thunkError, history, dispatch);
-            })
-    }, [id])
-
-    const approach = useAppSelector(state => state.approachReducer.approach)
-
-    return (
+    return  (
         <Box>
             <Box className={classes.breadCrumbs}>
                 <Location locationList={locationList}/>
@@ -129,5 +87,4 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
         </Box>
     )
 }
-
-export default MethodPage
+export default MethodLayoutPage
