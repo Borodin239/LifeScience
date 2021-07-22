@@ -103,4 +103,4 @@ export const useMethodPageStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(2),
     }
 
-}));
+}), {index: 1});

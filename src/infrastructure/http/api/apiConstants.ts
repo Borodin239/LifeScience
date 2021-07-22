@@ -13,8 +13,14 @@ const apiConstants = {
         },
         section: {
             GET: '/sections'
+        },
+        categories: {
+            INITIAL: '/categories',
+            ROOT: '/categories/root'
         }
-
+    },
+    common: {
+        ROOT_ID: -1
     }
 }
 

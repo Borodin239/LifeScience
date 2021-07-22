@@ -1,6 +1,6 @@
 import React from "react";
 import {alpha, makeStyles} from "@material-ui/core/styles";
-import {CatalogNode} from "./catalogNodeList";
+import {CatalogNode} from "./CatalogNodeList";
 import {Box, Typography} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.main,
         paddingRight: theme.spacing(1),
     },
-}));
+}), {index: 1});
 
 type NodeBoxProps = {
     node: CatalogNode,

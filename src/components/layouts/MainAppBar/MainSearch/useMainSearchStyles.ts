@@ -36,4 +36,4 @@ export const useMainSearchStyles = makeStyles((theme: Theme) => createStyles({
         },
     },
 
-}));
+}), {index: 1});

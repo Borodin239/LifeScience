@@ -19,4 +19,4 @@ export const useErrorPageStyles = makeStyles((theme) => ({
         }
     },
 
-}));
+}), {index: 1});

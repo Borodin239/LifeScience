@@ -32,4 +32,4 @@ export const useStyles = makeStyles((theme) => ({
             backgroundColor: alpha("#aa0000", 0.20),
         }
     }
-}));
+}), {index: 1});

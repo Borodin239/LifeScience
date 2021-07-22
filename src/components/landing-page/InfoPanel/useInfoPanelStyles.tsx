@@ -17,4 +17,4 @@ export const useInfoPanelStyles = makeStyles((theme) => ({
     },
 
 
-}));
+}), {index: 1});

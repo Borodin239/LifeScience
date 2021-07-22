@@ -12,7 +12,7 @@ const WelcomePanel = () => {
     const classes = useWelcomePanelStyles()
     const history = useHistory()
     const handleBrowseClick = () => {
-        history.push(appRoutesNames.ROOT)
+        history.push(`${appRoutesNames.CATEGORIES}/`)
     }
 
     return (

@@ -1,7 +1,7 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Box, Typography} from "@material-ui/core";
-import NodeBox from "./nodeBox";
+import NodeBox from "./NodeBox";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     nodes: {
         display: "flex",
     }
-}));
+}), {index: 1});
 
 export type CatalogNode = {
     name: string,
@@ -32,7 +32,7 @@ const CatalogNodeList = ({type, icon, list}: CatalogNodeListProps) => {
             </Typography>
             <Box className={classes.nodes}>
                 {
-                    list.map(node => <NodeBox node={node} icon={icon}/>)
+                    list.map((node, ind) => <NodeBox key={ind} node={node} icon={icon}/>)
                 }
             </Box>
         </Box>

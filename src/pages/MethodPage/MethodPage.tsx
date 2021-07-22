@@ -10,6 +10,18 @@ import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {getPublicApproachThunk, SectionTitle} from "../../redux/publicApproach/slice";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import ApproachContainer from "../../components/approach/ApproachContainer/ApproachContainer";
+import React from "react";
+import {Box, Divider, List, ListItem} from "@material-ui/core";
+import Location, {LocationUnit} from "../../components/navigation/Location";
+import {useStyles} from "./method-page-styles";
+import Typography from "@material-ui/core/Typography";
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import {useHistory} from "react-router-dom";
+
+type SectionTitle = {
+    id: number,
+    name: string,
+}
 
 type ProtocolTitle = {
     id: number,

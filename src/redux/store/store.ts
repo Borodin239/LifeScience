@@ -3,12 +3,13 @@ import errorReducer from "../error/slice";
 import authReducer from "../auth/slice";
 import approachReducer from "../publicApproach/slice"
 import sectionReducer from "../section/slice"
+import navigationReducer from "../navigation/slice";
 
 import logger from "redux-logger";
 
 
 export const store = configureStore({
-    reducer: {errorReducer, authReducer, approachReducer, sectionReducer},
+    reducer: {errorReducer, authReducer, approachReducer, sectionReducer, navigationReducer},
     middleware: process.env.REACT_APP_MODE === `development` ?
         getDefaultMiddleware().concat(logger)
         : getDefaultMiddleware()
