@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     arrow: {
         color: theme.palette.primary.main,
     }
-}));
+}), {index: 1});
 
 export type LocationUnit = {
     text: string,

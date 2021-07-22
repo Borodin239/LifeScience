@@ -100,4 +100,4 @@ export const useStyles = makeStyles((theme) => ({
         transitionDuration: '0.3s',
     }
 
-}));
+}), {index: 1});

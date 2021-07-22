@@ -10,4 +10,4 @@ export const useUnauthorizedProfileStyles = makeStyles((theme: Theme) => createS
         lineHeight: 1.5,
         marginRight: theme.spacing(1),
     },
-}));
+}), {index: 1});
