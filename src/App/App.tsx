@@ -11,7 +11,6 @@ import appRoutesNames from "../infrastructure/common/appRoutesNames";
 import HomePage from "../pages/HomePage/HomePage";
 import MethodPage from "../pages/MethodPage/MethodPage";
 import {useAppStyles} from "./useAppStyles";
-import MethodLayoutPage from "../pages/MethodPage/MethodLayoutPage";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -44,7 +43,6 @@ function App() {
                         <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                         <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
                         <Route exact path={"/approach/:approachId"} render={() => <MethodPage/>}/>
-                        <Route exact path={"/method-layout"} render={() => <MethodLayoutPage/>}/>
                         <Route exact path="/error"
                                render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 

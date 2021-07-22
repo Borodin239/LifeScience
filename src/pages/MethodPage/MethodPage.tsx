@@ -10,35 +10,28 @@ import {getPublicApproachThunk} from "../../redux/publicApproach/slice";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import ApproachContainer from "../../components/approach/ApproachContainer/ApproachContainer";
 import Location from "../../components/navigation/Location";
-
-type SectionTitle = {
-    id: number,
-    name: string,
-}
-
-type ProtocolTitle = {
-    id: number,
-    name: string,
-}
-
-type MethodPageProps = {
-    name?: string,
-    sections?: SectionTitle[],
-    protocols?: ProtocolTitle[],
-}
+import ProtocolList from "../../components/approach/ProtocolList/ProtocolList";
 
 interface ParamType {
     approachId: string
 }
 
-const MethodPage: React.FC<MethodPageProps> = (props) => {
+const MethodPage: React.FC = () => {
     const {approachId} = useParams<ParamType>()
     const history = useHistory()
     const classes = useMethodPageStyles()
     const dispatch = useAppDispatch();
 
     const [isLoading, setIsLoading] = useState(true);
+    const [isProtocolListViewed, setIsProtocolListViewed] = useState(false)
 
+    const handleGoToProtocolsClick = () => {
+        setIsProtocolListViewed(true)
+    }
+
+    const handleBackToMethodClick = () => {
+        setIsProtocolListViewed(false)
+    }
 
     useEffect(() => {
         setIsLoading(true)
@@ -66,7 +59,16 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
             <Box className={classes.breadCrumbs}>
                 <Location locationList={locationList}/>
             </Box>
-            <ApproachContainer approach={approach} approachId={approachId}/>
+            {
+                isProtocolListViewed
+                    ?
+                    <ProtocolList protocols={approach.protocols} approachName={approach.name} handleGoBackClick={handleBackToMethodClick}/>
+                    :
+                    <ApproachContainer approach={approach}
+                                       approachId={approachId}
+                                       handleGoToProtocolsClick={handleGoToProtocolsClick}/>
+            }
+
         </Box>
 
     )

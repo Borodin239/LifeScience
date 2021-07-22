@@ -1,10 +1,10 @@
 import {Box, Divider, List, ListItem} from "@material-ui/core";
-import Location from "../../components/categories/location";
 import {generalInfoText, locationList} from "./temporaryConstants";
 import Typography from "@material-ui/core/Typography";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import React from "react";
 import {useMethodPageStyles} from "./method-page-styles";
+import Location from "../../components/navigation/Location";
 
 
 const MethodLayoutPage = () => {

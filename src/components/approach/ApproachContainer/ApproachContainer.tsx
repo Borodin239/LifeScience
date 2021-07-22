@@ -11,9 +11,11 @@ import {ShortenedApproach} from "../../../redux/publicApproach/slice";
 type ApproachContainerProps = {
     approach: ShortenedApproach,
     approachId: string,
+    handleGoToProtocolsClick: () => void,
 }
 
-const ApproachContainer: React.FC<ApproachContainerProps> = ({approach, approachId}) => {
+const ApproachContainer: React.FC<ApproachContainerProps> = (props) => {
+    const {approach, approachId, handleGoToProtocolsClick} = props
     const classes = useMethodPageStyles()
 
     const [selectedSection, setSelectedSection] = useState(0);
@@ -28,7 +30,7 @@ const ApproachContainer: React.FC<ApproachContainerProps> = ({approach, approach
                     {approach.name}
                 </Typography>
                 <Box>
-                    <Box className={classes.goToProtocols}>
+                    <Box className={classes.goToProtocols} onClick={handleGoToProtocolsClick}>
                         <Typography className={classes.goProtocolsText}>
                             Go to protocols
                         </Typography>

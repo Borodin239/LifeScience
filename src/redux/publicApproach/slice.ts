@@ -33,11 +33,13 @@ export type Approach = {
     sections: SectionTitle[],
     categories: Category[],
     coAuthors: CoAuthor[],
+    protocols: Protocol[],
 }
 
 export type ShortenedApproach = {
     name: string,
     sections: SectionTitle[],
+    protocols: Protocol[],
 }
 
 type ApproachState = {
@@ -48,6 +50,7 @@ const initState: ApproachState = {
     approach: {
         name: '',
         sections: [],
+        protocols: [],
     }
 }
 
@@ -85,6 +88,7 @@ const approachSlice = createSlice({
           state.approach = {
               name: action.payload.name,
               sections: action.payload.sections,
+              protocols: action.payload.protocols,
           }
       })
     },
