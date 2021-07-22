@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react";
-import Location from "../../components/navigation/Location";
+import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
 import {useHistory, useParams} from "react-router-dom";
 import {Box, CircularProgress} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
@@ -115,7 +115,7 @@ const CategoryPage = () => {
     return (
         <Box>
             <Box className={classes.upperBar}>
-                <Location/>
+                <GlobalUserLocation/>
                 <AdminSettings/> {/*todo only visible to admins*/}
             </Box>
             {

@@ -1,11 +1,7 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {useHistory} from "react-router-dom";
+import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Breadcrumbs, Typography} from "@material-ui/core";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {NavigationUnit} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
-import { pathMove } from "../../redux/navigation/slice";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -29,37 +25,21 @@ const useStyles = makeStyles((theme) => ({
 
 export type LocationUnit = {
     text: string,
-    handleClick: () => void
+    handleClick: (event: any) => void
 }
 
-const Location: React.FC = () => {
-    const classes = useStyles();
 
-    const dispatch = useAppDispatch();
-    const history = useHistory();
+export type LocationProps = {
+    locationList: LocationUnit[]
+}
 
-    const [locationPath, setLocationPath] = useState<LocationUnit[]>([]);
-
-    const path = useAppSelector<NavigationUnit[]>(state => state.navigationReducer.path);
-
-    const createLocationUnit = useCallback((lu: NavigationUnit): LocationUnit => {
-        return {
-            text: lu.name,
-            handleClick: () => {
-                dispatch(pathMove(lu));
-                history.push(lu.route);
-            }
-        } as LocationUnit;
-    }, [dispatch, history]);
-
-    useEffect(() => {
-        setLocationPath(path.map(createLocationUnit));
-    }, [path, createLocationUnit]);
+const Location: React.FC<LocationProps> = ({locationList}) => {
+    const classes = useStyles()
 
     return (
         <Breadcrumbs separator={<NavigateNextIcon className={classes.arrow}/>} className={classes.container}>
             {
-                locationPath.map((unit, ind) => (
+                locationList.map((unit, ind) => (
                     <Typography key={ind} onClick={unit.handleClick} variant="subtitle1" className={classes.locationUnit}>
                         {unit.text}
                     </Typography>

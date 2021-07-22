@@ -44,7 +44,7 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
     return (
         <Box>
             <Box className={classes.breadCrumbs}>
-                <Location /*locationList={locationList}*//>
+                <Location locationList={locationList}/>
             </Box>
             <Box className={classes.methodTitleContainer}>
                 <Typography variant={"h5"}>
