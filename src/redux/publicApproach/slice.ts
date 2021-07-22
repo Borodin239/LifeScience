@@ -35,7 +35,7 @@ export type Approach = {
     coAuthors: CoAuthor[],
 }
 
-type ShortenedApproach = {
+export type ShortenedApproach = {
     name: string,
     sections: SectionTitle[],
 }

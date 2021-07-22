@@ -2,8 +2,6 @@ import React, {useEffect, useState} from "react";
 import {Box} from "@material-ui/core";
 import Location from "../../components/categories/location";
 import {useMethodPageStyles} from "./method-page-styles";
-import Typography from "@material-ui/core/Typography";
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {useHistory, useParams} from "react-router-dom";
 import {locationList} from "./temporaryConstants";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
@@ -11,8 +9,7 @@ import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {getPublicApproachThunk, SectionTitle} from "../../redux/publicApproach/slice";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
-import SectionList from "../../components/approach/SectionList/SectionList";
-import ContentContainer from "../../components/approach/ContentContainer/ContentContainer";
+import ApproachContainer from "../../components/approach/ApproachContainer/ApproachContainer";
 
 type ProtocolTitle = {
     id: number,
@@ -36,7 +33,7 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
     const dispatch = useAppDispatch();
 
     const [isLoading, setIsLoading] = useState(true);
-    const [selectedSection, setSelectedSection] = useState(0);
+
 
     useEffect(() => {
         setIsLoading(true)
@@ -53,10 +50,6 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
             })
     }, [approachId]);
 
-    const handleSectionTitleClick = (index: number) => () => {
-        setSelectedSection(index);
-    }
-
     const approach = useAppSelector(state => state.approachReducer.approach)
 
     if (isLoading) {
@@ -68,28 +61,9 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
             <Box className={classes.breadCrumbs}>
                 <Location locationList={locationList}/>
             </Box>
-            <Box className={classes.methodTitleContainer}>
-                <Typography variant={"h5"}>
-                    {approach.name}
-                </Typography>
-                <Box>
-                    <Box className={classes.goToProtocols}>
-                        <Typography className={classes.goProtocolsText}>
-                            Go to protocols
-                        </Typography>
-                        <ArrowForwardIcon fontSize={"small"} className={classes.protocolsArrow}/>
-                    </Box>
-                </Box>
-            </Box>
-            <Box className={classes.mainContainer}>
-                <SectionList sections={approach.sections}
-                             selectedSection={selectedSection}
-                             handleSectionTitleClick={handleSectionTitleClick}/>
-                <ContentContainer title={approach.sections[selectedSection].name}
-                                  approachId={approachId}
-                                  sectionId={approach.sections[selectedSection].id}/>
-            </Box>
+            <ApproachContainer approach={approach} approachId={approachId}/>
         </Box>
+
     )
 }
 
