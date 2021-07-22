@@ -1,22 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {Box} from "@material-ui/core";
-import Location from "../../components/categories/location";
 import {useMethodPageStyles} from "./method-page-styles";
 import {useHistory, useParams} from "react-router-dom";
 import {locationList} from "./temporaryConstants";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
-import {getPublicApproachThunk, SectionTitle} from "../../redux/publicApproach/slice";
+import {getPublicApproachThunk} from "../../redux/publicApproach/slice";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import ApproachContainer from "../../components/approach/ApproachContainer/ApproachContainer";
-import React from "react";
-import {Box, Divider, List, ListItem} from "@material-ui/core";
-import Location, {LocationUnit} from "../../components/navigation/Location";
-import {useStyles} from "./method-page-styles";
-import Typography from "@material-ui/core/Typography";
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import {useHistory} from "react-router-dom";
+import Location from "../../components/navigation/Location";
 
 type SectionTitle = {
     id: number,
