@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {makeStyles} from "@material-ui/core/styles";
 import {Breadcrumbs, Typography} from "@material-ui/core";
@@ -42,7 +42,7 @@ const Location: React.FC = () => {
 
     const path = useAppSelector<NavigationUnit[]>(state => state.navigationReducer.path);
 
-    const createLocationUnit = (lu: NavigationUnit): LocationUnit => {
+    const createLocationUnit = useCallback((lu: NavigationUnit): LocationUnit => {
         return {
             text: lu.name,
             handleClick: () => {
@@ -50,17 +50,17 @@ const Location: React.FC = () => {
                 history.push(lu.route);
             }
         } as LocationUnit;
-    }
+    }, [dispatch, history]);
 
     useEffect(() => {
         setLocationPath(path.map(createLocationUnit));
-    }, [path]);
+    }, [path, createLocationUnit]);
 
     return (
         <Breadcrumbs separator={<NavigateNextIcon className={classes.arrow}/>} className={classes.container}>
             {
-                locationPath.map(unit => (
-                    <Typography onClick={unit.handleClick} variant="subtitle1" className={classes.locationUnit}>
+                locationPath.map((unit, ind) => (
+                    <Typography key={ind} onClick={unit.handleClick} variant="subtitle1" className={classes.locationUnit}>
                         {unit.text}
                     </Typography>
                 ))

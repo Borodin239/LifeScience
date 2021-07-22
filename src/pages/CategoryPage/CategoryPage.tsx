@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Location from "../../components/navigation/Location";
 import {useHistory, useParams} from "react-router-dom";
 import {Box, CircularProgress} from "@material-ui/core";
@@ -41,7 +41,7 @@ const CategoryPage = () => {
     const [categoryCatalog, setCategoryCatalog] = useState<CatalogNode[]>([]);
     const [approachCatalog, setApproachCatalog] = useState<CatalogNode[]>([]);
 
-    const createCatalogNode = (type: "category" | "approach", view: ApproachView | CategoryView): CatalogNode => {
+    const createCatalogNode = useCallback((type: "category" | "approach", view: ApproachView | CategoryView): CatalogNode => {
         const redirectionRoute = getRedirectionRoute("category", view.id);
 
         return {
@@ -51,9 +51,9 @@ const CategoryPage = () => {
                 history.push(redirectionRoute);
             }
         } as CatalogNode;
-    };
+    }, [dispatch, history]);
 
-    const processRoot = () => {
+    const processRoot = useCallback(() => {
         setIsPending(true);
 
         dispatch(getCategoryRootThunk())
@@ -69,9 +69,9 @@ const CategoryPage = () => {
                 setIsPending(false);
                 handleThunkErrorBase(thunkError, history, dispatch);
             });
-    };
+    }, [createCatalogNode, dispatch, history]);
 
-    const processCategoryWithId = () => {
+    const processCategoryWithId = useCallback(() => {
         setIsPending(true);
 
         dispatch(getCategoryRootThunk())
@@ -96,18 +96,21 @@ const CategoryPage = () => {
                     handleThunkErrorBase(thunkError, history, dispatch);
                 }
             });
-    };
+    }, [createCatalogNode, dispatch, history, categoryId]);
 
     useEffect(() => {
         developmentLog(`targetPlotsParams: ${JSON.stringify(params)}`);
-        setCategoryId(parseInt(params.categoryId));
 
-        if (Number.isNaN(categoryId)) {
+        let id = parseInt(params.categoryId);
+
+        setCategoryId(id);
+
+        if (Number.isNaN(id)) {
             processRoot();
         } else {
             processCategoryWithId();
         }
-    }, [params]);
+    }, [params, processCategoryWithId, processRoot]);
 
     return (
         <Box>
