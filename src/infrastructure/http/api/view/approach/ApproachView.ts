@@ -1,6 +1,6 @@
 export type ApproachView = {
     id: number,
-    name: "string",
+    name: string,
     creationDate: string,
     tags: string[]
 };

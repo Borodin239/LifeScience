@@ -23,8 +23,8 @@ const authSlice = createSlice({
     /* extraReducers: {
         ['fetchUser/fulfilled']
     }*/
-})
+});
 
-export const {loggedIn, loggedOut} = authSlice.actions
+export const {loggedIn, loggedOut} = authSlice.actions;
 
 export default authSlice.reducer;

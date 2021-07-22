@@ -1,6 +1,6 @@
 import React from "react";
 import {Box, Divider, List, ListItem} from "@material-ui/core";
-import Location, {LocationUnit} from "../../components/categories/Location";
+import Location, {LocationUnit} from "../../components/navigation/Location";
 import {useStyles} from "./method-page-styles";
 import Typography from "@material-ui/core/Typography";
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
@@ -44,7 +44,7 @@ const MethodPage: React.FC<MethodPageProps> = (props) => {
     return (
         <Box>
             <Box className={classes.breadCrumbs}>
-                <Location locationList={locationList}/>
+                <Location /*locationList={locationList}*//>
             </Box>
             <Box className={classes.methodTitleContainer}>
                 <Typography variant={"h5"}>

@@ -37,7 +37,7 @@ function App() {
                         </Route>
 
                         <Route exact path={appRoutesNames.HOME} render={() => <HomePage/>}/>
-                        <Route exact path={appRoutesNames.ROOT} render={() => <CategoryPage/>}/>
+                        <Route exact path={`${appRoutesNames.CATEGORIES}/:categoryId(\\d*)`} render={() => <CategoryPage/>}/>
                         <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                         <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
                         <Route exact path={"/method-layout"} render={() => <MethodPage/>}/>

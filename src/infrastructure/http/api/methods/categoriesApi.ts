@@ -3,8 +3,10 @@ import apiConstants from "../apiConstants";
 
 export const categoriesApi = {
     getById(id: number) {
-        return apiClientDefault.get(id === apiConstants.common.ROOT_ID ?
-            apiConstants.routes.categories.ROOT :
-            `${apiConstants.routes.categories.INITIAL}/${id}`);
+        return apiClientDefault.get(`${apiConstants.routes.categories.INITIAL}/${id}`);
+    },
+
+    getRoot() {
+        return apiClientDefault.get(apiConstants.routes.categories.ROOT);
     }
 }

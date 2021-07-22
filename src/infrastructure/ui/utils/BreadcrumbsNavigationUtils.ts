@@ -1,3 +1,5 @@
+import appRoutesNames from "../../common/appRoutesNames";
+
 export type NavigationUnit = {
     type: 'category' | 'approach' | 'protocol',
     name: string,
@@ -24,6 +26,18 @@ export const patchPathFromNavigationUnit = (unit: NavigationUnit, currentPath: N
         return [unit];
 
     return currentPath;
+}
+
+export const getRedirectionRoute = (type: 'category' | 'approach' | 'protocol', id: number): string => {
+    if (type === 'category') {
+        return `${appRoutesNames.CATEGORIES}/${id || ''}`;
+    }
+
+    if (type === 'approach') {
+        return `${appRoutesNames.APPROACHES}/${id}`;
+    }
+
+    return `${appRoutesNames.PROTOCOLS}/${id}`;
 }
 
 
