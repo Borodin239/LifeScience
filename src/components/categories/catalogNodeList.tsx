@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     nodes: {
         display: "flex",
     }
-}));
+}), {index: 1});
 
 export type CatalogNode = {
     name: string,

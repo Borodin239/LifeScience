@@ -22,4 +22,4 @@ export const useDescriptionBlockStyles = makeStyles((theme) => ({
     },
 
 
-}));
+}), {index: 1});

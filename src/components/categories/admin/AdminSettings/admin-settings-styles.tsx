@@ -8,4 +8,4 @@ export const useStyles = makeStyles((theme) => ({
         border: "1px solid " + theme.palette.primary.main,
         borderRadius: theme.shape.borderRadius,
     }
-}));
+}), {index: 1});

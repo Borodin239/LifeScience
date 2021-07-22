@@ -47,4 +47,4 @@ export const useWelcomePanelStyles = makeStyles((theme) => ({
     }
 
 
-}));
+}), {index: 1});
