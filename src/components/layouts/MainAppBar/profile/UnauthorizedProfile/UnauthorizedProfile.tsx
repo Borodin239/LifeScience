@@ -1,12 +1,12 @@
-import appRoutesNames from "../../../../infrastructure/common/appRoutesNames";
+import appRoutesNames from "../../../../../infrastructure/common/appRoutesNames";
 import {Button} from "@material-ui/core";
 import React from "react";
 import {useHistory} from "react-router-dom";
-import useMainAppBarStyles from "../useMainAppBarStyles";
+import {useUnauthorizedProfileStyles} from "./useUnauthorizedProfileStyles";
 
 const UnauthorizedProfile: React.FC = () => {
     const history = useHistory();
-    const classes = useMainAppBarStyles();
+    const classes = useUnauthorizedProfileStyles()
 
     const handleSignInClick = () => {
         history.push(appRoutesNames.SIGN_IN)

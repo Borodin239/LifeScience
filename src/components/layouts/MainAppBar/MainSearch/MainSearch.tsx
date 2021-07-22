@@ -1,10 +1,10 @@
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import React from "react";
-import useMainAppBarStyles from "./useMainAppBarStyles";
+import {useMainSearchStyles} from "./useMainSearchStyles";
 
 const MainSearch: React.FC = () => {
-    const classes = useMainAppBarStyles();
+    const classes = useMainSearchStyles();
 
     return (
         <div className={classes.search}>

@@ -9,6 +9,7 @@ import CategoryPage from "../pages/CategoryPage/categoryPage";
 import {SignInForm} from "../components/auth-forms/SignInForm/SignInForm";
 import {SignUpForm} from "../components/auth-forms/SignUpForm/SignUpForm";
 import appRoutesNames from "../infrastructure/common/appRoutesNames";
+import HomePage from "../pages/HomePage/HomePage";
 import MethodPage from "../pages/MethodPage/MethodPage";
 import MethodLayoutPage from "../pages/MethodPage/MethodLayoutPage";
 
@@ -36,7 +37,8 @@ function App() {
                             <Redirect to={appRoutesNames.HOME}/>
                         </Route>
 
-                        <Route exact path={appRoutesNames.HOME} render={() => <CategoryPage/>}/>
+                        <Route exact path={appRoutesNames.HOME} render={() => <HomePage/>}/>
+                        <Route exact path={appRoutesNames.ROOT} render={() => <CategoryPage/>}/>
                         <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                         <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
                         <Route exact path={"/approach/:approachId"} render={() => <MethodPage/>}/>
