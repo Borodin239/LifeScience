@@ -1,5 +1,7 @@
 import {Protocol} from "../../../redux/publicApproach/slice";
 import {Box, List, ListItem, Typography} from "@material-ui/core";
+import {useProtocolListStyles} from "./useProtocolListStyles";
+import {LeftProtocolsArrow} from "../ProtocolsArrows/ProtocolsArrows";
 
 
 type ProtocolListProps = {
@@ -16,15 +18,15 @@ const ProtocolList: React.FC<ProtocolListProps> = (props) => {
         console.log("clicked protocol with id: " + protocol.id)
     }
 
+    const classes = useProtocolListStyles()
+
     return (
         <Box>
-           <Box>
-                <Box onClick={handleGoBackClick}>
-                    <Typography>
-                        Back to method
-                    </Typography>
-                </Box>
-               <Typography>
+           <Box className={classes.upperBar}>
+               <Box className={classes.backToMethod}>
+                    <LeftProtocolsArrow handleClick={handleGoBackClick}/>
+               </Box>
+               <Typography className={classes.title} variant={"h5"}>
                    {approachName}: protocols
                </Typography>
            </Box>

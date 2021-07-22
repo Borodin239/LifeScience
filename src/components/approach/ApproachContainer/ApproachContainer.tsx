@@ -1,11 +1,11 @@
 import {Box} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import SectionList from "../SectionList/SectionList";
 import ContentContainer from "../ContentContainer/ContentContainer";
 import React, {useState} from "react";
 import {useMethodPageStyles} from "../../../pages/MethodPage/method-page-styles";
 import {ShortenedApproach} from "../../../redux/publicApproach/slice";
+import {RightProtocolsArrow} from "../ProtocolsArrows/ProtocolsArrows";
 
 
 type ApproachContainerProps = {
@@ -29,14 +29,7 @@ const ApproachContainer: React.FC<ApproachContainerProps> = (props) => {
                 <Typography variant={"h5"}>
                     {approach.name}
                 </Typography>
-                <Box>
-                    <Box className={classes.goToProtocols} onClick={handleGoToProtocolsClick}>
-                        <Typography className={classes.goProtocolsText}>
-                            Go to protocols
-                        </Typography>
-                        <ArrowForwardIcon fontSize={"small"} className={classes.protocolsArrow}/>
-                    </Box>
-                </Box>
+                <RightProtocolsArrow handleClick={handleGoToProtocolsClick}/>
             </Box>
             <Box className={classes.mainContainer}>
                 <SectionList sections={approach.sections}
