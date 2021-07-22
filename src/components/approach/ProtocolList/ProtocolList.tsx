@@ -26,17 +26,17 @@ const ProtocolList: React.FC<ProtocolListProps> = (props) => {
                <Box className={classes.backToMethod}>
                     <LeftProtocolsArrow handleClick={handleGoBackClick}/>
                </Box>
-               <Typography className={classes.title} variant={"h5"}>
+               <Typography variant={"h5"} className={classes.title}>
                    {approachName}: protocols
                </Typography>
            </Box>
-           <Box>
+           <Box className={classes.protocols}>
                 <List>
                     {
                         protocols.map((protocol, index) => (
                             <ListItem key={index}>
-                                <Typography onClick={handleProtocolClick(protocol)}>
-                                    {protocol.name}
+                                <Typography onClick={handleProtocolClick(protocol)} className={classes.protocolName}>
+                                    {index + 1}. {protocol.name}
                                 </Typography>
                             </ListItem>
                         ))

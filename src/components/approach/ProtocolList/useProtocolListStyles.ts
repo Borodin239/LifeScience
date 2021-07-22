@@ -14,8 +14,19 @@ export const useProtocolListStyles = makeStyles((theme) => ({
         left: 0,
         top: 0,
     },
+    protocols: {
+        marginTop: theme.spacing(2),
+        display: "flex",
+        justifyContent: "space-around",
+    },
     title: {
-
+        borderBottom: "1px solid " + theme.palette.primary.main,
+    },
+    protocolName: {
+        cursor: "pointer",
+        '&:hover': {
+            textDecoration: "underline",
+        }
     }
 
 
