@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: 'space-between',
     },
-}));
+}), {index: 1});
 
 const CategoryPage = () => {
     const classes = useStyles();
