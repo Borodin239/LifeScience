@@ -30,7 +30,6 @@ export const useProtocolsArrowStyles = makeStyles((theme) => ({
             },
         },
         borderRight: "1px solid " + theme.palette.primary.main,
-        marginLeft: '20px',
     },
     rightContainer: {
         '&:hover': {
@@ -39,7 +38,6 @@ export const useProtocolsArrowStyles = makeStyles((theme) => ({
             },
         },
         borderLeft: "1px solid " + theme.palette.primary.main,
-        marginRight: '20px',
     }
 
 }), {index: 1});
