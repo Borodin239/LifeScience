@@ -30,6 +30,6 @@ const useAuthFormStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-around",
     }
-}));
+}), {index: 1});
 
 export default useAuthFormStyles;

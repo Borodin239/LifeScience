@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.main,
         paddingRight: theme.spacing(1),
     },
-}));
+}), {index: 1});
 
 type NodeBoxProps = {
     node: CatalogNode,
