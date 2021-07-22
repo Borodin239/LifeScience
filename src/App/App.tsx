@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
 
-import styles from './App.module.css';
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import HandledErrorBoundary from "../components/boundary/HandledErrorBoundary";
 import MainAppBar from "../components/layouts/MainAppBar/MainAppBar";
@@ -11,6 +10,7 @@ import {SignUpForm} from "../components/auth-forms/SignUpForm/SignUpForm";
 import appRoutesNames from "../infrastructure/common/appRoutesNames";
 import HomePage from "../pages/HomePage/HomePage";
 import MethodPage from "../pages/MethodPage/MethodPage";
+import {useAppStyles} from "./useAppStyles";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -22,8 +22,10 @@ function App() {
     useEffect(() => {
         console.log(`App started in ${process.env.REACT_APP_MODE} mode`);
     }, [])
+
+    const classes = useAppStyles()
     return (
-        <div className={styles.App}>
+        <div className={classes.app}>
             <BrowserRouter>
                 <HandledErrorBoundary>
                     <MainAppBar/>
