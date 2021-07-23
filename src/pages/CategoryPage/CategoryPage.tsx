@@ -18,6 +18,7 @@ import {pathMove, pathSwitch, ROOT_NAVIGATION_UNIT} from "../../redux/navigation
 import {getRedirectionRoute, NavigationUnit} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 import {CategoryView} from "../../infrastructure/http/api/view/category/CategoryView";
 import {CategoryInfoView} from "../../infrastructure/http/api/view/category/CategoryInfoView";
+import Location from "../../components/navigation/Location";
 
 const useStyles = makeStyles((theme) => ({
     upperBar: {
@@ -35,7 +36,7 @@ const CategoryPage = () => {
     const history = useHistory();
     const dispatch = useAppDispatch();
 
-    const [isPending, setIsPending] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const [categoryCatalog, setCategoryCatalog] = useState<CatalogNode[]>([]);
     const [approachCatalog, setApproachCatalog] = useState<CatalogNode[]>([]);
@@ -53,42 +54,41 @@ const CategoryPage = () => {
     }, [dispatch, history]);
 
     const processRoot = useCallback(() => {
-        setIsPending(true);
+        setIsLoading(true);
 
         dispatch(getCategoryRootThunk())
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then((payload: CategoryRootView) => {
-                setIsPending(false);
                 dispatch(pathSwitch(ROOT_NAVIGATION_UNIT));
                 setCategoryCatalog(payload.map(categoryView => createCatalogNode("category", categoryView)));
                 setApproachCatalog([]);
+                setIsLoading(false);
             })
             .catch(thunkError => {
-                setIsPending(false);
+                setIsLoading(false);
                 handleThunkErrorBase(thunkError, history, dispatch);
             });
     }, [createCatalogNode, dispatch, history]);
 
     const processCategoryWithId = useCallback((categoryId) => {
-        setIsPending(true);
+        setIsLoading(true);
 
         dispatch(getCategoryInfoThunk(categoryId))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then((payload: CategoryInfoView) => {
-                setIsPending(false);
                 dispatch(pathSwitch({
                     name: payload.name,
                     type: "category",
                     route: getRedirectionRoute("category", categoryId)
                 }));
-
                 setCategoryCatalog(payload.subCategories.map(categoryView => createCatalogNode("category", categoryView)));
                 setApproachCatalog(payload.approaches.map(approachView => createCatalogNode("approach", approachView)));
+                setIsLoading(false);
             })
             .catch(thunkError => {
-                setIsPending(false);
+                setIsLoading(false);
                 if (thunkError.name === 'ApiError' && thunkError.description.httpCode === 404) {
                     history.push(ROOT_NAVIGATION_UNIT.route);
                 } else {
@@ -112,11 +112,11 @@ const CategoryPage = () => {
     return (
         <Box>
             <Box className={classes.upperBar}>
-                <GlobalUserLocation/>
+                {isLoading ? <Location locationList={[]}/> : <GlobalUserLocation/>}
                 <AdminSettings/> {/*todo only visible to admins*/}
             </Box>
             {
-                isPending ?
+                isLoading ?
                     <CircularProgress color="primary" /> :
                     <>
                         <CatalogNodeList list={categoryCatalog} icon={<FolderOutlined/>} type={"Categories"}/>
