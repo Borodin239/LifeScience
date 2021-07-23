@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Box} from "@material-ui/core";
+import {Box, Fade, Slide} from "@material-ui/core";
 import {useMethodPageStyles} from "./method-page-styles";
 import {useHistory, useParams} from "react-router-dom";
 import {locationList} from "./temporaryConstants";
@@ -62,11 +62,21 @@ const MethodPage: React.FC = () => {
             {
                 isProtocolListViewed
                     ?
-                    <ProtocolList protocols={approach.protocols} approachName={approach.name} handleGoBackClick={handleBackToMethodClick}/>
+                    <Slide in={isProtocolListViewed} direction={"left"} mountOnEnter unmountOnExit>
+                        <div>
+                            <ProtocolList protocols={approach.protocols} approachName={approach.name}
+                                          handleGoBackClick={handleBackToMethodClick}/>
+                        </div>
+                    </Slide>
                     :
-                    <ApproachContainer approach={approach}
-                                       approachId={approachId}
-                                       handleGoToProtocolsClick={handleGoToProtocolsClick}/>
+                    <Fade in={!isProtocolListViewed}>
+                        <div>
+                            <ApproachContainer approach={approach}
+                                               approachId={approachId}
+                                               handleGoToProtocolsClick={handleGoToProtocolsClick}/>
+                        </div>
+                     </Fade>
+
             }
 
         </Box>

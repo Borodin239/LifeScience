@@ -26,7 +26,8 @@ export const useProtocolListStyles = makeStyles((theme) => ({
         cursor: "pointer",
         '&:hover': {
             textDecoration: "underline",
-        }
+        },
+        fontSize: '18px',
     }
 
 
