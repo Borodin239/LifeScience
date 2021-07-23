@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     arrow: {
         color: theme.palette.primary.main,
     }
-}));
+}), {index: 1});
 
 export type LocationUnit = {
     text: string,
@@ -33,14 +33,14 @@ export type LocationProps = {
     locationList: LocationUnit[]
 }
 
-const Location = ({locationList}: LocationProps) => {
+const Location: React.FC<LocationProps> = ({locationList}) => {
     const classes = useStyles()
 
     return (
         <Breadcrumbs separator={<NavigateNextIcon className={classes.arrow}/>} className={classes.container}>
             {
-                locationList.map(unit => (
-                    <Typography onClick={unit.handleClick} variant="subtitle1" className={classes.locationUnit}>
+                locationList.map((unit, ind) => (
+                    <Typography key={ind} onClick={unit.handleClick} variant="subtitle1" className={classes.locationUnit}>
                         {unit.text}
                     </Typography>
                 ))
