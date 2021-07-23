@@ -3,30 +3,19 @@ image: mhart/alpine-node:14
 stages:
   - lint
   - test
-  - build
 
 lint test:
   stage: lint
   script:
     - yarn install --progress=false
     - yarn run lint
+  only:
+    - production
+    - test
+    - dev
 
 unit test:
   stage: test
   script:
     - yarn install --progress=false
     - yarn run test
-
-build site:
-  stage: build
-  script:
-    - yarn install --progress=false
-    - yarn run build
-  only:
-    - production
-    - test
-    - dev
-  artifacts:
-    expire_in: 1 week
-    paths:
-      - build

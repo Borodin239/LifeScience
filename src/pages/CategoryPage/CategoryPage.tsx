@@ -9,7 +9,7 @@ import {FolderOutlined} from "@material-ui/icons";
 import AdminSettings from "../../components/categories/admin/AdminSettings/AdminSettings";
 import {developmentLog} from "../../infrastructure/common/developmentLog";
 import {useAppDispatch} from "../../redux/hooks";
-import {getCategoryRootThunk} from "../../redux/categories/thunkActions";
+import {getCategoryInfoThunk, getCategoryRootThunk} from "../../redux/categories/thunkActions";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {CategoryRootView} from "../../infrastructure/http/api/view/category/CategoryRootView";
@@ -35,7 +35,6 @@ const CategoryPage = () => {
     const history = useHistory();
     const dispatch = useAppDispatch();
 
-    const [categoryId, setCategoryId] = useState<number>(NaN);
     const [isPending, setIsPending] = useState(false);
 
     const [categoryCatalog, setCategoryCatalog] = useState<CatalogNode[]>([]);
@@ -71,10 +70,10 @@ const CategoryPage = () => {
             });
     }, [createCatalogNode, dispatch, history]);
 
-    const processCategoryWithId = useCallback(() => {
+    const processCategoryWithId = useCallback((categoryId) => {
         setIsPending(true);
 
-        dispatch(getCategoryRootThunk())
+        dispatch(getCategoryInfoThunk(categoryId))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then((payload: CategoryInfoView) => {
@@ -96,19 +95,17 @@ const CategoryPage = () => {
                     handleThunkErrorBase(thunkError, history, dispatch);
                 }
             });
-    }, [createCatalogNode, dispatch, history, categoryId]);
+    }, [createCatalogNode, dispatch, history]);
 
     useEffect(() => {
         developmentLog(`targetPlotsParams: ${JSON.stringify(params)}`);
 
         let id = parseInt(params.categoryId);
 
-        setCategoryId(id);
-
         if (Number.isNaN(id)) {
             processRoot();
         } else {
-            processCategoryWithId();
+            processCategoryWithId(id);
         }
     }, [params, processCategoryWithId, processRoot]);
 
@@ -123,7 +120,7 @@ const CategoryPage = () => {
                     <CircularProgress color="primary" /> :
                     <>
                         <CatalogNodeList list={categoryCatalog} icon={<FolderOutlined/>} type={"Categories"}/>
-                        {approachCatalog.length && <CatalogNodeList type={"Methods"} icon={<SubjectIcon/>} list={approachCatalog}/>}
+                        <CatalogNodeList type={"Methods"} icon={<SubjectIcon/>} list={approachCatalog}/>
                     </>
             }
         </Box>
