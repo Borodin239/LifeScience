@@ -20,6 +20,7 @@ export const useProtocolListStyles = makeStyles((theme) => ({
         justifyContent: "space-around",
     },
     title: {
+        padding: theme.spacing(0, 3, 0, 3),
         borderBottom: "1px solid " + theme.palette.primary.main,
     },
     protocolName: {

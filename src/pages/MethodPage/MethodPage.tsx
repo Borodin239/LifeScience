@@ -63,18 +63,18 @@ const MethodPage: React.FC = () => {
                 isProtocolListViewed
                     ?
                     <Slide in={isProtocolListViewed} direction={"left"} mountOnEnter unmountOnExit>
-                        <div>
+                        <Box>
                             <ProtocolList protocols={approach.protocols} approachName={approach.name}
                                           handleGoBackClick={handleBackToMethodClick}/>
-                        </div>
+                        </Box>
                     </Slide>
                     :
                     <Fade in={!isProtocolListViewed}>
-                        <div>
+                        <Box>
                             <ApproachContainer approach={approach}
                                                approachId={approachId}
                                                handleGoToProtocolsClick={handleGoToProtocolsClick}/>
-                        </div>
+                        </Box>
                      </Fade>
 
             }
