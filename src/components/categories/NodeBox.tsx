@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
         "&:hover": {
             border: "1px solid " + theme.palette.primary.main,
             backgroundColor: alpha(theme.palette.primary.main, 0.03)
-        }
+        },
+        userSelect: "none"
     },
     icon: {
         color: theme.palette.primary.main,
@@ -31,11 +32,11 @@ type NodeBoxProps = {
 const NodeBox = ({node, icon}: NodeBoxProps) => {
     const classes = useStyles()
     return (
-        <Box className={classes.container}>
+        <Box className={classes.container} onClick={node.handleClick}>
             <Box className={classes.icon}>
                 {icon}
             </Box>
-            <Box onClick={node.handleClick}>
+            <Box>
                 <Typography style={{verticalAlign: "middle"}}>
                     {node.name}
                 </Typography>
