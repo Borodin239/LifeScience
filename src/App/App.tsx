@@ -12,6 +12,7 @@ import HomePage from "../pages/HomePage/HomePage";
 import MethodPage from "../pages/MethodPage/MethodPage";
 import {useAppStyles} from "./useAppStyles";
 import {Box} from "@material-ui/core";
+import './App.css'
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -36,21 +37,23 @@ function App() {
                         </Route>
 
                         <Route exact path={appRoutesNames.HOME} render={() => <HomePage/>}/>
+                        <Route>
+                            <Box className={classes.fixedWidth}>
+                                {/*1100 px*/}
+                                <Switch>
+
+                                    <Route exact path={`${appRoutesNames.CATEGORIES}/:categoryId(\\d*)`} render={() => <CategoryPage/>}/>
+                                    <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
+                                    <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
+                                    <Route exact path={"/method-layout"} render={() => <MethodPage/>}/>
+                                    <Route exact path="/error"
+                                           render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
+
+                                    <Route render={() => <ErrorPage errorCode="404" message="Page doesn't exist"/>}/>
+                                </Switch>
+                            </Box>
+                        </Route>
                     </Switch>
-                    <Box className={classes.fixedWidth}>
-                        {/*1100 px*/}
-                        <Switch>
-
-                            <Route exact path={`${appRoutesNames.CATEGORIES}/:categoryId(\\d*)`} render={() => <CategoryPage/>}/>
-                            <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
-                            <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
-                            <Route exact path={"/method-layout"} render={() => <MethodPage/>}/>
-                            <Route exact path="/error"
-                                   render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
-
-                            <Route render={() => <ErrorPage errorCode="404" message="Page doesn't exist"/>}/>
-                        </Switch>
-                    </Box>
                 </HandledErrorBoundary>
             </BrowserRouter>
         </div>
