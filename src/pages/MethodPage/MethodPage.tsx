@@ -2,15 +2,14 @@ import React, {useEffect, useState} from "react";
 import {Box, Fade, Slide} from "@material-ui/core";
 import {useMethodPageStyles} from "./method-page-styles";
 import {useHistory, useParams} from "react-router-dom";
-import {locationList} from "./temporaryConstants";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {getPublicApproachThunk} from "../../redux/publicApproach/slice";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import ApproachContainer from "../../components/approach/ApproachContainer/ApproachContainer";
-import Location from "../../components/navigation/Location";
 import ProtocolList from "../../components/approach/ProtocolList/ProtocolList";
+import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
 
 interface ParamType {
     approachId: string
@@ -57,7 +56,7 @@ const MethodPage: React.FC = () => {
     return (
         <Box>
             <Box className={classes.breadCrumbs}>
-                <Location locationList={locationList}/>
+                <GlobalUserLocation/>
             </Box>
             {
                 isProtocolListViewed

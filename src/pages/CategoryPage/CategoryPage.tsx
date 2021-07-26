@@ -42,7 +42,7 @@ const CategoryPage = () => {
     const [approachCatalog, setApproachCatalog] = useState<CatalogNode[]>([]);
 
     const createCatalogNode = useCallback((type: "category" | "approach", view: ApproachView | CategoryView): CatalogNode => {
-        const redirectionRoute = getRedirectionRoute("category", view.id);
+        const redirectionRoute = getRedirectionRoute(type, view.id);
 
         return {
             name: view.name,

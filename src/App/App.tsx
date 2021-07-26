@@ -42,7 +42,7 @@ function App() {
                         <Route exact path={`${appRoutesNames.CATEGORIES}/:categoryId(\\d*)`} render={() => <CategoryPage/>}/>
                         <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                         <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
-                        <Route exact path={"/approach/:approachId"} render={() => <MethodPage/>}/>
+                        <Route exact path={"/approaches/:approachId"} render={() => <MethodPage/>}/>
                         <Route exact path="/error"
                                render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 
