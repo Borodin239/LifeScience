@@ -50,7 +50,7 @@ const ContentContainer: React.FC<ContentContainerProps> = ({title, approachId, s
                     <Divider style={{width: '35%'}} className={classes.divider}/>
                 </Box>
                 {
-                    isLoading ? <CenteredLoader/> :
+                    isLoading ? <CenteredLoader className={classes.contentLoader}/> :
                         <Typography className={classes.content}>
                             {section.content}
                         </Typography>

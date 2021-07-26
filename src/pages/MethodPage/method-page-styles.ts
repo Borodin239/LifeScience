@@ -71,6 +71,9 @@ export const useMethodPageStyles = makeStyles((theme) => ({
     },
     mainLoader: {
         marginTop: theme.spacing(2),
+    },
+    contentLoader: {
+        marginTop: theme.spacing(5),
     }
 
 }), {index: 1});
