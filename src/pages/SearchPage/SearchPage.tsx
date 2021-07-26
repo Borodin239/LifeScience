@@ -1,4 +1,4 @@
-import {Box} from "@material-ui/core";
+import {Box, CircularProgress} from "@material-ui/core";
 import {useState} from "react";
 
 
@@ -6,8 +6,9 @@ const SearchPage = () => {
 
     const [isLoading, setIsLoading] = useState(true)
 
-
-    
+    if (isLoading) {
+        return <CircularProgress color={"primary"}/>
+    }
 
     return (
         <Box>
