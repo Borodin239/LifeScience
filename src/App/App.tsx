@@ -11,6 +11,7 @@ import appRoutesNames from "../infrastructure/common/appRoutesNames";
 import HomePage from "../pages/HomePage/HomePage";
 import MethodPage from "../pages/MethodPage/MethodPage";
 import {useAppStyles} from "./useAppStyles";
+import SearchPage from "../pages/SearchPage/SearchPage";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -43,6 +44,7 @@ function App() {
                         <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                         <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
                         <Route exact path={"/method-layout"} render={() => <MethodPage/>}/>
+                        <Route exact path={"/search"} render={() => <SearchPage/>}/>
                         <Route exact path="/error"
                                render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 
