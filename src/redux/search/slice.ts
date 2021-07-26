@@ -24,7 +24,7 @@ type ProtocolSearchResult = {
     "typeName": "Protocol",
 }
 
-type SearchResult = CategorySearchResult | ApproachSearchResult | ProtocolSearchResult
+export type SearchResult = CategorySearchResult | ApproachSearchResult | ProtocolSearchResult
 
 type SearchState = {
     results: SearchResult[],
@@ -39,13 +39,14 @@ export enum SearchActionThunkTypes {
 }
 
 export type SearchDto = {
-    "text": string,
-    "includeTypes?": ["CATEGORY" | "APPROACH" | "PROTOCOL"],
-    "size?": number,
-    "from?": number
+    "query": string,
+    "includeTypes"?: ["CATEGORY" | "APPROACH" | "PROTOCOL"],
+    "size"?: number,
+    "from"?: number
 }
 
-export const SearchThunk = createAsyncThunk<SearchResult[], // что возвращает при fulfilled
+export const searchThunk = createAsyncThunk<
+    SearchResult[], // что возвращает при fulfilled
     SearchDto, // что принимает как аргумент при dispatch
     { // деструктуризация thunkAPI
         dispatch: AppDispatch,
@@ -68,7 +69,7 @@ const searchSlice = createSlice({
     initialState: initState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(SearchThunk.fulfilled, (state, action) => {
+        builder.addCase(searchThunk.fulfilled, (state, action) => {
             state.results = action.payload
         })
     }
