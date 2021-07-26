@@ -39,10 +39,10 @@ export enum SearchActionThunkTypes {
 }
 
 export type SearchDto = {
-    "query": string,
-    "includeTypes"?: ["CATEGORY" | "APPROACH" | "PROTOCOL"],
-    "size"?: number,
-    "from"?: number
+    text: string,
+    includeTypes?: ["CATEGORY" | "APPROACH" | "PROTOCOL"],
+    size?: number,
+    from?: number
 }
 
 export const searchThunk = createAsyncThunk<

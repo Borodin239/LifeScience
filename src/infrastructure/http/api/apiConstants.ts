@@ -13,7 +13,7 @@ const apiConstants = {
             ROOT: '/categories/root'
         },
         search: {
-            SEARCH: '/searchw'
+            SEARCH: '/search'
         }
     },
 

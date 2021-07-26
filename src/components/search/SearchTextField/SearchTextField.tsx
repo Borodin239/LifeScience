@@ -3,8 +3,12 @@ import {InputBase, Paper} from "@material-ui/core";
 import React from "react";
 import useSearchTextFieldStyles from "./useSearchTextFieldStyles";
 
+type SearchTextFieldProps = {
+    placeholder?: string,
+    defaultValue?: string,
+}
 
-const SearchTextField = () => {
+const SearchTextField: React.FC<SearchTextFieldProps> = ({placeholder, defaultValue}) => {
 
     const classes = useSearchTextFieldStyles()
 
@@ -13,7 +17,8 @@ const SearchTextField = () => {
             <SearchIcon className={classes.iconButton}/>
             <InputBase
                 className={classes.input}
-                placeholder="Search for the method"
+                placeholder={placeholder ?? "Search..."}
+                value={defaultValue ?? ""}
             />
         </Paper>
     )

@@ -1,6 +1,6 @@
-import {Box, CircularProgress} from "@material-ui/core";
+import {Box, CircularProgress, Typography} from "@material-ui/core";
 import {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {SearchDto, searchThunk} from "../../redux/search/slice";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
@@ -12,6 +12,7 @@ const SearchPage = () => {
 
     const location = useLocation()
     const dispatch = useAppDispatch()
+    const history = useHistory()
 
     const [query, setQuery] = useState("")
     const [isLoading, setIsLoading] = useState(true)
@@ -23,7 +24,7 @@ const SearchPage = () => {
     const updateSearch = () => {
         const newQuery = new URLSearchParams(location.search).get("query") ?? ""
         setQuery(newQuery)
-        const dto: SearchDto = {query: newQuery}
+        const dto: SearchDto = {text: newQuery}
         dispatch(searchThunk(dto))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
@@ -45,13 +46,22 @@ const SearchPage = () => {
     return (
         <Box>
             <Box>
-                <SearchTextField/>
+                <SearchTextField defaultValue={query}/>
             </Box>
             <Box>
+                <Typography>
+                    Found {results.length} results for "{query}":
+                </Typography>
+            </Box>
+            <Box>
+                {
+                    results.map(result =>
+                        <Typography>
+                            {result.name}
+                        </Typography>
+                    )
 
-            </Box>
-            <Box>
-                {/*search results*/}
+                }
             </Box>
         </Box>
     )

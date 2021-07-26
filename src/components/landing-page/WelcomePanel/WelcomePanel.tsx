@@ -31,7 +31,7 @@ const WelcomePanel = () => {
                 <Typography variant={'h5'} className={classes.orText}>
                     or
                 </Typography>
-                <SearchTextField/>
+                <SearchTextField placeholder={"Search for method..."}/>
             </Box>
         </Box>
     )
