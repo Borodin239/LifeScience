@@ -10,9 +10,6 @@ import MainAppBarProfileMenu from "./MainAppBarProfileMenu";
 import MainSearch from "./MainSearch/MainSearch";
 import UnauthorizedProfile from "./profile/UnauthorizedProfile/UnauthorizedProfile";
 import AuthorizedProfilePreview from "./profile/AuthorizedProfilePreview";
-import {
-    getFullWidthStyling
-} from "../../../infrastructure/common/fullWidthStyler";
 
 
 const MainAppBar: React.FC = () => {
@@ -38,7 +35,7 @@ const MainAppBar: React.FC = () => {
     }, []);
 
     return (
-        <div className={classes.main} style={getFullWidthStyling()}>
+        <div className={classes.main}>
             <AppBar position="static" className={classes.appbar}>
                 <Toolbar>
                     <Typography className={classes.homeLink}
