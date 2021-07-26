@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
 import {useHistory, useParams} from "react-router-dom";
-import {Box, CircularProgress} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import CatalogNodeList, {CatalogNode} from "../../components/categories/CatalogNodeList";
 import SubjectIcon from "@material-ui/icons/Subject";
@@ -19,6 +19,7 @@ import {getRedirectionRoute, NavigationUnit} from "../../infrastructure/ui/utils
 import {CategoryView} from "../../infrastructure/http/api/view/category/CategoryView";
 import {CategoryInfoView} from "../../infrastructure/http/api/view/category/CategoryInfoView";
 import Location from "../../components/navigation/Location";
+import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 
 const useStyles = makeStyles((theme) => ({
     upperBar: {
@@ -117,7 +118,7 @@ const CategoryPage = () => {
             </Box>
             {
                 isLoading ?
-                    <CircularProgress color="primary" /> :
+                    <CenteredLoader/> :
                     <>
                         <CatalogNodeList list={categoryCatalog} icon={<FolderOutlined/>} type={"Categories"}/>
                         <CatalogNodeList type={"Methods"} icon={<SubjectIcon/>} list={approachCatalog}/>
