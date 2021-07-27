@@ -3,47 +3,13 @@ import {AppDispatch} from "../store/store";
 import {ApiError} from "../../infrastructure/common/exceptions/ApiError";
 import {approachApi} from "../../infrastructure/http/api/methods/approachApi";
 import onThunkError from "../utils/onThunkError";
+import {ApproachView} from "../../infrastructure/http/api/view/approach/ApproachView";
+import {ApproachPreview} from "../../infrastructure/http/api/view/approach/ApproachPreview";
 
 export const APPROACH_ACTION_TYPE_PREFIX = 'approaches'
 
-export type SectionTitle = {
-    id: string,
-    name: string,
-}
-
-export type Category = {
-    id: number,
-    name: string,
-    creationDate: string,
-}
-
-export type CoAuthor = {
-    "id": number,
-    "fullName": string,
-}
-
-export type Protocol = {
-    "id": number,
-    "name": string,
-}
-
-export type Approach = {
-    id: string,
-    name: string,
-    sections: SectionTitle[],
-    categories: Category[],
-    coAuthors: CoAuthor[],
-    protocols: Protocol[],
-}
-
-export type ShortenedApproach = {
-    name: string,
-    sections: SectionTitle[],
-    protocols: Protocol[],
-}
-
 type ApproachState = {
-    approach: ShortenedApproach,
+    approach: ApproachPreview,
 }
 
 const initState: ApproachState = {
@@ -59,7 +25,7 @@ enum ApproachActionThunkTypes {
 }
 
 export const getPublicApproachThunk = createAsyncThunk<
-    Approach, // что возвращает при fulfilled
+    ApproachView, // что возвращает при fulfilled
     string, // что принимает как аргумент при dispatch
     { // деструктуризация thunkAPI
         dispatch: AppDispatch,
@@ -71,7 +37,7 @@ export const getPublicApproachThunk = createAsyncThunk<
         try {
             const response = await approachApi.getApproach(id)
 
-            return response.data as Approach
+            return response.data as ApproachView
         } catch (err) {
             return onThunkError(err, thunkAPI);
         }

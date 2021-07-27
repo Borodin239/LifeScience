@@ -3,18 +3,12 @@ import {AppDispatch} from "../store/store";
 import {ApiError} from "../../infrastructure/common/exceptions/ApiError";
 import onThunkError from "../utils/onThunkError";
 import {sectionApi} from "../../infrastructure/http/api/methods/sectionApi";
+import {SectionView} from "../../infrastructure/http/api/view/section/SectionView";
 
 
 export const SECTION_ACTION_TYPE_PREFIX = 'approaches'
 
-type Section = {
-    "id": string,
-    "name": string,
-    "hidden": boolean,
-    "content": string
-}
-
-const initState: Section = {
+const initState: SectionView = {
     "id": '',
     "name": '',
     "hidden": false,
@@ -22,7 +16,7 @@ const initState: Section = {
 }
 
 enum SectionActionThunkTypes {
-    GET= "/getSection",
+    GET = "/getSection",
 }
 
 type GetSectionArguments = {
@@ -30,20 +24,18 @@ type GetSectionArguments = {
     sectionId: string,
 }
 
-export const getSectionThunk = createAsyncThunk<
-    Section, // что возвращает при fulfilled
+export const getSectionThunk = createAsyncThunk<SectionView, // что возвращает при fulfilled
     GetSectionArguments, // что принимает как аргумент при dispatch
     { // деструктуризация thunkAPI
         dispatch: AppDispatch,
         rejectValue: ApiError
-    }
-    >(
+    }>(
     `${SECTION_ACTION_TYPE_PREFIX}${SectionActionThunkTypes.GET}`,
     async ({approachId, sectionId}, thunkAPI) => {
         try {
             const response = await sectionApi.getSection(approachId, sectionId);
 
-            return response.data as Section
+            return response.data as SectionView
         } catch (err) {
             return onThunkError(err, thunkAPI);
         }

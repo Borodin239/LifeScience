@@ -4,12 +4,12 @@ import SectionList from "../SectionList/SectionList";
 import ContentContainer from "../ContentContainer/ContentContainer";
 import React, {useState} from "react";
 import {useMethodPageStyles} from "../../../pages/MethodPage/method-page-styles";
-import {ShortenedApproach} from "../../../redux/publicApproach/slice";
 import {RightProtocolsArrow} from "../ProtocolsArrows/ProtocolsArrows";
+import {ApproachPreview} from "../../../infrastructure/http/api/view/approach/ApproachPreview";
 
 
 type ApproachContainerProps = {
-    approach: ShortenedApproach,
+    approach: ApproachPreview,
     approachId: string,
     handleGoToProtocolsClick: () => void,
 }

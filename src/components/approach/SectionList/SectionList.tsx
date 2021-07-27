@@ -2,11 +2,11 @@ import {useMethodPageStyles} from "../../../pages/MethodPage/method-page-styles"
 import Typography from "@material-ui/core/Typography";
 import {Box, Divider, List, ListItem} from "@material-ui/core";
 import React from "react";
-import {SectionTitle} from "../../../redux/publicApproach/slice";
+import {SectionTitleView} from "../../../infrastructure/http/api/view/section/SectionTitleView";
 
 
 type SectionListProps = {
-    sections: SectionTitle[],
+    sections: SectionTitleView[],
     selectedSection: number,
     handleSectionTitleClick: (index: number) => () => void,
     className?: string,

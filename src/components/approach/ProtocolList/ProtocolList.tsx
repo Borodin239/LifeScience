@@ -1,11 +1,11 @@
-import {Protocol} from "../../../redux/publicApproach/slice";
 import {Box, List, ListItem, Typography} from "@material-ui/core";
 import {useProtocolListStyles} from "./useProtocolListStyles";
 import {LeftProtocolsArrow} from "../ProtocolsArrows/ProtocolsArrows";
+import {ProtocolTitleView} from "../../../infrastructure/http/api/view/protocol/ProtocolTitleView";
 
 
 type ProtocolListProps = {
-    protocols: Protocol[],
+    protocols: ProtocolTitleView[],
     approachName: string,
     handleGoBackClick: () => void,
 }
@@ -14,7 +14,7 @@ const ProtocolList: React.FC<ProtocolListProps> = (props) => {
 
     const {protocols, approachName, handleGoBackClick} = props
 
-    const handleProtocolClick = (protocol: Protocol) => () => {
+    const handleProtocolClick = (protocol: ProtocolTitleView) => () => {
         console.log("clicked protocol with id: " + protocol.id)
     }
 
