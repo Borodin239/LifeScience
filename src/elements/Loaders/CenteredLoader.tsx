@@ -1,6 +1,5 @@
 import React from "react";
 import {Box, CircularProgress} from "@material-ui/core";
-import useAuthFormStyles from "../../components/auth-forms/useAuthFormStyles";
 
 type LoaderProps = {
     className?: string,

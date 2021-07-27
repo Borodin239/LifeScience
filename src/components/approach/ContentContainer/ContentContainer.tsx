@@ -36,7 +36,7 @@ const ContentContainer: React.FC<ContentContainerProps> = ({title, approachId, s
 
                 handleThunkErrorBase(thunkError, history, dispatch);
             });
-    }, [sectionId]);
+    }, [sectionId, approachId, dispatch, history]);
 
     const section = useAppSelector(state => state.sectionReducer)
 
