@@ -9,10 +9,10 @@ const apiConstants = {
             REFRESH: '/auth/refresh'
         },
         publicApproach: {
-            GET: '/approaches/public'
+            BASE: '/approaches/public'
         },
         section: {
-            GET: '/sections'
+            BASE: '/sections'
         },
         categories: {
             INITIAL: '/categories',
