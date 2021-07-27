@@ -6,6 +6,7 @@ import {SearchDto, searchThunk} from "../../redux/search/slice";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import SearchTextField from "../../components/search/SearchTextField/SearchTextField";
+import apiConstants from "../../infrastructure/http/api/apiConstants";
 
 
 const SearchPage = () => {
@@ -22,7 +23,7 @@ const SearchPage = () => {
     }, [location.search])
 
     const updateSearch = () => {
-        const newQuery = new URLSearchParams(location.search).get("query") ?? ""
+        const newQuery = new URLSearchParams(location.search).get(apiConstants.search.query) ?? ""
         setQuery(newQuery)
         const dto: SearchDto = {text: newQuery}
         dispatch(searchThunk(dto))

@@ -17,6 +17,10 @@ const apiConstants = {
         }
     },
 
+    search: {
+        query: "query",
+    },
+
     common: {
         ROOT_ID: -1
     }
