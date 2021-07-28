@@ -41,4 +41,5 @@ const WelcomePanel = () => {
         </Box>
     )
 }
+
 export default WelcomePanel

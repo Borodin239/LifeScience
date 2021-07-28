@@ -35,17 +35,16 @@ function App() {
                         <Route exact path="/">
                             <Redirect to={appRoutesNames.HOME}/>
                         </Route>
-
                         <Route exact path={appRoutesNames.HOME} render={() => <HomePage/>}/>
                         <Route>
                             <Box className={classes.fixedWidth}>
                                 {/*1100 px*/}
                                 <Switch>
 
-                                    <Route exact path={`${appRoutesNames.CATEGORIES}/:categoryId(\\d*)`} render={() => <CategoryPage/>}/>
+                                    <Route exact path={`${appRoutesNames.APPROACHES}/:approachId(\\d{1,11})`} render={() => <MethodPage/>}/>
+                                    <Route exact path={`${appRoutesNames.CATEGORIES}/:categoryId(\\d{0,11})`} render={() => <CategoryPage/>}/>
                                     <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                                     <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
-                                    <Route exact path={"/method-layout"} render={() => <MethodPage/>}/>
                                     <Route exact path="/error"
                                            render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 

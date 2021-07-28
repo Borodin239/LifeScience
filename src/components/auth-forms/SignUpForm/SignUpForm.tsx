@@ -13,7 +13,7 @@ import BaseTextField from "../../../elements/text-fields/BaseTextField";
 import validateSignUpForm from "./validateSignUpForm";
 import {useAppDispatch} from "../../../redux/hooks";
 import {signUpThunk} from "../../../redux/auth/thunkActions";
-import FormSubmitLoader from "../../../elements/Loaders/FormSubmitLoader";
+import FormSubmitLoader from "../../../elements/Loaders/CenteredLoader";
 import handleThunkErrorBase from "../../../redux/utils/handleThunkErrorBase";
 import splitThunkPayload from "../../../redux/utils/splitThunkPayload";
 
