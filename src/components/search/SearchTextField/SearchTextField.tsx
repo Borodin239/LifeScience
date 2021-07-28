@@ -1,19 +1,24 @@
 import SearchIcon from "@material-ui/icons/Search";
 import {InputBase, Paper} from "@material-ui/core";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import useSearchTextFieldStyles from "./useSearchTextFieldStyles";
 import apiConstants from "../../../infrastructure/http/api/apiConstants";
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 
 type SearchTextFieldProps = {
     placeholder?: string,
-    defaultValue?: string,
 }
 
-const SearchTextField: React.FC<SearchTextFieldProps> = ({placeholder, defaultValue}) => {
+const SearchTextField: React.FC<SearchTextFieldProps> = ({placeholder}) => {
 
     const classes = useSearchTextFieldStyles()
     const history = useHistory()
+    const location = useLocation()
+
+    useEffect(() => {
+        const queryInUrl = new URLSearchParams(location.search).get(apiConstants.search.query) ?? ""
+        setQuery(queryInUrl)
+    }, [location])
 
     const [query, setQuery] = useState("")
 
@@ -23,7 +28,6 @@ const SearchTextField: React.FC<SearchTextFieldProps> = ({placeholder, defaultVa
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        console.log("query: " + query);
         history.push(`${apiConstants.routes.search.SEARCH}/?${apiConstants.search.query}=${query}`);
     }
 
@@ -33,7 +37,7 @@ const SearchTextField: React.FC<SearchTextFieldProps> = ({placeholder, defaultVa
             <InputBase
                 className={classes.input}
                 placeholder={placeholder ?? "Search..."}
-                defaultValue={defaultValue ?? ""}
+                value={query}
                 onChange={handleQueryChange}
             />
         </Paper>

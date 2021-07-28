@@ -13,6 +13,7 @@ const MainSearch: React.FC = () => {
     const handleSubmit = (e: any) => {
         e.preventDefault()
         history.push(`${apiConstants.routes.search.SEARCH}/?${apiConstants.search.query}=${query}`)
+        setQuery("")
     }
 
     const handleChange = (e: any) => {
@@ -33,6 +34,7 @@ const MainSearch: React.FC = () => {
                     }}
                     inputProps={{'aria-label': 'search'}}
                     onChange={handleChange}
+                    value={query}
                 />
             </form>
         </div>

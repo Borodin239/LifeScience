@@ -47,7 +47,7 @@ const SearchPage = () => {
     return (
         <Box>
             <Box>
-                <SearchTextField defaultValue={query}/>
+                <SearchTextField/>
             </Box>
             <Box>
                 <Typography>
