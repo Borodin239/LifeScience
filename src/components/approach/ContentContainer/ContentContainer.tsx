@@ -3,11 +3,11 @@ import {Box, Divider} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../redux/hooks";
-import {getSectionThunk} from "../../../redux/section/slice";
 import handleThunkErrorBase from "../../../redux/utils/handleThunkErrorBase";
 import splitThunkPayload from "../../../redux/utils/splitThunkPayload";
 import CenteredLoader from "../../../elements/Loaders/CenteredLoader";
 import {useHistory} from "react-router-dom";
+import {getSectionThunk} from "../../../redux/section/thunkActions";
 
 
 type ContentContainerProps = {

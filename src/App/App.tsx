@@ -41,8 +41,8 @@ function App() {
                                 {/*1100 px*/}
                                 <Switch>
 
-                                    <Route exact path={`${appRoutesNames.APPROACHES}/:approachId`} render={() => <MethodPage/>}/>
-                                    <Route exact path={`${appRoutesNames.CATEGORIES}/:categoryId(\\d*)`} render={() => <CategoryPage/>}/>
+                                    <Route exact path={`${appRoutesNames.APPROACHES}/:approachId(\\d{1,11})`} render={() => <MethodPage/>}/>
+                                    <Route exact path={`${appRoutesNames.CATEGORIES}/:categoryId(\\d{0,11})`} render={() => <CategoryPage/>}/>
                                     <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                                     <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
                                     <Route exact path="/error"

@@ -5,7 +5,7 @@ import {useHistory, useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
-import {getPublicApproachThunk} from "../../redux/publicApproach/slice";
+import {getPublicApproachThunk} from "../../redux/publicApproach/thunkActions";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import ApproachContainer from "../../components/approach/ApproachContainer/ApproachContainer";
 import ProtocolList from "../../components/approach/ProtocolList/ProtocolList";
@@ -41,9 +41,9 @@ const MethodPage: React.FC = () => {
                 setIsLoading(false)
             })
             .catch(thunkError => {
-                setIsLoading(false);
-
                 handleThunkErrorBase(thunkError, history, dispatch);
+                // setIsLoading(false);
+
             })
     }, [approachId, history, dispatch]);
 
