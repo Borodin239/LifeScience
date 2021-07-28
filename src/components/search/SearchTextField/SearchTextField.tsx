@@ -7,9 +7,10 @@ import {useHistory, useLocation} from "react-router-dom";
 
 type SearchTextFieldProps = {
     placeholder?: string,
+    passedClassName?: string
 }
 
-const SearchTextField: React.FC<SearchTextFieldProps> = ({placeholder}) => {
+const SearchTextField: React.FC<SearchTextFieldProps> = ({placeholder, passedClassName}) => {
 
     const classes = useSearchTextFieldStyles()
     const history = useHistory()
@@ -32,7 +33,9 @@ const SearchTextField: React.FC<SearchTextFieldProps> = ({placeholder}) => {
     }
 
     return (
-        <Paper component="form" className={classes.searchPaper} onSubmit={handleSubmit}>
+        <Paper component="form"
+               className={`${classes.searchPaper} ${passedClassName}`}
+               onSubmit={handleSubmit}>
             <SearchIcon className={classes.iconButton}/>
             <InputBase
                 className={classes.input}

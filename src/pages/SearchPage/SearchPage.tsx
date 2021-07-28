@@ -1,4 +1,4 @@
-import {Box, CircularProgress, Typography} from "@material-ui/core";
+import {Box, Typography} from "@material-ui/core";
 import {useEffect, useState} from "react";
 import {useHistory, useLocation} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
@@ -7,6 +7,8 @@ import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import SearchTextField from "../../components/search/SearchTextField/SearchTextField";
 import apiConstants from "../../infrastructure/http/api/apiConstants";
+import CenteredLoader from "../../elements/Loaders/CenteredLoader";
+import {useSearchPageStyles} from "./useSearchPageStyles";
 
 
 const SearchPage = () => {
@@ -14,6 +16,8 @@ const SearchPage = () => {
     const location = useLocation()
     const dispatch = useAppDispatch()
     const history = useHistory()
+
+    const classes = useSearchPageStyles()
 
     const [query, setQuery] = useState("")
     const [isLoading, setIsLoading] = useState(true)
@@ -40,14 +44,13 @@ const SearchPage = () => {
     const results = useAppSelector(state => state.searchReducer.results)
 
     if (isLoading) {
-        return <CircularProgress color={"primary"}/>
-        //todo replace with CenteredLoader
+        return <CenteredLoader/>
     }
 
     return (
         <Box>
-            <Box>
-                <SearchTextField/>
+            <Box className={classes.searchFieldContainer}>
+                <SearchTextField passedClassName={classes.searchField}/>
             </Box>
             <Box>
                 <Typography>
