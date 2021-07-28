@@ -1,9 +1,11 @@
 import {makeStyles} from "@material-ui/core/styles";
+import uiConstants from "../../../infrastructure/ui/themes/uiConstants";
 
 export const useInfoPanelStyles = makeStyles((theme) => ({
     mainContainer: {
         height: "1600px",
-        width: '100%',
+        width: uiConstants.width,
+        margin: 'auto'
     },
     divider: {
         backgroundColor: theme.palette.primary.main,
