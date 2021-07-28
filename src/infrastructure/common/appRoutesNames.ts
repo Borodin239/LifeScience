@@ -5,7 +5,8 @@ const appRoutesNames = {
     ERROR: '/error',
     CATEGORIES: '/categories',
     APPROACHES: '/approaches',
-    PROTOCOLS: '/protocols'
+    PROTOCOLS: '/protocols',
+    SEARCH: '/search',
 }
 
 Object.freeze(appRoutesNames);
