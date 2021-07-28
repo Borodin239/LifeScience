@@ -1,8 +1,9 @@
 import {makeStyles} from "@material-ui/core/styles";
+import uiConstants from "../infrastructure/ui/themes/uiConstants";
 
 export const useAppStyles = makeStyles((theme) => ({
-    app: {
-        width: "1100px",
+    fixedWidth: {
+        width: uiConstants.width,
         margin: "auto",
     }
 

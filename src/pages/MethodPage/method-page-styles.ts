@@ -14,7 +14,7 @@ const sectionSelectionMark = (theme: any) => {
     }
 }
 
-export const useStyles = makeStyles((theme) => ({
+export const useMethodPageStyles = makeStyles((theme) => ({
     breadCrumbs: {
         margin: theme.spacing(3, 0, 2)
     },
@@ -64,40 +64,16 @@ export const useStyles = makeStyles((theme) => ({
             textDecoration: 'underline',
         },
     },
-    goToProtocols: {
-        display: "flex",
-        alignItems: "center",
-        cursor: "pointer",
-        '&:hover': {
-            // "& + $divider" : {
-            //     backgroundColor: theme.palette.primary.dark,
-            // },
-            "& $protocolsArrow" : {
-                transform: 'translateX(10px)'
-            },
-            // "& $goProtocolsText": {
-            //     color: theme.palette.primary.dark,
-            // }
-        },
-        marginRight: '20px',
-        padding: theme.spacing(0, 1, 0.2, 1),
-        borderLeft: "1px solid " + theme.palette.primary.main,
-        borderBottom: "1px solid " + theme.palette.primary.main,
-    },
-    goProtocolsText: {
-        fontSize: middleFontSize,
-        // color: theme.palette.primary.main,
-    },
     methodTitleContainer: {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
     },
-    protocolsArrow: {
-        color: theme.palette.primary.main,
-        marginLeft: theme.spacing(1),
-        transitionProperty: 'transform',
-        transitionDuration: '0.3s',
+    mainLoader: {
+        marginTop: theme.spacing(2),
+    },
+    contentLoader: {
+        marginTop: theme.spacing(5),
     }
 
 }), {index: 1});

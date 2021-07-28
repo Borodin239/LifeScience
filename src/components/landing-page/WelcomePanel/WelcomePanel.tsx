@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router-dom";
 import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
 import SearchIcon from "@material-ui/icons/Search";
-import {getFullWidthStyling} from "../../../infrastructure/common/fullWidthStyler";
 
 const WelcomePanel = () => {
     const classes = useWelcomePanelStyles()
@@ -16,7 +15,7 @@ const WelcomePanel = () => {
     }
 
     return (
-        <Box className={classes.mainContainer} style={getFullWidthStyling()}>
+        <Box className={classes.mainContainer}>
             <Box className={classes.centerContainer}>
                 <Typography variant={'h3'} className={classes.mainName}>
                     JetScience
@@ -42,4 +41,5 @@ const WelcomePanel = () => {
         </Box>
     )
 }
+
 export default WelcomePanel
