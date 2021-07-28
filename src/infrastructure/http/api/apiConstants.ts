@@ -11,6 +11,9 @@ const apiConstants = {
         categories: {
             INITIAL: '/categories',
             ROOT: '/categories/root'
+        },
+        users: {
+            CURRENT: '/users/current'
         }
     },
 

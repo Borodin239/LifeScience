@@ -40,7 +40,7 @@ export const SignInForm: React.FC = () => {
 
         dispatch(signInThunk({email, password}))
             .unwrap()
-            .then((payload) => splitThunkPayload(payload))
+            // .then((payload) => splitThunkPayload(payload))
             .then(() => history.push(appRoutesNames.HOME))
             .catch(thunkError => {
                 setIsPending(false);

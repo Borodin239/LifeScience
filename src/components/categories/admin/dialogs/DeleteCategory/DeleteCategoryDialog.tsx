@@ -1,10 +1,10 @@
 import React from "react";
-import {DialogProps} from "../CreateCategory/CreateCategoryDialog";
+import {CategoryDialogProps} from "../CreateCategory/CreateCategoryDialog";
 import {Box, Dialog, DialogTitle} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import {useStyles} from "../dialog-styles";
 
-const DeleteCategoryDialog: React.FC<DialogProps> = ({open, onClose}) => {
+const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({isOpen, onClose}) => {
 
     const classes = useStyles()
 
@@ -15,7 +15,7 @@ const DeleteCategoryDialog: React.FC<DialogProps> = ({open, onClose}) => {
     }
 
     return (
-        <Dialog open={open} onClose={onClose} classes={{paper: classes.paper}}>
+        <Dialog open={isOpen} onClose={onClose} classes={{paper: classes.paper}}>
             <DialogTitle>
                 Are you sure you want to delete this category?
             </DialogTitle>

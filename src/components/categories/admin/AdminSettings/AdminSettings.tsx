@@ -54,9 +54,9 @@ const AdminSettings = () => {
                 <MoreVertIcon />
             </IconButton>
             {renderMenu}
-            <CreateCategoryDialog open={createDialogOpen} onClose={handleDialogCloseClick(setCreateDialogOpen)}/>
-            <DeleteCategoryDialog open={deleteDialogOpen} onClose={handleDialogCloseClick(setDeleteDialogOpen)}/>
-            <RenameCategoryDialog open={renameDialogOpen} onClose={handleDialogCloseClick(setRenameDialogOpen)}/>
+            {/*<CreateCategoryDialog isOpen={createDialogOpen} onClose={handleDialogCloseClick(setCreateDialogOpen)}/>*/}
+            {/*<DeleteCategoryDialog isOpen={deleteDialogOpen} onClose={handleDialogCloseClick(setDeleteDialogOpen)}/>*/}
+            {/*<RenameCategoryDialog isOpen={renameDialogOpen} onClose={handleDialogCloseClick(setRenameDialogOpen)}/>*/}
         </>
     )
 
