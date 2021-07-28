@@ -29,6 +29,9 @@ export const useSearchPageStyles = makeStyles((theme) => ({
     },
     divider: {
         backgroundColor: theme.palette.primary.main,
+    },
+    loader: {
+        marginTop: theme.spacing(4),
     }
 
 }), {index: 1});

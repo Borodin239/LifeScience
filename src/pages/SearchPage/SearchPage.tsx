@@ -56,7 +56,6 @@ const SearchPage = () => {
     }
 
     const renderIcon = (typeName: string) => {
-        console.log("failed: " + typeName)
         switch (typeName) {
             case SearchResultType.CATEGORY: {
                 return <FolderOpenIcon fontSize="large"/>;
@@ -89,7 +88,7 @@ const SearchPage = () => {
     const results = useAppSelector(state => state.searchReducer.results)
 
     if (isLoading) {
-        return <CenteredLoader/>
+        return <CenteredLoader className={classes.loader}/>
     }
 
     return (
