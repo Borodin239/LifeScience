@@ -28,9 +28,9 @@ export const patchPathFromNavigationUnit = (unit: NavigationUnit, currentPath: N
     return currentPath;
 }
 
-export const getRedirectionRoute = (type: 'category' | 'approach' | 'protocol', id: number): string => {
+export const getRedirectionRoute = (type: 'category' | 'approach' | 'protocol', id: string): string => {
     if (type === 'category') {
-        return `${appRoutesNames.CATEGORIES}/${id || ''}`;
+        return `${appRoutesNames.CATEGORIES}/${id}`;
     }
 
     if (type === 'approach') {

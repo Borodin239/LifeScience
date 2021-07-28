@@ -45,7 +45,7 @@ const CategoryPage = () => {
     const userRoles = useAppSelector(state => state.usersReducer.userInfo?.roles);
 
     const createCatalogNode = useCallback((type: "category" | "approach", view: ApproachView | CategoryView): CatalogNode => {
-        const redirectionRoute = getRedirectionRoute(type, view.id);
+        const redirectionRoute = getRedirectionRoute(type, `${view.id}`);
 
         return {
             name: view.name,
@@ -84,7 +84,7 @@ const CategoryPage = () => {
                 dispatch(pathSwitch({
                     name: payload.name,
                     type: "category",
-                    route: getRedirectionRoute("category", categoryId)
+                    route: getRedirectionRoute("category", `${categoryId}`)
                 }));
                 setCategoryCatalog(payload.subCategories.map(categoryView => createCatalogNode("category", categoryView)));
                 setApproachCatalog(payload.approaches.map(approachView => createCatalogNode("approach", approachView)));
