@@ -8,6 +8,12 @@ const apiConstants = {
             SIGN_UP: '/auth/register',
             REFRESH: '/auth/refresh'
         },
+        publicApproach: {
+            BASE: '/approaches/public'
+        },
+        section: {
+            BASE: '/sections'
+        },
         categories: {
             INITIAL: '/categories',
             ROOT: '/categories/root'
@@ -16,7 +22,6 @@ const apiConstants = {
             CURRENT: '/users/current'
         }
     },
-
     common: {
         ROOT_ID: -1
     }

@@ -11,7 +11,7 @@ import FormTitle from "../../../elements/typographies/FormTitle";
 import {useAppDispatch} from "../../../redux/hooks";
 import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
 import {signInThunk} from "../../../redux/auth/thunkActions";
-import FormSubmitLoader from "../../../elements/Loaders/FormSubmitLoader";
+import FormSubmitLoader from "../../../elements/Loaders/CenteredLoader";
 import handleThunkErrorBase from "../../../redux/utils/handleThunkErrorBase";
 
 
