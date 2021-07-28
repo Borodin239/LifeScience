@@ -3,37 +3,13 @@ import {AppDispatch} from "../store/store";
 import {ApiError} from "../../infrastructure/common/exceptions/ApiError";
 import onThunkError from "../utils/onThunkError";
 import {searchApi} from "../../infrastructure/http/api/search/searchApi";
+import {SearchDto} from "../../infrastructure/http/api/dto/search/SearchDto";
+import {SearchResultView} from "../../infrastructure/http/api/view/search/SearchResultView";
 
 export const SEARCH_ACTION_TYPE_PREFIX = 'auth';
 
-export enum SearchResultType {
-    CATEGORY = "Category",
-    APPROACH = "Approach",
-    PROTOCOL = "Protocol",
-}
-
-export type CategorySearchResult = {
-    "categoryId": string,
-    "name": string,
-    "typeName": "Category",
-}
-
-export type ApproachSearchResult = {
-    "publishApproachId": string,
-    "name": string,
-    "typeName": "Approach",
-}
-
-export type ProtocolSearchResult = {
-    "publishProtocolId": string,
-    "name": string,
-    "typeName": "Protocol",
-}
-
-export type SearchResult = CategorySearchResult | ApproachSearchResult | ProtocolSearchResult
-
 type SearchState = {
-    results: SearchResult[],
+    results: SearchResultView[],
 }
 
 const initState: SearchState = {
@@ -48,14 +24,7 @@ export enum SearchType {
     CATEGORY= "CATEGORY", APPROACH= "APPROACH", PROTOCOL= "PROTOCOL"
 }
 
-export type SearchDto = {
-    text: string,
-    includeTypes?: SearchType[],
-    size?: number,
-    from?: number
-}
-
-export const searchThunk = createAsyncThunk<SearchResult[], // что возвращает при fulfilled
+export const searchThunk = createAsyncThunk<SearchResultView[], // что возвращает при fulfilled
     SearchDto, // что принимает как аргумент при dispatch
     { // деструктуризация thunkAPI
         dispatch: AppDispatch,
@@ -66,7 +35,7 @@ export const searchThunk = createAsyncThunk<SearchResult[], // что возвр
         try {
             const response = await searchApi.search(dto)
 
-            return response.data as SearchResult
+            return response.data as SearchResultView
         } catch (err) {
             return onThunkError(err, thunkAPI);
         }

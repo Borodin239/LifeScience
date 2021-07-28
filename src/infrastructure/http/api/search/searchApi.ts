@@ -1,6 +1,6 @@
 import apiClientDefault from "../client/apiClientDefault";
-import {SearchDto} from "../../../../redux/search/slice";
 import apiConstants from "../apiConstants";
+import {SearchDto} from "../dto/search/SearchDto";
 
 
 export const searchApi = {

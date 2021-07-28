@@ -3,9 +3,6 @@ import {useEffect, useState} from "react";
 import {useHistory, useLocation} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {
-    SearchDto,
-    SearchResult,
-    SearchResultType,
     searchThunk,
     SearchType
 } from "../../redux/search/slice";
@@ -19,6 +16,9 @@ import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import SubjectIcon from '@material-ui/icons/Subject';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
+import {SearchDto} from "../../infrastructure/http/api/dto/search/SearchDto";
+import {SearchResultType} from "../../infrastructure/http/api/view/search/SearchResultType";
+import {SearchResultView} from "../../infrastructure/http/api/view/search/SearchResultView";
 
 
 const SearchPage = () => {
@@ -70,7 +70,7 @@ const SearchPage = () => {
         }
     }
 
-    const handleClick = (result: SearchResult) => () => {
+    const handleClick = (result: SearchResultView) => () => {
         switch (result.typeName) {
             case "Approach": {
                 history.push(`${appRoutesNames.APPROACHES}/${result.publishApproachId}`);
