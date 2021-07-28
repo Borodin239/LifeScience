@@ -6,6 +6,12 @@ import {searchApi} from "../../infrastructure/http/api/search/searchApi";
 
 export const SEARCH_ACTION_TYPE_PREFIX = 'auth';
 
+export enum SearchResultType {
+    Category = "Category",
+    Approach = "Approach",
+    Protocol = "Protocol",
+}
+
 type CategorySearchResult = {
     "categoryId": number,
     "name": string,
@@ -45,8 +51,7 @@ export type SearchDto = {
     from?: number
 }
 
-export const searchThunk = createAsyncThunk<
-    SearchResult[], // что возвращает при fulfilled
+export const searchThunk = createAsyncThunk<SearchResult[], // что возвращает при fulfilled
     SearchDto, // что принимает как аргумент при dispatch
     { // деструктуризация thunkAPI
         dispatch: AppDispatch,
