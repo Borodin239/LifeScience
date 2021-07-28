@@ -12,10 +12,11 @@ export const useSearchPageStyles = makeStyles((theme) => ({
         borderBottom: "1px solid " + theme.palette.primary.main,
     },
     searchResultContainer: {
-        marginTop: theme.spacing(3),
+        marginTop: theme.spacing(2),
         width: '30%',
         display: "flex",
         justifyContent: "start",
+        padding: theme.spacing(1),
     },
     iconContainer: {
         fontSize: "20px",
@@ -23,7 +24,10 @@ export const useSearchPageStyles = makeStyles((theme) => ({
         color: theme.palette.primary.main,
     },
     searchResultName: {
-        fontSize: "20px"
+        fontSize: "24px"
+    },
+    divider: {
+        backgroundColor: theme.palette.primary.main,
     }
 
 }), {index: 1});

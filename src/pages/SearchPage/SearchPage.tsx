@@ -2,7 +2,7 @@ import {Box, Divider, Typography} from "@material-ui/core";
 import {useEffect, useState} from "react";
 import {useHistory, useLocation} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {SearchDto, SearchResultType, searchThunk} from "../../redux/search/slice";
+import {SearchDto, SearchResultType, searchThunk, SearchType} from "../../redux/search/slice";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import SearchTextField from "../../components/search/SearchTextField/SearchTextField";
@@ -32,7 +32,10 @@ const SearchPage = () => {
     const updateSearch = () => {
         const newQuery = new URLSearchParams(location.search).get(apiConstants.search.query) ?? ""
         setQuery(newQuery)
-        const dto: SearchDto = {text: newQuery}
+        const dto: SearchDto = {
+            text: newQuery,
+            includeTypes: [SearchType.APPROACH, SearchType.CATEGORY, SearchType.PROTOCOL]
+        }
         dispatch(searchThunk(dto))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
@@ -46,14 +49,15 @@ const SearchPage = () => {
     }
 
     const renderIcon = (typeName: string) => {
+        console.log("failed: " + typeName)
         switch (typeName) {
-            case SearchResultType.Category: {
+            case SearchResultType.CATEGORY: {
                 return <FolderOpenIcon fontSize="large"/>;
             }
-            case SearchResultType.Approach: {
+            case SearchResultType.APPROACH: {
                 return <SubjectIcon fontSize="large"/>;
             }
-            case SearchResultType.Protocol: {
+            case SearchResultType.PROTOCOL: {
                 return <AssignmentIcon fontSize="large"/>
             }
         }
@@ -74,23 +78,26 @@ const SearchPage = () => {
                     Found {results.length} results for "{query}":
                 </Typography>
             </Box>
-            <Divider/>
+            <Divider className={classes.divider}/>
             <Box>
                 {
                     results.map(result =>
-                        <Box className={classes.searchResultContainer}>
-                            <Box className={classes.iconContainer}>
-                                {renderIcon(result.typeName)}
+                        <>
+                            <Box className={classes.searchResultContainer}>
+                                <Box className={classes.iconContainer}>
+                                    {renderIcon(result.typeName)}
+                                </Box>
+                                <Box>
+                                    <Typography className={classes.searchResultName}>
+                                        {result.name}
+                                    </Typography>
+                                    <Typography>
+                                        Type: {result.typeName}
+                                    </Typography>
+                                </Box>
                             </Box>
-                            <Box>
-                                <Typography className={classes.searchResultName}>
-                                    {result.name}
-                                </Typography>
-                                <Typography>
-                                    Type: {result.typeName}
-                                </Typography>
-                            </Box>
-                        </Box>
+                            <Divider className={classes.divider} style={{width: '30%'}}/>
+                        </>
                     )
 
                 }

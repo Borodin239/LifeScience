@@ -7,9 +7,9 @@ import {searchApi} from "../../infrastructure/http/api/search/searchApi";
 export const SEARCH_ACTION_TYPE_PREFIX = 'auth';
 
 export enum SearchResultType {
-    Category = "Category",
-    Approach = "Approach",
-    Protocol = "Protocol",
+    CATEGORY = "Category",
+    APPROACH = "Approach",
+    PROTOCOL = "Protocol",
 }
 
 type CategorySearchResult = {
@@ -44,9 +44,13 @@ export enum SearchActionThunkTypes {
     SEARCH = "/search",
 }
 
+export enum SearchType {
+    CATEGORY= "CATEGORY", APPROACH= "APPROACH", PROTOCOL= "PROTOCOL"
+}
+
 export type SearchDto = {
     text: string,
-    includeTypes?: ["CATEGORY" | "APPROACH" | "PROTOCOL"],
+    includeTypes?: SearchType[],
     size?: number,
     from?: number
 }
