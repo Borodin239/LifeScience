@@ -10,6 +10,8 @@ import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import ApproachContainer from "../../components/approach/ApproachContainer/ApproachContainer";
 import ProtocolList from "../../components/approach/ProtocolList/ProtocolList";
 import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
+import {pathSwitch} from "../../redux/navigation/slice";
+import {getRedirectionRoute} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 
 interface ParamType {
     approachId: string
@@ -37,8 +39,13 @@ const MethodPage: React.FC = () => {
         dispatch(getPublicApproachThunk(approachId))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
-            .then(() => {
-                setIsLoading(false)
+            .then(payload => {
+                dispatch(pathSwitch({
+                    name: payload.name,
+                    type: "approach",
+                    route: getRedirectionRoute("approach", approachId)
+                }));
+                setIsLoading(false);
             })
             .catch(thunkError => {
                 handleThunkErrorBase(thunkError, history, dispatch);

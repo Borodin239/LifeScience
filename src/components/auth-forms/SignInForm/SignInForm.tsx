@@ -12,7 +12,6 @@ import {useAppDispatch} from "../../../redux/hooks";
 import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
 import {signInThunk} from "../../../redux/auth/thunkActions";
 import FormSubmitLoader from "../../../elements/Loaders/CenteredLoader";
-import splitThunkPayload from "../../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../../redux/utils/handleThunkErrorBase";
 
 
@@ -40,7 +39,7 @@ export const SignInForm: React.FC = () => {
 
         dispatch(signInThunk({email, password}))
             .unwrap()
-            .then((payload) => splitThunkPayload(payload))
+            // .then((payload) => splitThunkPayload(payload))
             .then(() => history.push(appRoutesNames.HOME))
             .catch(thunkError => {
                 setIsPending(false);
