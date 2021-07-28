@@ -6,9 +6,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import CatalogNodeList, {CatalogNode} from "../../components/categories/CatalogNodeList";
 import SubjectIcon from "@material-ui/icons/Subject";
 import {FolderOutlined} from "@material-ui/icons";
-import AdminSettings from "../../components/categories/admin/AdminSettings/AdminSettings";
+import CategoryAdminSettings from "../../components/categories/admin/AdminSettings/CategoryAdminSettings";
 import {developmentLog} from "../../infrastructure/common/developmentLog";
-import {useAppDispatch} from "../../redux/hooks";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {getCategoryInfoThunk, getCategoryRootThunk} from "../../redux/categories/thunkActions";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
@@ -40,6 +40,8 @@ const CategoryPage = () => {
 
     const [categoryCatalog, setCategoryCatalog] = useState<CatalogNode[]>([]);
     const [approachCatalog, setApproachCatalog] = useState<CatalogNode[]>([]);
+
+    const userRoles = useAppSelector(state => state.usersReducer.userInfo?.roles);
 
     const createCatalogNode = useCallback((type: "category" | "approach", view: ApproachView | CategoryView): CatalogNode => {
         const redirectionRoute = getRedirectionRoute("category", view.id);
@@ -113,7 +115,7 @@ const CategoryPage = () => {
         <Box>
             <Box className={classes.upperBar}>
                 {isLoading ? <Location locationList={[]}/> : <GlobalUserLocation/>}
-                <AdminSettings/> {/*todo only visible to admins*/}
+                {(userRoles && userRoles.includes("ROLE_ADMIN")) ? <CategoryAdminSettings categoryId={parseInt(params.categoryId)}/> : null}
             </Box>
             {
                 isLoading ?

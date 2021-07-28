@@ -1,7 +1,7 @@
 export type UserInfoView = {
     id: number,
     email: string,
-    roles: "ROLE_USER" | "ROLE_ADMIN" | "ROLE_MODERATOR",
+    roles: ("ROLE_USER" | "ROLE_ADMIN" | "ROLE_MODERATOR")[],
     personalData:
         {
             firstName: string,
