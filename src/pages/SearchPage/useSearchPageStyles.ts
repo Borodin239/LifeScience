@@ -24,7 +24,8 @@ export const useSearchPageStyles = makeStyles((theme) => ({
         color: theme.palette.primary.main,
     },
     searchResultName: {
-        fontSize: "24px"
+        fontSize: "24px",
+        cursor: "pointer",
     },
     divider: {
         backgroundColor: theme.palette.primary.main,

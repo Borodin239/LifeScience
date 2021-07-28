@@ -2,7 +2,13 @@ import {Box, Divider, Typography} from "@material-ui/core";
 import {useEffect, useState} from "react";
 import {useHistory, useLocation} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {SearchDto, SearchResultType, searchThunk, SearchType} from "../../redux/search/slice";
+import {
+    SearchDto,
+    SearchResult,
+    SearchResultType,
+    searchThunk,
+    SearchType
+} from "../../redux/search/slice";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import SearchTextField from "../../components/search/SearchTextField/SearchTextField";
@@ -12,6 +18,7 @@ import {useSearchPageStyles} from "./useSearchPageStyles";
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import SubjectIcon from '@material-ui/icons/Subject';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 
 
 const SearchPage = () => {
@@ -62,6 +69,23 @@ const SearchPage = () => {
             }
         }
     }
+
+    const handleClick = (result: SearchResult) => () => {
+        switch (result.typeName) {
+            case "Approach": {
+                history.push(`${appRoutesNames.APPROACHES}/${result.publishApproachId}`);
+                return;
+            }
+            case "Category": {
+                history.push(`${appRoutesNames.CATEGORIES}/${result.categoryId}`);
+                return;
+            }
+            case "Protocol": {
+                return;
+            }
+        }
+    }
+
     const results = useAppSelector(state => state.searchReducer.results)
 
     if (isLoading) {
@@ -88,7 +112,7 @@ const SearchPage = () => {
                                     {renderIcon(result.typeName)}
                                 </Box>
                                 <Box>
-                                    <Typography className={classes.searchResultName}>
+                                    <Typography className={classes.searchResultName} onClick={handleClick(result)}>
                                         {result.name}
                                     </Typography>
                                     <Typography>

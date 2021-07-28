@@ -12,20 +12,20 @@ export enum SearchResultType {
     PROTOCOL = "Protocol",
 }
 
-type CategorySearchResult = {
-    "categoryId": number,
+export type CategorySearchResult = {
+    "categoryId": string,
     "name": string,
     "typeName": "Category",
 }
 
-type ApproachSearchResult = {
-    "publishApproachId": number,
+export type ApproachSearchResult = {
+    "publishApproachId": string,
     "name": string,
     "typeName": "Approach",
 }
 
-type ProtocolSearchResult = {
-    "publishProtocolId": number,
+export type ProtocolSearchResult = {
+    "publishProtocolId": string,
     "name": string,
     "typeName": "Protocol",
 }
