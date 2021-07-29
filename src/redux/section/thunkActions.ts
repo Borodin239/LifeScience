@@ -5,7 +5,7 @@ import {ApiError} from "../../infrastructure/common/exceptions/ApiError";
 import {sectionApi} from "../../infrastructure/http/api/methods/sectionApi";
 import onThunkError from "../utils/onThunkError";
 
-export const SECTION_ACTION_TYPE_PREFIX = 'approaches'
+export const SECTION_ACTION_TYPE_PREFIX = 'sections'
 
 enum SectionActionThunkTypes {
     GET = "/getSection",
@@ -16,7 +16,8 @@ type GetSectionArguments = {
     sectionId: string,
 }
 
-export const getSectionThunk = createAsyncThunk<SectionView, // что возвращает при fulfilled
+export const getSectionThunk = createAsyncThunk<
+    SectionView, // что возвращает при fulfilled
     GetSectionArguments, // что принимает как аргумент при dispatch
     { // деструктуризация thunkAPI
         dispatch: AppDispatch,

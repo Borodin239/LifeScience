@@ -20,6 +20,9 @@ const apiConstants = {
         },
         users: {
             CURRENT: '/users/current'
+        },
+        protocol: {
+            BASE: '/protocols'
         }
     },
     common: {
