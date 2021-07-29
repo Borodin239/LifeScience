@@ -20,6 +20,7 @@ apiClientSecure.interceptors.response.use((config) => {
         const originalRequest = error.config;
         if (error.response && [401003, 401004].includes(error.response.data?.systemCode)) {
             try {
+                developmentLog("Potential auth error, trying to refresh... ");
                 const response = await authApi.refresh();
                 setAccessToken(response.data.accessToken);
                 return apiClientSecure.request(originalRequest);

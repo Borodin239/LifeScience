@@ -18,6 +18,9 @@ const apiConstants = {
             INITIAL: '/categories',
             ROOT: '/categories/root'
         },
+        users: {
+            CURRENT: '/users/current'
+        },
         search: {
             SEARCH: '/search'
         }
