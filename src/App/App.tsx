@@ -11,6 +11,7 @@ import appRoutesNames from "../infrastructure/common/appRoutesNames";
 import HomePage from "../pages/HomePage/HomePage";
 import MethodPage from "../pages/MethodPage/MethodPage";
 import {useAppStyles} from "./useAppStyles";
+import SearchPage from "../pages/SearchPage/SearchPage";
 import {Box} from "@material-ui/core";
 import './App.css'
 
@@ -45,6 +46,7 @@ function App() {
                                     <Route exact path={`${appRoutesNames.CATEGORIES}/:categoryId(\\d{0,11})`} render={() => <CategoryPage/>}/>
                                     <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                                     <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
+                                    <Route exact path={appRoutesNames.SEARCH} render={() => <SearchPage/>}/>
                                     <Route exact path="/error"
                                            render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 

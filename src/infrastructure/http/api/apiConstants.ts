@@ -20,8 +20,16 @@ const apiConstants = {
         },
         users: {
             CURRENT: '/users/current'
+        },
+        search: {
+            SEARCH: '/search'
         }
     },
+
+    search: {
+        query: "query",
+    },
+
     common: {
         ROOT_ID: -1
     }
