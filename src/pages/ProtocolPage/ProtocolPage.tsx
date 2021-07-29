@@ -13,6 +13,7 @@ import {getPublicProtocolThunk} from "../../redux/protocol/thunkActions";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 import {useProtocolPageStyles} from "./useProtocolPageStyles";
+import SectionList from "../../components/approach/SectionList/SectionList";
 
 
 interface ParamType {
@@ -30,6 +31,8 @@ const ProtocolPage = () => {
     const {approachId, protocolId} = useParams<ParamType>()
 
     const [isLoading, setIsLoading] = useState(true);
+
+    const [selectedSection, setSelectedSection] = useState(0)
 
     useEffect(() => {
         setIsLoading(true)
@@ -55,6 +58,10 @@ const ProtocolPage = () => {
         history.push(`${appRoutesNames.APPROACHES}/${approachId}`)
     }
 
+    const handleSectionTitleClick = (index: number) => () => {
+        setSelectedSection(index);
+    }
+
     const protocol = useAppSelector(state => state.protocolReducer.protocol)
 
     if (isLoading) {
@@ -75,9 +82,11 @@ const ProtocolPage = () => {
                         {protocol.approach.name}: {protocol.name}
                     </Typography>
                 </Box>
-                <Box>
-                {/*    section list  */}
-                {/*    content container */}
+                <Box className={protocolClasses.protocolContainer}>
+                    <SectionList sections={protocol.sections}
+                                 selectedSection={selectedSection}
+                                 handleSectionTitleClick={handleSectionTitleClick}/>
+                    {/*    content container */}
                 </Box>
             </Box>
 

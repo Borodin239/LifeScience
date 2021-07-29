@@ -4,18 +4,20 @@ import {makeStyles} from "@material-ui/core/styles";
 export const useProtocolPageStyles = makeStyles((theme) => ({
     upperBar: {
         position: "relative",
+        display: "flex",
+        justifyContent: "start",
     },
     backButtonContainer: {
-        position: "absolute",
-        left: '0',
-        top: '0',
         width: '20%',
     },
     protocolName: {
-        position: "absolute",
-        top: '0',
-        left: '25%',
+        marginLeft: '5%',
         width: '75%',
+    },
+    protocolContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginTop: theme.spacing(2),
     }
 
 }), {index: 1});
