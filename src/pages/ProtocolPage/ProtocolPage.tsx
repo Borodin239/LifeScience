@@ -1,14 +1,58 @@
 import {Box, Typography} from "@material-ui/core";
 import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useMethodPageStyles} from "../MethodPage/method-page-styles";
 import {LeftProtocolsArrow} from "../../components/approach/ProtocolsArrows/ProtocolsArrows";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
+import splitThunkPayload from "../../redux/utils/splitThunkPayload";
+import {pathSwitch} from "../../redux/navigation/slice";
+import {getRedirectionRoute} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
+import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
+import {useHistory, useParams} from "react-router-dom";
+import {getPublicProtocolThunk} from "../../redux/protocol/thunkActions";
+import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 
+
+interface ParamType {
+    approachId: string,
+    protocolId: string,
+}
 
 const ProtocolPage = () => {
 
-    const methodClasses = useMethodPageStyles()
+    const dispatch = useAppDispatch()
+    const history = useHistory()
 
+    const methodClasses = useMethodPageStyles()
+    const {approachId, protocolId} = useParams<ParamType>()
+
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        setIsLoading(true)
+        dispatch(getPublicProtocolThunk({approachId, protocolId}))
+            .unwrap()
+            .then(payload => splitThunkPayload(payload))
+            .then(payload => {
+                dispatch(pathSwitch({
+                    name: payload.name,
+                    type: "protocol",
+                    route: getRedirectionRoute("protocol", protocolId)
+                }));
+                setIsLoading(false);
+            })
+            .catch(thunkError => {
+                handleThunkErrorBase(thunkError, history, dispatch);
+                // setIsLoading(false);
+
+            })
+    }, [approachId, history, dispatch]);
+
+    const protocol = useAppSelector(state => state.protocolReducer.protocol)
+
+    if (isLoading) {
+        return <CenteredLoader/>
+    }
 
     return (
         <Box>
@@ -19,7 +63,7 @@ const ProtocolPage = () => {
                 <Box>
                     <LeftProtocolsArrow handleClick={() => {}}/>
                     <Typography>
-                        Bradford assay: original protocol
+                        {protocol.approach.name}: {protocol.name}
                     </Typography>
                 </Box>
                 <Box>
