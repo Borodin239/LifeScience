@@ -1,44 +1,19 @@
 import {useMethodPageStyles} from "../../../pages/MethodPage/method-page-styles";
 import {Box, Divider} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import React, {useEffect, useState} from "react";
-import {useAppDispatch, useAppSelector} from "../../../redux/hooks";
-import handleThunkErrorBase from "../../../redux/utils/handleThunkErrorBase";
-import splitThunkPayload from "../../../redux/utils/splitThunkPayload";
+import React from "react";
 import CenteredLoader from "../../../elements/Loaders/CenteredLoader";
-import {useHistory} from "react-router-dom";
-import {getSectionThunk} from "../../../redux/section/thunkActions";
+import {SectionView} from "../../../infrastructure/http/api/view/section/SectionView";
 
 
 type ContentContainerProps = {
     title: string,
-    approachId: string,
-    sectionId: string,
+    section: SectionView,
+    isLoading: boolean,
 }
 
-const ContentContainer: React.FC<ContentContainerProps> = ({title, approachId, sectionId}) => {
+const ContentContainer: React.FC<ContentContainerProps> = ({title, section, isLoading}) => {
     const classes = useMethodPageStyles();
-    const dispatch = useAppDispatch();
-    const history = useHistory();
-
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        setIsLoading(true);
-        dispatch(getSectionThunk({approachId, sectionId}))
-            .unwrap()
-            .then(payload => splitThunkPayload(payload))
-            .then(() => {
-                setIsLoading(false)
-            })
-            .catch(thunkError => {
-                setIsLoading(false);
-
-                handleThunkErrorBase(thunkError, history, dispatch);
-            });
-    }, [sectionId, approachId, dispatch, history]);
-
-    const section = useAppSelector(state => state.sectionReducer)
 
     return (
         <Box className={classes.contentContainer}>
