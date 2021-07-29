@@ -32,10 +32,6 @@ const SearchPage = () => {
     const [query, setQuery] = useState("")
     const [isLoading, setIsLoading] = useState(true)
 
-    useEffect(() => {
-        updateSearch()
-    }, [location.search])
-
     const updateSearch = () => {
         const newQuery = new URLSearchParams(location.search).get(apiConstants.search.query) ?? ""
         setQuery(newQuery)
@@ -54,6 +50,10 @@ const SearchPage = () => {
                 handleThunkErrorBase(thunkError, history, dispatch);
             });
     }
+
+    useEffect(() => {
+        updateSearch()
+    }, [location.search, updateSearch])
 
     const renderIcon = (typeName: string) => {
         switch (typeName) {
