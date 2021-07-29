@@ -14,6 +14,7 @@ import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 import {useProtocolPageStyles} from "./useProtocolPageStyles";
 import SectionList from "../../components/approach/SectionList/SectionList";
+import {viewProtocolList} from "../../redux/publicApproach/slice";
 
 
 interface ParamType {
@@ -55,6 +56,7 @@ const ProtocolPage = () => {
     }, [approachId, history, dispatch]);
 
     const handleBackToProtocols = () => {
+        dispatch(viewProtocolList())
         history.push(`${appRoutesNames.APPROACHES}/${approachId}`)
     }
 

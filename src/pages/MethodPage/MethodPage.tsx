@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Box, Fade, Slide} from "@material-ui/core";
+import {Box, Fade} from "@material-ui/core";
 import {useMethodPageStyles} from "./method-page-styles";
 import {useHistory, useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
@@ -12,6 +12,7 @@ import ProtocolList from "../../components/approach/ProtocolList/ProtocolList";
 import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
 import {pathSwitch} from "../../redux/navigation/slice";
 import {getRedirectionRoute} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
+import {hideProtocolList, viewProtocolList} from "../../redux/publicApproach/slice";
 
 interface ParamType {
     approachId: string
@@ -24,15 +25,16 @@ const MethodPage: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const [isLoading, setIsLoading] = useState(true);
-    const [isProtocolListViewed, setIsProtocolListViewed] = useState(false)
 
     const handleGoToProtocolsClick = () => {
-        setIsProtocolListViewed(true)
+        dispatch(viewProtocolList())
     }
 
     const handleBackToMethodClick = () => {
-        setIsProtocolListViewed(false)
+        dispatch(hideProtocolList())
     }
+
+    const isProtocolListViewed = useAppSelector(state => state.approachReducer.isProtocolListViewed)
 
     useEffect(() => {
         setIsLoading(true)
@@ -68,14 +70,14 @@ const MethodPage: React.FC = () => {
             {
                 isProtocolListViewed
                     ?
-                    <Slide in={isProtocolListViewed} direction={"left"} mountOnEnter unmountOnExit>
+                    <Fade in={isProtocolListViewed}>
                         <Box>
                             <ProtocolList protocols={approach.protocols}
                                           approachName={approach.name}
                                           approachId={approachId}
                                           handleGoBackClick={handleBackToMethodClick}/>
                         </Box>
-                    </Slide>
+                    </Fade>
                     :
                     <Fade in={!isProtocolListViewed}>
                         <Box>
