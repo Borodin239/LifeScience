@@ -11,6 +11,8 @@ import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {useHistory, useParams} from "react-router-dom";
 import {getPublicProtocolThunk} from "../../redux/protocol/thunkActions";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
+import appRoutesNames from "../../infrastructure/common/appRoutesNames";
+import {useProtocolPageStyles} from "./useProtocolPageStyles";
 
 
 interface ParamType {
@@ -24,6 +26,7 @@ const ProtocolPage = () => {
     const history = useHistory()
 
     const methodClasses = useMethodPageStyles()
+    const protocolClasses = useProtocolPageStyles()
     const {approachId, protocolId} = useParams<ParamType>()
 
     const [isLoading, setIsLoading] = useState(true);
@@ -37,7 +40,7 @@ const ProtocolPage = () => {
                 dispatch(pathSwitch({
                     name: payload.name,
                     type: "protocol",
-                    route: getRedirectionRoute("protocol", protocolId)
+                    route: getRedirectionRoute("protocol", protocolId, approachId)
                 }));
                 setIsLoading(false);
             })
@@ -47,6 +50,10 @@ const ProtocolPage = () => {
 
             })
     }, [approachId, history, dispatch]);
+
+    const handleBackToProtocols = () => {
+        history.push(`${appRoutesNames.APPROACHES}/${approachId}`)
+    }
 
     const protocol = useAppSelector(state => state.protocolReducer.protocol)
 
@@ -60,9 +67,11 @@ const ProtocolPage = () => {
                 <GlobalUserLocation/>
             </Box>
             <Box>
-                <Box>
-                    <LeftProtocolsArrow handleClick={() => {}}/>
-                    <Typography>
+                <Box className={protocolClasses.upperBar}>
+                    <Box className={protocolClasses.backButtonContainer}>
+                        <LeftProtocolsArrow text={"To other protocols"} handleClick={handleBackToProtocols}/>
+                    </Box>
+                    <Typography variant={"h5"} className={protocolClasses.protocolName}>
                         {protocol.approach.name}: {protocol.name}
                     </Typography>
                 </Box>

@@ -29,7 +29,7 @@ const ProtocolList: React.FC<ProtocolListProps> = (props) => {
         <Box>
            <Box className={classes.upperBar}>
                <Box className={classes.backToMethod}>
-                    <LeftProtocolsArrow handleClick={handleGoBackClick}/>
+                    <LeftProtocolsArrow text={"Back to method"} handleClick={handleGoBackClick}/>
                </Box>
                <Typography variant={"h5"} className={classes.title}>
                    {approachName}: protocols

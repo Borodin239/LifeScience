@@ -28,7 +28,7 @@ export const patchPathFromNavigationUnit = (unit: NavigationUnit, currentPath: N
     return currentPath;
 }
 
-export const getRedirectionRoute = (type: 'category' | 'approach' | 'protocol', id: string): string => {
+export const getRedirectionRoute = (type: 'category' | 'approach' | 'protocol', id: string, approachId? : string): string => {
     if (type === 'category') {
         return `${appRoutesNames.CATEGORIES}/${id}`;
     }
@@ -37,7 +37,7 @@ export const getRedirectionRoute = (type: 'category' | 'approach' | 'protocol', 
         return `${appRoutesNames.APPROACHES}/${id}`;
     }
 
-    return `${appRoutesNames.PROTOCOLS}/${id}`;
+    return `${appRoutesNames.APPROACHES}/${approachId}${appRoutesNames.PROTOCOLS}/${id}`;
 }
 
 

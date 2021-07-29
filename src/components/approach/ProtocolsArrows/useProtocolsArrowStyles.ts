@@ -22,6 +22,7 @@ export const useProtocolsArrowStyles = makeStyles((theme) => ({
         cursor: "pointer",
         padding: theme.spacing(0, 1, 0.2, 1),
         borderBottom: "1px solid " + theme.palette.primary.main,
+        maxWidth: "fit-content",
     },
     leftContainer: {
         '&:hover': {
