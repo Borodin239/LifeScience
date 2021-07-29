@@ -1,5 +1,5 @@
 import {Box, Divider, Typography} from "@material-ui/core";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useHistory, useLocation} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {
@@ -32,7 +32,7 @@ const SearchPage = () => {
     const [query, setQuery] = useState("")
     const [isLoading, setIsLoading] = useState(true)
 
-    const updateSearch = () => {
+    const updateSearch = useCallback(() => {
         const newQuery = new URLSearchParams(location.search).get(apiConstants.search.query) ?? ""
         setQuery(newQuery)
         const dto: SearchDto = {
@@ -49,7 +49,7 @@ const SearchPage = () => {
                 setIsLoading(false);
                 handleThunkErrorBase(thunkError, history, dispatch);
             });
-    }
+    }, [location, dispatch, history])
 
     useEffect(() => {
         updateSearch()
