@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     },
     nodes: {
         display: "flex",
+        flexWrap: "wrap"
     }
 }), {index: 1});
 
