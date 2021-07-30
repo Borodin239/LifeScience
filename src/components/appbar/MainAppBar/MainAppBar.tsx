@@ -1,15 +1,16 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {useHistory} from "react-router-dom";
-import {useAppSelector} from "../../../redux/hooks";
+import {useAppDispatch, useAppSelector} from "../../../redux/hooks";
 import useMainAppBarStyles from "./useMainAppBarStyles";
 import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
 import MainAppBarProfileMenu from "./MainAppBarProfileMenu";
 import MainSearch from "./MainSearch/MainSearch";
 import UnauthorizedProfile from "./profile/UnauthorizedProfile/UnauthorizedProfile";
 import AuthorizedProfilePreview from "./profile/AuthorizedProfilePreview";
+import {updateCurrentUserThunk} from "../../../redux/users/thunkActions";
 
 
 const MainAppBar: React.FC = () => {
@@ -17,9 +18,15 @@ const MainAppBar: React.FC = () => {
 
     const classes = useMainAppBarStyles();
     const history = useHistory();
+    const dispatch = useAppDispatch();
 
     const isAuthorized = useAppSelector(state => state.authReducer.isAuthorized);
 
+    useEffect(() => {
+        if (isAuthorized) {
+            dispatch(updateCurrentUserThunk());
+        }
+    }, [isAuthorized, dispatch]);
 
     const handleHomeClick = useCallback(() => {
         history.push(appRoutesNames.HOME);

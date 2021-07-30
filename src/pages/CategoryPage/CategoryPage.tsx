@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
 import {useHistory, useParams} from "react-router-dom";
 import {Box} from "@material-ui/core";
@@ -6,9 +6,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import CatalogNodeList, {CatalogNode} from "../../components/categories/CatalogNodeList";
 import SubjectIcon from "@material-ui/icons/Subject";
 import {FolderOutlined} from "@material-ui/icons";
-import AdminSettings from "../../components/categories/admin/AdminSettings/AdminSettings";
+import CategoryAdminSettings from "../../components/categories/admin/AdminSettings/CategoryAdminSettings";
 import {developmentLog} from "../../infrastructure/common/developmentLog";
-import {useAppDispatch} from "../../redux/hooks";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {getCategoryInfoThunk, getCategoryRootThunk} from "../../redux/categories/thunkActions";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
@@ -20,6 +20,7 @@ import {CategoryView} from "../../infrastructure/http/api/view/category/Category
 import {CategoryInfoView} from "../../infrastructure/http/api/view/category/CategoryInfoView";
 import Location from "../../components/navigation/Location";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
+import {sortBy} from "lodash";
 
 const useStyles = makeStyles((theme) => ({
     upperBar: {
@@ -42,8 +43,18 @@ const CategoryPage = () => {
     const [categoryCatalog, setCategoryCatalog] = useState<CatalogNode[]>([]);
     const [approachCatalog, setApproachCatalog] = useState<CatalogNode[]>([]);
 
+    const sortedCategoryCatalog = useMemo(() => {
+        return sortBy(categoryCatalog, (elem: CatalogNode) => elem.name);
+    }, [categoryCatalog]);
+
+    const sortedApproachCatalog = useMemo(() => {
+        return sortBy(approachCatalog, (elem: CatalogNode) => elem.name);
+    }, [approachCatalog]);
+
+    const userRoles = useAppSelector(state => state.usersReducer.userInfo?.roles);
+
     const createCatalogNode = useCallback((type: "category" | "approach", view: ApproachView | CategoryView): CatalogNode => {
-        const redirectionRoute = getRedirectionRoute(type, view.id);
+        const redirectionRoute = getRedirectionRoute(type, `${view.id}`);
 
         return {
             name: view.name,
@@ -82,7 +93,7 @@ const CategoryPage = () => {
                 dispatch(pathSwitch({
                     name: payload.name,
                     type: "category",
-                    route: getRedirectionRoute("category", categoryId)
+                    route: getRedirectionRoute("category", `${categoryId}`)
                 }));
                 setCategoryCatalog(payload.subCategories.map(categoryView => createCatalogNode("category", categoryView)));
                 setApproachCatalog(payload.approaches.map(approachView => createCatalogNode("approach", approachView)));
@@ -114,14 +125,14 @@ const CategoryPage = () => {
         <Box>
             <Box className={classes.upperBar}>
                 {isLoading ? <Location locationList={[]}/> : <GlobalUserLocation/>}
-                <AdminSettings/> {/*todo only visible to admins*/}
+                {(userRoles && userRoles.includes("ROLE_ADMIN")) ? <CategoryAdminSettings categoryId={parseInt(params.categoryId)}/> : null}
             </Box>
             {
                 isLoading ?
                     <CenteredLoader/> :
                     <>
-                        <CatalogNodeList list={categoryCatalog} icon={<FolderOutlined/>} type={"Categories"}/>
-                        <CatalogNodeList type={"Methods"} icon={<SubjectIcon/>} list={approachCatalog}/>
+                        <CatalogNodeList list={sortedCategoryCatalog} icon={<FolderOutlined/>} type={"Categories"}/>
+                        <CatalogNodeList list={sortedApproachCatalog} icon={<SubjectIcon/>} type={"Methods"}/>
                     </>
             }
         </Box>

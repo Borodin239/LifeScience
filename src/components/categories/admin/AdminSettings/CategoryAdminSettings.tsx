@@ -8,7 +8,7 @@ import CreateCategoryDialog from "../dialogs/CreateCategory/CreateCategoryDialog
 import DeleteCategoryDialog from "../dialogs/DeleteCategory/DeleteCategoryDialog";
 import RenameCategoryDialog from "../dialogs/RenameCategory/RenameCategoryDialog";
 
-const AdminSettings = () => {
+const CategoryAdminSettings: React.FC<{ categoryId: number }> = ({categoryId}) => {
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -36,7 +36,7 @@ const AdminSettings = () => {
         <Menu
             anchorEl={anchorEl}
             keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            transformOrigin={{vertical: 'top', horizontal: 'right'}}
             open={isMenuOpen}
             onClose={handleMenuClose}
             classes={{paper: classes.menu}}
@@ -50,17 +50,22 @@ const AdminSettings = () => {
 
     return (
         <>
-            <IconButton onClick={handleSettingsOpen} className={classes.dots}>
-                <MoreVertIcon />
-            </IconButton>
-            {renderMenu}
-            <CreateCategoryDialog open={createDialogOpen} onClose={handleDialogCloseClick(setCreateDialogOpen)}/>
-            <DeleteCategoryDialog open={deleteDialogOpen} onClose={handleDialogCloseClick(setDeleteDialogOpen)}/>
-            <RenameCategoryDialog open={renameDialogOpen} onClose={handleDialogCloseClick(setRenameDialogOpen)}/>
+            {categoryId ?
+                <>
+                    <IconButton onClick={handleSettingsOpen} className={classes.dots}>
+                        <MoreVertIcon/>
+                    </IconButton>
+                    {renderMenu}
+                    <CreateCategoryDialog categoryId={categoryId} isOpen={createDialogOpen}
+                                          onClose={handleDialogCloseClick(setCreateDialogOpen)}/>
+                    <DeleteCategoryDialog categoryId={categoryId} isOpen={deleteDialogOpen}
+                                          onClose={handleDialogCloseClick(setDeleteDialogOpen)}/>
+                    <RenameCategoryDialog categoryId={categoryId} isOpen={renameDialogOpen}
+                                          onClose={handleDialogCloseClick(setRenameDialogOpen)}/>
+                </> : null
+            }
         </>
     )
-
-
 }
 
-export default AdminSettings
+export default CategoryAdminSettings

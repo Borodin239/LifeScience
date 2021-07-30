@@ -17,8 +17,21 @@ const apiConstants = {
         categories: {
             INITIAL: '/categories',
             ROOT: '/categories/root'
+        },
+        users: {
+            CURRENT: '/users/current'
+        },
+        search: {
+            SEARCH: '/search'
         }
     },
+
+    search: {
+        query: "query",
+        MIN_LENGTH: 2,
+        MAX_LENGTH: 70,
+    },
+
     common: {
         ROOT_ID: -1
     }
