@@ -21,10 +21,20 @@ const apiConstants = {
         users: {
             CURRENT: '/users/current'
         },
+        search: {
+            SEARCH: '/search'
+        },
         protocol: {
             BASE: '/protocols'
         }
     },
+
+    search: {
+        query: "query",
+        MIN_LENGTH: 2,
+        MAX_LENGTH: 70,
+    },
+
     common: {
         ROOT_ID: -1
     }
