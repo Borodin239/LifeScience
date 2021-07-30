@@ -6,7 +6,7 @@ import {LeftProtocolsArrow} from "../../components/approach/ProtocolsArrows/Prot
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import {pathSwitch} from "../../redux/navigation/slice";
-import {getRedirectionRoute} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
+import {getRedirectionRoute, NavigationUnit} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {useHistory, useParams} from "react-router-dom";
 import {getPublicProtocolThunk} from "../../redux/protocol/thunkActions";
@@ -45,8 +45,8 @@ const ProtocolPage = () => {
                 dispatch(pathSwitch({
                     name: payload.name,
                     type: "protocol",
-                    route: getRedirectionRoute("protocol", protocolId, approachId)
-                }));
+                    route: getRedirectionRoute({type: "protocol", approachId: approachId, protocolId: protocolId})
+                } as NavigationUnit));
                 setIsLoading(false);
             })
             .catch(thunkError => {

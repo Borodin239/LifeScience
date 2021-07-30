@@ -45,7 +45,9 @@ const CategoryPage = () => {
     const userRoles = useAppSelector(state => state.usersReducer.userInfo?.roles);
 
     const createCatalogNode = useCallback((type: "category" | "approach", view: ApproachView | CategoryView): CatalogNode => {
-        const redirectionRoute = getRedirectionRoute(type, `${view.id}`);
+        const redirectionRoute = type === 'category'
+            ? getRedirectionRoute({type: type, categoryId: `${view.id}`})
+            : getRedirectionRoute({type: type, approachId: `${view.id}`})
 
         return {
             name: view.name,
@@ -84,7 +86,7 @@ const CategoryPage = () => {
                 dispatch(pathSwitch({
                     name: payload.name,
                     type: "category",
-                    route: getRedirectionRoute("category", `${categoryId}`)
+                    route: getRedirectionRoute({type: "category", categoryId: `${categoryId}`})
                 }));
                 setCategoryCatalog(payload.subCategories.map(categoryView => createCatalogNode("category", categoryView)));
                 setApproachCatalog(payload.approaches.map(approachView => createCatalogNode("approach", approachView)));
@@ -116,7 +118,8 @@ const CategoryPage = () => {
         <Box>
             <Box className={classes.upperBar}>
                 {isLoading ? <Location locationList={[]}/> : <GlobalUserLocation/>}
-                {(userRoles && userRoles.includes("ROLE_ADMIN")) ? <CategoryAdminSettings categoryId={parseInt(params.categoryId)}/> : null}
+                {(userRoles && userRoles.includes("ROLE_ADMIN")) ?
+                    <CategoryAdminSettings categoryId={parseInt(params.categoryId)}/> : null}
             </Box>
             {
                 isLoading ?

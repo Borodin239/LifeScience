@@ -45,7 +45,7 @@ const MethodPage: React.FC = () => {
                 dispatch(pathSwitch({
                     name: payload.name,
                     type: "approach",
-                    route: getRedirectionRoute("approach", approachId)
+                    route: getRedirectionRoute({type: "approach", approachId: approachId})
                 }));
                 setIsLoading(false);
             })

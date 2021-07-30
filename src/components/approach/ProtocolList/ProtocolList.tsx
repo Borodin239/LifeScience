@@ -3,7 +3,10 @@ import {useProtocolListStyles} from "./useProtocolListStyles";
 import {LeftProtocolsArrow} from "../ProtocolsArrows/ProtocolsArrows";
 import {ProtocolTitleView} from "../../../infrastructure/http/api/view/protocol/ProtocolTitleView";
 import {useHistory} from "react-router-dom";
-import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
+import {pathMove} from "../../../redux/navigation/slice";
+import {getRedirectionRoute, NavigationUnit} from "../../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
+import {useAppDispatch} from "../../../redux/hooks";
+import React from "react";
 
 
 type ProtocolListProps = {
@@ -18,9 +21,13 @@ const ProtocolList: React.FC<ProtocolListProps> = (props) => {
     const {protocols, approachName, approachId, handleGoBackClick} = props
 
     const history = useHistory()
+    const dispatch = useAppDispatch()
 
     const handleProtocolClick = (protocol: ProtocolTitleView) => () => {
-        history.push(`${appRoutesNames.APPROACHES}/${approachId}${appRoutesNames.PROTOCOLS}/${protocol.id}`)
+        const route = getRedirectionRoute({type: 'protocol', approachId: approachId, protocolId: protocol.id})
+
+        dispatch(pathMove({name: protocol.name, route: route, type: 'protocol'} as NavigationUnit));
+        history.push(route)
     }
 
     const classes = useProtocolListStyles()
