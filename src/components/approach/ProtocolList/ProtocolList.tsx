@@ -6,7 +6,8 @@ import {useHistory} from "react-router-dom";
 import {pathMove} from "../../../redux/navigation/slice";
 import {getRedirectionRoute, NavigationUnit} from "../../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 import {useAppDispatch} from "../../../redux/hooks";
-import React from "react";
+import React, {useEffect} from "react";
+import {hideProtocolList} from "../../../redux/publicApproach/slice";
 
 
 type ProtocolListProps = {
@@ -29,6 +30,14 @@ const ProtocolList: React.FC<ProtocolListProps> = (props) => {
         dispatch(pathMove({name: protocol.name, route: route, type: 'protocol'} as NavigationUnit));
         history.push(route)
     }
+
+    const onUnmount = () => {
+        dispatch(hideProtocolList())
+    }
+
+    useEffect(() => {
+        return onUnmount
+    }, [])
 
     const classes = useProtocolListStyles()
 
