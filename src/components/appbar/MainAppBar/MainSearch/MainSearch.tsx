@@ -11,9 +11,12 @@ const MainSearch: React.FC = () => {
     const [query, setQuery] = useState("")
 
     const handleSubmit = (e: any) => {
-        e.preventDefault()
-        history.push(`${apiConstants.routes.search.SEARCH}/?${apiConstants.search.query}=${query}`)
-        setQuery("")
+        e.preventDefault();
+
+        if (query.length >= apiConstants.search.MIN_LENGTH) {
+            history.push(`${apiConstants.routes.search.SEARCH}/?${apiConstants.search.query}=${query}`);
+            setQuery("");
+        }
     }
 
     const handleChange = (e: any) => {
@@ -32,7 +35,7 @@ const MainSearch: React.FC = () => {
                         root: classes.inputRoot,
                         input: classes.inputInput,
                     }}
-                    inputProps={{'aria-label': 'search'}}
+                    inputProps={{'aria-label': 'search', maxLength: apiConstants.search.MAX_LENGTH}}
                     onChange={handleChange}
                     value={query}
                 />

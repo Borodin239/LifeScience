@@ -28,6 +28,8 @@ const apiConstants = {
 
     search: {
         query: "query",
+        MIN_LENGTH: 2,
+        MAX_LENGTH: 70,
     },
 
     common: {
