@@ -29,7 +29,9 @@ const SearchTextField: React.FC<SearchTextFieldProps> = ({placeholder, passedCla
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        history.push(`${apiConstants.routes.search.SEARCH}/?${apiConstants.search.query}=${query}`);
+        if (query.length >= apiConstants.search.MIN_LENGTH) {
+            history.push(`${apiConstants.routes.search.SEARCH}/?${apiConstants.search.query}=${query}`);
+        }
     }
 
     return (
@@ -42,6 +44,7 @@ const SearchTextField: React.FC<SearchTextFieldProps> = ({placeholder, passedCla
                 placeholder={placeholder ?? "Search..."}
                 value={query}
                 onChange={handleQueryChange}
+                inputProps={{maxLength: apiConstants.search.MAX_LENGTH}}
             />
         </Paper>
     )
