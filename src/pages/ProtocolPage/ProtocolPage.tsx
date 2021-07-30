@@ -5,13 +5,12 @@ import {useMethodPageStyles} from "../MethodPage/method-page-styles";
 import {LeftProtocolsArrow} from "../../components/approach/ProtocolsArrows/ProtocolsArrows";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
-import {pathSwitch} from "../../redux/navigation/slice";
+import {pathMove, pathSwitch} from "../../redux/navigation/slice";
 import {getRedirectionRoute, NavigationUnit} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {useHistory, useParams} from "react-router-dom";
 import {getPublicProtocolThunk} from "../../redux/protocol/thunkActions";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
-import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 import {useProtocolPageStyles} from "./useProtocolPageStyles";
 import SectionList from "../../components/approach/SectionList/SectionList";
 import {viewProtocolList} from "../../redux/publicApproach/slice";
@@ -58,7 +57,10 @@ const ProtocolPage = () => {
 
     const handleBackToProtocols = () => {
         dispatch(viewProtocolList())
-        history.push(`${appRoutesNames.APPROACHES}/${approachId}`)
+
+        const route = getRedirectionRoute({type: 'approach', approachId: approachId})
+        dispatch(pathMove({name: protocol.approach.name, route: route, type: 'approach'} as NavigationUnit));
+        history.push(route)
     }
 
     const handleSectionTitleClick = (index: number) => () => {

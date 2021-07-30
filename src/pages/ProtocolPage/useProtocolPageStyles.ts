@@ -6,6 +6,7 @@ export const useProtocolPageStyles = makeStyles((theme) => ({
         position: "relative",
         display: "flex",
         justifyContent: "start",
+        marginTop: theme.spacing(3),
     },
     backButtonContainer: {
         width: '20%',
