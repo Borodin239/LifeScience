@@ -1,20 +1,20 @@
+import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../redux/hooks";
 import {useHistory} from "react-router-dom";
-import React, {useEffect, useState} from "react";
-import {getApproachSectionThunk} from "../../../redux/section/thunkActions";
+import {getProtocolSectionThunk} from "../../../redux/section/thunkActions";
 import splitThunkPayload from "../../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../../redux/utils/handleThunkErrorBase";
 import ContentContainer from "./ContentContainer";
 
 
-type ApproachContentProps = {
+type ProtocolContentProps = {
     title: string,
     approachId: string,
+    protocolId: string,
     sectionId: string,
 }
 
-const ApproachContent: React.FC<ApproachContentProps> = ({title, approachId, sectionId}) => {
-
+const ProtocolContent: React.FC<ProtocolContentProps> = ({title, approachId, sectionId, protocolId}) => {
     const dispatch = useAppDispatch();
     const history = useHistory();
 
@@ -22,7 +22,7 @@ const ApproachContent: React.FC<ApproachContentProps> = ({title, approachId, sec
 
     useEffect(() => {
         setIsLoading(true);
-        dispatch(getApproachSectionThunk({approachId, sectionId}))
+        dispatch(getProtocolSectionThunk({approachId, protocolId, sectionId}))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then(() => {
@@ -35,6 +35,7 @@ const ApproachContent: React.FC<ApproachContentProps> = ({title, approachId, sec
 
     const section = useAppSelector(state => state.sectionReducer)
 
+
     return (
         <ContentContainer title={title}
                           section={section}
@@ -42,4 +43,4 @@ const ApproachContent: React.FC<ApproachContentProps> = ({title, approachId, sec
     )
 }
 
-export default ApproachContent
+export default ProtocolContent

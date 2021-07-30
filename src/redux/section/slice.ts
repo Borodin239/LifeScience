@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {SectionView} from "../../infrastructure/http/api/view/section/SectionView";
-import {getSectionThunk, SECTION_ACTION_TYPE_PREFIX} from "./thunkActions";
+import {getApproachSectionThunk, getProtocolSectionThunk, SECTION_ACTION_TYPE_PREFIX} from "./thunkActions";
 
 const initState: SectionView = {
     "id": '',
@@ -14,11 +14,16 @@ const sectionSlice = createSlice({
     initialState: initState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getSectionThunk.fulfilled, (state, action) => {
+        builder.addCase(getApproachSectionThunk.fulfilled, (state, action) => {
             return {
                 ...action.payload
             }
         })
+            .addCase(getProtocolSectionThunk.fulfilled, (state, action) => {
+                return {
+                    ...action.payload
+                }
+            })
     },
 })
 

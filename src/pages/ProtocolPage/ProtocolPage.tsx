@@ -15,6 +15,7 @@ import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 import {useProtocolPageStyles} from "./useProtocolPageStyles";
 import SectionList from "../../components/approach/SectionList/SectionList";
 import {viewProtocolList} from "../../redux/publicApproach/slice";
+import ProtocolContent from "../../components/approach/ContentContainer/ProtocolContent";
 
 
 interface ParamType {
@@ -88,7 +89,10 @@ const ProtocolPage = () => {
                     <SectionList sections={protocol.sections}
                                  selectedSection={selectedSection}
                                  handleSectionTitleClick={handleSectionTitleClick}/>
-                    {/*    content container */}
+                    <ProtocolContent title={protocol.sections[selectedSection].name}
+                                     approachId={protocol.approach.id}
+                                     protocolId={protocol.id}
+                                     sectionId={protocol.sections[selectedSection].id}/>
                 </Box>
             </Box>
 
