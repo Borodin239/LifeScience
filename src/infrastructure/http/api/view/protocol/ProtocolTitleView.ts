@@ -1,4 +1,4 @@
 export type ProtocolTitleView = {
-    "id": number,
+    "id": string,
     "name": string,
 }

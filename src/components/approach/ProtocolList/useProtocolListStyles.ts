@@ -13,6 +13,7 @@ export const useProtocolListStyles = makeStyles((theme) => ({
         position: "absolute",
         left: 0,
         top: 0,
+        width: '20%',
     },
     protocols: {
         marginTop: theme.spacing(2),
