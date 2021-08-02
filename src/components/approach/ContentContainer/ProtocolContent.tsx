@@ -31,7 +31,7 @@ const ProtocolContent: React.FC<ProtocolContentProps> = ({title, approachId, sec
             .catch(thunkError => {
                 handleThunkErrorBase(thunkError, history, dispatch);
             });
-    }, [sectionId, approachId, dispatch, history]);
+    }, [sectionId, approachId, protocolId, dispatch, history]);
 
     const section = useAppSelector(state => state.sectionReducer)
 
