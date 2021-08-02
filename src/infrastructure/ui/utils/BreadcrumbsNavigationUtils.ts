@@ -28,16 +28,34 @@ export const patchPathFromNavigationUnit = (unit: NavigationUnit, currentPath: N
     return currentPath;
 }
 
-export const getRedirectionRoute = (type: 'category' | 'approach' | 'protocol', id: string): string => {
-    if (type === 'category') {
-        return `${appRoutesNames.CATEGORIES}/${id}`;
+type CategoryRoute = {
+    type: 'category',
+    categoryId: string,
+}
+
+type ApproachRoute = {
+    type: 'approach',
+    approachId: string,
+}
+
+type ProtocolRoute = {
+    type: 'protocol',
+    approachId: string,
+    protocolId: string,
+}
+
+type GetRedirectionRouteArguments = CategoryRoute | ApproachRoute | ProtocolRoute
+
+export const getRedirectionRoute = (args: GetRedirectionRouteArguments): string => {
+    if (args.type === 'category') {
+        return `${appRoutesNames.CATEGORIES}/${args.categoryId}`;
     }
 
-    if (type === 'approach') {
-        return `${appRoutesNames.APPROACHES}/${id}`;
+    if (args.type === 'approach') {
+        return `${appRoutesNames.APPROACHES}/${args.approachId}`;
     }
 
-    return `${appRoutesNames.PROTOCOLS}/${id}`;
+    return `${appRoutesNames.APPROACHES}/${args.approachId}${appRoutesNames.PROTOCOLS}/${args.protocolId}`;
 }
 
 

@@ -7,16 +7,17 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 
 type ProtocolsArrowProps = {
+    text: string,
     handleClick: () => void,
 }
 
-export const RightProtocolsArrow: React.FC<ProtocolsArrowProps> = ({handleClick}) => {
+export const RightProtocolsArrow: React.FC<ProtocolsArrowProps> = ({text, handleClick}) => {
     const classes = useProtocolsArrowStyles()
 
     return (
         <Box className={`${classes.container} ${classes.rightContainer}`} onClick={handleClick}>
             <Typography className={classes.text}>
-                Go to protocols
+                {text}
             </Typography>
             <ArrowForwardIcon fontSize={"small"}
                               className={`${classes.arrow} ${classes.rightArrow}`}/>
@@ -24,7 +25,7 @@ export const RightProtocolsArrow: React.FC<ProtocolsArrowProps> = ({handleClick}
     )
 }
 
-export const LeftProtocolsArrow: React.FC<ProtocolsArrowProps> = ({handleClick}) => {
+export const LeftProtocolsArrow: React.FC<ProtocolsArrowProps> = ({handleClick, text}) => {
     const classes = useProtocolsArrowStyles()
 
     return (
@@ -32,7 +33,7 @@ export const LeftProtocolsArrow: React.FC<ProtocolsArrowProps> = ({handleClick})
             <ArrowBackIcon fontSize={"small"}
                            className={`${classes.arrow} ${classes.leftArrow}`}/>
             <Typography className={classes.text}>
-                Back to method
+                {text}
             </Typography>
         </Box>
     )
