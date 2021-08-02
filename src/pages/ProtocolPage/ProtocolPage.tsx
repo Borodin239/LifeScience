@@ -84,7 +84,7 @@ const ProtocolPage = () => {
                         <LeftProtocolsArrow text={"To other protocols"} handleClick={handleBackToProtocols}/>
                     </Box>
                     <Typography variant={"h5"} className={protocolClasses.protocolName}>
-                        {protocol.approach.name}: {protocol.name}
+                        {protocol.name}
                     </Typography>
                 </Box>
                 <Box className={protocolClasses.protocolContainer}>
