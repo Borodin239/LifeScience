@@ -3,7 +3,7 @@ import {Box, Typography} from "@material-ui/core";
 import {useUserInfoTextStyles} from "./useUserInfoTextStyles";
 
 type UserInfoTextProps = {
-    text: string | null,
+    text?: string,
 }
 
 const UserInfoText: React.FC<UserInfoTextProps> = ({text}) => {

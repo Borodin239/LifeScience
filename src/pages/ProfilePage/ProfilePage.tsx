@@ -1,23 +1,34 @@
 import {Box, Divider, Typography} from "@material-ui/core";
 import {useProfilePageStyles} from "./useProfilePageStyles";
-import {useAppSelector} from "../../redux/hooks";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {useHistory} from "react-router-dom";
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 import UserInfoTitle from "../../components/profile/UserInfoTitle/UserInfoTitle";
 import UserInfoText from "../../components/profile/UserInfoText/UserInfoText";
+import {useEffect} from "react";
+import {updateCurrentUserThunk} from "../../redux/users/thunkActions";
 
 
 const ProfilePage = () => {
 
     const history = useHistory()
+    const dispatch = useAppDispatch()
     const classes = useProfilePageStyles()
 
-    const userInfo = useAppSelector(state => state.usersReducer.userInfo)
+    const isAuthorized = useAppSelector(state => state.authReducer.isAuthorized);
 
-    if (!userInfo) {
-        history.push(`${appRoutesNames.SIGN_IN}`)
-        return null
+    useEffect(() => {
+        if (isAuthorized) {
+            dispatch(updateCurrentUserThunk());
+        }
+    }, [isAuthorized, dispatch]);
+
+
+    if (!isAuthorized) {
+        history.replace(`${appRoutesNames.SIGN_IN}`)
     }
+
+    const userInfo = useAppSelector(state => state.usersReducer.userInfo)
 
     return (
         <Box>
