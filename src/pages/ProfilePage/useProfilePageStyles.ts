@@ -6,7 +6,7 @@ export const useProfilePageStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(5),
     },
     infoListContainer: {
-        margin: theme.spacing(2, 0, 0, 1),
+        margin: theme.spacing(3, 0, 0, 2),
     },
     divider: {
         backgroundColor: theme.palette.primary.main
