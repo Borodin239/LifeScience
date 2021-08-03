@@ -4,6 +4,7 @@ import {useAppSelector} from "../../redux/hooks";
 import {useHistory} from "react-router-dom";
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 import UserInfoTitle from "../../components/profile/UserInfoTitle/UserInfoTitle";
+import UserInfoText from "../../components/profile/UserInfoText/UserInfoText";
 
 
 const ProfilePage = () => {
@@ -13,7 +14,7 @@ const ProfilePage = () => {
 
     const userInfo = useAppSelector(state => state.usersReducer)
 
-    if (userInfo === null) {
+    if (!userInfo || !userInfo.userInfo) {
         history.push(`${appRoutesNames.SIGN_IN}`)
     }
 
@@ -26,14 +27,17 @@ const ProfilePage = () => {
                 <Divider className={classes.divider} style={{width: '20%'}}/>
             </Box>
             <Box className={classes.infoListContainer}>
-                <Box>
-                    <UserInfoTitle title={'First name'}/>
+                <Box className={classes.infoRow}>
+                    <UserInfoTitle title={'First name:'}/>
+                    <UserInfoText text={userInfo.userInfo!.personalData.firstName}/>
                 </Box>
-                <Box>
-                    <UserInfoTitle title={'Last name'}/>
+                <Box className={classes.infoRow}>
+                    <UserInfoTitle title={'Last name:'}/>
+                    <UserInfoText text={userInfo.userInfo!.personalData.lastName}/>
                 </Box>
-                <Box>
-                    <UserInfoTitle title={'Email'}/>
+                <Box className={classes.infoRow}>
+                    <UserInfoTitle title={'Email:'}/>
+                    <UserInfoText text={userInfo.userInfo!.email}/>
                 </Box>
             </Box>
         </Box>

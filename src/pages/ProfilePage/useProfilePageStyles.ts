@@ -10,6 +10,12 @@ export const useProfilePageStyles = makeStyles((theme) => ({
     },
     divider: {
         backgroundColor: theme.palette.primary.main
+    },
+    infoRow: {
+        display: "flex",
+        justifyContent: "start",
+        alignItems: "center",
+        marginTop: theme.spacing(1),
     }
 
 }), {index: 1});
