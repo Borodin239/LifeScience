@@ -23,6 +23,9 @@ const apiConstants = {
         },
         search: {
             SEARCH: '/search'
+        },
+        protocol: {
+            BASE: '/protocols'
         }
     },
 

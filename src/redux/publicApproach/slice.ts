@@ -5,6 +5,7 @@ import {ApproachPreview} from "../../infrastructure/http/api/view/approach/Appro
 
 type ApproachState = {
     approach: ApproachPreview,
+    isProtocolListViewed: boolean,
 }
 
 const initState: ApproachState = {
@@ -12,13 +13,21 @@ const initState: ApproachState = {
         name: '',
         sections: [],
         protocols: [],
-    }
+    },
+    isProtocolListViewed: false,
 }
 
 const approachSlice = createSlice({
     name: APPROACH_ACTION_TYPE_PREFIX,
     initialState: initState,
-    reducers: {},
+    reducers: {
+        viewProtocolList(state) {
+            state.isProtocolListViewed = true;
+        },
+        hideProtocolList(state) {
+            state.isProtocolListViewed = false;
+        }
+    },
     extraReducers: (builder) => {
       builder.addCase(getPublicApproachThunk.fulfilled, (state, action) => {
           state.approach = {
@@ -29,5 +38,6 @@ const approachSlice = createSlice({
       })
     },
 })
+export const {viewProtocolList, hideProtocolList} = approachSlice.actions
 
 export default approachSlice.reducer
