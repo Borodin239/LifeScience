@@ -21,8 +21,7 @@ const WelcomePanel = () => {
                     JetScience
                 </Typography>
                 <Typography variant={'h5'}>
-                    is a simple and easy-to-use
-                    catalog of research methods.
+                    is a platform to unite and speed up the science.
                 </Typography>
                 <Button onClick={handleBrowseClick} className={classes.browseButton}>
                     Browse the catalog

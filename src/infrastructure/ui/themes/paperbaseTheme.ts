@@ -1,4 +1,5 @@
 import createTheme from "@material-ui/core/styles/createTheme";
+import uiConstants from "./uiConstants";
 
 let theme = createTheme({
     palette: {
@@ -19,7 +20,7 @@ let theme = createTheme({
         },
         subtitle1: {
             fontWeight: 600,
-            color: "rgb(80, 80, 80)",
+            color: uiConstants.grey,
         }
     },
     shape: {

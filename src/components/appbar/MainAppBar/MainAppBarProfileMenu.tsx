@@ -3,6 +3,8 @@ import Menu from "@material-ui/core/Menu";
 import React from "react";
 import {useAppDispatch} from "../../../redux/hooks";
 import {loggedOut} from "../../../redux/auth/slice"
+import {useHistory} from "react-router-dom";
+import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
 
 export const MainAppBarMenu_ID = 'primary-search-account-menu';
 
@@ -15,6 +17,12 @@ const MainAppBarProfileMenu: React.FC<MainAppBarProfileMenuProps> = (props) => {
 
     const isMenuOpen = Boolean(props.anchorEl);
     const dispatch = useAppDispatch();
+    const history = useHistory()
+
+    const handleProfileClick = () => {
+        history.push(`${appRoutesNames.PROFILE}`)
+        props.handleMenuClose()
+    }
 
     return (
         <Menu
@@ -26,8 +34,7 @@ const MainAppBarProfileMenu: React.FC<MainAppBarProfileMenuProps> = (props) => {
             open={isMenuOpen}
             onClose={props.handleMenuClose}
         >
-            <MenuItem onClick={props.handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={props.handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
             <MenuItem onClick={() => {dispatch(loggedOut()); props.handleMenuClose();}}>Logout</MenuItem>
         </Menu>
     )
