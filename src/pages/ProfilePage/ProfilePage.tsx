@@ -51,6 +51,10 @@ const ProfilePage = () => {
                     <UserInfoTitle title={'Email:'}/>
                     <UserInfoText text={userInfo?.email}/>
                 </Box>
+                <Box className={classes.infoRow}>
+                    <UserInfoTitle title={'Roles:'}/>
+                    <UserInfoText text={userInfo ? userInfo.roles.join(', ') : ''}/>
+                </Box>
             </Box>
         </Box>
     )
