@@ -8,7 +8,7 @@ export type UserInfoView = {
             lastName: string,
             organisations: OrganisationBaseInfoView[],
             orcid: string,
-            doctorialDegree: boolean,
+            doctoralDegree: boolean,
             academicDegree: string,
             favouriteGroup: GroupBaseInfoView,
             "about": string,

@@ -14,6 +14,7 @@ import {useAppStyles} from "./useAppStyles";
 import SearchPage from "../pages/SearchPage/SearchPage";
 import {Box} from "@material-ui/core";
 import './App.css'
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -41,12 +42,12 @@ function App() {
                             <Box className={classes.fixedWidth}>
                                 {/*1100 px*/}
                                 <Switch>
-
                                     <Route exact path={`${appRoutesNames.APPROACHES}/:approachId(\\d{1,11})`} render={() => <MethodPage/>}/>
                                     <Route exact path={`${appRoutesNames.CATEGORIES}/:categoryId(\\d{0,11})`} render={() => <CategoryPage/>}/>
                                     <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                                     <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
                                     <Route exact path={appRoutesNames.SEARCH} render={() => <SearchPage/>}/>
+                                    <Route exact path={appRoutesNames.PROFILE} render={() => <ProfilePage/>}/>
                                     <Route exact path="/error"
                                            render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 
