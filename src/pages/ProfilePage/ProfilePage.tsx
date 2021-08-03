@@ -12,10 +12,11 @@ const ProfilePage = () => {
     const history = useHistory()
     const classes = useProfilePageStyles()
 
-    const userInfo = useAppSelector(state => state.usersReducer)
+    const userInfo = useAppSelector(state => state.usersReducer.userInfo)
 
-    if (!userInfo || !userInfo.userInfo) {
+    if (!userInfo) {
         history.push(`${appRoutesNames.SIGN_IN}`)
+        return null
     }
 
     return (
@@ -29,15 +30,15 @@ const ProfilePage = () => {
             <Box className={classes.infoListContainer}>
                 <Box className={classes.infoRow}>
                     <UserInfoTitle title={'First name:'}/>
-                    <UserInfoText text={userInfo.userInfo!.personalData.firstName}/>
+                    <UserInfoText text={userInfo?.personalData.firstName}/>
                 </Box>
                 <Box className={classes.infoRow}>
                     <UserInfoTitle title={'Last name:'}/>
-                    <UserInfoText text={userInfo.userInfo!.personalData.lastName}/>
+                    <UserInfoText text={userInfo?.personalData.lastName}/>
                 </Box>
                 <Box className={classes.infoRow}>
                     <UserInfoTitle title={'Email:'}/>
-                    <UserInfoText text={userInfo.userInfo!.email}/>
+                    <UserInfoText text={userInfo?.email}/>
                 </Box>
             </Box>
         </Box>
