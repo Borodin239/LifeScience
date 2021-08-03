@@ -15,6 +15,7 @@ import SearchPage from "../pages/SearchPage/SearchPage";
 import {Box} from "@material-ui/core";
 import './App.css'
 import ProtocolPage from "../pages/ProtocolPage/ProtocolPage";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -48,6 +49,7 @@ function App() {
                                     <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                                     <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
                                     <Route exact path={appRoutesNames.SEARCH} render={() => <SearchPage/>}/>
+                                    <Route exact path={appRoutesNames.PROFILE} render={() => <ProfilePage/>}/>
                                     <Route exact path="/error"
                                            render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 
