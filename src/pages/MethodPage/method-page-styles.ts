@@ -51,6 +51,27 @@ export const useMethodPageStyles = makeStyles((theme) => ({
     },
     content: {
         marginTop: theme.spacing(1),
+        '& img': {
+            width: '100%',
+        },
+        '& blockquote': {
+            margin: 0,
+            borderLeft: '3px solid ' + theme.palette.primary.main,
+            paddingLeft: theme.spacing(4),
+        },
+        '& table': {
+            marginTop: theme.spacing(2),
+            tableLayout: 'fixed',
+            width: '100%',
+            borderCollapse: 'collapse',
+            '& th, td': {
+                padding: theme.spacing(2),
+                border: '1px solid ' + theme.palette.primary.main,
+            },
+            '& th': {
+                fontWeight: '500'
+            }
+        }
     },
     divider: {
         backgroundColor: theme.palette.primary.main,
