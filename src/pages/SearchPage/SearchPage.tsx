@@ -2,10 +2,7 @@ import {Box, Divider, Typography} from "@material-ui/core";
 import {useCallback, useEffect, useState} from "react";
 import {useHistory, useLocation} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {
-    searchThunk,
-    SearchType
-} from "../../redux/search/slice";
+import {searchThunk} from "../../redux/search/slice";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import SearchTextField from "../../components/search/SearchTextField/SearchTextField";
@@ -15,7 +12,7 @@ import {useSearchPageStyles} from "./useSearchPageStyles";
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import SubjectIcon from '@material-ui/icons/Subject';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import {SearchDto} from "../../infrastructure/http/api/dto/search/SearchDto";
+import {SearchDto, SearchType} from "../../infrastructure/http/api/dto/search/SearchDto";
 import {SearchResultType} from "../../infrastructure/http/api/view/search/SearchResultType";
 import {SearchResultView} from "../../infrastructure/http/api/view/search/SearchResultView";
 import {getRedirectionRoute} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
