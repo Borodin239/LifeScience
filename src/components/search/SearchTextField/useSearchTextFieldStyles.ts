@@ -15,8 +15,9 @@ const useSearchTextFieldStyles = makeStyles((theme: Theme) =>
         },
         input: {
             flex: 1,
-        },
+            marginRight: theme.spacing(2),
+        }
     }),
-);
+    {index: 1});
 
 export default useSearchTextFieldStyles
