@@ -10,7 +10,7 @@ import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 
 export const ROOT_NAVIGATION_UNIT: NavigationUnit = {
     type: "category",
-    name: "root",
+    name: "catalog",
     route: `${appRoutesNames.CATEGORIES}/`
 }
 
