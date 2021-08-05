@@ -12,10 +12,10 @@ import {useSearchPageStyles} from "./useSearchPageStyles";
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import SubjectIcon from '@material-ui/icons/Subject';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 import {SearchDto, SearchType} from "../../infrastructure/http/api/dto/search/SearchDto";
 import {SearchResultType} from "../../infrastructure/http/api/view/search/SearchResultType";
 import {SearchResultView} from "../../infrastructure/http/api/view/search/SearchResultView";
+import {getRedirectionRoute} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 
 
 const SearchPage = () => {
@@ -69,14 +69,19 @@ const SearchPage = () => {
     const handleClick = (result: SearchResultView) => () => {
         switch (result.typeName) {
             case "Approach": {
-                history.push(`${appRoutesNames.APPROACHES}/${result.publishApproachId}`);
+                history.push(getRedirectionRoute({type: "approach", approachId: result.publishApproachId}));
                 return;
             }
             case "Category": {
-                history.push(`${appRoutesNames.CATEGORIES}/${result.categoryId}`);
+                history.push(getRedirectionRoute({type: "category", categoryId: result.categoryId}));
                 return;
             }
             case "Protocol": {
+                history.push(getRedirectionRoute({
+                    type: "protocol",
+                    approachId: result.publishProtocolId,
+                    protocolId: result.publishProtocolId
+                }))
                 return;
             }
         }
