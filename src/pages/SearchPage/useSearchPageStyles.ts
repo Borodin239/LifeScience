@@ -11,6 +11,9 @@ export const useSearchPageStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(3),
         borderBottom: "1px solid " + theme.palette.primary.main,
     },
+    divider: {
+        backgroundColor: theme.palette.primary.main,
+    },
     loader: {
         marginTop: theme.spacing(4),
     }

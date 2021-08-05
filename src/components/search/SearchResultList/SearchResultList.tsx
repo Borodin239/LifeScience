@@ -8,11 +8,11 @@ import SubjectIcon from "@material-ui/icons/Subject";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
 import {useHistory} from "react-router-dom";
+import AdditionalInfo from "./AdditionalInfo/AdditionalInfo";
 
 
 type SearchResultListProps = {
     results: SearchResultView[],
-
 }
 
 const SearchResultList: React.FC<SearchResultListProps> = ({results}) => {
@@ -50,7 +50,6 @@ const SearchResultList: React.FC<SearchResultListProps> = ({results}) => {
             }
         }
     }
-
     return (
         <Box>
             {
@@ -60,16 +59,14 @@ const SearchResultList: React.FC<SearchResultListProps> = ({results}) => {
                             <Box className={classes.iconContainer}>
                                 {renderIcon(result.typeName)}
                             </Box>
-                            <Box>
+                            <Box className={classes.contentContainer}>
                                 <Typography className={classes.name} onClick={handleClick(result)}>
                                     {result.name}
                                 </Typography>
-                                <Typography>
-                                    Type: {result.typeName}
-                                </Typography>
+                                <AdditionalInfo result={result}/>
                             </Box>
                         </Box>
-                        <Divider className={classes.divider} style={{width: '30%'}}/>
+                        <Divider className={classes.divider}/>
                     </>
                 )
 
