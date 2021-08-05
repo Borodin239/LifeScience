@@ -1,4 +1,6 @@
-import {SearchType} from "../../../../../redux/search/slice";
+export enum SearchType {
+    CATEGORY = "CATEGORY", APPROACH = "APPROACH", PROTOCOL = "PROTOCOL"
+}
 
 export type SearchDto = {
     text: string,
