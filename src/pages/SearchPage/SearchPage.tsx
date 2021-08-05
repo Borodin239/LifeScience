@@ -12,13 +12,8 @@ import SearchTextField from "../../components/search/SearchTextField/SearchTextF
 import apiConstants from "../../infrastructure/http/api/apiConstants";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import {useSearchPageStyles} from "./useSearchPageStyles";
-import FolderOpenIcon from '@material-ui/icons/FolderOpen';
-import SubjectIcon from '@material-ui/icons/Subject';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 import {SearchDto} from "../../infrastructure/http/api/dto/search/SearchDto";
-import {SearchResultType} from "../../infrastructure/http/api/view/search/SearchResultType";
-import {SearchResultView} from "../../infrastructure/http/api/view/search/SearchResultView";
+import SearchResultList from "../../components/search/SearchResultList/SearchResultList";
 
 
 const SearchPage = () => {
@@ -55,36 +50,6 @@ const SearchPage = () => {
         updateSearch()
     }, [location.search, updateSearch])
 
-    const renderIcon = (typeName: string) => {
-        switch (typeName) {
-            case SearchResultType.CATEGORY: {
-                return <FolderOpenIcon fontSize="large"/>;
-            }
-            case SearchResultType.APPROACH: {
-                return <SubjectIcon fontSize="large"/>;
-            }
-            case SearchResultType.PROTOCOL: {
-                return <AssignmentIcon fontSize="large"/>
-            }
-        }
-    }
-
-    const handleClick = (result: SearchResultView) => () => {
-        switch (result.typeName) {
-            case "Approach": {
-                history.push(`${appRoutesNames.APPROACHES}/${result.publishApproachId}`);
-                return;
-            }
-            case "Category": {
-                history.push(`${appRoutesNames.CATEGORIES}/${result.categoryId}`);
-                return;
-            }
-            case "Protocol": {
-                return;
-            }
-        }
-    }
-
     const results = useAppSelector(state => state.searchReducer.results)
 
     if (isLoading) {
@@ -102,29 +67,7 @@ const SearchPage = () => {
                 </Typography>
             </Box>
             <Divider className={classes.divider}/>
-            <Box>
-                {
-                    results.map(result =>
-                        <>
-                            <Box className={classes.searchResultContainer}>
-                                <Box className={classes.iconContainer}>
-                                    {renderIcon(result.typeName)}
-                                </Box>
-                                <Box>
-                                    <Typography className={classes.searchResultName} onClick={handleClick(result)}>
-                                        {result.name}
-                                    </Typography>
-                                    <Typography>
-                                        Type: {result.typeName}
-                                    </Typography>
-                                </Box>
-                            </Box>
-                            <Divider className={classes.divider} style={{width: '30%'}}/>
-                        </>
-                    )
-
-                }
-            </Box>
+            <SearchResultList results={results}/>
         </Box>
     )
 }
