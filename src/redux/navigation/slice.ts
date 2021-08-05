@@ -1,11 +1,12 @@
 import {
     addNavigationUnit,
     NavigationUnit,
-    patchPathFromNavigationUnit
+    patchPathFromNavigationUnit, pathToNavigationUnitList
 } from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
+import {PathUnitView} from "../../infrastructure/http/api/view/path/PathUnitView/PathUnitView";
 
 
 export const ROOT_NAVIGATION_UNIT: NavigationUnit = {
@@ -30,12 +31,15 @@ const navigationSlice = createSlice({
         pathMove(state, action: PayloadAction<NavigationUnit>) {
             state.path = addNavigationUnit(action.payload, state.path);
         },
-        pathSwitch(state, action: PayloadAction<NavigationUnit>)  {
+        pathSwitch(state, action: PayloadAction<NavigationUnit>) {
             state.path = patchPathFromNavigationUnit(action.payload, state.path)
+        },
+        setPath(state, action: PayloadAction<PathUnitView[]>) {
+            state.path = pathToNavigationUnitList(action.payload)
         }
     }
 });
 
-export const {pathMove, pathSwitch} = navigationSlice.actions;
+export const {pathMove, pathSwitch, setPath} = navigationSlice.actions;
 
 export default navigationSlice.reducer;

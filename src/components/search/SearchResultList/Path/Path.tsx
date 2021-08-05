@@ -1,4 +1,4 @@
-import {PathsView} from "../../../../infrastructure/http/api/view/search/PathsView/PathsView";
+import {PathsView} from "../../../../infrastructure/http/api/view/path/PathsView/PathsView";
 import React from "react";
 import {Box, Breadcrumbs, Typography} from "@material-ui/core";
 import {useHistory} from "react-router-dom";

@@ -1,4 +1,4 @@
-import {PathsView} from "../PathsView/PathsView";
+import {PathsView} from "../../path/PathsView/PathsView";
 
 export type CategorySearchResultView = {
     "categoryId": string,

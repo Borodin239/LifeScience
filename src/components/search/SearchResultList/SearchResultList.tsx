@@ -9,6 +9,8 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
 import {useHistory} from "react-router-dom";
 import AdditionalInfo from "./AdditionalInfo/AdditionalInfo";
+import {useAppDispatch} from "../../../redux/hooks";
+import {setPath} from "../../../redux/navigation/slice";
 
 
 type SearchResultListProps = {
@@ -18,6 +20,7 @@ type SearchResultListProps = {
 const SearchResultList: React.FC<SearchResultListProps> = ({results}) => {
 
     const history = useHistory()
+    const dispatch = useAppDispatch()
 
     const classes = useSearchResultListStyles()
 
@@ -42,6 +45,11 @@ const SearchResultList: React.FC<SearchResultListProps> = ({results}) => {
                 return;
             }
             case "Category": {
+                const lastPoint = {
+                    id: result.categoryId,
+                    name: result.name,
+                }
+                dispatch(setPath(result.paths[0].concat([lastPoint])))
                 history.push(`${appRoutesNames.CATEGORIES}/${result.categoryId}`);
                 return;
             }
