@@ -29,7 +29,6 @@ const ApproachContainer: React.FC<ApproachContainerProps> = (props) => {
                 <Typography variant={"h5"}>
                     {approach.name}
                 </Typography>
-                <RightProtocolsArrow text={"Go to protocols"} handleClick={handleGoToProtocolsClick}/>
             </Box>
             <Box className={classes.mainContainer}>
                 <SectionList sections={approach.sections}
@@ -38,6 +37,9 @@ const ApproachContainer: React.FC<ApproachContainerProps> = (props) => {
                 <ApproachContent title={approach.sections[selectedSection].name}
                                   approachId={approachId}
                                   sectionId={approach.sections[selectedSection].id}/>
+                <Box className={classes.protocolsButtonContainer}>
+                    <RightProtocolsArrow text={"Go to protocols"} handleClick={handleGoToProtocolsClick}/>
+                </Box>
             </Box>
         </Box>
     )

@@ -19,6 +19,7 @@ export const useMethodPageStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 0, 2)
     },
     mainContainer: {
+        position: "relative",
         display: 'flex',
         justifyContent: 'space-between',
         marginTop: theme.spacing(2),
@@ -95,6 +96,12 @@ export const useMethodPageStyles = makeStyles((theme) => ({
     },
     contentLoader: {
         marginTop: theme.spacing(5),
+    },
+    protocolsButtonContainer: {
+        position: "absolute",
+        top: 0,
+        right: 0,
+        width: "200px",
     }
 
 }), {index: 1});
