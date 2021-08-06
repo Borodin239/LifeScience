@@ -1,6 +1,6 @@
 import React from "react";
 import {SearchResultView} from "../../../../infrastructure/http/api/view/search/SearchResultView";
-import Path from "../Path/Path";
+import Path from "./Paths/Path/Path";
 import {Typography} from "@material-ui/core";
 
 
@@ -12,7 +12,7 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({result}) => {
 
     switch (result.typeName) {
         case "Category": {
-            return <Path paths={result.paths}/>;
+            return <Path path={result.paths[0]}/>;
         }
         case "Approach" :
         case "Protocol" : {
