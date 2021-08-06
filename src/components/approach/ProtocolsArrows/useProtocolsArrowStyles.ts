@@ -20,8 +20,8 @@ export const useProtocolsArrowStyles = makeStyles((theme) => ({
         display: "flex",
         alignItems: "center",
         cursor: "pointer",
-        padding: theme.spacing(0, 1, 0.2, 1),
-        borderBottom: "1px solid " + theme.palette.primary.main,
+        paddingRight: theme.spacing(1),
+        borderBottom: "1.5px solid " + theme.palette.primary.main,
         maxWidth: "fit-content",
     },
     leftContainer: {
@@ -38,7 +38,6 @@ export const useProtocolsArrowStyles = makeStyles((theme) => ({
                 transform: 'translateX(10px)'
             },
         },
-        borderLeft: "1px solid " + theme.palette.primary.main,
     }
 
 }), {index: 1});
