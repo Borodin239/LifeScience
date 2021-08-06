@@ -30,7 +30,6 @@ export const useProtocolsArrowStyles = makeStyles((theme) => ({
                 transform: 'translateX(-10px)'
             },
         },
-        borderRight: "1px solid " + theme.palette.primary.main,
     },
     rightContainer: {
         '&:hover': {
