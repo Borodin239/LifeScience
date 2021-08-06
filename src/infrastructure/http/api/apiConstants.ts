@@ -22,7 +22,8 @@ const apiConstants = {
             CURRENT: '/users/current'
         },
         search: {
-            SEARCH: '/search'
+            SEARCH: '/search',
+            PRE_SEARCH: '/search/suggest'
         },
         protocol: {
             BASE: '/protocols'
@@ -33,6 +34,8 @@ const apiConstants = {
         query: "query",
         MIN_LENGTH: 2,
         MAX_LENGTH: 70,
+        SUGGEST_BUNDLE_SIZE: 5,
+        SUGGEST_UPDATE_INTERVAL_MS: 300
     },
 
     common: {
