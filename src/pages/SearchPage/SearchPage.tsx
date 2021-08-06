@@ -3,8 +3,7 @@ import {useCallback, useEffect, useState} from "react";
 import {useHistory, useLocation} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {
-    searchThunk,
-    SearchType
+    searchThunk
 } from "../../redux/search/slice";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
@@ -12,7 +11,7 @@ import SearchTextField from "../../components/search/SearchTextField/SearchTextF
 import apiConstants from "../../infrastructure/http/api/apiConstants";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import {useSearchPageStyles} from "./useSearchPageStyles";
-import {SearchDto} from "../../infrastructure/http/api/dto/search/SearchDto";
+import {SearchDto, SearchType} from "../../infrastructure/http/api/dto/search/SearchDto";
 import SearchResultList from "../../components/search/SearchResultList/SearchResultList";
 
 
