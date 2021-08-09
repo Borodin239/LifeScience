@@ -54,18 +54,19 @@ export const getCategoryRootThunk = createAsyncThunk<CategoryInfoView,
 )
 
 export const getCategoryPathsThunk = createAsyncThunk<PathUnitView[], // что возвращает при fulfilled
-    string, // что принимает как аргумент при dispatch
+    {id: string, name: string}, // что принимает как аргумент при dispatch
     { // деструктуризация thunkAPI
         dispatch: AppDispatch,
         rejectValue: ApiError
     }>(
     `${CATEGORIES_ACTION_TYPE_PREFIX}${CategoriesActionThunkTypes.GET_PATHS}`,
-    async (id, thunkAPI) => {
-
+    async (pathUnit, thunkAPI) => {
+        const {id} = pathUnit
         try {
             const response = await categoriesApi.getPaths(id);
-
-            return response.data as PathUnitView[];
+            const pathList = response.data[0]
+            const fullPath = pathList.concat([pathUnit])
+            return fullPath as PathUnitView[];
         } catch (err) {
             return onThunkError(err, thunkAPI);
         }

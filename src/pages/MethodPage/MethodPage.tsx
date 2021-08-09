@@ -48,16 +48,12 @@ const MethodPage: React.FC = () => {
                 const unitRoute = getRedirectionRoute({type: "approach", approachId: approachId});
                 if (path[path.length - 1]?.route === unitRoute) return
                 const category = payload.categories[0]
-                dispatch(getCategoryPathsThunk(category.id))
+                const pathUnit = {id: category.id, name: category.name}
+                dispatch(getCategoryPathsThunk(pathUnit))
                     .unwrap()
                     .then(payload => splitThunkPayload(payload))
                     .then(pathPayload => {
-                        dispatch(setPath(pathPayload[0]))
-                        dispatch(pathMove({
-                            name: category.name,
-                            type: "category",
-                            route: getRedirectionRoute({type: "category", categoryId: category.id})
-                        }))
+                        dispatch(setPath(pathPayload))
                         dispatch(pathMove({
                             name: payload.name,
                             type: "approach",
