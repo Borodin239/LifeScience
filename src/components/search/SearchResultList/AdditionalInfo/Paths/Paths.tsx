@@ -32,14 +32,18 @@ const Paths: React.FC<PathsProps> = ({paths}) => {
                                 {paths.map((path, index) => (
                                     (index !== 0) && <Path path={path}/>
                                 ))}
-                                <Typography onClick={togglePaths} className={classes.showPathsText}>
+                                <Typography onClick={togglePaths}
+                                            className={classes.showPathsText}
+                                            color={"textSecondary"}>
                                     Hide
                                 </Typography>
                             </>
                         ) :
                         (
-                            <Typography onClick={togglePaths} className={classes.showPathsText}>
-                                Show paths
+                            <Typography onClick={togglePaths}
+                                        className={classes.showPathsText}
+                                        color={"textSecondary"}>
+                                Show all paths
                             </Typography>
                         )
                 )

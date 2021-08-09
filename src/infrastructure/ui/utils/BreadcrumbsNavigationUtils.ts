@@ -45,9 +45,9 @@ type ProtocolRoute = {
     protocolId: string,
 }
 
-type GetRedirectionRouteArguments = CategoryRoute | ApproachRoute | ProtocolRoute
+export type RouteUrlArguments = CategoryRoute | ApproachRoute | ProtocolRoute
 
-export const getRedirectionRoute = (args: GetRedirectionRouteArguments): string => {
+export const getRedirectionRoute = (args: RouteUrlArguments): string => {
     if (args.type === 'category') {
         return `${appRoutesNames.CATEGORIES}/${args.categoryId}`;
     }
@@ -59,7 +59,7 @@ export const getRedirectionRoute = (args: GetRedirectionRouteArguments): string 
     return `${appRoutesNames.APPROACHES}/${args.approachId}${appRoutesNames.PROTOCOLS}/${args.protocolId}`;
 }
 
-export const pathToNavigationUnitList = (list: PathUnitView[]) : NavigationUnit[] => {
+export const pathToNavigationUnitList = (list: PathUnitView[]): NavigationUnit[] => {
     return list.map(pathUnit => {
         return {
             type: 'category',

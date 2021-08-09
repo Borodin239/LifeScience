@@ -1,7 +1,8 @@
 import {
     addNavigationUnit,
     NavigationUnit,
-    patchPathFromNavigationUnit, pathToNavigationUnitList
+    patchPathFromNavigationUnit,
+    pathToNavigationUnitList
 } from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";

@@ -8,5 +8,9 @@ export const categoriesApi = {
 
     getRoot() {
         return apiClientDefault.get(apiConstants.routes.categories.ROOT);
-    }
+    },
+
+    getPaths(id: string) {
+        return apiClientDefault.get(`${apiConstants.routes.categories.INITIAL}/${id}${apiConstants.routes.categories.PATHS}`)
+    },
 }

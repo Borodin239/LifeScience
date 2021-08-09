@@ -10,9 +10,10 @@ import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import ApproachContainer from "../../components/approach/ApproachContainer/ApproachContainer";
 import ProtocolList from "../../components/approach/ProtocolList/ProtocolList";
 import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
-import {pathSwitch} from "../../redux/navigation/slice";
+import {pathMove, setPath} from "../../redux/navigation/slice";
 import {getRedirectionRoute} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 import {hideProtocolList, viewProtocolList} from "../../redux/publicApproach/slice";
+import {getCategoryPathsThunk} from "../../redux/categories/thunkActions";
 
 interface ParamType {
     approachId: string
@@ -35,6 +36,7 @@ const MethodPage: React.FC = () => {
     }
 
     const isProtocolListViewed = useAppSelector(state => state.approachReducer.isProtocolListViewed)
+    const path = useAppSelector(state => state.navigationReducer.path);
 
     useEffect(() => {
         setIsLoading(true)
@@ -42,12 +44,26 @@ const MethodPage: React.FC = () => {
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then(payload => {
-                dispatch(pathSwitch({
-                    name: payload.name,
-                    type: "approach",
-                    route: getRedirectionRoute({type: "approach", approachId: approachId})
-                }));
                 setIsLoading(false);
+                const unitRoute = getRedirectionRoute({type: "approach", approachId: approachId});
+                if (path[path.length - 1]?.route === unitRoute) return
+                const category = payload.categories[0]
+                dispatch(getCategoryPathsThunk(category.id))
+                    .unwrap()
+                    .then(payload => splitThunkPayload(payload))
+                    .then(pathPayload => {
+                        dispatch(setPath(pathPayload[0]))
+                        dispatch(pathMove({
+                            name: category.name,
+                            type: "category",
+                            route: getRedirectionRoute({type: "category", categoryId: category.id})
+                        }))
+                        dispatch(pathMove({
+                            name: payload.name,
+                            type: "approach",
+                            route: getRedirectionRoute({type: "approach", approachId: approachId})
+                        }))
+                    })
             })
             .catch(thunkError => {
                 handleThunkErrorBase(thunkError, history, dispatch);
@@ -85,7 +101,7 @@ const MethodPage: React.FC = () => {
                                                approachId={approachId}
                                                handleGoToProtocolsClick={handleGoToProtocolsClick}/>
                         </Box>
-                     </Fade>
+                    </Fade>
 
             }
 
