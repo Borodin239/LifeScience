@@ -12,7 +12,7 @@ import {PathUnitView} from "../../infrastructure/http/api/view/path/PathUnitView
 
 export const ROOT_NAVIGATION_UNIT: NavigationUnit = {
     type: "category",
-    name: "catalog",
+    name: "Catalog",
     route: `${appRoutesNames.CATEGORIES}/`
 }
 

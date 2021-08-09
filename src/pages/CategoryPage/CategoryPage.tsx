@@ -9,16 +9,15 @@ import {FolderOutlined} from "@material-ui/icons";
 import CategoryAdminSettings from "../../components/categories/admin/AdminSettings/CategoryAdminSettings";
 import {developmentLog} from "../../infrastructure/common/developmentLog";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {getCategoryInfoThunk, getCategoryRootThunk} from "../../redux/categories/thunkActions";
+import {getCategoryInfoThunk, getCategoryPathsThunk, getCategoryRootThunk} from "../../redux/categories/thunkActions";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {CategoryRootView} from "../../infrastructure/http/api/view/category/CategoryRootView";
 import {ApproachView} from "../../infrastructure/http/api/view/approach/ApproachView";
-import {pathMove, pathSwitch, ROOT_NAVIGATION_UNIT} from "../../redux/navigation/slice";
+import {pathMove, pathSwitch, ROOT_NAVIGATION_UNIT, setPath} from "../../redux/navigation/slice";
 import {getRedirectionRoute, NavigationUnit} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 import {CategoryView} from "../../infrastructure/http/api/view/category/CategoryView";
 import {CategoryInfoView} from "../../infrastructure/http/api/view/category/CategoryInfoView";
-import Location from "../../components/navigation/Location";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import {sortBy} from "lodash";
 
@@ -38,7 +37,8 @@ const CategoryPage = () => {
     const history = useHistory();
     const dispatch = useAppDispatch();
 
-    const [isLoading, setIsLoading] = useState(true);
+    const [isCategoryLoading, setIsCategoryLoading] = useState(true);
+    const [isLocationLoading, setIsLocationLoading] = useState(true);
 
     const [categoryCatalog, setCategoryCatalog] = useState<CatalogNode[]>([]);
     const [approachCatalog, setApproachCatalog] = useState<CatalogNode[]>([]);
@@ -68,7 +68,7 @@ const CategoryPage = () => {
     }, [dispatch, history]);
 
     const processRoot = useCallback(() => {
-        setIsLoading(true);
+        setIsCategoryLoading(true);
 
         dispatch(getCategoryRootThunk())
             .unwrap()
@@ -77,39 +77,49 @@ const CategoryPage = () => {
                 dispatch(pathSwitch(ROOT_NAVIGATION_UNIT));
                 setCategoryCatalog(payload.map(categoryView => createCatalogNode("category", categoryView)));
                 setApproachCatalog([]);
-                setIsLoading(false);
+                setIsCategoryLoading(false);
             })
             .catch(thunkError => {
-                setIsLoading(false);
+                setIsCategoryLoading(false);
                 handleThunkErrorBase(thunkError, history, dispatch);
             });
     }, [createCatalogNode, dispatch, history]);
 
+    const path = useAppSelector(state => state.navigationReducer.path);
+
     const processCategoryWithId = useCallback((categoryId) => {
-        setIsLoading(true);
+        setIsCategoryLoading(true);
 
         dispatch(getCategoryInfoThunk(categoryId))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then((payload: CategoryInfoView) => {
-                dispatch(pathSwitch({
-                    name: payload.name,
-                    type: "category",
-                    route: getRedirectionRoute({type: "category", categoryId: `${categoryId}`})
-                }));
+                const unitRoute = getRedirectionRoute({type: "category", categoryId: categoryId});
+                if (path[path.length - 1]?.route !== unitRoute) {
+                    const category = {id: categoryId, name: payload.name};
+                    dispatch(getCategoryPathsThunk(category))
+                        .unwrap()
+                        .then(payload => splitThunkPayload(payload))
+                        .then(pathPayload => {
+                            dispatch(setPath(pathPayload))
+                            setIsLocationLoading(false)
+                        });
+                } else {
+                    setIsLocationLoading(false)
+                }
                 setCategoryCatalog(payload.subCategories.map(categoryView => createCatalogNode("category", categoryView)));
                 setApproachCatalog(payload.approaches.map(approachView => createCatalogNode("approach", approachView)));
-                setIsLoading(false);
+                setIsCategoryLoading(false);
             })
             .catch(thunkError => {
-                setIsLoading(false);
+                setIsCategoryLoading(false);
                 if (thunkError.name === 'ApiError' && thunkError.description.httpCode === 404) {
                     history.push(ROOT_NAVIGATION_UNIT.route);
                 } else {
                     handleThunkErrorBase(thunkError, history, dispatch);
                 }
             });
-    }, [createCatalogNode, dispatch, history]);
+    }, [createCatalogNode, dispatch, history, path]);
 
     useEffect(() => {
         developmentLog(`targetPlotsParams: ${JSON.stringify(params)}`);
@@ -123,20 +133,22 @@ const CategoryPage = () => {
         }
     }, [params, processCategoryWithId, processRoot]);
 
+    if (isCategoryLoading || isLocationLoading) {
+        return <CenteredLoader/>;
+    }
+
     return (
         <Box>
             <Box className={classes.upperBar}>
-                {isLoading ? <Location locationList={[]}/> : <GlobalUserLocation/>}
+                <GlobalUserLocation/>
                 {(userRoles && userRoles.includes("ROLE_ADMIN")) ?
                     <CategoryAdminSettings categoryId={parseInt(params.categoryId)}/> : null}
             </Box>
             {
-                isLoading ?
-                    <CenteredLoader/> :
-                    <>
-                        <CatalogNodeList list={sortedCategoryCatalog} icon={<FolderOutlined/>} type={"Categories"}/>
-                        <CatalogNodeList list={sortedApproachCatalog} icon={<SubjectIcon/>} type={"Methods"}/>
-                    </>
+                <>
+                    <CatalogNodeList list={sortedCategoryCatalog} icon={<FolderOutlined/>} type={"Categories"}/>
+                    <CatalogNodeList list={sortedApproachCatalog} icon={<SubjectIcon/>} type={"Methods"}/>
+                </>
             }
         </Box>
     )

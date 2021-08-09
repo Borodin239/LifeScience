@@ -44,22 +44,23 @@ const MethodPage: React.FC = () => {
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then(payload => {
-                setIsLoading(false);
                 const unitRoute = getRedirectionRoute({type: "approach", approachId: approachId});
-                if (path[path.length - 1]?.route === unitRoute) return
-                const category = payload.categories[0]
-                const pathUnit = {id: category.id, name: category.name}
-                dispatch(getCategoryPathsThunk(pathUnit))
-                    .unwrap()
-                    .then(payload => splitThunkPayload(payload))
-                    .then(pathPayload => {
-                        dispatch(setPath(pathPayload))
-                        dispatch(pathMove({
-                            name: payload.name,
-                            type: "approach",
-                            route: getRedirectionRoute({type: "approach", approachId: approachId})
-                        }))
-                    })
+                if (path[path.length - 1]?.route !== unitRoute) {
+                    const category = payload.categories[0]
+                    const pathUnit = {id: category.id, name: category.name}
+                    dispatch(getCategoryPathsThunk(pathUnit))
+                        .unwrap()
+                        .then(payload => splitThunkPayload(payload))
+                        .then(pathPayload => {
+                            dispatch(setPath(pathPayload))
+                            dispatch(pathMove({
+                                name: payload.name,
+                                type: "approach",
+                                route: getRedirectionRoute({type: "approach", approachId: approachId})
+                            }))
+                        })
+                }
+                setIsLoading(false);
             })
             .catch(thunkError => {
                 handleThunkErrorBase(thunkError, history, dispatch);
