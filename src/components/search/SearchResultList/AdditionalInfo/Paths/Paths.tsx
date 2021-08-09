@@ -2,6 +2,7 @@ import {PathsView} from "../../../../../infrastructure/http/api/view/path/PathsV
 import React, {useState} from "react";
 import {Box, Typography} from "@material-ui/core";
 import Path from "./Path/Path";
+import {usePathsStyles} from "./usePathsStyles";
 
 
 type PathsProps = {
@@ -9,6 +10,8 @@ type PathsProps = {
 }
 
 const Paths: React.FC<PathsProps> = ({paths}) => {
+
+    const classes = usePathsStyles()
 
     const [showAllPaths, setShowAllPaths] = useState(false)
 
@@ -22,23 +25,24 @@ const Paths: React.FC<PathsProps> = ({paths}) => {
         <Box>
             <Path path={firstPath}/>
             {
-                showAllPaths ?
-                    (
-                        <>
-                            {paths.map((path, index) => (
-                                (index !== 0) && <Path path={path}/>
-                            ))}
-                            <Typography onClick={togglePaths}>
-                                Hide
+                (paths.length > 1) &&
+                (showAllPaths ?
+                        (
+                            <>
+                                {paths.map((path, index) => (
+                                    (index !== 0) && <Path path={path}/>
+                                ))}
+                                <Typography onClick={togglePaths} className={classes.showPathsText}>
+                                    Hide
+                                </Typography>
+                            </>
+                        ) :
+                        (
+                            <Typography onClick={togglePaths} className={classes.showPathsText}>
+                                Show paths
                             </Typography>
-                        </>
-                    ) :
-                    (
-                        <Typography onClick={togglePaths}>
-                            Show paths
-                        </Typography>
-                    )
-
+                        )
+                )
             }
         </Box>
     )
