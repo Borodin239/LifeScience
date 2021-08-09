@@ -37,12 +37,12 @@ const Location: React.FC<LocationProps> = ({locationList}) => {
     const classes = useStyles()
 
     return (
-        <Breadcrumbs separator={<NavigateNextIcon className={classes.arrow}/>}
+        <Breadcrumbs separator={<NavigateNextIcon className={classes.arrow} fontSize={"small"}/>}
                      className={classes.container}
                      maxItems={6}>
             {
                 locationList.map((unit, ind) => (
-                    <Typography key={ind} onClick={unit.handleClick} variant="subtitle1" className={classes.locationUnit}>
+                    <Typography key={ind} onClick={unit.handleClick} className={classes.locationUnit}>
                         {unit.text}
                     </Typography>
                 ))
