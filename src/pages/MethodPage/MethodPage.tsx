@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Box, Fade} from "@material-ui/core";
 import {useMethodPageStyles} from "./method-page-styles";
 import {useHistory, useParams} from "react-router-dom";
@@ -36,7 +36,7 @@ const MethodPage: React.FC = () => {
         dispatch(hideProtocolList())
     }
 
-    const updateLocation = (path: NavigationUnit[], payload: ApproachView) => {
+    const updateLocation = useCallback((path: NavigationUnit[], payload: ApproachView) => {
         const unitRoute = getRedirectionRoute({type: "approach", approachId: approachId});
         if (path[path.length - 1]?.route !== unitRoute) {
             const category = payload.categories[0]
@@ -53,7 +53,7 @@ const MethodPage: React.FC = () => {
                     }))
                 })
         }
-    }
+    }, [approachId, dispatch])
 
     const isProtocolListViewed = useAppSelector(state => state.approachReducer.isProtocolListViewed)
     const path = useAppSelector(state => state.navigationReducer.path);
@@ -72,7 +72,7 @@ const MethodPage: React.FC = () => {
                 // setIsLoading(false);
 
             })
-    }, [approachId, history, dispatch]);
+    }, [approachId, history, dispatch, path, updateLocation]);
 
     const approach = useAppSelector(state => state.approachReducer.approach)
 

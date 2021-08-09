@@ -83,7 +83,7 @@ const ProtocolPage = () => {
                 // setIsLoading(false);
 
             })
-    }, [protocolId, approachId, history, dispatch]);
+    }, [protocolId, approachId, history, dispatch, path]);
 
     const handleBackToProtocols = () => {
         dispatch(viewProtocolList())
