@@ -36,7 +36,8 @@ const navigationSlice = createSlice({
             state.path = patchPathFromNavigationUnit(action.payload, state.path)
         },
         setPath(state, action: PayloadAction<PathUnitView[]>) {
-            state.path = initState.path.concat(pathToNavigationUnitList(action.payload))
+            const path = pathToNavigationUnitList(action.payload)
+            state.path = [...initState.path, ...path]
         }
     }
 });

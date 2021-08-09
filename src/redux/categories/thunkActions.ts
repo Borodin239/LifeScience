@@ -65,8 +65,7 @@ export const getCategoryPathsThunk = createAsyncThunk<PathUnitView[], // что 
         try {
             const response = await categoriesApi.getPaths(id);
             const pathList = response.data[0]
-            const fullPath = pathList.concat([pathUnit])
-            return fullPath as PathUnitView[];
+            return [...pathList, pathUnit] as PathUnitView[];
         } catch (err) {
             return onThunkError(err, thunkAPI);
         }
