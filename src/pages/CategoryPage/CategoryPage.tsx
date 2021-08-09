@@ -133,7 +133,7 @@ const CategoryPage = () => {
         }
     }, [params, processCategoryWithId, processRoot]);
 
-    if (isCategoryLoading || isLocationLoading) {
+    if (isCategoryLoading && isLocationLoading) {
         return <CenteredLoader/>;
     }
 
