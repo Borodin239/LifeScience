@@ -34,6 +34,7 @@ const ProtocolPage = () => {
     const {approachId, protocolId} = useParams<ParamType>()
 
     const [isLoading, setIsLoading] = useState(true);
+    const [isLocationLoading, setIsLocationLoading] = useState(true);
 
     const [selectedSection, setSelectedSection] = useState(0)
 
@@ -70,8 +71,11 @@ const ProtocolPage = () => {
                                     } as NavigationUnit
 
                                     dispatch(setPath({pathUnits: pathPayload, extraRoutes: [approachUnit, protocolUnit]}))
+                                    setIsLocationLoading(false)
                                 })
                         })
+                } else {
+                    setIsLocationLoading(false)
                 }
                 setIsLoading(false);
             })
@@ -96,7 +100,7 @@ const ProtocolPage = () => {
 
     const protocol = useAppSelector(state => state.protocolReducer.protocol)
 
-    if (isLoading) {
+    if (isLoading && isLocationLoading) {
         return <CenteredLoader/>
     }
 

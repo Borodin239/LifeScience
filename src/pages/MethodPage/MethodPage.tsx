@@ -27,6 +27,7 @@ const MethodPage: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const [isLoading, setIsLoading] = useState(true);
+    const [isLocationLoading, setIsLocationLoading] = useState(true)
 
     const handleGoToProtocolsClick = () => {
         dispatch(viewProtocolList())
@@ -51,7 +52,10 @@ const MethodPage: React.FC = () => {
                         route: getRedirectionRoute({type: "approach", approachId: approachId})
                     } as NavigationUnit
                     dispatch(setPath({pathUnits: pathPayload, extraRoutes: [approachUnit]}))
+                    setIsLocationLoading(false)
                 })
+        } else {
+            setIsLocationLoading(false)
         }
     }, [approachId, dispatch])
 
@@ -76,7 +80,7 @@ const MethodPage: React.FC = () => {
 
     const approach = useAppSelector(state => state.approachReducer.approach)
 
-    if (isLoading) {
+    if (isLoading && isLocationLoading) {
         return <CenteredLoader className={classes.mainLoader}/>
     }
 
