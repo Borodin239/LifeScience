@@ -10,7 +10,7 @@ import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import ApproachContainer from "../../components/approach/ApproachContainer/ApproachContainer";
 import ProtocolList from "../../components/approach/ProtocolList/ProtocolList";
 import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
-import {pathMove, setPath} from "../../redux/navigation/slice";
+import {setPath} from "../../redux/navigation/slice";
 import {getRedirectionRoute, NavigationUnit} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 import {hideProtocolList, viewProtocolList} from "../../redux/publicApproach/slice";
 import {getCategoryPathsThunk} from "../../redux/categories/thunkActions";
@@ -45,12 +45,12 @@ const MethodPage: React.FC = () => {
                 .unwrap()
                 .then(payload => splitThunkPayload(payload))
                 .then(pathPayload => {
-                    dispatch(setPath(pathPayload))
-                    dispatch(pathMove({
+                    const approachUnit = {
                         name: payload.name,
                         type: "approach",
                         route: getRedirectionRoute({type: "approach", approachId: approachId})
-                    }))
+                    } as NavigationUnit
+                    dispatch(setPath({pathUnits: pathPayload, extraRoutes: [approachUnit]}))
                 })
         }
     }, [approachId, dispatch])
@@ -72,7 +72,7 @@ const MethodPage: React.FC = () => {
                 // setIsLoading(false);
 
             })
-    }, [approachId, history, dispatch, path, updateLocation]);
+    }, [approachId, history, dispatch, updateLocation, path]);
 
     const approach = useAppSelector(state => state.approachReducer.approach)
 

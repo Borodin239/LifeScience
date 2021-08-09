@@ -5,7 +5,7 @@ import {useMethodPageStyles} from "../MethodPage/method-page-styles";
 import {LeftProtocolsArrow} from "../../components/approach/ProtocolsArrows/ProtocolsArrows";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
-import {pathMove, pathSwitch, setPath} from "../../redux/navigation/slice";
+import {pathMove, setPath} from "../../redux/navigation/slice";
 import {getRedirectionRoute, NavigationUnit} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {useHistory, useParams} from "react-router-dom";
@@ -57,25 +57,22 @@ const ProtocolPage = () => {
                                 .unwrap()
                                 .then(payload => splitThunkPayload(payload))
                                 .then(pathPayload => {
-                                    dispatch(setPath(pathPayload))
-                                    dispatch(pathMove({
+                                    const approachUnit = {
                                         name: approachPayload.name,
                                         type: "approach",
                                         route: getRedirectionRoute({type: "approach", approachId: approachId})
-                                    }))
-                                    dispatch(pathMove({
+                                    } as NavigationUnit
+
+                                    const protocolUnit = {
                                         name: payload.name,
                                         type: "protocol",
                                         route: getRedirectionRoute({type: "protocol", approachId: approachId, protocolId: protocolId})
-                                    }))
+                                    } as NavigationUnit
+
+                                    dispatch(setPath({pathUnits: pathPayload, extraRoutes: [approachUnit, protocolUnit]}))
                                 })
                         })
                 }
-                dispatch(pathSwitch({
-                    name: payload.name,
-                    type: "protocol",
-                    route: getRedirectionRoute({type: "protocol", approachId: approachId, protocolId: protocolId})
-                } as NavigationUnit));
                 setIsLoading(false);
             })
             .catch(thunkError => {

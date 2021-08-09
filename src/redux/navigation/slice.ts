@@ -25,6 +25,11 @@ const initState: { path: NavigationUnit[] } = {
 
 export const NAVIGATION_ACTION_TYPE_PREFIX = 'navigation';
 
+type SetPathArguments = {
+    pathUnits: PathUnitView[],
+    extraRoutes?: NavigationUnit[],
+}
+
 const navigationSlice = createSlice({
     name: NAVIGATION_ACTION_TYPE_PREFIX,
     initialState: initState,
@@ -35,9 +40,9 @@ const navigationSlice = createSlice({
         pathSwitch(state, action: PayloadAction<NavigationUnit>) {
             state.path = patchPathFromNavigationUnit(action.payload, state.path)
         },
-        setPath(state, action: PayloadAction<PathUnitView[]>) {
-            const path = pathToNavigationUnitList(action.payload)
-            state.path = [...initState.path, ...path]
+        setPath(state, action: PayloadAction<SetPathArguments>) {
+            const path = pathToNavigationUnitList(action.payload.pathUnits)
+            state.path = [...initState.path, ...path, ...(action.payload.extraRoutes ?? [])]
         }
     }
 });

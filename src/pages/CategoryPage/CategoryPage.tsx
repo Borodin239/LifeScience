@@ -101,7 +101,7 @@ const CategoryPage = () => {
                         .unwrap()
                         .then(payload => splitThunkPayload(payload))
                         .then(pathPayload => {
-                            dispatch(setPath(pathPayload))
+                            dispatch(setPath({pathUnits: pathPayload}))
                             setIsLocationLoading(false)
                         });
                 } else {

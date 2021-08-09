@@ -49,7 +49,7 @@ const SearchResultList: React.FC<SearchResultListProps> = ({results}) => {
                     id: result.categoryId,
                     name: result.name,
                 }
-                dispatch(setPath(result.paths[0].concat([lastPoint])))
+                dispatch(setPath({pathUnits: [...result.paths[0], lastPoint]}))
                 history.push(`${appRoutesNames.CATEGORIES}/${result.categoryId}`);
                 return;
             }
