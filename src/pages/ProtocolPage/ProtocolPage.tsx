@@ -5,7 +5,7 @@ import {useMethodPageStyles} from "../MethodPage/method-page-styles";
 import {LeftProtocolsArrow} from "../../components/approach/ProtocolsArrows/ProtocolsArrows";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
-import {pathMove, pathSwitch} from "../../redux/navigation/slice";
+import {pathMove, pathSwitch, setPath} from "../../redux/navigation/slice";
 import {getRedirectionRoute, NavigationUnit} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {useHistory, useParams} from "react-router-dom";
@@ -15,6 +15,8 @@ import {useProtocolPageStyles} from "./useProtocolPageStyles";
 import SectionList from "../../components/approach/SectionList/SectionList";
 import {viewProtocolList} from "../../redux/publicApproach/slice";
 import ProtocolContent from "../../components/approach/ContentContainer/ProtocolContent";
+import {getPublicApproachThunk} from "../../redux/publicApproach/thunkActions";
+import {getCategoryPathsThunk} from "../../redux/categories/thunkActions";
 
 
 interface ParamType {
@@ -35,12 +37,40 @@ const ProtocolPage = () => {
 
     const [selectedSection, setSelectedSection] = useState(0)
 
+    const path = useAppSelector(state => state.navigationReducer.path);
+
     useEffect(() => {
         setIsLoading(true)
         dispatch(getPublicProtocolThunk({approachId, protocolId}))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then(payload => {
+                const unitRoute = getRedirectionRoute({type: "protocol", approachId: approachId, protocolId: protocolId});
+                if (path[path.length - 1]?.route !== unitRoute) {
+                    dispatch(getPublicApproachThunk(approachId))
+                        .unwrap()
+                        .then(payload => splitThunkPayload(payload))
+                        .then(approachPayload => {
+                            const category = approachPayload.categories[0]
+                            const pathUnit = {id: category.id, name: category.name}
+                            dispatch(getCategoryPathsThunk(pathUnit))
+                                .unwrap()
+                                .then(payload => splitThunkPayload(payload))
+                                .then(pathPayload => {
+                                    dispatch(setPath(pathPayload))
+                                    dispatch(pathMove({
+                                        name: approachPayload.name,
+                                        type: "approach",
+                                        route: getRedirectionRoute({type: "approach", approachId: approachId})
+                                    }))
+                                    dispatch(pathMove({
+                                        name: payload.name,
+                                        type: "protocol",
+                                        route: getRedirectionRoute({type: "protocol", approachId: approachId, protocolId: protocolId})
+                                    }))
+                                })
+                        })
+                }
                 dispatch(pathSwitch({
                     name: payload.name,
                     type: "protocol",

@@ -11,9 +11,10 @@ import ApproachContainer from "../../components/approach/ApproachContainer/Appro
 import ProtocolList from "../../components/approach/ProtocolList/ProtocolList";
 import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
 import {pathMove, setPath} from "../../redux/navigation/slice";
-import {getRedirectionRoute} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
+import {getRedirectionRoute, NavigationUnit} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 import {hideProtocolList, viewProtocolList} from "../../redux/publicApproach/slice";
 import {getCategoryPathsThunk} from "../../redux/categories/thunkActions";
+import {ApproachView} from "../../infrastructure/http/api/view/approach/ApproachView";
 
 interface ParamType {
     approachId: string
@@ -35,6 +36,25 @@ const MethodPage: React.FC = () => {
         dispatch(hideProtocolList())
     }
 
+    const updateLocation = (path: NavigationUnit[], payload: ApproachView) => {
+        const unitRoute = getRedirectionRoute({type: "approach", approachId: approachId});
+        if (path[path.length - 1]?.route !== unitRoute) {
+            const category = payload.categories[0]
+            const pathUnit = {id: category.id, name: category.name}
+            dispatch(getCategoryPathsThunk(pathUnit))
+                .unwrap()
+                .then(payload => splitThunkPayload(payload))
+                .then(pathPayload => {
+                    dispatch(setPath(pathPayload))
+                    dispatch(pathMove({
+                        name: payload.name,
+                        type: "approach",
+                        route: getRedirectionRoute({type: "approach", approachId: approachId})
+                    }))
+                })
+        }
+    }
+
     const isProtocolListViewed = useAppSelector(state => state.approachReducer.isProtocolListViewed)
     const path = useAppSelector(state => state.navigationReducer.path);
 
@@ -44,22 +64,7 @@ const MethodPage: React.FC = () => {
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then(payload => {
-                const unitRoute = getRedirectionRoute({type: "approach", approachId: approachId});
-                if (path[path.length - 1]?.route !== unitRoute) {
-                    const category = payload.categories[0]
-                    const pathUnit = {id: category.id, name: category.name}
-                    dispatch(getCategoryPathsThunk(pathUnit))
-                        .unwrap()
-                        .then(payload => splitThunkPayload(payload))
-                        .then(pathPayload => {
-                            dispatch(setPath(pathPayload))
-                            dispatch(pathMove({
-                                name: payload.name,
-                                type: "approach",
-                                route: getRedirectionRoute({type: "approach", approachId: approachId})
-                            }))
-                        })
-                }
+                updateLocation(path, payload)
                 setIsLoading(false);
             })
             .catch(thunkError => {
