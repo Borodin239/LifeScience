@@ -60,7 +60,7 @@ const MethodPage: React.FC = () => {
         } else {
             setIsLocationLoading(false)
         }
-    }, [approachId, dispatch])
+    }, [approachId, dispatch, history])
 
     const isProtocolListViewed = useAppSelector(state => state.approachReducer.isProtocolListViewed)
     const path = useAppSelector(state => state.navigationReducer.path);
