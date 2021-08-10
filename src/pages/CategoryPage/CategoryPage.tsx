@@ -103,6 +103,11 @@ const CategoryPage = () => {
                         .then(pathPayload => {
                             dispatch(setPath({pathUnits: pathPayload}))
                             setIsLocationLoading(false)
+                        })
+                        .catch(thunkError => {
+                            handleThunkErrorBase(thunkError, history, dispatch);
+                            // setIsLoading(false);
+
                         });
                 } else {
                     setIsLocationLoading(false)

@@ -54,6 +54,9 @@ const MethodPage: React.FC = () => {
                     dispatch(setPath({pathUnits: pathPayload, extraRoutes: [approachUnit]}))
                     setIsLocationLoading(false)
                 })
+                .catch(thunkError => {
+                    handleThunkErrorBase(thunkError, history, dispatch);
+                });
         } else {
             setIsLocationLoading(false)
         }
