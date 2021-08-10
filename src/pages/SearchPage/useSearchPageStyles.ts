@@ -11,22 +11,6 @@ export const useSearchPageStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(3),
         borderBottom: "1px solid " + theme.palette.primary.main,
     },
-    searchResultContainer: {
-        marginTop: theme.spacing(2),
-        width: '30%',
-        display: "flex",
-        justifyContent: "start",
-        padding: theme.spacing(1),
-    },
-    iconContainer: {
-        fontSize: "20px",
-        width: '20%',
-        color: theme.palette.primary.main,
-    },
-    searchResultName: {
-        fontSize: "24px",
-        cursor: "pointer",
-    },
     divider: {
         backgroundColor: theme.palette.primary.main,
     },

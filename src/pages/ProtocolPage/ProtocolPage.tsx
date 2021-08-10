@@ -5,7 +5,7 @@ import {useMethodPageStyles} from "../MethodPage/method-page-styles";
 import {LeftProtocolsArrow} from "../../components/approach/ProtocolsArrows/ProtocolsArrows";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
-import {pathMove, pathSwitch} from "../../redux/navigation/slice";
+import {pathMove, setPath} from "../../redux/navigation/slice";
 import {getRedirectionRoute, NavigationUnit} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {useHistory, useParams} from "react-router-dom";
@@ -15,6 +15,8 @@ import {useProtocolPageStyles} from "./useProtocolPageStyles";
 import SectionList from "../../components/approach/SectionList/SectionList";
 import {viewProtocolList} from "../../redux/publicApproach/slice";
 import ProtocolContent from "../../components/approach/ContentContainer/ProtocolContent";
+import {getPublicApproachThunk} from "../../redux/publicApproach/thunkActions";
+import {getCategoryPathsThunk} from "../../redux/categories/thunkActions";
 
 
 interface ParamType {
@@ -32,8 +34,11 @@ const ProtocolPage = () => {
     const {approachId, protocolId} = useParams<ParamType>()
 
     const [isLoading, setIsLoading] = useState(true);
+    const [isLocationLoading, setIsLocationLoading] = useState(true);
 
     const [selectedSection, setSelectedSection] = useState(0)
+
+    const path = useAppSelector(state => state.navigationReducer.path);
 
     useEffect(() => {
         setIsLoading(true)
@@ -41,11 +46,43 @@ const ProtocolPage = () => {
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then(payload => {
-                dispatch(pathSwitch({
-                    name: payload.name,
-                    type: "protocol",
-                    route: getRedirectionRoute({type: "protocol", approachId: approachId, protocolId: protocolId})
-                } as NavigationUnit));
+                const unitRoute = getRedirectionRoute({type: "protocol", approachId: approachId, protocolId: protocolId});
+                if (path[path.length - 1]?.route !== unitRoute) {
+                    dispatch(getPublicApproachThunk(approachId))
+                        .unwrap()
+                        .then(payload => splitThunkPayload(payload))
+                        .then(approachPayload => {
+                            const category = approachPayload.categories[0]
+                            const pathUnit = {id: category.id, name: category.name}
+                            dispatch(getCategoryPathsThunk(pathUnit))
+                                .unwrap()
+                                .then(payload => splitThunkPayload(payload))
+                                .then(pathPayload => {
+                                    const approachUnit = {
+                                        name: approachPayload.name,
+                                        type: "approach",
+                                        route: getRedirectionRoute({type: "approach", approachId: approachId})
+                                    } as NavigationUnit
+
+                                    const protocolUnit = {
+                                        name: payload.name,
+                                        type: "protocol",
+                                        route: getRedirectionRoute({type: "protocol", approachId: approachId, protocolId: protocolId})
+                                    } as NavigationUnit
+
+                                    dispatch(setPath({pathUnits: pathPayload, extraRoutes: [approachUnit, protocolUnit]}))
+                                    setIsLocationLoading(false)
+                                })
+                                .catch(thunkError => {
+                                    handleThunkErrorBase(thunkError, history, dispatch);
+                                });
+                        })
+                        .catch(thunkError => {
+                            handleThunkErrorBase(thunkError, history, dispatch);
+                        });
+                } else {
+                    setIsLocationLoading(false)
+                }
                 setIsLoading(false);
             })
             .catch(thunkError => {
@@ -53,7 +90,7 @@ const ProtocolPage = () => {
                 // setIsLoading(false);
 
             })
-    }, [protocolId, approachId, history, dispatch]);
+    }, [protocolId, approachId, history, dispatch, path]);
 
     const handleBackToProtocols = () => {
         dispatch(viewProtocolList())
@@ -69,7 +106,7 @@ const ProtocolPage = () => {
 
     const protocol = useAppSelector(state => state.protocolReducer.protocol)
 
-    if (isLoading) {
+    if (isLoading && isLocationLoading) {
         return <CenteredLoader/>
     }
 

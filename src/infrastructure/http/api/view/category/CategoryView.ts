@@ -1,5 +1,5 @@
 export type CategoryView = {
-  id: number,
+  id: string,
   name: string,
   creationDate: string
   aliases: string[]
