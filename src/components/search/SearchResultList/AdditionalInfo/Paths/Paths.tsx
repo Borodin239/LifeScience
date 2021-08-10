@@ -1,8 +1,8 @@
 import {PathsView} from "../../../../../infrastructure/http/api/view/path/PathsView/PathsView";
 import React, {useState} from "react";
-import {Box, Typography} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import Path from "./Path/Path";
-import {usePathsStyles} from "./usePathsStyles";
+import ShowPathsText from "./ShowPathsText/ShowPathsText";
 
 
 type PathsProps = {
@@ -10,8 +10,6 @@ type PathsProps = {
 }
 
 const Paths: React.FC<PathsProps> = ({paths}) => {
-
-    const classes = usePathsStyles()
 
     const [showAllPaths, setShowAllPaths] = useState(false)
 
@@ -32,19 +30,11 @@ const Paths: React.FC<PathsProps> = ({paths}) => {
                                 {paths.map((path, index) => (
                                     (index !== 0) && <Path path={path}/>
                                 ))}
-                                <Typography onClick={togglePaths}
-                                            className={classes.showPathsText}
-                                            color={"textSecondary"}>
-                                    Hide
-                                </Typography>
+                                <ShowPathsText text={"Hide"} handleClick={togglePaths}/>
                             </>
                         ) :
                         (
-                            <Typography onClick={togglePaths}
-                                        className={classes.showPathsText}
-                                        color={"textSecondary"}>
-                                Show all paths
-                            </Typography>
+                            <ShowPathsText text={"Show all paths"} handleClick={togglePaths}/>
                         )
                 )
             }
