@@ -108,6 +108,7 @@ const CategoryPage = () => {
         let id = parseInt(categoryId);
 
         if (Number.isNaN(id)) {
+            setCategoryName(ROOT_NAVIGATION_UNIT.name)
             processRoot();
         } else {
             processCategoryWithId(id);
@@ -115,7 +116,9 @@ const CategoryPage = () => {
     }, [categoryId, processCategoryWithId, processRoot]);
 
     useEffect(() => {
-        if (isCategoryLoading || !categoryName) return
+        if (isCategoryLoading || !categoryName) {
+            return
+        }
         const unitRoute = getRedirectionRoute({type: "category", categoryId: categoryId});
         if (path[path.length - 1]?.route !== unitRoute) {
             setIsLocationLoading(true)
