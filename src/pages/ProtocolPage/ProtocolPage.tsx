@@ -101,7 +101,7 @@ const ProtocolPage = () => {
     const protocol = useAppSelector(state => state.protocolReducer.protocol)
 
     if (isLoading && isLocationLoading) {
-        return <CenteredLoader/>
+        return <CenteredLoader className={methodClasses.mainLoader}/>
     }
 
     return (
