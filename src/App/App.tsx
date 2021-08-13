@@ -16,6 +16,7 @@ import {Box} from "@material-ui/core";
 import './App.css'
 import ProtocolPage from "../pages/ProtocolPage/ProtocolPage";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
+import CreateProtocolPage from "../pages/CreateProtocolPage/CreateProtocolPage";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -43,9 +44,15 @@ function App() {
                             <Box className={classes.fixedWidth}>
                                 {/*1100 px*/}
                                 <Switch>
-                                    <Route exact path={`${appRoutesNames.APPROACHES}/:approachId(\\d{1,11})${appRoutesNames.PROTOCOLS}/:protocolId(\\d{1,11})`} render={() => <ProtocolPage/>}/>
-                                    <Route exact path={`${appRoutesNames.APPROACHES}/:approachId(\\d{1,11})`} render={() => <MethodPage/>}/>
-                                    <Route exact path={`${appRoutesNames.CATEGORIES}/:categoryId(\\d{0,11})`} render={() => <CategoryPage/>}/>
+                                    <Route exact
+                                           path={`${appRoutesNames.APPROACHES}/:approachId(\\d{1,11})${appRoutesNames.PROTOCOLS}/:protocolId(\\d{1,11})`}
+                                           render={() => <ProtocolPage/>}/>
+                                    <Route exact path={`${appRoutesNames.APPROACHES}/:approachId(\\d{1,11})`}
+                                           render={() => <MethodPage/>}/>
+                                    <Route exact path={`${appRoutesNames.CATEGORIES}/:categoryId(\\d{0,11})`}
+                                           render={() => <CategoryPage/>}/>
+                                    <Route exact path={appRoutesNames.CREATE_PROTOCOL}
+                                           render={() => <CreateProtocolPage/>}/>
                                     <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                                     <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
                                     <Route exact path={appRoutesNames.SEARCH} render={() => <SearchPage/>}/>

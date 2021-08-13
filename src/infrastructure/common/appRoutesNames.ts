@@ -8,6 +8,7 @@ const appRoutesNames = {
     PROTOCOLS: '/protocols',
     SEARCH: '/search',
     PROFILE: '/profile',
+    CREATE_PROTOCOL: '/create-protocol',
 }
 
 Object.freeze(appRoutesNames);
