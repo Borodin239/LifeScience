@@ -73,13 +73,7 @@ const ProtocolPage = () => {
                                     dispatch(setPath({pathUnits: pathPayload, extraRoutes: [approachUnit, protocolUnit]}))
                                     setIsLocationLoading(false)
                                 })
-                                .catch(thunkError => {
-                                    handleThunkErrorBase(thunkError, history, dispatch);
-                                });
                         })
-                        .catch(thunkError => {
-                            handleThunkErrorBase(thunkError, history, dispatch);
-                        });
                 } else {
                     setIsLocationLoading(false)
                 }
@@ -107,7 +101,7 @@ const ProtocolPage = () => {
     const protocol = useAppSelector(state => state.protocolReducer.protocol)
 
     if (isLoading && isLocationLoading) {
-        return <CenteredLoader/>
+        return <CenteredLoader className={methodClasses.mainLoader}/>
     }
 
     return (

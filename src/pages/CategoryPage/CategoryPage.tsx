@@ -2,7 +2,6 @@ import React, {useCallback, useEffect, useMemo, useState} from "react";
 import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
 import {useHistory, useParams} from "react-router-dom";
 import {Box} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
 import CatalogNodeList, {CatalogNode} from "../../components/categories/CatalogNodeList";
 import SubjectIcon from "@material-ui/icons/Subject";
 import {FolderOutlined} from "@material-ui/icons";
@@ -20,25 +19,19 @@ import {CategoryView} from "../../infrastructure/http/api/view/category/Category
 import {CategoryInfoView} from "../../infrastructure/http/api/view/category/CategoryInfoView";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import {sortBy} from "lodash";
-
-const useStyles = makeStyles((theme) => ({
-    upperBar: {
-        margin: theme.spacing(3, 0, 2),
-        width: '100%',
-        display: "flex",
-        justifyContent: 'space-between',
-    },
-}), {index: 1});
+import {useCategoryPageStyles} from "./useCategoryPageStyles";
 
 const CategoryPage = () => {
-    const classes = useStyles();
+    const classes = useCategoryPageStyles()
 
-    const params = useParams<{ categoryId: string }>();
+    const {categoryId} = useParams<{ categoryId: string }>();
     const history = useHistory();
     const dispatch = useAppDispatch();
 
     const [isCategoryLoading, setIsCategoryLoading] = useState(true);
     const [isLocationLoading, setIsLocationLoading] = useState(true);
+
+    const [categoryName, setCategoryName] = useState<string | null>(null);
 
     const [categoryCatalog, setCategoryCatalog] = useState<CatalogNode[]>([]);
     const [approachCatalog, setApproachCatalog] = useState<CatalogNode[]>([]);
@@ -94,27 +87,10 @@ const CategoryPage = () => {
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then((payload: CategoryInfoView) => {
-                const unitRoute = getRedirectionRoute({type: "category", categoryId: categoryId});
-                if (path[path.length - 1]?.route !== unitRoute) {
-                    const category = {id: categoryId, name: payload.name};
-                    dispatch(getCategoryPathsThunk(category))
-                        .unwrap()
-                        .then(payload => splitThunkPayload(payload))
-                        .then(pathPayload => {
-                            dispatch(setPath({pathUnits: pathPayload}))
-                            setIsLocationLoading(false)
-                        })
-                        .catch(thunkError => {
-                            handleThunkErrorBase(thunkError, history, dispatch);
-                            // setIsLoading(false);
-
-                        });
-                } else {
-                    setIsLocationLoading(false)
-                }
                 setCategoryCatalog(payload.subCategories.map(categoryView => createCatalogNode("category", categoryView)));
                 setApproachCatalog(payload.approaches.map(approachView => createCatalogNode("approach", approachView)));
                 setIsCategoryLoading(false);
+                setCategoryName(payload.name);
             })
             .catch(thunkError => {
                 setIsCategoryLoading(false);
@@ -124,36 +100,69 @@ const CategoryPage = () => {
                     handleThunkErrorBase(thunkError, history, dispatch);
                 }
             });
-    }, [createCatalogNode, dispatch, history, path]);
+    }, [createCatalogNode, dispatch, history]);
 
     useEffect(() => {
-        developmentLog(`targetPlotsParams: ${JSON.stringify(params)}`);
+        developmentLog(`targetPlotsParams: ${JSON.stringify(categoryId)}`);
 
-        let id = parseInt(params.categoryId);
+        let id = parseInt(categoryId);
 
         if (Number.isNaN(id)) {
+            setCategoryName(ROOT_NAVIGATION_UNIT.name)
             processRoot();
         } else {
             processCategoryWithId(id);
         }
-    }, [params, processCategoryWithId, processRoot]);
+    }, [categoryId, processCategoryWithId, processRoot]);
+
+    useEffect(() => {
+        if (isCategoryLoading || !categoryName) {
+            return
+        }
+        const unitRoute = getRedirectionRoute({type: "category", categoryId: categoryId});
+        if (path[path.length - 1]?.route !== unitRoute) {
+            setIsLocationLoading(true)
+            dispatch(getCategoryPathsThunk({id: categoryId, name: categoryName}))
+                .unwrap()
+                .then(payload => splitThunkPayload(payload))
+                .then(pathPayload => {
+                    dispatch(setPath({pathUnits: pathPayload}))
+                    setIsLocationLoading(false)
+                })
+        } else {
+            setIsLocationLoading(false)
+        }
+    }, [dispatch, path, categoryId, categoryName, isCategoryLoading]);
 
     if (isCategoryLoading && isLocationLoading) {
-        return <CenteredLoader/>;
+        return <CenteredLoader className={classes.upperLoader}/>;
     }
 
     return (
         <Box>
-            <Box className={classes.upperBar}>
-                <GlobalUserLocation/>
-                {(userRoles && userRoles.includes("ROLE_ADMIN")) ?
-                    <CategoryAdminSettings categoryId={parseInt(params.categoryId)}/> : null}
-            </Box>
             {
-                <>
-                    <CatalogNodeList list={sortedCategoryCatalog} icon={<FolderOutlined/>} type={"Categories"}/>
-                    <CatalogNodeList list={sortedApproachCatalog} icon={<SubjectIcon/>} type={"Methods"}/>
-                </>
+                isLocationLoading
+                    ?
+                    (
+                        <CenteredLoader className={classes.upperLoader}/>
+                    )
+                    :
+                    (
+                        <Box className={classes.upperBar}>
+                            <GlobalUserLocation/>
+                            {(userRoles && userRoles.includes("ROLE_ADMIN")) ?
+                                <CategoryAdminSettings categoryId={parseInt(categoryId)}/> : null}
+                        </Box>
+                    )
+            }
+            {
+                isCategoryLoading ? <CenteredLoader/> :
+                    (
+                        <>
+                            <CatalogNodeList list={sortedCategoryCatalog} icon={<FolderOutlined/>} type={"Categories"}/>
+                            <CatalogNodeList list={sortedApproachCatalog} icon={<SubjectIcon/>} type={"Methods"}/>
+                        </>
+                    )
             }
         </Box>
     )
