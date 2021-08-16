@@ -8,7 +8,7 @@ import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {getPublicApproachThunk} from "../../redux/publicApproach/thunkActions";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import ApproachContainer from "../../components/approach/ApproachContainer/ApproachContainer";
-import ProtocolList from "../../components/approach/ProtocolList/ProtocolList";
+import ProtocolList from "../../components/approach/protocol-list/ProtocolList";
 import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
 import {setPath} from "../../redux/navigation/slice";
 import {getRedirectionRoute, NavigationUnit} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";

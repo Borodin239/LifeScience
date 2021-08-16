@@ -8,6 +8,7 @@ import {getRedirectionRoute, NavigationUnit} from "../../../infrastructure/ui/ut
 import {useAppDispatch} from "../../../redux/hooks";
 import React, {useEffect, useCallback} from "react";
 import {hideProtocolList} from "../../../redux/publicApproach/slice";
+import AddProtocolButton from "./add-protocol/AddProtocolButton";
 
 
 type ProtocolListProps = {
@@ -43,27 +44,34 @@ const ProtocolList: React.FC<ProtocolListProps> = (props) => {
 
     return (
         <Box>
-           <Box className={classes.upperBar}>
-               <Box className={classes.backToMethod}>
+            <Box className={classes.upperBar}>
+                <Box className={classes.backToMethod}>
                     <LeftProtocolsArrow text={"Back to method"} handleClick={handleGoBackClick}/>
-               </Box>
-               <Typography variant={"h5"} className={classes.title}>
-                   {approachName}: protocols
-               </Typography>
-           </Box>
-           <Box className={classes.protocols}>
-                <List>
-                    {
-                        protocols.map((protocol, index) => (
-                            <ListItem key={index}>
-                                <Typography onClick={handleProtocolClick(protocol)} className={classes.protocolName}>
-                                    {index + 1}. {protocol.name}
-                                </Typography>
-                            </ListItem>
-                        ))
-                    }
-                </List>
-           </Box>
+                </Box>
+                <Typography variant={"h5"} className={classes.title}>
+                    {approachName}: protocols
+                </Typography>
+            </Box>
+            <Box className={classes.mainContainer}>
+                <Box className={classes.protocols}>
+                    <List>
+                        {
+                            protocols.map((protocol, index) => (
+                                <ListItem key={index}>
+                                    <Typography onClick={handleProtocolClick(protocol)}
+                                                className={classes.protocolName}>
+                                        {index + 1}. {protocol.name}
+                                    </Typography>
+                                </ListItem>
+                            ))
+                        }
+                    </List>
+                </Box>
+                <Box className={classes.addProtocol}>
+                    <AddProtocolButton approachId={approachId}/>
+                </Box>
+            </Box>
+
         </Box>
     )
 }

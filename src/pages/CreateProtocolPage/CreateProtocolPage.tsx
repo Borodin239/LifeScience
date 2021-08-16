@@ -1,26 +1,29 @@
 import {Box, Typography} from "@material-ui/core";
 import {useParams} from "react-router-dom";
 import CreateSection from "../../components/create-section/CreateSection";
+import {useCreateProtocolPageStyles} from "./useCreateProtocolPageStyles";
 
 
 type CreateProtocolParams = {
-    methodId: string
+    approachId: string
 }
 
 const CreateProtocolPage = () => {
-    const {methodId} = useParams<CreateProtocolParams>()
+    const {approachId} = useParams<CreateProtocolParams>()
 
+    const classes = useCreateProtocolPageStyles()
 
     return (
         <Box>
             <Box>
-                <Typography>
+                <Typography className={classes.title}>
                     Create new protocol
                 </Typography>
             </Box>
-            <Box>
+            <Box className={classes.editor}>
                 <CreateSection handleSubmit={() => {}} />
             </Box>
+
         </Box>
     )
 }

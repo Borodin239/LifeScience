@@ -16,7 +16,6 @@ export const useProtocolListStyles = makeStyles((theme) => ({
         width: '20%',
     },
     protocols: {
-        marginTop: theme.spacing(2),
         display: "flex",
         justifyContent: "space-around",
     },
@@ -30,6 +29,15 @@ export const useProtocolListStyles = makeStyles((theme) => ({
             textDecoration: "underline",
         },
         fontSize: '18px',
+    },
+    mainContainer: {
+        marginTop: theme.spacing(2),
+        position: "relative",
+    },
+    addProtocol: {
+        position: "absolute",
+        left: 0,
+        top: theme.spacing(2),
     }
 
 

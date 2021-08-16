@@ -51,7 +51,7 @@ function App() {
                                            render={() => <MethodPage/>}/>
                                     <Route exact path={`${appRoutesNames.CATEGORIES}/:categoryId(\\d{0,11})`}
                                            render={() => <CategoryPage/>}/>
-                                    <Route exact path={appRoutesNames.CREATE_PROTOCOL}
+                                    <Route exact path={`${appRoutesNames.CREATE_PROTOCOL}/:approachId(\\d{0,11})`}
                                            render={() => <CreateProtocolPage/>}/>
                                     <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                                     <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
