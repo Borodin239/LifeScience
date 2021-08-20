@@ -1,4 +1,4 @@
-import {Box, List, ListItem, Typography} from "@material-ui/core";
+import {Box, IconButton, List, ListItem, Tooltip, Typography} from "@material-ui/core";
 import {useProtocolListStyles} from "./useProtocolListStyles";
 import {LeftProtocolsArrow} from "../ProtocolsArrows/ProtocolsArrows";
 import {ProtocolTitleView} from "../../../infrastructure/http/api/view/protocol/ProtocolTitleView";
@@ -9,6 +9,8 @@ import {useAppDispatch} from "../../../redux/hooks";
 import React, {useEffect, useCallback} from "react";
 import {hideProtocolList} from "../../../redux/publicApproach/slice";
 import AddProtocolButton from "./add-protocol/AddProtocolButton";
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
 
 
 type ProtocolListProps = {
@@ -30,6 +32,10 @@ const ProtocolList: React.FC<ProtocolListProps> = (props) => {
 
         dispatch(pathMove({name: protocol.name, route: route, type: 'protocol'} as NavigationUnit));
         history.push(route)
+    }
+
+    const handleCreateFromExistingClick = (protocol: ProtocolTitleView) => () => {
+        history.push(`${appRoutesNames.CREATE_PROTOCOL}/${approachId}/${protocol.id}`)
     }
 
     const onUnmount = useCallback(() => {
@@ -58,10 +64,19 @@ const ProtocolList: React.FC<ProtocolListProps> = (props) => {
                         {
                             protocols.map((protocol, index) => (
                                 <ListItem key={index}>
-                                    <Typography onClick={handleProtocolClick(protocol)}
-                                                className={classes.protocolName}>
-                                        {index + 1}. {protocol.name}
-                                    </Typography>
+                                    <Box className={classes.protocolBarContainer}>
+                                        <Typography onClick={handleProtocolClick(protocol)}
+                                                    className={classes.protocolName}>
+                                            {index + 1}. {protocol.name}
+                                        </Typography>
+                                        <Tooltip title={"Create new protocol from existing"}
+                                                 placement={"top"}
+                                                 className={classes.createFromExistingButton}>
+                                            <IconButton onClick={handleCreateFromExistingClick(protocol)}>
+                                                <PostAddIcon fontSize={"small"}/>
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Box>
                                 </ListItem>
                             ))
                         }

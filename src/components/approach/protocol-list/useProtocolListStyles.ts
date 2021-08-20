@@ -25,9 +25,6 @@ export const useProtocolListStyles = makeStyles((theme) => ({
     },
     protocolName: {
         cursor: "pointer",
-        '&:hover': {
-            textDecoration: "underline",
-        },
         fontSize: '18px',
     },
     mainContainer: {
@@ -38,6 +35,16 @@ export const useProtocolListStyles = makeStyles((theme) => ({
         position: "absolute",
         left: 0,
         top: theme.spacing(2),
+    },
+    protocolBarContainer: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderBottom: "1px solid " + theme.palette.primary.main,
+        width: "100%",
+    },
+    createFromExistingButton: {
+        color: theme.palette.primary.main,
     }
 
 
