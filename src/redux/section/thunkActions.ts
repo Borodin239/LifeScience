@@ -42,7 +42,8 @@ export const getApproachSectionThunk = createAsyncThunk<SectionView, // что �
     }
 )
 
-export const getProtocolSectionThunk = createAsyncThunk<SectionView, // что возвращает при fulfilled
+export const getProtocolSectionThunk = createAsyncThunk<
+    SectionView, // что возвращает при fulfilled
     GetProtocolSectionArguments, // что принимает как аргумент при dispatch
     { // деструктуризация thunkAPI
         dispatch: AppDispatch,

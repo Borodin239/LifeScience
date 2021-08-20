@@ -8,6 +8,9 @@ export const useCreateProtocolPageStyles = makeStyles((theme) => ({
     },
     editor: {
         marginTop: theme.spacing(2),
+    },
+    loader: {
+        marginTop: theme.spacing(3),
     }
 
 

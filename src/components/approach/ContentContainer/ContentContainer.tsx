@@ -5,8 +5,7 @@ import React from "react";
 import CenteredLoader from "../../../elements/Loaders/CenteredLoader";
 import {SectionView} from "../../../infrastructure/http/api/view/section/SectionView";
 import ReactMarkdown from 'react-markdown'
-import gfm from 'remark-gfm'
-import footnotes from 'remark-footnotes'
+import uiConstants from "../../../infrastructure/ui/themes/uiConstants";
 
 
 type ContentContainerProps = {
@@ -29,7 +28,7 @@ const ContentContainer: React.FC<ContentContainerProps> = ({title, section, isLo
                 </Box>
                 {
                     isLoading ? <CenteredLoader className={classes.contentLoader}/> :
-                        <ReactMarkdown remarkPlugins={[gfm, footnotes]} className={classes.content}>
+                        <ReactMarkdown remarkPlugins={uiConstants.markdownPlugins} className={classes.content}>
                             {section.content}
                         </ReactMarkdown>
                 }
