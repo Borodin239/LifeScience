@@ -5,10 +5,12 @@ import {useEffect, useState} from "react";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import {getPublicProtocolThunk} from "../../redux/protocol/thunkActions";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
-import {useAppDispatch} from "../../redux/hooks";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {getProtocolSectionThunk} from "../../redux/section/thunkActions";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import CreateSection from "../../components/create-section/CreateSection";
+import {updateCurrentUserThunk} from "../../redux/users/thunkActions";
+import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 
 
 type CreateProtocolParams = {
@@ -27,6 +29,19 @@ const CreateProtocolPage = () => {
     const [isLoading, setIsLoading] = useState(!!sourceProtocolId); // no loading when no source protocol
 
     const [text, setText] = useState("")
+
+    const isAuthorized = useAppSelector(state => state.authReducer.isAuthorized);
+
+    useEffect(() => {
+        if (isAuthorized) {
+            dispatch(updateCurrentUserThunk());
+        }
+    }, [isAuthorized, dispatch]);
+
+
+    if (!isAuthorized) {
+        history.replace(`${appRoutesNames.SIGN_IN}`)
+    }
 
     useEffect(() => {
         if (!sourceProtocolId) return
