@@ -27,7 +27,8 @@ const apiConstants = {
             PRE_SEARCH: '/search/suggest'
         },
         protocol: {
-            BASE: '/protocols'
+            BASE: '/protocols',
+            DRAFT: '/draft'
         }
     },
 
