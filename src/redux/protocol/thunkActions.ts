@@ -11,7 +11,7 @@ import {CreateDraftProtocolDto} from "../../infrastructure/http/api/dto/protocol
 export const PROTOCOL_ACTION_TYPE_PREFIX = "protocols"
 
 enum ProtocolActionThunkTypes {
-    GET = "/getProtocol",
+    GET_PUBLIC = "/getProtocol",
     POST_DRAFT = "/postDraft"
 }
 
@@ -27,10 +27,10 @@ export const getPublicProtocolThunk = createAsyncThunk<
         dispatch: AppDispatch,
         rejectValue: ApiError
     }>(
-    `${PROTOCOL_ACTION_TYPE_PREFIX}${ProtocolActionThunkTypes.GET}`,
+    `${PROTOCOL_ACTION_TYPE_PREFIX}${ProtocolActionThunkTypes.GET_PUBLIC}`,
     async ({approachId, protocolId}, thunkAPI) => {
         try {
-            const response = await protocolApi.getProtocol(approachId, protocolId)
+            const response = await protocolApi.getPublicProtocol(approachId, protocolId)
 
             return response.data as ProtocolView
         } catch (err) {
@@ -53,6 +53,26 @@ export const postDraftProtocolThunk = createAsyncThunk<
             const response = await protocolApi.postDraftProtocol(dto);
 
             return response.data as DraftProtocolView;
+        } catch (err) {
+            return onThunkError(err, thunkAPI);
+        }
+
+    }
+)
+
+export const getDraftProtocolThunk = createAsyncThunk<
+    DraftProtocolView, // что возвращает при fulfilled
+    {protocolId: string}, // что принимает как аргумент при dispatch
+    { // деструктуризация thunkAPI
+        dispatch: AppDispatch,
+        rejectValue: ApiError
+    }>(
+    `${PROTOCOL_ACTION_TYPE_PREFIX}${ProtocolActionThunkTypes.GET_PUBLIC}`,
+    async ({protocolId}, thunkAPI) => {
+        try {
+            const response = await protocolApi.getDraftProtocol(protocolId)
+
+            return response.data as DraftProtocolView
         } catch (err) {
             return onThunkError(err, thunkAPI);
         }

@@ -1,6 +1,8 @@
 import apiClientDefault from "../client/apiClientDefault";
 import apiConstants from "../apiConstants";
 import {PatchDraftProtocolSectionDto} from "../dto/section/PatchDraftProtocolSectionDto";
+import apiClientSecure from "../client/apiClientSecure";
+import {PostDraftProtocolDto} from "../dto/section/PostDraftProtocolDto";
 
 
 export const sectionApi = {
@@ -11,6 +13,9 @@ export const sectionApi = {
         return apiClientDefault.get(`${apiConstants.routes.publicApproach.BASE}/${approachId}${apiConstants.routes.protocol.BASE}/${protocolId}${apiConstants.routes.section.BASE}/${sectionId}`)
     },
     patchDraftProtocolSection(dto: PatchDraftProtocolSectionDto, protocolId: string, sectionId: string) {
-        return apiClientDefault.patch(`${apiConstants.routes.protocol.BASE}${apiConstants.routes.protocol.DRAFT}/${protocolId}${apiConstants.routes.section.BASE}/${sectionId}`, dto)
+        return apiClientSecure.patch(`${apiConstants.routes.protocol.BASE}${apiConstants.routes.protocol.DRAFT}/${protocolId}${apiConstants.routes.section.BASE}/${sectionId}`, dto)
+    },
+    postDraftProtocolSection(dto: PostDraftProtocolDto, protocolId: string) {
+        return apiClientSecure.post(`${apiConstants.routes.protocol.BASE}${apiConstants.routes.protocol.DRAFT}/${protocolId}${apiConstants.routes.section.BASE}`, dto)
     }
 }

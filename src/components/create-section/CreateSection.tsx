@@ -7,14 +7,13 @@ import ReactMde from "react-mde";
 import MarkdownContainer from "../approach/ContentContainer/MarkdownContainer";
 
 type CreateSectionProps = {
-    handleSubmit: (text: string) => void,
-    initialText?: string,
+    text: string,
+    setText: React.Dispatch<React.SetStateAction<string>>,
 }
 
 const CreateSection: React.FC<CreateSectionProps> = (props) => {
-    const {handleSubmit, initialText} = props;
+    const {text, setText} = props;
 
-    const [value, setValue] = React.useState<string>(initialText ?? "");
     const [selectedTab, setSelectedTab] = React.useState<"write" | "preview">("write");
 
     const renderMarkdown = (text: string): ReactElement => {
@@ -27,8 +26,8 @@ const CreateSection: React.FC<CreateSectionProps> = (props) => {
     return (
         <Box>
             <ReactMde
-                value={value}
-                onChange={setValue}
+                value={text}
+                onChange={setText}
                 selectedTab={selectedTab}
                 onTabChange={setSelectedTab}
                 minEditorHeight={400}

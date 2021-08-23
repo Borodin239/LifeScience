@@ -3,14 +3,19 @@ import {useHistory, useParams} from "react-router-dom";
 import {useCreateProtocolPageStyles} from "./useCreateProtocolPageStyles";
 import {useEffect, useState} from "react";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
-import {getPublicProtocolThunk} from "../../redux/protocol/thunkActions";
+import {getPublicProtocolThunk, postDraftProtocolThunk} from "../../redux/protocol/thunkActions";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {getProtocolSectionThunk} from "../../redux/section/thunkActions";
+import {
+    getProtocolSectionThunk,
+    patchDraftProtocolSectionThunk,
+    postDraftProtocolSectionThunk
+} from "../../redux/section/thunkActions";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import CreateSection from "../../components/create-section/CreateSection";
 import {updateCurrentUserThunk} from "../../redux/users/thunkActions";
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
+import {PostDraftProtocolDto} from "../../infrastructure/http/api/dto/section/PostDraftProtocolDto";
 
 
 type CreateProtocolParams = {
@@ -38,7 +43,30 @@ const CreateProtocolPage = () => {
     }
 
     const handleSubmit = () => {
-
+        dispatch(postDraftProtocolThunk({name: protocolName, approachId: approachId}))
+            .unwrap()
+            .then(payload => splitThunkPayload(payload))
+            .then(payload => {
+                const protocolId = payload.id;
+                const dto = {name: "Protocol", hidden: false} as PostDraftProtocolDto;
+                return dispatch(postDraftProtocolSectionThunk({dto: dto, protocolId: protocolId}))
+                    .unwrap()
+                    .then(payload => splitThunkPayload(payload))
+                    .then(section => {
+                        const dto = {...section, content: text};
+                        return dispatch(patchDraftProtocolSectionThunk({
+                            dto: dto,
+                            protocolId: protocolId,
+                            sectionId: section.id,
+                        }))
+                    })
+                    .then(payload => payload.payload)
+                    .then(payload => splitThunkPayload(payload))
+                    .then(payload => console.log(payload))
+            })
+            .catch(thunkError => {
+                handleThunkErrorBase(thunkError, history, dispatch);
+            });
     }
 
     useEffect(() => {
@@ -62,7 +90,11 @@ const CreateProtocolPage = () => {
                 return payload.sections[0]
             })
             .then(section => {
-                return dispatch(getProtocolSectionThunk({approachId: approachId, protocolId: sourceProtocolId, sectionId: section.id}))
+                return dispatch(getProtocolSectionThunk({
+                    approachId: approachId,
+                    protocolId: sourceProtocolId,
+                    sectionId: section.id
+                }))
             })
             .then(payload => payload.payload)
             .then(payload => splitThunkPayload(payload))
@@ -88,15 +120,17 @@ const CreateProtocolPage = () => {
             </Box>
             <Box className={classes.editor}>
                 <TextField placeholder={"Enter protocol name"}
-                           onClick={handleProtocolNameChange}
+                           onChange={handleProtocolNameChange}
+                           value={protocolName}
                            className={classes.protocolName}/>
-                <CreateSection handleSubmit={() => {}} initialText={text}/>
+                <CreateSection text={text} setText={setText}/>
             </Box>
             <Box className={classes.submitButtonContainer}>
                 <Button variant="outlined"
                         color="primary"
                         className={classes.submitButton}
-                        onClick={handleSubmit}>
+                        onClick={handleSubmit}
+                        disabled={!protocolName}>
                     Create
                 </Button>
             </Box>
