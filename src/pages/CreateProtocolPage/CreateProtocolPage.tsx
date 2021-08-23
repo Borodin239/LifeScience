@@ -1,4 +1,4 @@
-import {Box, Typography} from "@material-ui/core";
+import {Box, Button, TextField, Typography} from "@material-ui/core";
 import {useHistory, useParams} from "react-router-dom";
 import {useCreateProtocolPageStyles} from "./useCreateProtocolPageStyles";
 import {useEffect, useState} from "react";
@@ -28,9 +28,18 @@ const CreateProtocolPage = () => {
 
     const [isLoading, setIsLoading] = useState(!!sourceProtocolId); // no loading when no source protocol
 
-    const [text, setText] = useState("")
+    const [text, setText] = useState("");
+    const [protocolName, setProtocolName] = useState("");
 
     const isAuthorized = useAppSelector(state => state.authReducer.isAuthorized);
+
+    const handleProtocolNameChange = (e: any) => {
+        setProtocolName(e.target.value)
+    }
+
+    const handleSubmit = () => {
+
+    }
 
     useEffect(() => {
         if (isAuthorized) {
@@ -78,9 +87,19 @@ const CreateProtocolPage = () => {
                 </Typography>
             </Box>
             <Box className={classes.editor}>
+                <TextField placeholder={"Enter protocol name"}
+                           onClick={handleProtocolNameChange}
+                           className={classes.protocolName}/>
                 <CreateSection handleSubmit={() => {}} initialText={text}/>
             </Box>
-
+            <Box className={classes.submitButtonContainer}>
+                <Button variant="outlined"
+                        color="primary"
+                        className={classes.submitButton}
+                        onClick={handleSubmit}>
+                    Create
+                </Button>
+            </Box>
         </Box>
     )
 }
