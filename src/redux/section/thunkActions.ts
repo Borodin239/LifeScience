@@ -14,6 +14,7 @@ enum SectionActionThunkTypes {
     GET_PROTOCOL_SECTION = "/getProtocolSection",
     PATCH_DRAFT_PROTOCOL_SECTION = "/patchDraftProtocolSection",
     POST_DRAFT_PROTOCOL_SECTION = "/postDraftProtocolSection",
+    GET_DRAFT_PROTOCOL_SECTION = "/getDraftProtocolSection",
 }
 
 type GetApproachSectionArguments = {
@@ -23,6 +24,11 @@ type GetApproachSectionArguments = {
 
 type GetProtocolSectionArguments = {
     approachId: string,
+    protocolId: string,
+    sectionId: string,
+}
+
+type GetDraftProtocolSectionArguments = {
     protocolId: string,
     sectionId: string,
 }
@@ -108,6 +114,26 @@ export const postDraftProtocolSectionThunk = createAsyncThunk<
     async ({dto, protocolId}, thunkAPI) => {
         try {
             const response = await sectionApi.postDraftProtocolSection(dto, protocolId);
+
+            return response.data as SectionView
+        } catch (err) {
+            return onThunkError(err, thunkAPI);
+        }
+
+    }
+)
+
+export const getDraftProtocolSectionThunk = createAsyncThunk<
+    SectionView, // что возвращает при fulfilled
+    GetDraftProtocolSectionArguments, // что принимает как аргумент при dispatch
+    { // деструктуризация thunkAPI
+        dispatch: AppDispatch,
+        rejectValue: ApiError
+    }>(
+    `${SECTION_ACTION_TYPE_PREFIX}${SectionActionThunkTypes.GET_PROTOCOL_SECTION}`,
+    async ({protocolId, sectionId}, thunkAPI) => {
+        try {
+            const response = await sectionApi.getDraftProtocolSection(protocolId, sectionId)
 
             return response.data as SectionView
         } catch (err) {

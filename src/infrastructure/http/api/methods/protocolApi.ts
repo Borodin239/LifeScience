@@ -12,6 +12,6 @@ export const protocolApi = {
         return apiClientSecure.post(`${apiConstants.routes.protocol.BASE}${apiConstants.routes.protocol.DRAFT}`, dto)
     },
     getDraftProtocol(protocolId: string) {
-        return apiClientDefault.get(`${apiConstants.routes.protocol.BASE}${apiConstants.routes.protocol.DRAFT}/${protocolId}`)
+        return apiClientSecure.get(`${apiConstants.routes.protocol.BASE}${apiConstants.routes.protocol.DRAFT}/${protocolId}`)
     }
 }

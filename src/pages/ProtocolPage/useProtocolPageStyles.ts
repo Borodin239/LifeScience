@@ -19,6 +19,10 @@ export const useProtocolPageStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         marginTop: theme.spacing(2),
+    },
+    loader: {
+        marginTop: theme.spacing(2),
     }
+
 
 }), {index: 1});

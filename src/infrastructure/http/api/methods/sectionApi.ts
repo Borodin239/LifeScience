@@ -17,5 +17,8 @@ export const sectionApi = {
     },
     postDraftProtocolSection(dto: PostDraftProtocolDto, protocolId: string) {
         return apiClientSecure.post(`${apiConstants.routes.protocol.BASE}${apiConstants.routes.protocol.DRAFT}/${protocolId}${apiConstants.routes.section.BASE}`, dto)
+    },
+    getDraftProtocolSection(protocolId: string, sectionId: string) {
+        return apiClientSecure.get(`${apiConstants.routes.protocol.BASE}${apiConstants.routes.protocol.DRAFT}/${protocolId}${apiConstants.routes.section.BASE}/${sectionId}`)
     }
 }

@@ -62,13 +62,13 @@ export const postDraftProtocolThunk = createAsyncThunk<
 
 export const getDraftProtocolThunk = createAsyncThunk<
     DraftProtocolView, // что возвращает при fulfilled
-    {protocolId: string}, // что принимает как аргумент при dispatch
+    string, // что принимает как аргумент при dispatch
     { // деструктуризация thunkAPI
         dispatch: AppDispatch,
         rejectValue: ApiError
     }>(
     `${PROTOCOL_ACTION_TYPE_PREFIX}${ProtocolActionThunkTypes.GET_PUBLIC}`,
-    async ({protocolId}, thunkAPI) => {
+    async (protocolId, thunkAPI) => {
         try {
             const response = await protocolApi.getDraftProtocol(protocolId)
 

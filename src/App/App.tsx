@@ -17,6 +17,7 @@ import './App.css'
 import ProtocolPage from "../pages/ProtocolPage/ProtocolPage";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import CreateProtocolPage from "../pages/CreateProtocolPage/CreateProtocolPage";
+import DraftProtocolPage from "../pages/DraftProtocolPage/DraftProtocolPage";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -57,6 +58,7 @@ function App() {
                                     <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
                                     <Route exact path={appRoutesNames.SEARCH} render={() => <SearchPage/>}/>
                                     <Route exact path={appRoutesNames.PROFILE} render={() => <ProfilePage/>}/>
+                                    <Route exact path={`${appRoutesNames.DRAFT_PROTOCOLS}/:protocolId(\\d{1,11})`} render={() => <DraftProtocolPage/>}/>
                                     <Route exact path="/error"
                                            render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 
