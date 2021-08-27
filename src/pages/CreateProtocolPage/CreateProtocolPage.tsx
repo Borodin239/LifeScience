@@ -43,6 +43,7 @@ const CreateProtocolPage = () => {
     }
 
     const handleSubmit = () => {
+        setIsLoading(true)
         dispatch(postDraftProtocolThunk({name: protocolName, approachId: approachId}))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
@@ -62,9 +63,10 @@ const CreateProtocolPage = () => {
                     })
                     .then(payload => payload.payload)
                     .then(payload => splitThunkPayload(payload))
-                    .then(payload => console.log(payload))
+                    .then(() => history.push(`${appRoutesNames.DRAFT_PROTOCOLS}/${protocolId}`))
             })
             .catch(thunkError => {
+                setIsLoading(false);
                 handleThunkErrorBase(thunkError, history, dispatch);
             });
     }
