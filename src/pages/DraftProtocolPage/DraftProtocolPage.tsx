@@ -37,7 +37,7 @@ const DraftProtocolPage = () => {
             .catch(thunkError => {
                 handleThunkErrorBase(thunkError, history, dispatch);
             });
-    }, [])
+    }, [dispatch, history, protocolId])
 
     const handleSectionTitleClick = (index: number) => () => {
         setSelectedSection(index);

@@ -40,7 +40,7 @@ const ProfilePage = () => {
                     handleThunkErrorBase(thunkError, history, dispatch);
                 });
         }
-    }, [isAuthorized, dispatch]);
+    }, [isAuthorized, dispatch, history, userId]);
 
 
     if (!isAuthorized) {

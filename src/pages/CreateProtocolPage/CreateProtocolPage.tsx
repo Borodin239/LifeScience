@@ -107,9 +107,7 @@ const CreateProtocolPage = () => {
             .catch(thunkError => {
                 handleThunkErrorBase(thunkError, history, dispatch);
             });
-    }, [])
-
-    //todo add deps in useEffect
+    }, [approachId, dispatch, history, sourceProtocolId])
 
     if (isLoading) return <CenteredLoader className={classes.loader}/>
 
