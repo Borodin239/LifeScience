@@ -4,9 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import CenteredLoader from "../../../elements/Loaders/CenteredLoader";
 import {SectionView} from "../../../infrastructure/http/api/view/section/SectionView";
-import ReactMarkdown from 'react-markdown'
-import gfm from 'remark-gfm'
-import footnotes from 'remark-footnotes'
+import MarkdownContainer from "./MarkdownContainer";
 
 
 type ContentContainerProps = {
@@ -29,9 +27,7 @@ const ContentContainer: React.FC<ContentContainerProps> = ({title, section, isLo
                 </Box>
                 {
                     isLoading ? <CenteredLoader className={classes.contentLoader}/> :
-                        <ReactMarkdown remarkPlugins={[gfm, footnotes]} className={classes.content}>
-                            {section.content}
-                        </ReactMarkdown>
+                        <MarkdownContainer content={section.content}/>
                 }
 
             </Box>
