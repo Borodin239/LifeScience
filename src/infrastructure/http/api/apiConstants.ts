@@ -20,7 +20,8 @@ const apiConstants = {
             PATHS: '/paths'
         },
         users: {
-            CURRENT: '/users/current'
+            BASE: '/users',
+            CURRENT: '/current'
         },
         search: {
             SEARCH: '/search',
