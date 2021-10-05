@@ -1,7 +1,7 @@
 HELP.md
 .gradle
 build/
-!gradle/wrapper/gradle-wrapper.jar
+!backend/gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
@@ -40,4 +40,4 @@ out/
 .DS_Store
 
 ### Local environment ###
-/src/main/resources/application-local.properties
+/backend/src/main/resources/application-local.properties
