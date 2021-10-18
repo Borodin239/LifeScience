@@ -5,6 +5,7 @@ data class CredentialsStorageEntity(
     val email: String,
     val password: String,
     val role: List<String>,
+    val enabled: Boolean,
     val userData: UserPersonalDataStorageEntity?
 )
 
