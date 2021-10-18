@@ -9,8 +9,11 @@ import com.jetbrains.life_science.controller.auth.view.AccessTokenViewMapper
 import com.jetbrains.life_science.exception.auth.InvalidRefreshTokenException
 import com.jetbrains.life_science.controller.auth.dto.NewUserDTO
 import com.jetbrains.life_science.controller.auth.dto.NewUserDTOToInfoAdapter
+import com.jetbrains.life_science.controller.auth.events.OnRegistrationCompleteEvent
 import com.jetbrains.life_science.user.credentials.service.CredentialsService
 import io.swagger.v3.oas.annotations.Operation
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -25,6 +28,9 @@ class AuthController(
     val accessTokenViewMapper: AccessTokenViewMapper,
     val credentialsService: CredentialsService
 ) {
+
+    @Autowired
+    private lateinit var eventPublisher: ApplicationEventPublisher
 
     @Operation(summary = "Sign in")
     @PostMapping("/signin")
@@ -43,12 +49,11 @@ class AuthController(
     @Transactional
     fun register(
         @Validated @RequestBody userDto: NewUserDTO,
+        request: HttpServletRequest,
         response: HttpServletResponse
-    ): AccessTokenView {
+    ) {
         val credentials = credentialsService.createUser(NewUserDTOToInfoAdapter(userDto))
-        val (accessToken, refreshToken) = authService.register(credentials)
-        setRefreshTokenToCookie(response, refreshToken)
-        return accessTokenViewMapper.toView(accessToken)
+        eventPublisher.publishEvent(OnRegistrationCompleteEvent(credentials, request.locale))
     }
 
     @Operation(summary = "Refreshes JWT and Refresh tokens")
