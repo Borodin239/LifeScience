@@ -5,4 +5,6 @@ import com.jetbrains.life_science.user.credentials.entity.Credentials
 
 interface VerificationTokenService {
     fun createVerificationToken(credentials: Credentials, token: String): VerificationToken
+    fun validateVerificationToken(token: String): Credentials
+    fun deleteVerificationToken(credentials: Credentials)
 }

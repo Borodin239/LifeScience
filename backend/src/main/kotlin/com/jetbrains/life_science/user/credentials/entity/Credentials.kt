@@ -32,7 +32,7 @@ class Credentials(
     )
     val roles: MutableCollection<Role>,
 
-    private var enabled: Boolean
+    var enabled: Boolean
 
 ) : UserDetails {
 

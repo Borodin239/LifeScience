@@ -4,6 +4,7 @@ import com.jetbrains.life_science.controller.auth.dto.AuthRequestDTO
 import com.jetbrains.life_science.auth.refresh.entity.RefreshTokenCode
 import com.jetbrains.life_science.auth.service.AuthRequestToCredentialsAdapter
 import com.jetbrains.life_science.auth.service.AuthService
+import com.jetbrains.life_science.auth.verification.service.VerificationTokenService
 import com.jetbrains.life_science.controller.auth.view.AccessTokenView
 import com.jetbrains.life_science.controller.auth.view.AccessTokenViewMapper
 import com.jetbrains.life_science.exception.auth.InvalidRefreshTokenException
@@ -26,7 +27,8 @@ import javax.servlet.http.HttpServletResponse
 class AuthController(
     val authService: AuthService,
     val accessTokenViewMapper: AccessTokenViewMapper,
-    val credentialsService: CredentialsService
+    val credentialsService: CredentialsService,
+    val verificationTokenService: VerificationTokenService
 ) {
 
     @Autowired
@@ -66,6 +68,20 @@ class AuthController(
         val (accessToken, refreshToken) = authService.refreshTokens(refreshTokenCode)
         setRefreshTokenToCookie(response, refreshToken)
         return accessTokenViewMapper.toView(accessToken)
+    }
+
+    @Operation(summary = "Confirm user's email via validation token")
+    @GetMapping("/confirm/{token}")
+    fun confirmRegistration(
+        @PathVariable token: String,
+        request: HttpServletRequest,
+        response: HttpServletResponse
+    )/*: AccessTokenView*/ {
+        val credentials = verificationTokenService.validateVerificationToken(token)
+        // TODO:: Как логиниться то ?
+        //val (accessToken, refreshToken) = authService.login(credentials)
+        //setRefreshTokenToCookie(response, refreshToken)
+        //return accessTokenViewMapper.toView(accessToken)
     }
 
     private fun getRefreshToken(cookies: Array<Cookie>): RefreshTokenCode {

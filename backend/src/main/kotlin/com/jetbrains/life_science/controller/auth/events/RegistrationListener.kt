@@ -29,12 +29,11 @@ class RegistrationListener : ApplicationListener<OnRegistrationCompleteEvent> {
         service.createVerificationToken(credentials, token)
         val recipientAddress: String = credentials.email
         val subject = "JetScience registration"
-        val confirmationUrl = "/regitrationConfirm.html?token=$token"
         // val message = messages.getMessage("message.regSuccess", null, Loca)
         val email = SimpleMailMessage()
         email.setTo(recipientAddress)
         email.subject = subject
-        email.text = "http://localhost:8080$confirmationUrl"
+        email.text = "http://localhost:8080/api/auth/confirm/$token"
         mailSender.send(email)
     }
 }
