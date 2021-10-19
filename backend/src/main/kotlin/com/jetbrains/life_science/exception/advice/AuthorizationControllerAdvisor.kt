@@ -10,6 +10,7 @@ import com.jetbrains.life_science.exception.maker.makeExceptionView
 import com.jetbrains.life_science.exception.request.UserAlreadyExistsException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.DisabledException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
@@ -60,6 +61,14 @@ class AuthorizationControllerAdvisor {
     fun handleInvalidCredentialsException(exception: InvalidCredentialsException): ResponseEntity<ApiExceptionView> {
         return ResponseEntity(
             makeExceptionView(401_005),
+            HttpStatus.UNAUTHORIZED
+        )
+    }
+
+    @ExceptionHandler(DisabledException::class)
+    fun handleDisabledException(exception: DisabledException): ResponseEntity<ApiExceptionView> {
+        return ResponseEntity(
+            makeExceptionView(401_006),
             HttpStatus.UNAUTHORIZED
         )
     }
