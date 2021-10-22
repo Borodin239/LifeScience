@@ -5,7 +5,7 @@ val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions.useIR = true
 
 plugins {
-    id("org.springframework.boot") version "2.5.4"
+    id("org.springframework.boot") version "2.4.11"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
     kotlin("jvm") version "1.4.31"
@@ -25,9 +25,9 @@ repositories {
 
 dependencies {
 
-    implementation("org.springframework.boot:spring-boot-starter-web:2.5.4")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.5")
-    implementation("org.springframework.boot:spring-boot-starter-security:2.5.4")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
     implementation("io.jsonwebtoken:jjwt-api:0.11.2")
@@ -38,9 +38,9 @@ dependencies {
 
     implementation("org.junit.jupiter:junit-jupiter:5.8.0")
 
-    developmentOnly("org.springframework.boot:spring-boot-devtools:2.5.4")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
-    testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.5")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test:5.5.1")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
 
@@ -49,7 +49,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-webmvc-core:1.5.10")
     implementation("org.springdoc:springdoc-openapi-ui:1.5.10")
 
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.5.4")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation(group = "org.springframework.data", name = "spring-data-elasticsearch", version = "4.1.7")
 
     implementation(group = "org.springframework.boot", name = "spring-boot-starter-validation")
