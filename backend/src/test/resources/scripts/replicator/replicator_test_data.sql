@@ -13,8 +13,8 @@ insert into users (id, first_name, last_name, academic_degree)
 values (1, 'Alex', 'R', 1);
 alter sequence user_personal_data_seq restart with 2;
 -- login=admin@gmail.ru, password=password, role = admin
-insert into credentials (id, email, password, user_personal_data_id)
-values (1, 'admin@gmail.ru', '$2a$10$qL3JuO4sEC7h9bw1Me9Kn.cnJGmK5dp68MI3B0ynKrJXvDy/iRG86', 1);
+insert into credentials (id, email, password, user_personal_data_id, enabled)
+values (1, 'admin@gmail.ru', '$2a$10$qL3JuO4sEC7h9bw1Me9Kn.cnJGmK5dp68MI3B0ynKrJXvDy/iRG86', 1, true);
 alter sequence credentials_seq restart with 2;
 
 insert into users_roles (user_id, role_id)

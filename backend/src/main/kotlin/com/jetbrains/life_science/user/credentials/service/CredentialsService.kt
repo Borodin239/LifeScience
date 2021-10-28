@@ -49,4 +49,10 @@ class CredentialsService(
             throw UserNotFoundException("User with id $id not found")
         }
     }
+
+    fun validateUser(id: Long) {
+        val credentials = getById(id)
+        credentials.enabled = true
+        credentialsRepository.save(credentials)
+    }
 }

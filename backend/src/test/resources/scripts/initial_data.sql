@@ -20,17 +20,17 @@ values (4, 'Regular', 'RS');
 alter sequence user_personal_data_seq restart with 5;
 
 -- login=email@email.ru, password=password, role = user
-insert into credentials (id, email, password, user_personal_data_id)
-values (1, 'email@email.ru', '$2a$10$qL3JuO4sEC7h9bw1Me9Kn.cnJGmK5dp68MI3B0ynKrJXvDy/iRG86', 1);
+insert into credentials (id, email, password, user_personal_data_id, enabled)
+values (1, 'email@email.ru', '$2a$10$qL3JuO4sEC7h9bw1Me9Kn.cnJGmK5dp68MI3B0ynKrJXvDy/iRG86', 1, true);
 -- login=admin@gmail.ru, password=password, role = admin
-insert into credentials (id, email, password, user_personal_data_id)
-values (2, 'admin@gmail.ru', '$2a$10$qL3JuO4sEC7h9bw1Me9Kn.cnJGmK5dp68MI3B0ynKrJXvDy/iRG86', 2);
+insert into credentials (id, email, password, user_personal_data_id, enabled)
+values (2, 'admin@gmail.ru', '$2a$10$qL3JuO4sEC7h9bw1Me9Kn.cnJGmK5dp68MI3B0ynKrJXvDy/iRG86', 2, true);
 -- login=simple@gmail.ru, password=user123, role = user
-insert into credentials (id, email, password, user_personal_data_id)
-values (3, 'simple@gmail.ru', '$2a$10$deGk.zxpc23BWE7Upb89IOG1eELe3cK0RIA0h91aB/wjLFOkE/a8.', null);
+insert into credentials (id, email, password, user_personal_data_id, enabled)
+values (3, 'simple@gmail.ru', '$2a$10$deGk.zxpc23BWE7Upb89IOG1eELe3cK0RIA0h91aB/wjLFOkE/a8.', null, true);
 -- login=regular@gmail.ru, password=user123, role = user
-insert into credentials (id, email, password, user_personal_data_id)
-values (4, 'regular@gmail.ru', '$2a$10$deGk.zxpc23BWE7Upb89IOG1eELe3cK0RIA0h91aB/wjLFOkE/a8.', 4);
+insert into credentials (id, email, password, user_personal_data_id, enabled)
+values (4, 'regular@gmail.ru', '$2a$10$deGk.zxpc23BWE7Upb89IOG1eELe3cK0RIA0h91aB/wjLFOkE/a8.', 4, true);
 -- nextId = 4
 alter sequence credentials_seq restart with 5;
 

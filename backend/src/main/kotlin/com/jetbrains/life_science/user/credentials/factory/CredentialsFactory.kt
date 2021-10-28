@@ -17,13 +17,13 @@ class CredentialsFactory(
 
     fun createUser(info: NewUserInfo, roles: MutableCollection<Role>): Credentials {
         val password = encoder.encode(info.password)
-        val credentials = Credentials(0, info.email, password, roles)
+        val credentials = Credentials(id = 0, email = info.email, password = password, roles = roles, enabled = false)
         credentials.userPersonalData = userPersonalDataFactory.create(info, credentials)
         return credentials
     }
 
     fun copyUser(storageEntity: CredentialsStorageEntity, roles: MutableCollection<Role>): Credentials {
-        val credentials = Credentials(0, storageEntity.email, storageEntity.password, roles)
+        val credentials = Credentials(0, storageEntity.email, storageEntity.password, roles, storageEntity.enabled)
         if (storageEntity.userData != null) {
             credentials.userPersonalData = userPersonalDataFactory.create(storageEntity.userData, credentials)
         }

@@ -8,6 +8,7 @@ import com.jetbrains.life_science.user.credentials.entity.Credentials
 import com.jetbrains.life_science.user.credentials.service.CredentialsService
 import com.jetbrains.life_science.util.getLogger
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.DisabledException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.stereotype.Service
 
@@ -50,7 +51,11 @@ class AuthServiceImpl(
             authenticationManager.authenticate(loginPasswordToken)
         } catch (exception: Exception) {
             logger.info("Bad credentials", exception)
-            throw InvalidCredentialsException()
+            if (exception is DisabledException) {
+                throw exception
+            } else {
+                throw InvalidCredentialsException()
+            }
         }
     }
 }

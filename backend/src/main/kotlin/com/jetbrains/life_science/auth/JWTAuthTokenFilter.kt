@@ -45,14 +45,14 @@ class JWTAuthTokenFilter(
     ) {
         val jwt = getJwt(request)
         if (jwt != null) {
-            jwtService.validateJwtToken(jwt)
+            jwtService.validateJWT(jwt)
             auth(jwt, request)
         }
         filterChain.doFilter(request, response)
     }
 
     private fun auth(jwt: String, request: HttpServletRequest) {
-        val username = jwtService.getUserNameFromJwtToken(jwt)
+        val username = jwtService.getUserNameFromJWT(jwt)
 
         val userDetails = userDetailsService.loadUserByUsername(username)
         val authentication = UsernamePasswordAuthenticationToken(
