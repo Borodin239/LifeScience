@@ -28,7 +28,7 @@ class JWTServiceImpl : JWTService {
         return JWTCode(code)
     }
 
-    override fun validateJwtToken(authToken: String) {
+    override fun validateJWT(authToken: String) {
         try {
             getClaimsFromToken(authToken)
         } catch (e: ExpiredJwtException) {
@@ -38,7 +38,7 @@ class JWTServiceImpl : JWTService {
         }
     }
 
-    override fun getUserNameFromJwtToken(token: String): String {
+    override fun getUserNameFromJWT(token: String): String {
         return getClaimsFromToken(token).subject
     }
 

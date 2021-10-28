@@ -30,7 +30,9 @@ class Credentials(
         joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "role_id")]
     )
-    val roles: MutableCollection<Role>
+    val roles: MutableCollection<Role>,
+
+    var enabled: Boolean
 
 ) : UserDetails {
 
@@ -54,7 +56,7 @@ class Credentials(
 
     override fun isCredentialsNonExpired() = true
 
-    override fun isEnabled() = true
+    override fun isEnabled() = enabled
 
     fun isAdminOrModerator(): Boolean {
         return roles.any { it.name == "ROLE_ADMIN" || it.name == "ROLE_MODERATOR" }

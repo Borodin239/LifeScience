@@ -30,7 +30,7 @@ class ReplicaControllerTest : ApiTest() {
             .andReturn().response.contentAsString
 
         val expectedJSON = "{\"users\":[{\"id\":1,\"email\":\"admin@gmail.ru\",\"password\":" +
-            "\"\$2a\$10\$qL3JuO4sEC7h9bw1Me9Kn.cnJGmK5dp68MI3B0ynKrJXvDy/iRG86\",\"role\":[\"ROLE_ADMIN\"],\"userData\"" +
+            "\"\$2a\$10\$qL3JuO4sEC7h9bw1Me9Kn.cnJGmK5dp68MI3B0ynKrJXvDy/iRG86\",\"role\":[\"ROLE_ADMIN\"],\"enabled\":true,\"userData\"" +
             ":{\"firstName\":\"Alex\",\"lastName\":\"R\",\"doctorDegree\":false,\"about\":null,\"academicDegree\":1," +
             "\"orcid\":null,\"researchId\":null}}],\"category\":[{\"id\":1,\"name\":\"catalog 2\",\"aliases\":[]," +
             "\"parents\":[]},{\"id\":2,\"name\":\"catalog 2\",\"aliases\":[],\"parents\":[1]},{\"id\":3,\"name\":" +

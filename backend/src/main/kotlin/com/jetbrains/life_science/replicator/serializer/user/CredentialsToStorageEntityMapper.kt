@@ -21,6 +21,7 @@ class CredentialsToStorageEntityMapper(
             email = credentials.email,
             password = credentials.password,
             role = credentials.roles.map { it.name },
+            enabled = credentials.isEnabled,
             userData = userDataToStorageEntityMapper.getStorageEntity(credentials.userPersonalData)
         )
     }
