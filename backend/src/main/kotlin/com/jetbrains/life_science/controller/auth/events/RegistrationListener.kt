@@ -2,6 +2,7 @@ package com.jetbrains.life_science.controller.auth.events
 
 import com.jetbrains.life_science.auth.verification.service.VerificationTokenService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.ApplicationListener
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
@@ -15,6 +16,8 @@ class RegistrationListener : ApplicationListener<OnRegistrationCompleteEvent> {
 
     /*@Autowired
     private lateinit var messages: MessageSource*/
+    @Value("\${api.path}")
+    private lateinit var apiPath: String
 
     @Autowired
     private lateinit var mailSender: JavaMailSender
@@ -33,7 +36,7 @@ class RegistrationListener : ApplicationListener<OnRegistrationCompleteEvent> {
         val email = SimpleMailMessage()
         email.setTo(recipientAddress)
         email.subject = subject
-        email.text = "http://localhost:8080/api/auth/confirm/$token"
+        email.text = "${apiPath}/auth/confirm/$token"
         mailSender.send(email)
     }
 }
