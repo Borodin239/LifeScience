@@ -52,7 +52,7 @@ export const SignUpForm: React.FC = () => {
         dispatch(signUpThunk({firstName, lastName, email, password}))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
-            .then(() => history.push(appRoutesNames.HOME))
+            .then(() => history.push(appRoutesNames.EMAIL_CONFIRMATION))
             .catch(thunkError => {
                 setIsPending(false);
 

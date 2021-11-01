@@ -18,6 +18,7 @@ import ProtocolPage from "../pages/ProtocolPage/ProtocolPage";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import CreateProtocolPage from "../pages/CreateProtocolPage/CreateProtocolPage";
 import DraftProtocolPage from "../pages/DraftProtocolPage/DraftProtocolPage";
+import {EmailConfirmationPage} from "../pages/EmailConfirmationPage/EmailConfirmationPage";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -41,6 +42,7 @@ function App() {
                             <Redirect to={appRoutesNames.HOME}/>
                         </Route>
                         <Route exact path={appRoutesNames.HOME} render={() => <HomePage/>}/>
+                        <Route exact path={appRoutesNames.EMAIL_CONFIRMATION} render={() => <EmailConfirmationPage/>} />
                         <Route>
                             <Box className={classes.fixedWidth}>
                                 {/*1100 px*/}
