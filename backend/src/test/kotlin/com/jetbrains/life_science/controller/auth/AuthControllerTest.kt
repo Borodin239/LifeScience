@@ -26,20 +26,26 @@ internal class AuthControllerTest : ApiTest() {
     /**
      * Success register test.
      *
-     * Access token in response and refresh token in cookie expected.
-     * Expected success attempt to login by this credentials.
-     * Expected success ping secured endpoint.
+     * Should create an inactive profile.
+     * Expected failed attempt to login by these credentials
+     * with 401 http code error and 401_006 system code.
      */
     @Test
     fun `register test`() {
         val password = "sample_password123=+"
         val login = "sobaka@mail.ru"
 
-        val registerTokens = register(login, password)
-        pingSecured(registerTokens)
+        register(login, password)
+        val apiExceptionView = getApiExceptionView(
+            401,
+            loginRequest(login, password)
+        )
+        assertEquals(401_006, apiExceptionView.systemCode)
+        assertEquals(login, apiExceptionView.arguments[0][0])
+/*        pingSecured(registerTokens)
 
         val loginTokens = login(login, password)
-        pingSecured(loginTokens)
+        pingSecured(loginTokens)*/
     }
 
     /**
@@ -232,10 +238,9 @@ internal class AuthControllerTest : ApiTest() {
             headers { add("Authorization", "Bearer ${tokenPair.accessToken}") }
         }
 
-    fun register(email: String, password: String): TokenPair {
+    fun register(email: String, password: String) {
         val registerRequest = registerRequest(email, password)
-        val registerResponse = assertOkAndReturn(registerRequest)
-        return getTokens(registerResponse)
+        assertOkAndReturn(registerRequest)
     }
 
     private fun registerRequest(
