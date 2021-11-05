@@ -36,7 +36,7 @@ class RegistrationListener : ApplicationListener<OnRegistrationCompleteEvent> {
         val email = SimpleMailMessage()
         email.setTo(recipientAddress)
         email.subject = subject
-        email.text = "${apiPath}/auth/confirm/$token"
+        email.text = "$apiPath/auth/confirm/$token"
         mailSender.send(email)
     }
 }
