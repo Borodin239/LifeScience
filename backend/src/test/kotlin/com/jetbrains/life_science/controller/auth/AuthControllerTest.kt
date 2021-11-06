@@ -4,16 +4,43 @@ import com.jetbrains.life_science.ApiTest
 import com.jetbrains.life_science.auth.jwt.JWTServiceImpl
 import com.jetbrains.life_science.auth.refresh.factory.RefreshTokenFactoryImpl
 import com.jetbrains.life_science.controller.auth.dto.NewUserDTO
+import com.jetbrains.life_science.util.emails.RandomPortInitializer
+import com.jetbrains.life_science.util.emails.WiserAssertions
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.*
+import org.subethamail.wiser.Wiser
 import javax.servlet.http.Cookie
 
 @Sql("/scripts/initial_data.sql")
+@ContextConfiguration(initializers = [RandomPortInitializer::class])
 internal class AuthControllerTest : ApiTest() {
+
+    @Value("\${spring.mail.host}")
+    lateinit var smtpHost: String
+
+    @Value("\${spring.mail.port}")
+    var smtpPort: Int = 0
+
+    lateinit var wiser: Wiser
+
+    @BeforeEach
+    fun startEmailServer() {
+        wiser = Wiser()
+        wiser.setPort(smtpPort)
+        wiser.setHostname(smtpHost)
+        wiser.start()
+    }
+
+    @AfterEach
+    fun stopEmailServer() {
+        wiser.stop()
+    }
 
     @Autowired
     lateinit var jwtServiceImpl: JWTServiceImpl
@@ -26,26 +53,30 @@ internal class AuthControllerTest : ApiTest() {
     /**
      * Success register test.
      *
-     * Should create an inactive profile.
+     * Should create an inactive profile and send verification email.
      * Expected failed attempt to login by these credentials
      * with 401 http code error and 401_006 system code.
      */
     @Test
     fun `register test`() {
+        // Prepare data
         val password = "sample_password123=+"
         val login = "sobaka@mail.ru"
+        val expectedSubject = "JetScience registration"
 
+        // Action
         register(login, password)
+
+        // Assert
+        WiserAssertions.assertReceivedMessage(wiser)
+            .to(login)
+            .withSubject(expectedSubject)
         val apiExceptionView = getApiExceptionView(
             401,
             loginRequest(login, password)
         )
         assertEquals(401_006, apiExceptionView.systemCode)
         assertEquals(login, apiExceptionView.arguments[0][0])
-/*        pingSecured(registerTokens)
-
-        val loginTokens = login(login, password)
-        pingSecured(loginTokens)*/
     }
 
     /**
