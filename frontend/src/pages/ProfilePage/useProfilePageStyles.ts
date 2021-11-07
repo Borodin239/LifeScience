@@ -1,7 +1,23 @@
-import {makeStyles} from "@material-ui/core/styles";
+import {alpha, makeStyles} from "@material-ui/core/styles";
 import uiConstants from "../../infrastructure/ui/themes/uiConstants";
 
 export const useProfilePageStyles = makeStyles((theme) => ({
+
+    // TODO :: copy-paste
+    button: {
+        marginTop: theme.spacing(1),
+        // padding: theme.spacing(0, 3, 0, 3),
+        height: '50px',
+        fontSize: '22px',
+        color: theme.palette.common.white,
+        border: 'none',
+        backgroundColor: alpha(theme.palette.primary.main, 1),
+        '&:hover': {
+            backgroundColor: alpha(theme.palette.primary.main, 0.6),
+        },
+        borderRadius: '10px'
+    },
+
 
     titleContainer: {
         marginTop: theme.spacing(5),

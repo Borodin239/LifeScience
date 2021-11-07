@@ -3,13 +3,15 @@ import {useProfilePageStyles} from "./useProfilePageStyles";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {useHistory} from "react-router-dom";
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
-import UserInfoTitle from "../../components/profile/UserInfoTitle/UserInfoTitle";
-import UserInfoText from "../../components/profile/UserInfoText/UserInfoText";
 import {useEffect, useState} from "react";
 import {getUserDraftProtocols, updateCurrentUserThunk} from "../../redux/users/thunkActions";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {ProtocolTitleView} from "../../infrastructure/http/api/view/protocol/ProtocolTitleView";
+import {tmp2} from "./Pages/tmp2";
+import {tmp3} from "./Pages/tmp3";
+import {AboutMePage} from "./Pages/AboutMePage";
+import maleProfileAvatar from "../../images/male_profile_avatar.jpg";
 
 
 const ProfilePage = () => {
@@ -49,56 +51,50 @@ const ProfilePage = () => {
 
     const userInfo = useAppSelector(state => state.usersReducer.userInfo)
 
-    return (
-        <Box>
-            <Box className={classes.titleContainer}>
-                <Typography variant={'h5'}>
-                    My profile
-                </Typography>
-                <Divider className={classes.divider} style={{width: '20%'}}/>
-            </Box>
-            <Box style={{marginLeft: "10px"}}>
+    const [page, setPage] = useState(AboutMePage(userInfo, classes));
 
-                <Box className={classes.infoListContainer}>
-                    <Box className={classes.infoRow}>
-                        <UserInfoTitle title={'First name:'}/>
-                        <UserInfoText text={userInfo?.personalData.firstName}/>
+    return (
+        <Box sx={{flexDirection: 'row'}}>
+
+            <div style={{width: '100%'}}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        p: 5,
+                        m: 5,
+                    }}
+                >
+
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        m: 5
+                    }} >
+                        <img src={maleProfileAvatar} style={{height: '200px', width: '200px'}}/>
+                        <button className={classes.button} onClick={() => setPage(AboutMePage(userInfo, classes))}>
+                            About me
+                        </button>
+                        <button className={classes.button} onClick={() => setPage(tmp2)}>
+                            Communication
+                        </button>
+                        <button className={classes.button} onClick={() => setPage(tmp3)}>
+                            Notifications
+                        </button>
+                        <button className={classes.button} onClick={() => setPage(tmp3)}>
+                            Working space
+                        </button>
+                        <button className={classes.button} onClick={() => setPage(tmp3)}>
+                            My publications
+                        </button>
                     </Box>
-                    <Box className={classes.infoRow}>
-                        <UserInfoTitle title={'Last name:'}/>
-                        <UserInfoText text={userInfo?.personalData.lastName}/>
+
+                    <Box className={"page_body"} sx={{m: 5}}>
+                        {page}
                     </Box>
-                    <Box className={classes.infoRow}>
-                        <UserInfoTitle title={'Email:'}/>
-                        <UserInfoText text={userInfo?.email}/>
-                    </Box>
-                    <Box className={classes.infoRow}>
-                        <UserInfoTitle title={'Roles:'}/>
-                        <UserInfoText text={userInfo ? userInfo.roles.join(', ') : ''}/>
-                    </Box>
+
                 </Box>
-                <Box className={classes.protocolsPanel}>
-                    <Box>
-                        <Typography className={classes.protocolsTitle}>
-                            My draft protocols:
-                        </Typography>
-                    </Box>
-                    <Box style={{marginLeft: "5px"}}>
-                        <List>
-                            {
-                                protocols.map((protocol, index) => (
-                                    <ListItem key={index}>
-                                        <Typography onClick={handleDraftProtocolClick(protocol.id)}
-                                        className={classes.protocolTitle}>
-                                            {protocol.name}
-                                        </Typography>
-                                    </ListItem>
-                                ))
-                            }
-                        </List>
-                    </Box>
-                </Box>
-            </Box>
+            </div>
         </Box>
     )
 }
