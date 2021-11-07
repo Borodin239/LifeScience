@@ -5,7 +5,6 @@ import com.jetbrains.life_science.auth.verification.factory.VerificationTokenFac
 import com.jetbrains.life_science.auth.verification.repository.VerificationTokenRepository
 import com.jetbrains.life_science.exception.auth.ExpiredVerificationTokenException
 import com.jetbrains.life_science.exception.auth.InvalidVerificationTokenException
-import com.jetbrains.life_science.exception.not_found.VerificationTokenNotFoundException
 import com.jetbrains.life_science.user.credentials.entity.Credentials
 import com.jetbrains.life_science.user.credentials.service.CredentialsService
 import com.jetbrains.life_science.util.UTCZone
@@ -44,6 +43,4 @@ class VerificationTokenServiceImpl(
             repository.deleteByCredentials(credentials)
         }
     }
-
-
 }

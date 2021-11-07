@@ -79,9 +79,9 @@ class AuthController(
     )/*: AccessTokenView*/ {
         val credentials = verificationTokenService.validateVerificationToken(token)
         // TODO:: Как логиниться то ?
-        //val (accessToken, refreshToken) = authService.login(credentials)
-        //setRefreshTokenToCookie(response, refreshToken)
-        //return accessTokenViewMapper.toView(accessToken)
+        // val (accessToken, refreshToken) = authService.login(credentials)
+        // setRefreshTokenToCookie(response, refreshToken)
+        // return accessTokenViewMapper.toView(accessToken)
     }
 
     private fun getRefreshToken(cookies: Array<Cookie>): RefreshTokenCode {
