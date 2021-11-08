@@ -6,7 +6,8 @@ const apiConstants = {
         auth: {
             SIGN_IN: '/auth/signin',
             SIGN_UP: '/auth/register',
-            REFRESH: '/auth/refresh'
+            REFRESH: '/auth/refresh',
+            RESEND: '/auth/confirmation/resend',
         },
         publicApproach: {
             BASE: '/approaches/public'

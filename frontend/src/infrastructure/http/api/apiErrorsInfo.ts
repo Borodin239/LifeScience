@@ -15,7 +15,6 @@ export const apiErrorsInfo: ReadonlyMap<number, ApiErrorInfoSetup> = new Map([
     [400005, {
         messagePattern: "Server validation error: $0"
     }],
-
     [401001, {
         messagePattern: "Invalid refresh token"
     }],
@@ -31,7 +30,9 @@ export const apiErrorsInfo: ReadonlyMap<number, ApiErrorInfoSetup> = new Map([
     [401005, {
         messagePattern: "Wrong login/password"
     }],
-
+    [401006, {
+        messagePattern: "You haven't verified your account. Please check your email."
+    }],
     [403000, {
         messagePattern: "No required permissions to perform the operation"
     }],
