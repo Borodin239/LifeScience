@@ -1,7 +1,6 @@
 package com.jetbrains.life_science.replicator.deserializer.credentials
 
 import com.jetbrains.life_science.auth.refresh.repository.RefreshTokenRepository
-import com.jetbrains.life_science.auth.verification.entity.VerificationToken
 import com.jetbrains.life_science.auth.verification.repository.VerificationTokenRepository
 import com.jetbrains.life_science.replicator.enities.CredentialsStorageEntity
 import com.jetbrains.life_science.user.credentials.entity.Credentials

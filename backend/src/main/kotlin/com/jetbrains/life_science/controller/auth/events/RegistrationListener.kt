@@ -3,40 +3,42 @@ package com.jetbrains.life_science.controller.auth.events
 import com.jetbrains.life_science.auth.verification.service.VerificationTokenService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.ApplicationListener
+import org.springframework.context.event.EventListener
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Component
-import java.util.*
 
 @Component
-class RegistrationListener : ApplicationListener<OnRegistrationCompleteEvent> {
+class RegistrationListener {
     @Autowired
     private lateinit var service: VerificationTokenService
 
-    /*@Autowired
-    private lateinit var messages: MessageSource*/
-    @Value("\${api.path}")
-    private lateinit var apiPath: String
+    @Value("\${confirmation.path}")
+    private lateinit var confirmationPagePath: String
 
     @Autowired
     private lateinit var mailSender: JavaMailSender
 
-    override fun onApplicationEvent(event: OnRegistrationCompleteEvent) {
-        confirmRegistration(event)
+    @EventListener
+    fun handleRegistrationCompleteEvent(event: OnRegistrationCompleteEvent) {
+        val credentials = event.credentials
+        val token = service.createVerificationToken(credentials).token
+        sendRegistrationEmail(credentials.email, token)
     }
 
-    private fun confirmRegistration(event: OnRegistrationCompleteEvent) {
+    @EventListener
+    fun handleResendEmailEvent(event: ResendEmailEvent) {
         val credentials = event.credentials
-        val token = UUID.randomUUID().toString()
-        service.createVerificationToken(credentials, token)
-        val recipientAddress: String = credentials.email
+        val token = service.updateVerificationToken(event.credentials).token
+        sendRegistrationEmail(credentials.email, token)
+    }
+
+    private fun sendRegistrationEmail(emailAddress: String, token: String) {
         val subject = "JetScience registration"
-        // val message = messages.getMessage("message.regSuccess", null, Loca)
         val email = SimpleMailMessage()
-        email.setTo(recipientAddress)
+        email.setTo(emailAddress)
         email.subject = subject
-        email.text = "${apiPath}/auth/confirm/$token"
+        email.text = "$confirmationPagePath$token"
         mailSender.send(email)
     }
 }

@@ -9,7 +9,8 @@ const appRoutesNames = {
     SEARCH: '/search',
     PROFILE: '/profile',
     CREATE_PROTOCOL: '/create-protocol',
-    DRAFT_PROTOCOLS: '/draft-protocols'
+    DRAFT_PROTOCOLS: '/draft-protocols',
+    EMAIL_CONFIRMATION: '/confirm-registration'
 }
 
 Object.freeze(appRoutesNames);

@@ -3,13 +3,14 @@ package com.jetbrains.life_science.auth.verification.factory
 import com.jetbrains.life_science.auth.verification.entity.VerificationToken
 import com.jetbrains.life_science.user.credentials.entity.Credentials
 import org.springframework.stereotype.Component
+import java.util.*
 
 @Component
 class VerificationTokenFactory {
-    fun create(credentials: Credentials, token: String): VerificationToken {
+    fun create(credentials: Credentials): VerificationToken {
         return VerificationToken(
             id = 0,
-            token = token,
+            token = UUID.randomUUID().toString(),
             credentials = credentials
         )
     }

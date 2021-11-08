@@ -70,3 +70,5 @@ frontend/yarn-debug.log*
 frontend/yarn-error.log*
 
 frontend/routes.json
+
+frontend/package-lock.json
