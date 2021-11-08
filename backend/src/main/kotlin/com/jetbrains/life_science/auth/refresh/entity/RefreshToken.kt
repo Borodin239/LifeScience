@@ -5,6 +5,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
+@Table(name = "refresh_token")
 class RefreshToken(
     @Id
     @GeneratedValue(
