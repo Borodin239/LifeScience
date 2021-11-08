@@ -36,6 +36,7 @@ export const SignInForm: React.FC = () => {
         event.preventDefault();
         dispatch(patchEmailConfirmationThunk(email))
             .unwrap()
+            .then(() => history.push(appRoutesNames.EMAIL_CONFIRMATION))
             .catch(thunkError => {
                     handleThunkErrorBase(thunkError, history, dispatch);
             })
