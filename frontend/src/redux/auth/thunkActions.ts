@@ -7,10 +7,12 @@ import {loggedIn} from "./slice";
 import {AppDispatch} from "../store/store";
 import {ApiError} from "../../infrastructure/common/exceptions/ApiError";
 import onThunkError from "../utils/onThunkError";
+import {SECTION_ACTION_TYPE_PREFIX} from "../section/thunkActions";
 
 export enum AuthActionThunkTypes {
     SIGN_IN = "/signIn",
-    SIGN_UP = "/signUp"
+    SIGN_UP = "/signUp",
+    RESEND_EMAIL = "/confirmation/resend",
 }
 
 // prefix
@@ -52,6 +54,22 @@ export const signUpThunk = createAsyncThunk<
         try {
             const response = await authApi.signUp(dto);
             thunkAPI.dispatch(loggedIn(response.data.accessToken));
+        } catch (err) {
+            return onThunkError(err, thunkAPI);
+        }
+    }
+)
+
+export const patchEmailConfirmationThunk = createAsyncThunk<
+    any,
+    SignInDto["email"],
+    {
+        rejectValue: ApiError
+    }>(
+    `${SECTION_ACTION_TYPE_PREFIX}${AuthActionThunkTypes.RESEND_EMAIL}`,
+    async (email, thunkAPI) => {
+        try {
+            await authApi.resend(email);
         } catch (err) {
             return onThunkError(err, thunkAPI);
         }
