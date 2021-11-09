@@ -5,6 +5,7 @@ import com.jetbrains.life_science.category.service.CategoryService
 import com.jetbrains.life_science.controller.approach.published.view.PublicApproachView
 import com.jetbrains.life_science.controller.approach.published.view.PublicApproachViewMapper
 import com.jetbrains.life_science.user.credentials.service.CredentialsService
+import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -19,6 +20,7 @@ class PublicApproachController(
     val viewMapper: PublicApproachViewMapper
 ) {
 
+    @Operation(summary = "Returns PublicApproach of interest")
     @GetMapping("/{approachId}")
     fun getApproach(@PathVariable approachId: Long): PublicApproachView {
         val approach = publicApproachService.get(approachId)

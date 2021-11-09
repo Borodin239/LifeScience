@@ -4,6 +4,7 @@ import com.jetbrains.life_science.container.protocol.service.PublicProtocolServi
 import com.jetbrains.life_science.controller.protocol.published.view.PublicProtocolView
 import com.jetbrains.life_science.controller.protocol.published.view.PublicProtocolViewMapper
 import com.jetbrains.life_science.exception.not_found.ProtocolNotFoundException
+import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,6 +17,7 @@ class PublicProtocolController(
     val viewMapper: PublicProtocolViewMapper
 ) {
 
+    @Operation(summary = "Returns PublicProtocol of interest")
     @GetMapping("/{protocolId}")
     fun getProtocol(
         @PathVariable approachId: Long,

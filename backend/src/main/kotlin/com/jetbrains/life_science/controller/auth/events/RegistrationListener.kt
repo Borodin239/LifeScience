@@ -20,7 +20,7 @@ class RegistrationListener {
     @Autowired
     private lateinit var mailSender: JavaMailSender
 
-    private val emailHtmlPath: String = "classpath:email/index.html"
+    private val emailHtmlPath: String = "classpath:email/verification_email.html"
     private val textToReplace: String = "{{action_url}}"
 
     @EventListener
