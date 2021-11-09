@@ -4,10 +4,11 @@ import com.jetbrains.life_science.auth.verification.service.VerificationTokenSer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.event.EventListener
+import org.springframework.core.io.ClassPathResource
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Component
-import org.springframework.util.ResourceUtils
+import java.io.InputStreamReader
 
 @Component
 class RegistrationListener {
@@ -38,7 +39,8 @@ class RegistrationListener {
     }
 
     private fun getEmailText(token: String): String {
-        val text = ResourceUtils.getFile(emailHtmlPath).readText()
+        val cpr = ClassPathResource("email/verification_email.html")
+        val text = InputStreamReader(cpr.inputStream).readText()
         return text.replace(textToReplace, "$confirmationPagePath$token")
     }
 
