@@ -86,7 +86,7 @@ export const SignInForm: React.FC = () => {
                 </Alert>}
             </form>
             {isEmailConfirmationRequired && <Typography onClick={handleSendEmailClick} className={classes.redirect}>
-                {"Send the letter again"}
+                {"Didn't get your email? Resend verification link"}
             </Typography>}
             {!isPending && <Typography onClick={handleSignUpClick} className={classes.redirect}>
                 {"Don't have an account? Sign Up"}
