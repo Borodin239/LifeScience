@@ -16,6 +16,7 @@ import com.jetbrains.life_science.review.request.entity.RequestState
 import com.jetbrains.life_science.review.request.service.publish.PublishApproachRequestService
 import com.jetbrains.life_science.review.request.service.publish.PublishProtocolRequestService
 import com.jetbrains.life_science.user.credentials.entity.Credentials
+import io.swagger.v3.oas.annotations.Operation
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -35,6 +36,7 @@ class ReviewRequestController(
     val reviewRequestViewMapper: ReviewRequestViewMapper
 ) {
 
+    @Operation(summary = "Creates new PublishApproachRequest")
     @PostMapping("/approaches/draft/{approachId}")
     fun draftApproachToReview(
         @PathVariable approachId: Long,
@@ -46,6 +48,7 @@ class ReviewRequestController(
         publishApproachRequestService.create(publicationInfo)
     }
 
+    @Operation(summary = "Returns PublishApproachRequest of interest")
     @GetMapping("/approaches/draft/{approachId}/{requestId}")
     fun getDraftApproachRequest(
         @PathVariable approachId: Long,
@@ -57,6 +60,7 @@ class ReviewRequestController(
         return reviewRequestViewMapper.draftApproachRequestToView(request)
     }
 
+    @Operation(summary = "Cancels an existing PublishApproachRequest")
     @PatchMapping("/approaches/draft/{approachId}/{requestId}/cancel")
     fun cancelDraftApproachRequest(
         @PathVariable approachId: Long,
@@ -68,6 +72,7 @@ class ReviewRequestController(
         publishApproachRequestService.cancel(requestId)
     }
 
+    @Operation(summary = "Deletes an existing PublishApproachRequest")
     @DeleteMapping("/approaches/draft/{approachId}/{requestId}")
     fun deleteDraftApproachRequest(
         @PathVariable approachId: Long,
@@ -82,6 +87,7 @@ class ReviewRequestController(
         publishApproachRequestService.delete(requestId)
     }
 
+    @Operation(summary = "Creates new PublishProtocolRequest")
     @PostMapping("/protocols/draft/{protocolId}")
     fun draftProtocolToReview(
         @PathVariable protocolId: Long,
@@ -93,6 +99,7 @@ class ReviewRequestController(
         publishProtocolRequestService.create(publicationInfo)
     }
 
+    @Operation(summary = "Returns PublishProtocolRequest of interest")
     @GetMapping("/protocols/draft/{protocolId}/{requestId}")
     fun getDraftProtocolRequest(
         @PathVariable protocolId: Long,
@@ -104,6 +111,7 @@ class ReviewRequestController(
         return reviewRequestViewMapper.draftProtocolRequestToView(request)
     }
 
+    @Operation(summary = "Cancels an existing PublishProtocolRequest")
     @PatchMapping("/protocols/draft/{protocolId}/{requestId}/cancel")
     fun cancelDraftProtocolRequest(
         @PathVariable protocolId: Long,
@@ -115,6 +123,7 @@ class ReviewRequestController(
         publishProtocolRequestService.cancel(requestId)
     }
 
+    @Operation(summary = "Deletes an existing PublishProtocolRequest")
     @DeleteMapping("/protocols/draft/{protocolId}/{requestId}")
     fun deleteDraftProtocolRequest(
         @PathVariable protocolId: Long,

@@ -4,9 +4,10 @@ import com.jetbrains.life_science.auth.verification.service.VerificationTokenSer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.event.EventListener
-import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
+import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Component
+import org.springframework.util.ResourceUtils
 
 @Component
 class RegistrationListener {
@@ -18,6 +19,9 @@ class RegistrationListener {
 
     @Autowired
     private lateinit var mailSender: JavaMailSender
+
+    private val emailHtmlPath: String = "classpath:email/verification_email.html"
+    private val textToReplace: String = "{{action_url}}"
 
     @EventListener
     fun handleRegistrationCompleteEvent(event: OnRegistrationCompleteEvent) {
@@ -33,12 +37,18 @@ class RegistrationListener {
         sendRegistrationEmail(credentials.email, token)
     }
 
+    private fun getEmailText(token: String): String {
+        val text = ResourceUtils.getFile(emailHtmlPath).readText()
+        return text.replace(textToReplace, "$confirmationPagePath$token")
+    }
+
     private fun sendRegistrationEmail(emailAddress: String, token: String) {
-        val subject = "JetScience registration"
-        val email = SimpleMailMessage()
-        email.setTo(emailAddress)
-        email.subject = subject
-        email.text = "$confirmationPagePath$token"
+        val email = mailSender.createMimeMessage()
+        val helper = MimeMessageHelper(email, "utf-8")
+        val htmlMsg = getEmailText(token)
+        email.setContent(htmlMsg, "text/html")
+        helper.setTo(emailAddress)
+        helper.setSubject("Welcome to JetScience. Let’s verify your email")
         mailSender.send(email)
     }
 }

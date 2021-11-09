@@ -15,6 +15,7 @@ import com.jetbrains.life_science.exception.section.SectionNotFoundException
 import com.jetbrains.life_science.section.entity.Section
 import com.jetbrains.life_science.section.service.SectionService
 import com.jetbrains.life_science.user.credentials.entity.Credentials
+import io.swagger.v3.oas.annotations.Operation
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
@@ -27,6 +28,7 @@ class DraftApproachSectionController(
     val contentVersionService: ContentVersionService
 ) {
 
+    @Operation(summary = "Returns DraftApproach section of interest")
     @GetMapping("/{sectionId}")
     fun getSection(
         @PathVariable approachId: Long,
@@ -38,6 +40,7 @@ class DraftApproachSectionController(
         return viewMapper.toView(section, content?.text)
     }
 
+    @Operation(summary = "Creates several new DraftApproach sections")
     @PostMapping("/many")
     fun createSections(
         @PathVariable approachId: Long,
@@ -54,6 +57,7 @@ class DraftApproachSectionController(
         return viewMapper.toViewAll(createdSections)
     }
 
+    @Operation(summary = "Creates one new DraftApproach section")
     @PostMapping
     fun createSection(
         @PathVariable approachId: Long,
@@ -68,6 +72,7 @@ class DraftApproachSectionController(
         return viewMapper.toView(section)
     }
 
+    @Operation(summary = "Deletes an existing DraftApproach section")
     @DeleteMapping("/{sectionId}")
     fun delete(
         @PathVariable approachId: Long,
@@ -80,6 +85,7 @@ class DraftApproachSectionController(
         sectionService.deleteById(sectionId, approach.sections)
     }
 
+    @Operation(summary = "Updates an existing DraftApproach section")
     @PatchMapping("/{sectionId}")
     fun updateSection(
         @PathVariable approachId: Long,

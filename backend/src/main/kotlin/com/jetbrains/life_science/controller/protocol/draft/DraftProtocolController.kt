@@ -13,6 +13,7 @@ import com.jetbrains.life_science.section.service.SectionService
 import com.jetbrains.life_science.user.credentials.entity.Credentials
 import com.jetbrains.life_science.user.credentials.service.CredentialsService
 import com.jetbrains.life_science.user.data.service.UserPersonalDataService
+import io.swagger.v3.oas.annotations.Operation
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
@@ -27,6 +28,7 @@ class DraftProtocolController(
     val sectionService: SectionService
 ) {
 
+    @Operation(summary = "Returns DraftProtocol of interest")
     @GetMapping("/{protocolId}")
     fun get(
         @PathVariable protocolId: Long,
@@ -40,6 +42,7 @@ class DraftProtocolController(
         )
     }
 
+    @Operation(summary = "Creates new DraftProtocol")
     @PostMapping
     fun create(
         @RequestBody dto: DraftProtocolDTO,
@@ -54,6 +57,7 @@ class DraftProtocolController(
         )
     }
 
+    @Operation(summary = "Deletes an existing DraftProtocol")
     @DeleteMapping("/{protocolId}")
     fun delete(
         @PathVariable protocolId: Long,
@@ -68,6 +72,7 @@ class DraftProtocolController(
         draftProtocolService.delete(protocolId)
     }
 
+    @Operation(summary = "Adds new participant to an existing DraftProtocol")
     @PostMapping("/{protocolId}/participants")
     fun addParticipant(
         @PathVariable protocolId: Long,
@@ -80,6 +85,7 @@ class DraftProtocolController(
         draftProtocolService.addParticipant(protocol.id, userCredentials)
     }
 
+    @Operation(summary = "Deletes an existing participant from the existing DraftProtocol")
     @DeleteMapping("/{protocolId}/participants/{participantId}")
     fun deleteParticipant(
         @PathVariable protocolId: Long,
