@@ -39,7 +39,7 @@ class CategoryController(
         return viewMapper.toView(category)
     }
 
-    @Operation(summary = "Returns RANDOM category path of all possible")
+    @Operation(summary = "Returns all category paths")
     @GetMapping("/{id}/paths")
     fun getPaths(@PathVariable id: Long): List<Path> {
         val category = categoryService.getById(id)
