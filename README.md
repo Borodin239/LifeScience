@@ -1,7 +1,7 @@
 [![CI](https://github.com/Life-Science-Project/LifeScience/actions/workflows/main.yml/badge.svg)](https://github.com/Life-Science-Project/LifeScience/actions/workflows/main.yml)
 
 # Life Science Project
-[life-science-2021.herokuapp.com](https://life-science-2021.herokuapp.com/)
+[uniscience-dev.vercel.app](https://uniscience-dev.vercel.app/home/)
 
 The Life Science Project is an online protocol resource for life scientists.
 
