@@ -4,6 +4,7 @@ import com.jetbrains.life_science.ApiTest
 import com.jetbrains.life_science.auth.jwt.JWTServiceImpl
 import com.jetbrains.life_science.auth.refresh.factory.RefreshTokenFactoryImpl
 import com.jetbrains.life_science.controller.auth.dto.NewUserDTO
+import com.jetbrains.life_science.controller.auth.dto.ResendEmailDTO
 import com.jetbrains.life_science.util.emails.RandomPortInitializer
 import com.jetbrains.life_science.util.emails.WiserAssertions
 import org.junit.jupiter.api.*
@@ -17,7 +18,7 @@ import org.springframework.test.web.servlet.*
 import org.subethamail.wiser.Wiser
 import javax.servlet.http.Cookie
 
-@Sql("/scripts/initial_data.sql")
+@Sql("/scripts/initial_data.sql", "/scripts/auth/verification.sql")
 @ContextConfiguration(initializers = [RandomPortInitializer::class])
 internal class AuthControllerTest : ApiTest() {
 
@@ -126,6 +127,25 @@ internal class AuthControllerTest : ApiTest() {
     }
 
     /**
+     * Resend email test. It should resend email with a
+     * verification token.
+     */
+    @Test
+    fun `resend email test`() {
+        // Prepare data
+        val login = "inactive@gmail.ru"
+        val expectedSubject = "Welcome to JetScience. Let’s verify your email"
+
+        // Action
+        resend(login)
+
+        // Assert
+        WiserAssertions.assertReceivedMessage(wiser)
+            .to(login)
+            .withSubject(expectedSubject)
+    }
+
+    /**
      * Success login test.
      *
      * Access token in response and refresh token in cookie expected.
@@ -135,6 +155,56 @@ internal class AuthControllerTest : ApiTest() {
     fun `login test`() {
         val tokens = login("admin@gmail.ru", "password")
         pingSecured(tokens)
+    }
+
+    /**
+     * Successfully verifies user's email.
+     */
+    @Test
+    fun `verification test`() {
+        // Prepare data
+        val token = "token1"
+        val login = "inactive@gmail.ru"
+        val password = "user123"
+
+        // Action
+        verification(token)
+
+        // Assert
+        val loginTokens = login(login, password)
+        pingSecured(loginTokens)
+    }
+
+    /**
+     * Tries to verify user's email by invalid verification token.
+     */
+    @Test
+    fun `invalid verification token test`() {
+        // Prepare data
+        val token = "token239"
+
+        // Action
+        val apiExceptionView = getApiExceptionView(401, verificationRequest(token))
+
+        // Assert
+        assertEquals(401_007, apiExceptionView.systemCode)
+        assertTrue(apiExceptionView.arguments.isEmpty())
+    }
+
+    /**
+     * Tries to verify user's email by expired verification token.
+     */
+    @Test
+    fun `expired verification token test`() {
+        // Prepare data
+        val token = "token3"
+
+        // Action
+        val apiExceptionView = getApiExceptionView(401, verificationRequest(token))
+
+        // Assert
+        assertEquals(401_008, apiExceptionView.systemCode)
+        assertTrue(apiExceptionView.arguments.isEmpty())
     }
 
     /**
@@ -274,6 +344,23 @@ internal class AuthControllerTest : ApiTest() {
         assertOkAndReturn(registerRequest)
     }
 
+    fun resend(email: String) {
+        val resendRequest = resendRequest(email)
+        assertOkAndReturn(resendRequest)
+    }
+
+    fun verification(token: String) {
+        val verificationRequest = verificationRequest(token)
+        assertOkAndReturn(verificationRequest)
+    }
+
+    private fun resendRequest(
+        email: String
+    ) = mockMvc.patch(makeAuthPath("/confirmation/resend")) {
+        contentType = MediaType.APPLICATION_JSON
+        content = objectMapper.writeValueAsString(ResendEmailDTO(email))
+    }
+
     private fun registerRequest(
         email: String,
         password: String
@@ -282,4 +369,6 @@ internal class AuthControllerTest : ApiTest() {
         content = objectMapper.writeValueAsString(NewUserDTO("firstName", "lastName", email, password))
         accept = MediaType.APPLICATION_JSON
     }
+
+    private fun verificationRequest(token: String) = mockMvc.patch(makeAuthPath("/confirmation/$token"))
 }
