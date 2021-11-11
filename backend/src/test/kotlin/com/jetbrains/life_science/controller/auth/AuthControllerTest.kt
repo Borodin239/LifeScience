@@ -62,7 +62,7 @@ internal class AuthControllerTest : ApiTest() {
         // Prepare data
         val password = "sample_password123=+"
         val login = "sobaka@mail.ru"
-        val expectedSubject = "JetScience registration"
+        val expectedSubject = "Welcome to JetScience. Let’s verify your email"
 
         // Action
         register(login, password)
