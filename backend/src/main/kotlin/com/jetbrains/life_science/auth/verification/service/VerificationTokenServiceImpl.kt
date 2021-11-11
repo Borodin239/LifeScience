@@ -26,11 +26,12 @@ class VerificationTokenServiceImpl(
 
     @Transactional
     override fun validateVerificationToken(token: String): Credentials {
-        val verificationToken = repository.findByToken(token)
-        val credentials = verificationToken.credentials
-        if (verificationToken.token != token) {
+        val verificationTokenOptional = repository.findByToken(token)
+        if (verificationTokenOptional.isEmpty) {
             throw InvalidVerificationTokenException()
         }
+        val verificationToken = verificationTokenOptional.get()
+        val credentials = verificationToken.credentials
         if (verificationToken.expiryDate.isBefore(LocalDateTime.now(UTCZone))) {
             throw ExpiredVerificationTokenException()
         }
