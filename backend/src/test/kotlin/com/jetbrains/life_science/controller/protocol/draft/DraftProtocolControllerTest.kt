@@ -147,7 +147,7 @@ internal class DraftProtocolControllerTest : ApiTest() {
     fun `add participant test`() {
         // Prepare data
         val loginAccessToken = loginAccessToken("email@email.ru", "password")
-        val dto = DraftProtocolAddParticipantDTO("regular@gmail.ru")
+        val dto = DraftProtocolAddParticipantDTO("simple@gmail.ru")
         val expectedView = DraftProtocolView(
             id = 1,
             name = "draft_protocol_test",
@@ -155,7 +155,7 @@ internal class DraftProtocolControllerTest : ApiTest() {
             participants = listOf(
                 UserShortView(id = 1, fullName = "Alex"),
                 UserShortView(id = 2, fullName = "Ben"),
-                UserShortView(id = 4, fullName = "Regular")
+                UserShortView(id = 3, fullName = "Ann")
             ),
             approach = ApproachShortView(1, "approach 1", timeOf(2020, 12, 17), emptyList())
         )

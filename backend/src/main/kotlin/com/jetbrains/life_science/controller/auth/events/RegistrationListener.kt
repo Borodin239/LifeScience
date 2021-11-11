@@ -21,7 +21,7 @@ class RegistrationListener {
     @Autowired
     private lateinit var mailSender: JavaMailSender
 
-    private val emailHtmlPath: String = "classpath:email/verification_email.html"
+    private val emailHtmlPath: String = "email/verification_email.html"
     private val textToReplace: String = "{{action_url}}"
 
     @EventListener
@@ -39,7 +39,7 @@ class RegistrationListener {
     }
 
     private fun getEmailText(token: String): String {
-        val cpr = ClassPathResource("email/verification_email.html")
+        val cpr = ClassPathResource(emailHtmlPath)
         val text = InputStreamReader(cpr.inputStream).readText()
         return text.replace(textToReplace, "$confirmationPagePath$token")
     }
