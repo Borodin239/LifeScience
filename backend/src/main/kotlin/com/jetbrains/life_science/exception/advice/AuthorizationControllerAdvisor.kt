@@ -67,4 +67,20 @@ class AuthorizationControllerAdvisor {
             HttpStatus.UNAUTHORIZED
         )
     }
+
+    @ExceptionHandler(InvalidVerificationTokenException::class)
+    fun handleInvalidVerificationTokenException(exception: InvalidVerificationTokenException): ResponseEntity<ApiExceptionView> {
+        return ResponseEntity(
+            makeExceptionView(401_007),
+            HttpStatus.UNAUTHORIZED
+        )
+    }
+
+    @ExceptionHandler(ExpiredVerificationTokenException::class)
+    fun handleExpiredVerificationTokenException(exception: ExpiredVerificationTokenException): ResponseEntity<ApiExceptionView> {
+        return ResponseEntity(
+            makeExceptionView(401_008),
+            HttpStatus.UNAUTHORIZED
+        )
+    }
 }
