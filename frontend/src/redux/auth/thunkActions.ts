@@ -52,8 +52,8 @@ export const signUpThunk = createAsyncThunk<
     `${AUTH_ACTION_TYPE_PREFIX}${AuthActionThunkTypes.SIGN_UP}`,
     async (dto: SignUpDto, thunkAPI) => {
         try {
-            const response = await authApi.signUp(dto);
-            thunkAPI.dispatch(loggedIn(response.data.accessToken));
+            await authApi.signUp(dto);
+            // thunkAPI.dispatch(loggedIn(response.data.accessToken));
         } catch (err) {
             return onThunkError(err, thunkAPI);
         }

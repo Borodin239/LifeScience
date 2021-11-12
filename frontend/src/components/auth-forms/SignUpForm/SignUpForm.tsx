@@ -42,6 +42,7 @@ export const SignUpForm: React.FC = () => {
         try {
             validateSignUpForm(firstName, lastName, email, password, repeat);
         } catch (err /*ValidationError only*/) {
+            // @ts-ignore
             setAlertText(err.message);
             return;
         }
