@@ -1,12 +1,12 @@
 package com.jetbrains.life_science.controller.category.dto
 
-import com.jetbrains.life_science.util.categoryNameRegex
+import com.jetbrains.life_science.util.categoryNameRegexp
 import javax.validation.Valid
 import javax.validation.constraints.Pattern
 
 data class CategoryUpdateDTO(
     @field:Pattern(
-        regexp = categoryNameRegex,
+        regexp = categoryNameRegexp,
         message = "Category name must contain only allowed characters"
     )
     val name: String,
