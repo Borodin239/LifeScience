@@ -15,6 +15,7 @@ import com.jetbrains.life_science.controller.user.view.UserViewMapper
 import com.jetbrains.life_science.exception.auth.ForbiddenOperationException
 import com.jetbrains.life_science.user.credentials.entity.Credentials
 import com.jetbrains.life_science.user.data.service.UserPersonalDataService
+import io.swagger.v3.oas.annotations.Operation
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
@@ -32,6 +33,7 @@ class UserController(
     val userPersonalDataService: UserPersonalDataService
 ) {
 
+    @Operation(summary = "Returns full information about authorized user")
     @GetMapping("/current")
     @Transactional(readOnly = true)
     fun getCurrentUser(
@@ -41,6 +43,7 @@ class UserController(
         return userViewMapper.toFullView(credentials, userData)
     }
 
+    @Operation(summary = "Returns list of user's public protocols")
     @GetMapping("/{userId}/protocols/public")
     @Transactional(readOnly = true)
     fun getPublicProtocols(
@@ -52,6 +55,7 @@ class UserController(
         return protocolViewMapper.toViews(publicProtocols)
     }
 
+    @Operation(summary = "Returns list of user's draft protocols")
     @GetMapping("/{userId}/protocols/draft")
     @Transactional(readOnly = true)
     fun getDraftProtocols(
@@ -63,6 +67,7 @@ class UserController(
         return protocolViewMapper.toViews(draftProtocols)
     }
 
+    @Operation(summary = "Returns list of user's public approaches")
     @GetMapping("/{userId}/approaches/public")
     @Transactional(readOnly = true)
     fun getPublicApproaches(
@@ -74,6 +79,7 @@ class UserController(
         return approachViewMapper.toViewsShort(publicApproach)
     }
 
+    @Operation(summary = "Returns list of user's draft approaches")
     @GetMapping("/{userId}/approaches/draft")
     @Transactional(readOnly = true)
     fun getDraftApproaches(
@@ -85,6 +91,7 @@ class UserController(
         return approachViewMapper.toViewsShort(draftApproach)
     }
 
+    @Operation(summary = "Returns full information about user of interest")
     @PatchMapping("/{userId}/data")
     fun updatePersonalData(
         @PathVariable userId: Long,

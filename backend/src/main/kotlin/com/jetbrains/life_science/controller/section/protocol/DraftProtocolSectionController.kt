@@ -15,6 +15,7 @@ import com.jetbrains.life_science.exception.section.SectionNotFoundException
 import com.jetbrains.life_science.section.entity.Section
 import com.jetbrains.life_science.section.service.SectionService
 import com.jetbrains.life_science.user.credentials.entity.Credentials
+import io.swagger.v3.oas.annotations.Operation
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
@@ -27,6 +28,7 @@ class DraftProtocolSectionController(
     val contentVersionService: ContentVersionService
 ) {
 
+    @Operation(summary = "Returns DraftProtocol section of interest")
     @GetMapping("/{sectionId}")
     fun getSection(
         @PathVariable protocolId: Long,
@@ -38,6 +40,7 @@ class DraftProtocolSectionController(
         return viewMapper.toView(section, content?.text)
     }
 
+    @Operation(summary = "Creates one new DraftProtocol section")
     @PostMapping
     fun createSection(
         @PathVariable protocolId: Long,
@@ -52,6 +55,7 @@ class DraftProtocolSectionController(
         return viewMapper.toView(section)
     }
 
+    @Operation(summary = "Deletes an existing DraftProtocol section")
     @DeleteMapping("/{sectionId}")
     fun delete(
         @PathVariable protocolId: Long,
@@ -64,6 +68,7 @@ class DraftProtocolSectionController(
         sectionService.deleteById(sectionId, protocol.sections)
     }
 
+    @Operation(summary = "Updates an existing DraftProtocol section")
     @PatchMapping("/{sectionId}")
     fun updateSection(
         @PathVariable protocolId: Long,

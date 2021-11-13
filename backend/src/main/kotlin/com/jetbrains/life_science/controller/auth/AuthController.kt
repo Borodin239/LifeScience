@@ -10,7 +10,9 @@ import com.jetbrains.life_science.controller.auth.view.AccessTokenViewMapper
 import com.jetbrains.life_science.exception.auth.InvalidRefreshTokenException
 import com.jetbrains.life_science.controller.auth.dto.NewUserDTO
 import com.jetbrains.life_science.controller.auth.dto.NewUserDTOToInfoAdapter
+import com.jetbrains.life_science.controller.auth.dto.ResendEmailDTO
 import com.jetbrains.life_science.controller.auth.events.OnRegistrationCompleteEvent
+import com.jetbrains.life_science.controller.auth.events.ResendEmailEvent
 import com.jetbrains.life_science.user.credentials.service.CredentialsService
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.beans.factory.annotation.Autowired
@@ -38,11 +40,11 @@ class AuthController(
     @PostMapping("/signin")
     fun login(
         @Validated @RequestBody authRequestDTO: AuthRequestDTO,
-        httpServletResponse: HttpServletResponse
+        response: HttpServletResponse
     ): AccessTokenView {
         val credentials = AuthRequestToCredentialsAdapter(authRequestDTO)
         val (accessToken, refreshToken) = authService.login(credentials)
-        setRefreshTokenToCookie(httpServletResponse, refreshToken)
+        setRefreshTokenToCookie(response, refreshToken)
         return accessTokenViewMapper.toView(accessToken)
     }
 
@@ -51,11 +53,10 @@ class AuthController(
     @Transactional
     fun register(
         @Validated @RequestBody userDto: NewUserDTO,
-        request: HttpServletRequest,
-        response: HttpServletResponse
+        request: HttpServletRequest
     ) {
         val credentials = credentialsService.createUser(NewUserDTOToInfoAdapter(userDto))
-        eventPublisher.publishEvent(OnRegistrationCompleteEvent(credentials, request.locale))
+        eventPublisher.publishEvent(OnRegistrationCompleteEvent(credentials))
     }
 
     @Operation(summary = "Refreshes JWT and Refresh tokens")
@@ -70,18 +71,24 @@ class AuthController(
         return accessTokenViewMapper.toView(accessToken)
     }
 
+    @Operation(summary = "Refreshes validation token and resend an email")
+    @PatchMapping("/confirmation/resend")
+    fun resendEmail(
+        @RequestBody resendEmailDTO: ResendEmailDTO,
+        request: HttpServletRequest
+    ) {
+        val credentials = credentialsService.getByEmail(resendEmailDTO.email)
+        eventPublisher.publishEvent(ResendEmailEvent(credentials))
+    }
+
     @Operation(summary = "Confirm user's email via validation token")
-    @GetMapping("/confirm/{token}")
+    @PatchMapping("/confirmation/{token}")
     fun confirmRegistration(
         @PathVariable token: String,
         request: HttpServletRequest,
         response: HttpServletResponse
-    )/*: AccessTokenView*/ {
-        val credentials = verificationTokenService.validateVerificationToken(token)
-        // TODO:: Как логиниться то ?
-        //val (accessToken, refreshToken) = authService.login(credentials)
-        //setRefreshTokenToCookie(response, refreshToken)
-        //return accessTokenViewMapper.toView(accessToken)
+    ) {
+        verificationTokenService.validateVerificationToken(token)
     }
 
     private fun getRefreshToken(cookies: Array<Cookie>): RefreshTokenCode {

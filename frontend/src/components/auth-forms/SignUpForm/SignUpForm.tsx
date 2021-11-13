@@ -40,8 +40,9 @@ export const SignUpForm: React.FC = () => {
         event.preventDefault();
 
         try {
-            validateSignUpForm(firstName, lastName, email, password, repeat);
+            validateSignUpForm(email, password, repeat);
         } catch (err /*ValidationError only*/) {
+            // @ts-ignore
             setAlertText(err.message);
             return;
         }

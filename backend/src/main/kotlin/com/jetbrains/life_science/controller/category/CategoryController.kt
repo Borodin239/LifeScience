@@ -11,6 +11,7 @@ import com.jetbrains.life_science.controller.category.view.CategoryShortView
 import com.jetbrains.life_science.controller.category.view.CategoryView
 import com.jetbrains.life_science.controller.category.view.CategoryViewMapper
 import com.jetbrains.life_science.user.credentials.entity.Credentials
+import io.swagger.v3.oas.annotations.Operation
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
@@ -24,24 +25,28 @@ class CategoryController(
     val viewMapper: CategoryViewMapper
 ) {
 
+    @Operation(summary = "Returns list of root's categories")
     @GetMapping("/root")
     fun getRootCategories(): List<CategoryShortView> {
         val categories = categoryService.getRootCategories()
         return viewMapper.toViewsShort(categories)
     }
 
+    @Operation(summary = "Returns the category of interests")
     @GetMapping("/{id}")
     fun getCategory(@PathVariable id: Long): CategoryView {
         val category = categoryService.getById(id)
         return viewMapper.toView(category)
     }
 
+    @Operation(summary = "Returns all category paths")
     @GetMapping("/{id}/paths")
     fun getPaths(@PathVariable id: Long): List<Path> {
         val category = categoryService.getById(id)
         return categorySearchUnitService.getPaths(category)
     }
 
+    @Operation(summary = "Creates one new category")
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     fun create(@Validated @RequestBody categoryCreationDTO: CategoryCreationDTO): CategoryShortView {
@@ -50,6 +55,7 @@ class CategoryController(
         return viewMapper.toViewShort(category)
     }
 
+    @Operation(summary = "Updates an existing category")
     @PatchMapping("/{categoryId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     fun update(
@@ -61,6 +67,7 @@ class CategoryController(
         return viewMapper.toView(category)
     }
 
+    @Operation(summary = "Deletes an existing category")
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     fun delete(@PathVariable id: Long, @AuthenticationPrincipal credentials: Credentials) {

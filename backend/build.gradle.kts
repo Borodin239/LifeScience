@@ -5,7 +5,7 @@ val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions.useIR = true
 
 plugins {
-    id("org.springframework.boot") version "2.4.11"
+    id("org.springframework.boot") version "2.4.12"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
     kotlin("jvm") version "1.4.31"
@@ -44,7 +44,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test:5.5.1")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
-
+    testImplementation("org.subethamail:subethasmtp:3.1.7")
     testImplementation("com.h2database:h2:1.4.200")
 
     implementation("org.springdoc:springdoc-openapi-webmvc-core:1.5.10")

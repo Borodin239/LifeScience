@@ -5,11 +5,11 @@ import com.jetbrains.life_science.auth.verification.factory.VerificationTokenFac
 import com.jetbrains.life_science.auth.verification.repository.VerificationTokenRepository
 import com.jetbrains.life_science.exception.auth.ExpiredVerificationTokenException
 import com.jetbrains.life_science.exception.auth.InvalidVerificationTokenException
-import com.jetbrains.life_science.exception.not_found.VerificationTokenNotFoundException
 import com.jetbrains.life_science.user.credentials.entity.Credentials
 import com.jetbrains.life_science.user.credentials.service.CredentialsService
 import com.jetbrains.life_science.util.UTCZone
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
@@ -19,18 +19,19 @@ class VerificationTokenServiceImpl(
     val credentialsService: CredentialsService
 ) : VerificationTokenService {
 
-    override fun createVerificationToken(credentials: Credentials, token: String): VerificationToken {
-        deleteVerificationToken(credentials)
-        val verificationToken = factory.create(credentials, token)
+    override fun createVerificationToken(credentials: Credentials): VerificationToken {
+        val verificationToken = factory.create(credentials)
         return repository.save(verificationToken)
     }
 
+    @Transactional
     override fun validateVerificationToken(token: String): Credentials {
-        val verificationToken = repository.findByToken(token)
-        val credentials = verificationToken.credentials
-        if (verificationToken.token != token) {
+        val verificationTokenOptional = repository.findByToken(token)
+        if (verificationTokenOptional.isEmpty) {
             throw InvalidVerificationTokenException()
         }
+        val verificationToken = verificationTokenOptional.get()
+        val credentials = verificationToken.credentials
         if (verificationToken.expiryDate.isBefore(LocalDateTime.now(UTCZone))) {
             throw ExpiredVerificationTokenException()
         }
@@ -39,11 +40,16 @@ class VerificationTokenServiceImpl(
         return credentials
     }
 
+    @Transactional
+    override fun updateVerificationToken(credentials: Credentials): VerificationToken {
+        deleteVerificationToken(credentials)
+        return createVerificationToken(credentials)
+    }
+
+    @Transactional
     override fun deleteVerificationToken(credentials: Credentials) {
         if (repository.existsByCredentials(credentials)) {
             repository.deleteByCredentials(credentials)
         }
     }
-
-
 }

@@ -4,16 +4,44 @@ import com.jetbrains.life_science.ApiTest
 import com.jetbrains.life_science.auth.jwt.JWTServiceImpl
 import com.jetbrains.life_science.auth.refresh.factory.RefreshTokenFactoryImpl
 import com.jetbrains.life_science.controller.auth.dto.NewUserDTO
+import com.jetbrains.life_science.controller.auth.dto.ResendEmailDTO
+import com.jetbrains.life_science.util.emails.RandomPortInitializer
+import com.jetbrains.life_science.util.emails.WiserAssertions
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.*
+import org.subethamail.wiser.Wiser
 import javax.servlet.http.Cookie
 
-@Sql("/scripts/initial_data.sql")
+@Sql("/scripts/initial_data.sql", "/scripts/auth/verification.sql")
+@ContextConfiguration(initializers = [RandomPortInitializer::class])
 internal class AuthControllerTest : ApiTest() {
+
+    @Value("\${spring.mail.host}")
+    lateinit var smtpHost: String
+
+    @Value("\${spring.mail.port}")
+    var smtpPort: Int = 0
+
+    lateinit var wiser: Wiser
+
+    @BeforeEach
+    fun startEmailServer() {
+        wiser = Wiser()
+        wiser.setPort(smtpPort)
+        wiser.setHostname(smtpHost)
+        wiser.start()
+    }
+
+    @AfterEach
+    fun stopEmailServer() {
+        wiser.stop()
+    }
 
     @Autowired
     lateinit var jwtServiceImpl: JWTServiceImpl
@@ -26,20 +54,30 @@ internal class AuthControllerTest : ApiTest() {
     /**
      * Success register test.
      *
-     * Access token in response and refresh token in cookie expected.
-     * Expected success attempt to login by this credentials.
-     * Expected success ping secured endpoint.
+     * Should create an inactive profile and send verification email.
+     * Expected failed attempt to login by these credentials
+     * with 401 http code error and 401_006 system code.
      */
     @Test
     fun `register test`() {
+        // Prepare data
         val password = "sample_password123=+"
         val login = "sobaka@mail.ru"
+        val expectedSubject = "Welcome to JetScience. Let’s verify your email"
 
-        val registerTokens = register(login, password)
-        pingSecured(registerTokens)
+        // Action
+        register(login, password)
 
-        val loginTokens = login(login, password)
-        pingSecured(loginTokens)
+        // Assert
+        WiserAssertions.assertReceivedMessage(wiser)
+            .to(login)
+            .withSubject(expectedSubject)
+        val apiExceptionView = getApiExceptionView(
+            401,
+            loginRequest(login, password)
+        )
+        assertEquals(401_006, apiExceptionView.systemCode)
+        assertEquals(login, apiExceptionView.arguments[0][0])
     }
 
     /**
@@ -89,6 +127,25 @@ internal class AuthControllerTest : ApiTest() {
     }
 
     /**
+     * Resend email test. It should resend email with a
+     * verification token.
+     */
+    @Test
+    fun `resend email test`() {
+        // Prepare data
+        val login = "inactive@gmail.ru"
+        val expectedSubject = "Welcome to JetScience. Let’s verify your email"
+
+        // Action
+        resend(login)
+
+        // Assert
+        WiserAssertions.assertReceivedMessage(wiser)
+            .to(login)
+            .withSubject(expectedSubject)
+    }
+
+    /**
      * Success login test.
      *
      * Access token in response and refresh token in cookie expected.
@@ -98,6 +155,56 @@ internal class AuthControllerTest : ApiTest() {
     fun `login test`() {
         val tokens = login("admin@gmail.ru", "password")
         pingSecured(tokens)
+    }
+
+    /**
+     * Successfully verifies user's email.
+     */
+    @Test
+    fun `verification test`() {
+        // Prepare data
+        val token = "token1"
+        val login = "inactive@gmail.ru"
+        val password = "user123"
+
+        // Action
+        verification(token)
+
+        // Assert
+        val loginTokens = login(login, password)
+        pingSecured(loginTokens)
+    }
+
+    /**
+     * Tries to verify user's email by invalid verification token.
+     */
+    @Test
+    fun `invalid verification token test`() {
+        // Prepare data
+        val token = "token239"
+
+        // Action
+        val apiExceptionView = getApiExceptionView(401, verificationRequest(token))
+
+        // Assert
+        assertEquals(401_007, apiExceptionView.systemCode)
+        assertTrue(apiExceptionView.arguments.isEmpty())
+    }
+
+    /**
+     * Tries to verify user's email by expired verification token.
+     */
+    @Test
+    fun `expired verification token test`() {
+        // Prepare data
+        val token = "token3"
+
+        // Action
+        val apiExceptionView = getApiExceptionView(401, verificationRequest(token))
+
+        // Assert
+        assertEquals(401_008, apiExceptionView.systemCode)
+        assertTrue(apiExceptionView.arguments.isEmpty())
     }
 
     /**
@@ -232,10 +339,26 @@ internal class AuthControllerTest : ApiTest() {
             headers { add("Authorization", "Bearer ${tokenPair.accessToken}") }
         }
 
-    fun register(email: String, password: String): TokenPair {
+    fun register(email: String, password: String) {
         val registerRequest = registerRequest(email, password)
-        val registerResponse = assertOkAndReturn(registerRequest)
-        return getTokens(registerResponse)
+        assertOkAndReturn(registerRequest)
+    }
+
+    fun resend(email: String) {
+        val resendRequest = resendRequest(email)
+        assertOkAndReturn(resendRequest)
+    }
+
+    fun verification(token: String) {
+        val verificationRequest = verificationRequest(token)
+        assertOkAndReturn(verificationRequest)
+    }
+
+    private fun resendRequest(
+        email: String
+    ) = mockMvc.patch(makeAuthPath("/confirmation/resend")) {
+        contentType = MediaType.APPLICATION_JSON
+        content = objectMapper.writeValueAsString(ResendEmailDTO(email))
     }
 
     private fun registerRequest(
@@ -246,4 +369,6 @@ internal class AuthControllerTest : ApiTest() {
         content = objectMapper.writeValueAsString(NewUserDTO("firstName", "lastName", email, password))
         accept = MediaType.APPLICATION_JSON
     }
+
+    private fun verificationRequest(token: String) = mockMvc.patch(makeAuthPath("/confirmation/$token"))
 }

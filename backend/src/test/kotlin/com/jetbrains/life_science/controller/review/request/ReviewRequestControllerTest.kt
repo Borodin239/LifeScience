@@ -51,14 +51,20 @@ internal class ReviewRequestControllerTest : ApiTest() {
                     comment = "first review",
                     date = timeOf(2021, 5, 22),
                     resolution = ReviewResolution.CHANGES_REQUESTED,
-                    reviewer = null
+                    reviewer = UserShortView(
+                        id = 3,
+                        fullName = "Ann"
+                    )
                 ),
                 ReviewView(
                     id = 2,
                     comment = "second review",
                     date = timeOf(2021, 5, 22),
                     resolution = ReviewResolution.APPROVE,
-                    reviewer = null
+                    reviewer = UserShortView(
+                        id = 3,
+                        fullName = "Ann"
+                    )
                 )
             ),
             editor = UserShortView(
@@ -137,14 +143,20 @@ internal class ReviewRequestControllerTest : ApiTest() {
                     comment = "first review",
                     date = timeOf(2021, 5, 22),
                     resolution = ReviewResolution.CHANGES_REQUESTED,
-                    reviewer = null
+                    reviewer = UserShortView(
+                        id = 3,
+                        fullName = "Ann"
+                    )
                 ),
                 ReviewView(
                     id = 2,
                     comment = "second review",
                     date = timeOf(2021, 5, 22),
                     resolution = ReviewResolution.APPROVE,
-                    reviewer = null
+                    reviewer = UserShortView(
+                        id = 3,
+                        fullName = "Ann"
+                    )
                 )
             ),
             editor = UserShortView(
