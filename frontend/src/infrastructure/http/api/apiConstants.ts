@@ -8,6 +8,7 @@ const apiConstants = {
             SIGN_UP: '/auth/register',
             REFRESH: '/auth/refresh',
             RESEND: '/auth/confirmation/resend',
+            VALIDATE_TOKEN: '/auth/confirmation'
         },
         publicApproach: {
             BASE: '/approaches/public'

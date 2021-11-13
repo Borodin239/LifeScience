@@ -13,6 +13,8 @@ export enum AuthActionThunkTypes {
     SIGN_IN = "/signIn",
     SIGN_UP = "/signUp",
     RESEND_EMAIL = "/confirmation/resend",
+    // TODO
+    VALIDATE_TOKEN = ""
 }
 
 // prefix
@@ -75,3 +77,21 @@ export const patchEmailConfirmationThunk = createAsyncThunk<
         }
     }
 )
+
+export const patchTokenValidationThunk = createAsyncThunk<
+    void,
+    string,
+    {
+        rejectValue: ApiError
+    }>(
+    `${SECTION_ACTION_TYPE_PREFIX}${AuthActionThunkTypes.VALIDATE_TOKEN}`,
+    async (token, thunkAPI) => {
+        try {
+            return await authApi.validate_token(token);
+        } catch (err) {
+            return onThunkError(err, thunkAPI);
+        }
+    }
+)
+
+
