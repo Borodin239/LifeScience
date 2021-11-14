@@ -6,18 +6,6 @@ import {Box, Button} from "@material-ui/core";
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 import {useAppDispatch} from "../../redux/hooks";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
-import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
-import CategoryAdminSettings from "../../components/categories/admin/AdminSettings/CategoryAdminSettings";
-import CatalogNodeList from "../../components/categories/CatalogNodeList";
-import {FolderOutlined} from "@material-ui/icons";
-import SubjectIcon from "@material-ui/icons/Subject";
-import {getRedirectionRoute} from "../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
-import {getCategoryPathsThunk} from "../../redux/categories/thunkActions";
-import splitThunkPayload from "../../redux/utils/splitThunkPayload";
-import {setPath} from "../../redux/navigation/slice";
-import {patchTokenValidationThunk} from "../../redux/auth/thunkActions";
-import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
-import {authApi} from "../../infrastructure/http/api/methods/authApi";
 
 export const TokenValidationPage: React.FC = () => {
     const classes = useMessagePagesStyle()
@@ -31,14 +19,14 @@ export const TokenValidationPage: React.FC = () => {
 
     useEffect(() => {
         setIsLoading(false)
-        authApi.validate_token(token).then(a => console.log(a))
+        // authApi.validate_token(token).then(a => console.log(a))
         // dispatch(patchTokenValidationThunk(token))
         //     .unwrap()
         //     .then(payload => )
         //     .catch(thunkError => {
         //         handleThunkErrorBase(thunkError, history, dispatch);
         //     })
-    }, [token])
+    }, [])
 
 
     return (

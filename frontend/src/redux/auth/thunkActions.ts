@@ -61,7 +61,6 @@ export const signUpThunk = createAsyncThunk<
         }
     }
 )
-
 export const patchEmailConfirmationThunk = createAsyncThunk<
     any,
     SignInDto["email"],
