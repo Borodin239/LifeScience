@@ -19,6 +19,7 @@ import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import CreateProtocolPage from "../pages/CreateProtocolPage/CreateProtocolPage";
 import DraftProtocolPage from "../pages/DraftProtocolPage/DraftProtocolPage";
 import {EmailConfirmationPage} from "../pages/EmailConfirmationPage/EmailConfirmationPage";
+import {SettingsPage} from "../pages/ProfilePage/Pages/SettingsPage";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -61,6 +62,7 @@ function App() {
                                     <Route exact path={appRoutesNames.SEARCH} render={() => <SearchPage/>}/>
                                     <Route exact path={appRoutesNames.PROFILE} render={() => <ProfilePage/>}/>
                                     <Route exact path={`${appRoutesNames.DRAFT_PROTOCOLS}/:protocolId(\\d{1,11})`} render={() => <DraftProtocolPage/>}/>
+                                    <Route exact path={appRoutesNames.SETTINGS} render={() => <SettingsPage/>}/>
                                     <Route exact path="/error"
                                            render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 

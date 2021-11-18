@@ -58,7 +58,7 @@ const ProfilePage = () => {
                     sx={{
                         display: 'flex',
                         flexDirection: 'row',
-                        p: 5,
+                        // p: 5,
                         m: 5,
                     }}
                 >
@@ -66,9 +66,9 @@ const ProfilePage = () => {
                     <Box sx={{
                         display: 'flex',
                         flexDirection: 'column',
-                        m: 5
+                        m: 2
                     }} >
-                        <img src={avatar} style={{height: '200px', width: '200px'}}/>
+                        <img src={avatar} className={classes.avatar}/>
                         <button className={classes.button} onClick={() => setPage(AboutMePage(userInfo, classes))}>
                             About me
                         </button>
@@ -86,7 +86,7 @@ const ProfilePage = () => {
                         </button>
                     </Box>
 
-                    <Box className={classes.pageBody} sx={{m: 5}}>
+                    <Box className={classes.pageBody} sx={{m: 2}}>
                         {page}
                     </Box>
 

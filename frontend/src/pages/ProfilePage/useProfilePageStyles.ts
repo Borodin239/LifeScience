@@ -6,13 +6,20 @@ export const useProfilePageStyles = makeStyles((theme) => ({
 
     },
 
+    avatar: {
+        borderRadius: '10px',
+        height: '200px',
+        width: '200px'
+    },
+
     pageBody: {
         paddingLeft: '5rem',
         paddingRight: '5rem',
-        backgroundColor: "aliceblue",
+        backgroundColor: 'white',
         borderRadius: '10px',
         paddingTop: '20px',
-        width: '200%'
+        width: '200%',
+        paddingBottom: '40px'
     },
 
     // TODO :: copy-paste
