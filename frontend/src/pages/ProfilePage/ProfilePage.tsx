@@ -9,9 +9,10 @@ import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {ProtocolTitleView} from "../../infrastructure/http/api/view/protocol/ProtocolTitleView";
 import {tmp2} from "./Pages/tmp2";
-import {tmp3} from "./Pages/tmp3";
+import {PublicationsPage} from "./Pages/PublicationsPage";
 import {AboutMePage} from "./Pages/AboutMePage";
 import maleProfileAvatar from "../../images/male_profile_avatar.jpg";
+import avatar from "../../images/male_profile_avatar.jpg"
 
 
 const ProfilePage = () => {
@@ -24,10 +25,6 @@ const ProfilePage = () => {
     const userId = useAppSelector(state => state.usersReducer.userInfo?.id);
 
     const [protocols, setProtocols] = useState<ProtocolTitleView[]>([]);
-
-    const handleDraftProtocolClick = (id: string) => () => {
-        history.push(`${appRoutesNames.DRAFT_PROTOCOLS}/${id}`)
-    }
 
     useEffect(() => {
         if (isAuthorized) {
@@ -71,25 +68,25 @@ const ProfilePage = () => {
                         flexDirection: 'column',
                         m: 5
                     }} >
-                        <img src={maleProfileAvatar} style={{height: '200px', width: '200px'}}/>
+                        <img src={avatar} style={{height: '200px', width: '200px'}}/>
                         <button className={classes.button} onClick={() => setPage(AboutMePage(userInfo, classes))}>
                             About me
                         </button>
                         <button className={classes.button} onClick={() => setPage(tmp2)}>
                             Communication
                         </button>
-                        <button className={classes.button} onClick={() => setPage(tmp3)}>
+                        <button className={classes.button} onClick={() => setPage(tmp2)}>
                             Notifications
                         </button>
-                        <button className={classes.button} onClick={() => setPage(tmp3)}>
+                        <button className={classes.button} onClick={() => setPage(tmp2)}>
                             Working space
                         </button>
-                        <button className={classes.button} onClick={() => setPage(tmp3)}>
+                        <button className={classes.button} onClick={() => setPage(PublicationsPage(classes, protocols, history))}>
                             My publications
                         </button>
                     </Box>
 
-                    <Box className={"page_body"} sx={{m: 5}}>
+                    <Box className={classes.pageBody} sx={{m: 5}}>
                         {page}
                     </Box>
 

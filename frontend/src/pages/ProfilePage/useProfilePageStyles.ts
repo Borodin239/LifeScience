@@ -2,6 +2,18 @@ import {alpha, makeStyles} from "@material-ui/core/styles";
 import uiConstants from "../../infrastructure/ui/themes/uiConstants";
 
 export const useProfilePageStyles = makeStyles((theme) => ({
+    aboutMePage: {
+
+    },
+
+    pageBody: {
+        paddingLeft: '5rem',
+        paddingRight: '5rem',
+        backgroundColor: "aliceblue",
+        borderRadius: '10px',
+        paddingTop: '20px',
+        width: '200%'
+    },
 
     // TODO :: copy-paste
     button: {
