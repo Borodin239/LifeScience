@@ -34,7 +34,8 @@ export const useProfilePageStyles = makeStyles((theme) => ({
         '&:hover': {
             backgroundColor: alpha(theme.palette.primary.main, 0.6),
         },
-        borderRadius: '10px'
+        borderRadius: '10px',
+        width: "auto",
     },
 
 

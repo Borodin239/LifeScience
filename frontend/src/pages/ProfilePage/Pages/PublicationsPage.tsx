@@ -1,5 +1,5 @@
-import {Box, List, ListItem, Typography} from "@material-ui/core";
-import { ReactChild, ReactFragment, ReactPortal, Key } from "react";
+import {Box, Divider, List, ListItem, Typography} from "@material-ui/core";
+import React, { ReactChild, ReactFragment, ReactPortal, Key } from "react";
 import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
 
 // @ts-ignore
@@ -11,11 +11,13 @@ export const PublicationsPage = (classes, protocols, history) => {
 
     return (
         <Box className={classes.protocolsPanel}>
-            <Box>
-                <Typography className={classes.protocolsTitle}>
-                    My draft protocols:
+            <Box className={classes.titleContainer}>
+                <Typography variant={'h5'} style={{marginBottom: '5px'}}>
+                    My draft protocols
                 </Typography>
+                <Divider className={classes.divider}/>
             </Box>
+           
             <Box style={{marginLeft: "5px"}}>
                 <List>
                     {

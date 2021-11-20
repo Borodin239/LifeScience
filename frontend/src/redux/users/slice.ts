@@ -4,7 +4,7 @@ import {updateCurrentUserThunk, USER_ACTION_TYPE_PREFIX} from "./thunkActions";
 import {loggedOut} from "../auth/slice";
 
 const initState: { userInfo: UserInfoView | null } = {
-    userInfo: JSON.parse(localStorage.getItem('userInfo')!) || null
+    userInfo: localStorage.getItem('userInfo') == null ? null : JSON.parse(localStorage.getItem('userInfo')!)
 };
 
 const usersSlice = createSlice({

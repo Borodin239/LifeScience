@@ -11,7 +11,6 @@ import {ProtocolTitleView} from "../../infrastructure/http/api/view/protocol/Pro
 import {tmp2} from "./Pages/tmp2";
 import {PublicationsPage} from "./Pages/PublicationsPage";
 import {AboutMePage} from "./Pages/AboutMePage";
-import maleProfileAvatar from "../../images/male_profile_avatar.jpg";
 import avatar from "../../images/male_profile_avatar.jpg"
 
 
@@ -48,7 +47,7 @@ const ProfilePage = () => {
 
     const userInfo = useAppSelector(state => state.usersReducer.userInfo)
 
-    const [page, setPage] = useState(AboutMePage(userInfo, classes));
+    const [page, setPage] = useState(AboutMePage(userInfo));
 
     return (
         <Box sx={{flexDirection: 'row'}}>
@@ -69,7 +68,7 @@ const ProfilePage = () => {
                         m: 2
                     }} >
                         <img src={avatar} className={classes.avatar}/>
-                        <button className={classes.button} onClick={() => setPage(AboutMePage(userInfo, classes))}>
+                        <button className={classes.button} onClick={() => setPage(AboutMePage(userInfo))}>
                             About me
                         </button>
                         <button className={classes.button} onClick={() => setPage(tmp2)}>
