@@ -4,7 +4,7 @@ import {removeAccessToken, setAccessToken} from "../../infrastructure/http/api/u
 export const AUTH_ACTION_TYPE_PREFIX = 'auth';
 
 const initState: { isAuthorized: boolean } = {
-    isAuthorized: JSON.parse(localStorage.getItem('isAuthorized')!) || false,
+    isAuthorized: localStorage.getItem('isAuthorized') == null ? false : JSON.parse(localStorage.getItem('isAuthorized')!),
 };
 
 const authSlice = createSlice({
