@@ -22,11 +22,14 @@ export const useProfilePageStyles = makeStyles((theme) => ({
         paddingBottom: '40px'
     },
 
-    // TODO :: copy-paste
     button: {
         marginTop: theme.spacing(1),
         // padding: theme.spacing(0, 3, 0, 3),
         height: '50px',
+        textDecoration: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         fontSize: '22px',
         color: theme.palette.common.white,
         border: 'none',

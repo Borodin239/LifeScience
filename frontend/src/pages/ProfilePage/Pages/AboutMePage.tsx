@@ -1,19 +1,15 @@
-import {Box, Divider, List, ListItem, TextField, Typography} from "@material-ui/core";
-import UserInfoTitle from "../../../components/profile/UserInfoTitle/UserInfoTitle";
-import UserInfoText from "../../../components/profile/UserInfoText/UserInfoText";
-import {UserInfoView} from "../../../infrastructure/http/api/view/social/user/UserInfoView";
+import {Box, Divider, Typography} from "@material-ui/core";
 import BaseTextField from "../../../elements/text-fields/BaseTextField";
 import React from "react";
 import SubmitButton from "../../../elements/buttons/SubmitButton";
 import {useProfilePageStyles} from "../useProfilePageStyles";
+import {useAppSelector} from "../../../redux/hooks";
 
-export const AboutMePage = (userInfo: UserInfoView | null) => {
-    // const [test, setTest] =
+export const AboutMePage = () => {
     const classes = useProfilePageStyles()
+    const userInfo = useAppSelector(state => state.usersReducer.userInfo)
 
-    // @ts-ignore
     return (
-        // <Box className={classes.aboutMePage}>
         <form onSubmit={() => 1 + 1} noValidate>
             <Box className={classes.titleContainer}>
                 <Typography variant={'h5'} style={{marginBottom: '5px'}}>
@@ -30,7 +26,8 @@ export const AboutMePage = (userInfo: UserInfoView | null) => {
 
                 <BaseTextField label="Last name"
                                name="Last name"
-                               defaultValue={userInfo == null ? "" : userInfo.personalData.lastName}
+                               defaultValue={userInfo == null ? "" :
+                                   userInfo.personalData.lastName}
                 />
 
                 <BaseTextField label="Email"
@@ -38,19 +35,18 @@ export const AboutMePage = (userInfo: UserInfoView | null) => {
                                defaultValue="Email"
                 />
 
-                <UserInfoTitle title={'Place of current employment:'}/>
-                <BaseTextField label="TODO"
-                               name="TODO"
-                               handleChange={() => 1 + 1}/>
+                <BaseTextField label="Place of current employment"
+                               name="Place of current employment"
+                               defaultValue="JetBrains"
+                />
 
-                <UserInfoTitle title={'Country:'}/>
-                <BaseTextField label="Russia"
-                               name="Russia"
-                               handleChange={() => 1 + 1}/>
+                <BaseTextField label="Country"
+                               name="Country"
+                               defaultValue="Russia"
+                />
 
                 <SubmitButton text={"Save change"} className={classes.button}/>
             </Box>
         </form>
-        // {/*// </Box>*/}
     )
 }

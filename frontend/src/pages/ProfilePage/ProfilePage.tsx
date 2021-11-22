@@ -1,24 +1,25 @@
-import {Box, Divider, List, ListItem, Typography} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import {useProfilePageStyles} from "./useProfilePageStyles";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {useHistory} from "react-router-dom";
+import {Router, useHistory, Link, Switch, Route, useRouteMatch} from "react-router-dom";
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 import {useEffect, useState} from "react";
 import {getUserDraftProtocols, updateCurrentUserThunk} from "../../redux/users/thunkActions";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import {ProtocolTitleView} from "../../infrastructure/http/api/view/protocol/ProtocolTitleView";
-import {tmp2} from "./Pages/tmp2";
 import {PublicationsPage} from "./Pages/PublicationsPage";
 import {AboutMePage} from "./Pages/AboutMePage";
 import avatar from "../../images/male_profile_avatar.jpg"
-
+import {CommunicationsPage} from "./Pages/CommunicationsPage";
+import {NotificationsPage} from "./Pages/NotificationsPage";
 
 const ProfilePage = () => {
 
     const history = useHistory()
     const dispatch = useAppDispatch()
     const classes = useProfilePageStyles()
+    let {path, url} = useRouteMatch();
 
     const isAuthorized = useAppSelector(state => state.authReducer.isAuthorized);
     const userId = useAppSelector(state => state.usersReducer.userInfo?.id);
@@ -45,53 +46,69 @@ const ProfilePage = () => {
         history.replace(`${appRoutesNames.SIGN_IN}`)
     }
 
-    const userInfo = useAppSelector(state => state.usersReducer.userInfo)
-
-    const [page, setPage] = useState(AboutMePage(userInfo));
-
     return (
-        <Box sx={{flexDirection: 'row'}}>
+        <Router history={history}>
+            <Box sx={{flexDirection: 'row'}}>
 
-            <div style={{width: '100%'}}>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        // p: 5,
-                        m: 5,
-                    }}
-                >
+                <div style={{width: '100%'}}>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            m: 5,
+                        }}
+                    >
 
-                    <Box sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        m: 2
-                    }} >
-                        <img src={avatar} className={classes.avatar}/>
-                        <button className={classes.button} onClick={() => setPage(AboutMePage(userInfo))}>
-                            About me
-                        </button>
-                        <button className={classes.button} onClick={() => setPage(tmp2)}>
-                            Communication
-                        </button>
-                        <button className={classes.button} onClick={() => setPage(tmp2)}>
-                            Notifications
-                        </button>
-                        <button className={classes.button} onClick={() => setPage(tmp2)}>
-                            Working space
-                        </button>
-                        <button className={classes.button} onClick={() => setPage(PublicationsPage(classes, protocols, history))}>
-                            My publications
-                        </button>
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            m: 2
+                        }}>
+                            <img src={avatar} className={classes.avatar}/>
+                            <Link className={classes.button} to={`${url}/about-me`}>
+                                About me
+                            </Link>
+                            <Link className={classes.button} to={`${url}/communication`}>
+                                Communication
+                            </Link>
+                            <Link className={classes.button} to={`${url}/notifications`}>
+                                Notifications
+                            </Link>
+                            <Link className={classes.button} to={`${url}/working-space`}>
+                                Working space
+                            </Link>
+                            <Link className={classes.button} to={`${url}/my-publications`}>
+                                My publications
+                            </Link>
+                        </Box>
+
+                        <Switch>
+                            <Box className={classes.pageBody} sx={{m: 2}}>
+                                <Route exact path={`${path}/`}>
+                                    <AboutMePage/>
+                                </Route>
+                                <Route path={`${path}/about-me`}>
+                                    <AboutMePage/>
+                                </Route>
+                                <Route path={`${path}/communication`}>
+                                    <CommunicationsPage/>
+                                </Route>
+                                <Route path={`${path}/notifications`}>
+                                    <NotificationsPage/>
+                                </Route>
+                                <Route path={`${path}/working-space`}>
+                                    <NotificationsPage/>
+                                </Route>
+                                <Route path={`${path}/my-publications`}>
+                                    <PublicationsPage protocols={protocols}/>
+                                </Route>
+                            </Box>
+                        </Switch>
+
                     </Box>
-
-                    <Box className={classes.pageBody} sx={{m: 2}}>
-                        {page}
-                    </Box>
-
-                </Box>
-            </div>
-        </Box>
+                </div>
+            </Box>
+        </Router>
     )
 }
 

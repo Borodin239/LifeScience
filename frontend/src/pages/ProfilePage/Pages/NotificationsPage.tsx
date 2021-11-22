@@ -1,4 +1,4 @@
-export const tmp2 = () => {
+export const NotificationsPage = () => {
     return (
         <div>
             2

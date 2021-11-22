@@ -60,7 +60,7 @@ function App() {
                                     <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                                     <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
                                     <Route exact path={appRoutesNames.SEARCH} render={() => <SearchPage/>}/>
-                                    <Route exact path={appRoutesNames.PROFILE} render={() => <ProfilePage/>}/>
+                                    <Route path={appRoutesNames.PROFILE} render={() => <ProfilePage/>}/>
                                     <Route exact path={`${appRoutesNames.DRAFT_PROTOCOLS}/:protocolId(\\d{1,11})`} render={() => <DraftProtocolPage/>}/>
                                     <Route exact path={appRoutesNames.SETTINGS} render={() => <SettingsPage/>}/>
                                     <Route exact path="/error"

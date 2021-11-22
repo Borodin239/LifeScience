@@ -4,7 +4,7 @@ import {removeAccessToken, setAccessToken} from "../../infrastructure/http/api/u
 export const AUTH_ACTION_TYPE_PREFIX = 'auth';
 
 const initState: { isAuthorized: boolean } = {
-    isAuthorized: localStorage.getItem('isAuthorized') == null ? false : JSON.parse(localStorage.getItem('isAuthorized')!),
+    isAuthorized: false
 };
 
 const authSlice = createSlice({
@@ -14,12 +14,10 @@ const authSlice = createSlice({
         loggedOut(state) {
             state.isAuthorized = false;
             removeAccessToken();
-            localStorage.setItem('isAuthorized', "false");
         },
         loggedIn(state, action: PayloadAction<string>) {
             setAccessToken(action.payload);
             state.isAuthorized = true;
-            localStorage.setItem('isAuthorized', "true");
         },
     },
     /* extraReducers: {

@@ -4,7 +4,7 @@ import {updateCurrentUserThunk, USER_ACTION_TYPE_PREFIX} from "./thunkActions";
 import {loggedOut} from "../auth/slice";
 
 const initState: { userInfo: UserInfoView | null } = {
-    userInfo: localStorage.getItem('userInfo') == null ? null : JSON.parse(localStorage.getItem('userInfo')!)
+    userInfo: null
 };
 
 const usersSlice = createSlice({
@@ -15,11 +15,9 @@ const usersSlice = createSlice({
         builder
             .addCase(updateCurrentUserThunk.fulfilled, (state, action) => {
                 state.userInfo = action.payload;
-                localStorage.setItem('userInfo', JSON.stringify(action.payload));
             })
             .addCase(loggedOut, (state) => {
                 state.userInfo = null;
-                localStorage.setItem('userInfo', 'null');
             })
     }
 })

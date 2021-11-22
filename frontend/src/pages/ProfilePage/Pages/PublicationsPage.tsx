@@ -1,9 +1,13 @@
 import {Box, Divider, List, ListItem, Typography} from "@material-ui/core";
-import React, { ReactChild, ReactFragment, ReactPortal, Key } from "react";
+import React, { Key } from "react";
 import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
+import {useProfilePageStyles} from "../useProfilePageStyles";
+import {useHistory} from "react-router-dom";
+import {ProtocolTitleView} from "../../../infrastructure/http/api/view/protocol/ProtocolTitleView";
 
-// @ts-ignore
-export const PublicationsPage = (classes, protocols, history) => {
+export const PublicationsPage : React.FC<{protocols: ProtocolTitleView[]}> = ({protocols}) => {
+    const classes = useProfilePageStyles()
+    const history = useHistory()
 
     const handleDraftProtocolClick = (id: string) => () => {
         history.push(`${appRoutesNames.DRAFT_PROTOCOLS}/${id}`)
@@ -21,7 +25,7 @@ export const PublicationsPage = (classes, protocols, history) => {
             <Box style={{marginLeft: "5px"}}>
                 <List>
                     {
-                        protocols.map((protocol: { id: any; name: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) => (
+                        protocols.map((protocol: ProtocolTitleView, index: Key) => (
                             <ListItem key={index}>
                                 <Typography onClick={handleDraftProtocolClick(protocol.id)}
                                             className={classes.protocolTitle}>

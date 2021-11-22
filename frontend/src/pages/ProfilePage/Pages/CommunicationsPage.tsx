@@ -1,4 +1,4 @@
-export const tmp1 = () => {
+export const CommunicationsPage = () => {
     return (
         <div>
             1
