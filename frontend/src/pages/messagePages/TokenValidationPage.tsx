@@ -6,6 +6,9 @@ import {Box, Button} from "@material-ui/core";
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 import {useAppDispatch} from "../../redux/hooks";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
+import {patchTokenValidationThunk} from "../../redux/auth/thunkActions";
+import {authApi} from "../../infrastructure/http/api/methods/authApi";
+import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 
 export const TokenValidationPage: React.FC = () => {
     const classes = useMessagePagesStyle()
@@ -18,14 +21,16 @@ export const TokenValidationPage: React.FC = () => {
     const [isSuccessfullyValidated, setIsSuccessfullyValidated] = useState(true);
 
     useEffect(() => {
-        setIsLoading(false)
-        // authApi.validate_token(token).then(a => console.log(a))
-        // dispatch(patchTokenValidationThunk(token))
-        //     .unwrap()
-        //     .then(payload => )
-        //     .catch(thunkError => {
-        //         handleThunkErrorBase(thunkError, history, dispatch);
-        //     })
+        setIsLoading(true)
+        authApi.validate_token(token).then(a => console.log(a))
+        dispatch(patchTokenValidationThunk(token))
+            .unwrap()
+            .then(() => {
+                setIsLoading(false)
+            })
+            .catch(thunkError => {
+                handleThunkErrorBase(thunkError, history, dispatch);
+            })
     }, [])
 
 

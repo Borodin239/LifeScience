@@ -14,7 +14,7 @@ export enum AuthActionThunkTypes {
     SIGN_UP = "/signUp",
     RESEND_EMAIL = "/confirmation/resend",
     // TODO
-    VALIDATE_TOKEN = ""
+    VALIDATE_TOKEN = "/confirmation"
 }
 
 // prefix

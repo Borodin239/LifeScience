@@ -84,9 +84,7 @@ class AuthController(
     @Operation(summary = "Confirm user's email via validation token")
     @PatchMapping("/confirmation/{token}")
     fun confirmRegistration(
-        @PathVariable token: String,
-        request: HttpServletRequest,
-        response: HttpServletResponse
+        @PathVariable token: String
     ) {
         verificationTokenService.validateVerificationToken(token)
     }
