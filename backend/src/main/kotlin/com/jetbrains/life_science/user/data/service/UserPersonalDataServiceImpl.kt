@@ -37,6 +37,7 @@ class UserPersonalDataServiceImpl(
 
     override fun update(info: UserPersonalDataInfo, userPersonalData: UserPersonalData): UserPersonalData {
         val organisations = organisationService.getOrganisationsByIds(info.organisations)
-        return factory.setParams(info, organisations, userPersonalData)
+        val newData = factory.setParams(info, organisations, userPersonalData)
+        return repository.save(newData)
     }
 }

@@ -1,6 +1,13 @@
 package com.jetbrains.life_science.controller.user.dto
 
+import javax.validation.constraints.NotBlank
+
 data class UserPersonalDataDTO(
+    @NotBlank
+    val firstName: String,
+
+    @NotBlank
+    val lastName: String,
 
     val doctorDegree: Boolean,
 
