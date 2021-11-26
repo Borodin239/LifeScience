@@ -36,7 +36,6 @@ class VerificationTokenServiceImpl(
             throw ExpiredVerificationTokenException()
         }
         credentialsService.validateUser(credentials.id)
-        deleteVerificationToken(credentials)
         return credentials
     }
 

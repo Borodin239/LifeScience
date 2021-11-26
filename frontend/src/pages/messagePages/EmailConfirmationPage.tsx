@@ -3,11 +3,11 @@ import DescriptionBlock from "../../elements/temporary/DescriptionBlock/Descript
 import {Button} from "@material-ui/core";
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 import {useHistory} from "react-router-dom";
-import {useEmailConfirmationPageStyle} from "./useEmailConfirmationPageStyle";
+import {useMessagePagesStyle} from "./useMessagePagesStyle";
 
 
 export const EmailConfirmationPage: React.FC = () => {
-    const classes = useEmailConfirmationPageStyle()
+    const classes = useMessagePagesStyle()
     const history = useHistory();
 
     return (
