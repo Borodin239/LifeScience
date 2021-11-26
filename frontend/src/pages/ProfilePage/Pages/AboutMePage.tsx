@@ -30,9 +30,23 @@ export const AboutMePage = () => {
                                    userInfo.personalData.lastName}
                 />
 
+                <BaseTextField label="Academic degree"
+                               name="Academic degree"
+                               defaultValue={userInfo == null ? "" :
+                                   userInfo.personalData.academicDegree}
+                />
+
+                <BaseTextField label="Doctoral degree"
+                               name="Doctoral degree"
+                               // TODO :: doctoral degree
+                               defaultValue={userInfo == null ? "" :
+                                   userInfo.personalData.academicDegree}
+                />
+
                 <BaseTextField label="Email"
                                name="Email"
-                               defaultValue="Email"
+                               defaultValue={userInfo == null ? "" :
+                                   userInfo.email}
                 />
 
                 <BaseTextField label="Place of current employment"

@@ -1,4 +1,4 @@
-import {Box, Divider, List, ListItem, Typography} from "@material-ui/core";
+import {Box, Button, Divider, List, ListItem, Typography} from "@material-ui/core";
 import React, { Key } from "react";
 import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
 import {useProfilePageStyles} from "../useProfilePageStyles";
@@ -13,11 +13,15 @@ export const PublicationsPage : React.FC<{protocols: ProtocolTitleView[]}> = ({p
         history.push(`${appRoutesNames.DRAFT_PROTOCOLS}/${id}`)
     }
 
+    const handleClick = () => {
+        history.push("/create-protocol/1");
+    }
+
     return (
         <Box className={classes.protocolsPanel}>
             <Box className={classes.titleContainer}>
                 <Typography variant={'h5'} style={{marginBottom: '5px'}}>
-                    My draft protocols
+                    My protocols
                 </Typography>
                 <Divider className={classes.divider}/>
             </Box>
@@ -27,6 +31,7 @@ export const PublicationsPage : React.FC<{protocols: ProtocolTitleView[]}> = ({p
                     {
                         protocols.map((protocol: ProtocolTitleView, index: Key) => (
                             <ListItem key={index}>
+                                <div>🞄   </div>
                                 <Typography onClick={handleDraftProtocolClick(protocol.id)}
                                             className={classes.protocolTitle}>
                                     {protocol.name}
@@ -35,6 +40,13 @@ export const PublicationsPage : React.FC<{protocols: ProtocolTitleView[]}> = ({p
                         ))
                     }
                 </List>
+                <Button variant="outlined"
+                        // color="primary"
+                        className={classes.button}
+                        onClick={handleClick}
+                        >
+                    Create
+                </Button>
             </Box>
         </Box>
     )

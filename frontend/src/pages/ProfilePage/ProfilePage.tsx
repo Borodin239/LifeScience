@@ -68,6 +68,9 @@ const ProfilePage = () => {
                             <Link className={classes.button} to={`${url}/about-me`}>
                                 About me
                             </Link>
+                            <Link className={classes.button} to={`${url}/my-publications`}>
+                                My protocols
+                            </Link>
                             <Link className={classes.button} to={`${url}/communication`}>
                                 Communication
                             </Link>
@@ -77,9 +80,7 @@ const ProfilePage = () => {
                             <Link className={classes.button} to={`${url}/working-space`}>
                                 Working space
                             </Link>
-                            <Link className={classes.button} to={`${url}/my-publications`}>
-                                My publications
-                            </Link>
+
                         </Box>
 
                         <Switch>
