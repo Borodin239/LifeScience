@@ -7,7 +7,6 @@ import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 import {useAppDispatch} from "../../redux/hooks";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import {patchTokenValidationThunk} from "../../redux/auth/thunkActions";
-import {authApi} from "../../infrastructure/http/api/methods/authApi";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 
 export const TokenValidationPage: React.FC = () => {
@@ -22,16 +21,21 @@ export const TokenValidationPage: React.FC = () => {
 
     useEffect(() => {
         setIsLoading(true)
-        authApi.validate_token(token).then(a => console.log(a))
         dispatch(patchTokenValidationThunk(token))
             .unwrap()
             .then(() => {
-                setIsLoading(false)
+                setIsLoading(false);
             })
             .catch(thunkError => {
-                handleThunkErrorBase(thunkError, history, dispatch);
+                setIsLoading(false);
+                if (thunkError.name === 'ApiError' && (thunkError.description.systemCode === 401008
+                    || thunkError.description.systemCode === 401007)) {
+                    setIsSuccessfullyValidated(false);
+                } else {
+                    handleThunkErrorBase(thunkError, history, dispatch);
+                }
             })
-    }, [])
+    }, [dispatch, history, token]);
 
 
     return (
@@ -49,17 +53,17 @@ export const TokenValidationPage: React.FC = () => {
                                 isSuccessfullyValidated
                                     ?
                                     (
-                                        // TODO :: change messages to more appropriate
                                         <div>
-                                            {/*TODO :: change messages to more appropriate*/}
-                                            <DescriptionBlock type="warning" message="Success."/><Button
+                                            <DescriptionBlock type="warning" message="Your email has been successfully
+                                            confirmed. Log in to continue exploring our platform"/><Button
                                             className={classes.toSignUpFormButton} onClick={() => {
                                             history.push(appRoutesNames.SIGN_IN);
                                         }}>Sign In</Button></div>
                                     )
                                     :
                                     (
-                                        <DescriptionBlock type="warning" message="Token died."/>
+                                        <DescriptionBlock type="warning"
+                                                          message="Unfortunately, your link is outdated."/>
                                         // TODO :: button "Send an email again"
                                     )
                             }

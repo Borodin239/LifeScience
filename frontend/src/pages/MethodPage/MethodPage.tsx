@@ -76,8 +76,6 @@ const MethodPage: React.FC = () => {
             })
             .catch(thunkError => {
                 handleThunkErrorBase(thunkError, history, dispatch);
-                // setIsLoading(false);
-
             })
     }, [approachId, history, dispatch, updateLocation, path]);
 
