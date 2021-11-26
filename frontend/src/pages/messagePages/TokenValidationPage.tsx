@@ -17,18 +17,18 @@ export const TokenValidationPage: React.FC = () => {
     const history = useHistory();
     const dispatch = useAppDispatch();
 
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setLoadingState] = useState(true);
     const [isSuccessfullyValidated, setIsSuccessfullyValidated] = useState(true);
 
     useEffect(() => {
-        setIsLoading(true)
+        setLoadingState(true)
         dispatch(patchTokenValidationThunk(token))
             .unwrap()
             .then(() => {
-                setIsLoading(false);
+                setLoadingState(false);
             })
             .catch(thunkError => {
-                setIsLoading(false);
+                setLoadingState(false);
                 if (thunkError.name === 'ApiError' &&
                     (thunkError.description.systemCode === apiConstants.errors.EXPIRED_TOKEN
                         || thunkError.description.systemCode === apiConstants.errors.INVALID_TOKEN)) {
