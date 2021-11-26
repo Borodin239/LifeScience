@@ -45,6 +45,11 @@ const apiConstants = {
 
     common: {
         ROOT_ID: -1
+    },
+
+    errors: {
+        INVALID_TOKEN: 401007,
+        EXPIRED_TOKEN: 401008
     }
 }
 

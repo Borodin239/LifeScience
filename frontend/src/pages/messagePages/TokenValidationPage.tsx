@@ -8,6 +8,7 @@ import {useAppDispatch} from "../../redux/hooks";
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import {patchTokenValidationThunk} from "../../redux/auth/thunkActions";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
+import apiConstants from "../../infrastructure/http/api/apiConstants";
 
 export const TokenValidationPage: React.FC = () => {
     const classes = useMessagePagesStyle()
@@ -28,8 +29,9 @@ export const TokenValidationPage: React.FC = () => {
             })
             .catch(thunkError => {
                 setIsLoading(false);
-                if (thunkError.name === 'ApiError' && (thunkError.description.systemCode === 401008
-                    || thunkError.description.systemCode === 401007)) {
+                if (thunkError.name === 'ApiError' &&
+                    (thunkError.description.systemCode === apiConstants.errors.EXPIRED_TOKEN
+                        || thunkError.description.systemCode === apiConstants.errors.INVALID_TOKEN)) {
                     setIsSuccessfullyValidated(false);
                 } else {
                     handleThunkErrorBase(thunkError, history, dispatch);
