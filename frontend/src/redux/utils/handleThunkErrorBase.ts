@@ -1,12 +1,14 @@
 import {developmentLog} from "../../infrastructure/common/developmentLog";
-import { loggedOut } from "../auth/slice";
+import {loggedOut} from "../auth/slice";
 import {setError} from "../error/slice";
 import {AppDispatch} from "../store/store";
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
+import apiConstants from "../../infrastructure/http/api/apiConstants";
 
 const handleThunkErrorBase = (error: any, history: any, dispatch: AppDispatch) => {
     if (error.name === 'ApiError') {
-        if (error.description.systemCode === 401001 || error.description.systemCode === 401002) {
+        if (error.description.systemCode === apiConstants.errors.INVALID_REFRESH_TOKEN
+            || error.description.systemCode === apiConstants.errors.EXPIRED_REFRESH_TOKEN) {
             dispatch(loggedOut());
             history.push(appRoutesNames.SIGN_IN);
         } else {
