@@ -30,8 +30,8 @@ export const TokenValidationPage: React.FC = () => {
             .catch(thunkError => {
                 setLoadingState(false);
                 if (thunkError.name === 'ApiError' &&
-                    (thunkError.description.systemCode === apiConstants.errors.EXPIRED_TOKEN
-                        || thunkError.description.systemCode === apiConstants.errors.INVALID_TOKEN)) {
+                    (thunkError.description.systemCode === apiConstants.errors.EXPIRED_VERIFICATION_TOKEN
+                        || thunkError.description.systemCode === apiConstants.errors.INVALID_VERIFICATION_TOKEN)) {
                     setIsSuccessfullyValidated(false);
                 } else {
                     handleThunkErrorBase(thunkError, history, dispatch);
