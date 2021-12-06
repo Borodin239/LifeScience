@@ -20,12 +20,8 @@ const MainAppBarProfileMenu: React.FC<MainAppBarProfileMenuProps> = (props) => {
     const history = useHistory()
 
     const handleProfileClick = () => {
-        history.push(`${appRoutesNames.PROFILE}`)
+        history.push(`${appRoutesNames.PROFILE}/profile`)
         props.handleMenuClose()
-    }
-
-    const handleSettingsClick = () => {
-        history.push(`${appRoutesNames.SETTINGS}`)
     }
 
     return (
@@ -39,7 +35,6 @@ const MainAppBarProfileMenu: React.FC<MainAppBarProfileMenuProps> = (props) => {
             onClose={props.handleMenuClose}
         >
             <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
-            <MenuItem onClick={handleSettingsClick}>Settings</MenuItem>
             <MenuItem onClick={() => {dispatch(loggedOut()); props.handleMenuClose();}}>Logout</MenuItem>
         </Menu>
     )

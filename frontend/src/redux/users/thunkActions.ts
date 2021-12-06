@@ -48,6 +48,7 @@ export const getUserDraftProtocols = createAsyncThunk<
 
             return response.data as ProtocolTitleView[]
         } catch (err) {
+            console.log(err)
             return onThunkError(err, thunkAPI);
         }
 

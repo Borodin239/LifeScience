@@ -13,12 +13,10 @@ const BaseTextField: React.FC<BaseTextFieldProps> = (props) => {
         <TextField
             variant="outlined"
             margin="normal"
-            // required
             fullWidth
             label={props.label}
             name={props.name}
             defaultValue={props.defaultValue}
-            // autoComplete="email"
             onChange={(event) => props.handleChange ? props.handleChange(event.target.value) : {}}
         />
     )

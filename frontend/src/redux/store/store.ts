@@ -14,7 +14,9 @@ import { save, load } from "redux-localstorage-simple"
 export const store = configureStore({
     reducer: {errorReducer, authReducer, navigationReducer, usersReducer, approachReducer, sectionReducer, protocolReducer, searchReducer},
     middleware: getDefaultMiddleware => process.env.REACT_APP_MODE === `development` ?
-        getDefaultMiddleware().concat(save()).concat(logger)
+        getDefaultMiddleware()
+            // .concat(logger):getDefaultMiddleware()
+            .concat(save()).concat(logger)
         : getDefaultMiddleware().concat(save()),
     preloadedState: load()
 });

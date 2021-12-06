@@ -15,11 +15,10 @@ import SearchPage from "../pages/SearchPage/SearchPage";
 import {Box} from "@material-ui/core";
 import './App.css'
 import ProtocolPage from "../pages/ProtocolPage/ProtocolPage";
-import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import CreateProtocolPage from "../pages/CreateProtocolPage/CreateProtocolPage";
 import DraftProtocolPage from "../pages/DraftProtocolPage/DraftProtocolPage";
 import {EmailConfirmationPage} from "../pages/EmailConfirmationPage/EmailConfirmationPage";
-import {SettingsPage} from "../pages/ProfilePage/Pages/SettingsPage";
+import WorkspacePage from "../pages/ProfilePage/WorkspacePage";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -60,9 +59,8 @@ function App() {
                                     <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
                                     <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
                                     <Route exact path={appRoutesNames.SEARCH} render={() => <SearchPage/>}/>
-                                    <Route path={appRoutesNames.PROFILE} render={() => <ProfilePage/>}/>
+                                    <Route path={appRoutesNames.PROFILE} render={() => <WorkspacePage/>}/>
                                     <Route exact path={`${appRoutesNames.DRAFT_PROTOCOLS}/:protocolId(\\d{1,11})`} render={() => <DraftProtocolPage/>}/>
-                                    <Route exact path={appRoutesNames.SETTINGS} render={() => <SettingsPage/>}/>
                                     <Route exact path="/error"
                                            render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 
