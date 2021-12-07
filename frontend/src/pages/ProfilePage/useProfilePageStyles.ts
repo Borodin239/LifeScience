@@ -27,18 +27,9 @@ export const useProfilePageStyles = makeStyles((theme) => ({
     },
 
     submitButton: {
-        marginTop: theme.spacing(1),
-        height: '50px',
-        textDecoration: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: '22px',
-        color: theme.palette.common.white,
-        border: 'none',
-        backgroundColor: alpha(theme.palette.primary.main, 0.6),
-        borderRadius: '5px',
-        width: "auto",
+        padding: theme.spacing(1, 2, 1, 2),
+        fontSize: '18px',
+        marginRight: theme.spacing(1),
     },
 
     infoRow: {
