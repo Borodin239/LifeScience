@@ -23,14 +23,22 @@ export const SettingsPage = () => {
 
     const dispatch = useAppDispatch()
     const [info, setInfo] = useState<UserDTO>({
-        firstName: userInfo!.personalData.firstName,
-        lastName: userInfo!.personalData.lastName,
-        doctoralDegree: false,
-        academicDegree: userInfo!.personalData.academicDegree,
-        organisations: [{id: 0}],
-        about: "jk",
-        orcid: "klk",
-        researchId: "klklk"
+        // "firstName": userInfo!.personalData.firstName,
+        // "lastName": userInfo!.personalData.lastName,
+        // "doctoralDegree": false,
+        // "academicDegree": userInfo!.personalData.academicDegree,
+        // "organisations": [{id: 0}],
+        // "about": "jk",
+        // "orcid": "1",
+        // "researchId": "2"
+        "firstName": "Evgenii",
+        "lastName": "string",
+        "doctorDegree": true,
+        "academicDegree": "MASTER",
+        "organisations": [],
+        "about": "Update some info",
+        "orcid": "ORCID",
+        "researchId": "ID239"
     })
 
     const onFormSubmit = (event: React.FormEvent) => {
