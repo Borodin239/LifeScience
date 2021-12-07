@@ -4,6 +4,7 @@ import WelcomePanel from "../../components/landing-page/WelcomePanel/WelcomePane
 import InfoPanel from "../../components/landing-page/InfoPanel/InfoPanel";
 
 const HomePage: React.FC = () => {
+
     return (
         <Box>
             <WelcomePanel/>

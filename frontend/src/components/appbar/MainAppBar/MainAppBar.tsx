@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -11,7 +11,10 @@ import MainSearch from "./MainSearch/MainSearch";
 import UnauthorizedProfile from "./profile/UnauthorizedProfile/UnauthorizedProfile";
 import AuthorizedProfilePreview from "./profile/AuthorizedProfilePreview";
 import {updateCurrentUserThunk} from "../../../redux/users/thunkActions";
+import BasicModalWindow from "../../../elements/modal-window/BasicModalWindow/BasicModalWindow";
 
+
+import InfoPanel from "../../../components/landing-page/InfoPanel/InfoPanel";
 
 const MainAppBar: React.FC = () => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -20,6 +23,7 @@ const MainAppBar: React.FC = () => {
     const history = useHistory();
     const dispatch = useAppDispatch();
 
+    const [modalActivate, setModalActivate] = useState(false);
     const isAuthorized = useAppSelector(state => state.authReducer.isAuthorized);
 
     useEffect(() => {
@@ -51,14 +55,28 @@ const MainAppBar: React.FC = () => {
                                 onClick={handleHomeClick}>
                         JetScience
                     </Typography>
-
+                    <BasicModalWindow active={modalActivate} setActive={setModalActivate}>
+                        <InfoPanel/>
+                        <Typography className={classes.homeLink}
+                                    variant="h6"
+                                    noWrap
+                                    onClick={() => setModalActivate(!modalActivate)}>
+                            Close
+                        </Typography>
+                    </BasicModalWindow>
                     <MainSearch/>
 
                     <div className={classes.grow}/>
-
                     {isAuthorized ? <AuthorizedProfilePreview handleProfileMenuOpen={handleProfileMenuOpen}/> :
                         <UnauthorizedProfile/>}
+                    <Typography className={classes.homeLink}
+                                variant="h6"
+                                noWrap
+                                onClick={() => setModalActivate(!modalActivate)}>
+                        About us
+                    </Typography>
                 </Toolbar>
+
             </AppBar>
             <MainAppBarProfileMenu anchorEl={anchorEl} handleMenuClose={handleMenuClose}/>
         </div>

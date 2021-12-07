@@ -20,6 +20,7 @@ import CreateProtocolPage from "../pages/CreateProtocolPage/CreateProtocolPage";
 import DraftProtocolPage from "../pages/DraftProtocolPage/DraftProtocolPage";
 import {EmailConfirmationPage} from "../pages/EmailConfirmationPage/EmailConfirmationPage";
 
+
 function App() {
     // const dispatch = useAppDispatch();
     //
