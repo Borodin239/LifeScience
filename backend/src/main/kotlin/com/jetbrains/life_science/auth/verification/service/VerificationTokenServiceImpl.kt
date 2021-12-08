@@ -31,11 +31,12 @@ class VerificationTokenServiceImpl(
             throw InvalidVerificationTokenException()
         }
         val verificationToken = verificationTokenOptional.get()
-        val credentials = verificationToken.credentials
+        var credentials = verificationToken.credentials
         if (verificationToken.expiryDate.isBefore(LocalDateTime.now(UTCZone))) {
             throw ExpiredVerificationTokenException()
         }
-        credentialsService.validateUser(credentials.id)
+        deleteVerificationToken(credentials)
+        credentials = credentialsService.validateUser(credentials.id)
         return credentials
     }
 
