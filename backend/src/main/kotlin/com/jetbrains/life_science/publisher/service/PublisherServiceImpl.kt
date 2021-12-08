@@ -42,6 +42,9 @@ class PublisherServiceImpl(
         // Publish sections in public entity
         publishSections(publicApproach.sections)
 
+        // Add approach to the category
+        publicApproach.categories.forEach { it.approaches.add(publicApproach) }
+
         return publicApproach
     }
 
@@ -65,14 +68,26 @@ class PublisherServiceImpl(
     @Transactional
     override fun publishApproachEditRecord(approachEditRecord: ApproachEditRecord): PublicApproach {
         val approach = approachEditRecord.approach
-        processEditRecord(approachEditRecord, publicApproachService, approach.sections, approach.id, approachEditRecordService::clear)
+        processEditRecord(
+            approachEditRecord,
+            publicApproachService,
+            approach.sections,
+            approach.id,
+            approachEditRecordService::clear
+        )
         return approach
     }
 
     @Transactional
     override fun publishProtocolEditRecord(protocolEditRecord: ProtocolEditRecord): PublicProtocol {
         val protocol = protocolEditRecord.protocol
-        processEditRecord(protocolEditRecord, publicProtocolService, protocol.sections, protocol.id, protocolEditRecordService::clear)
+        processEditRecord(
+            protocolEditRecord,
+            publicProtocolService,
+            protocol.sections,
+            protocol.id,
+            protocolEditRecordService::clear
+        )
         return protocol
     }
 
