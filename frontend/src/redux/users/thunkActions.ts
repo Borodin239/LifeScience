@@ -5,7 +5,7 @@ import {ApiError} from "../../infrastructure/common/exceptions/ApiError";
 import onThunkError from "../utils/onThunkError";
 import {userApi} from "../../infrastructure/http/api/methods/userApi";
 import {ProtocolTitleView} from "../../infrastructure/http/api/view/protocol/ProtocolTitleView";
-import {UserDTO} from "../../infrastructure/http/api/view/social/user/UserDTO";
+import {UserDTO} from "../../infrastructure/http/api/dto/user/UserDTO";
 
 export enum UserActionThunkTypes {
     UPDATE_CURRENT = "/current",

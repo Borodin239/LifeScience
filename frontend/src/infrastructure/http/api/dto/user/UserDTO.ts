@@ -3,10 +3,7 @@ export type UserDTO = {
     lastName: string,
     doctorDegree: boolean,
     academicDegree: string,
-    organisations:
-        [
-
-        ],
+    organisations: [],
     about: string,
     orcid: string,
     researchId: string

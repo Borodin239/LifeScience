@@ -10,7 +10,7 @@ import appRoutesNames from "../../../../infrastructure/common/appRoutesNames";
 import handleThunkErrorBase from "../../../../redux/utils/handleThunkErrorBase";
 import {updateUserData} from "../../../../redux/users/thunkActions";
 import {useHistory} from "react-router-dom";
-import {UserDTO} from "../../../../infrastructure/http/api/view/social/user/UserDTO";
+import {UserDTO} from "../../../../infrastructure/http/api/dto/user/UserDTO";
 
 export const SettingsPage = () => {
 
@@ -23,22 +23,15 @@ export const SettingsPage = () => {
 
     const dispatch = useAppDispatch()
     const [info, setInfo] = useState<UserDTO>({
-        // "firstName": userInfo!.personalData.firstName,
-        // "lastName": userInfo!.personalData.lastName,
-        // "doctoralDegree": false,
-        // "academicDegree": userInfo!.personalData.academicDegree,
-        // "organisations": [{id: 0}],
-        // "about": "jk",
-        // "orcid": "1",
-        // "researchId": "2"
-        "firstName": "Evgenii",
-        "lastName": "string",
-        "doctorDegree": true,
-        "academicDegree": "MASTER",
-        "organisations": [],
-        "about": "Update some info",
-        "orcid": "ORCID",
-        "researchId": "ID239"
+        firstName: userInfo!.personalData.firstName,
+        lastName: userInfo!.personalData.lastName,
+        // doctorDegree
+        doctorDegree: userInfo!.personalData.doctoralDegree,
+        academicDegree: userInfo!.personalData.academicDegree,
+        organisations: [],
+        about: "TODO",
+        orcid: userInfo!.personalData.orcid,
+        researchId: userInfo!.personalData.researchId
     })
 
     const onFormSubmit = (event: React.FormEvent) => {
@@ -64,13 +57,9 @@ export const SettingsPage = () => {
         setInfo(prevState => (
             {
                 ...prevState,
-                // personalData : {
-                //     ...prevState.personalData,
                 [name]: e
             }
-            // }
         ))
-        // alert(info.personalData.firstName)
     }
 
     return (
@@ -92,6 +81,7 @@ export const SettingsPage = () => {
                 <BaseTextField label="Academic degree"
                                name="Academic degree"
                                defaultValue={userInfo?.personalData.academicDegree}
+                               handleChange={(e) => handleFieldChange(e, "lastName")}
                     // TODO :: handleChange={handleFieldChange}
                 />
 
