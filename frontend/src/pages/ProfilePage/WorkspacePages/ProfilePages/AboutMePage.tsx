@@ -14,6 +14,11 @@ const AboutMePage = () => {
             <Typography variant={'h6'}>
                 About me
             </Typography>
+
+            {/*TODO :: copy-paste*/}
+            {/*TODO :: show only non-void fields*/}
+            {/*TODO :: current styles don't word properly with big texts*/}
+
             <Box className={classes.infoRow}>
                 <UserInfoTitle title={'First name:'}/>
                 <UserInfoText text={userInfo?.personalData.firstName}/>
@@ -23,8 +28,20 @@ const AboutMePage = () => {
                 <UserInfoText text={userInfo?.personalData.lastName}/>
             </Box>
             <Box className={classes.infoRow}>
+                <UserInfoTitle title={'About:'}/>
+                <UserInfoText text={userInfo?.personalData.about}/>
+            </Box>
+            <Box className={classes.infoRow}>
                 <UserInfoTitle title={'Email:'}/>
                 <UserInfoText text={userInfo?.email}/>
+            </Box>
+            <Box className={classes.infoRow}>
+                <UserInfoTitle title={'Doctoral degree:'}/>
+                <UserInfoText text={userInfo!.personalData.doctoralDegree ? "Y" : "N"}/>
+            </Box>
+            <Box className={classes.infoRow}>
+                <UserInfoTitle title={'Academic degree:'}/>
+                <UserInfoText text={userInfo!.personalData.academicDegree}/>
             </Box>
             <Box className={classes.infoRow}>
                 <UserInfoTitle title={'Roles:'}/>
@@ -32,7 +49,8 @@ const AboutMePage = () => {
             </Box>
             <Box className={classes.infoRow}>
                 <UserInfoTitle title={'Organisations:'}/>
-                <UserInfoText text={userInfo ? userInfo.personalData.organisations.join(', ') : ''}/>
+                <UserInfoText text={"To be done..."}/>
+                {/*<UserInfoText text={userInfo ? userInfo.personalData.organisations.join(', ') : ''}/>*/}
             </Box>
             <Box className={classes.infoRow}>
                 <UserInfoTitle title={'Country:'}/>
