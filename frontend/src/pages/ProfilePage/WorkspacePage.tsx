@@ -1,9 +1,8 @@
 import {Divider, Tab, Tabs} from "@material-ui/core";
-import {useAppDispatch, useAppSelector} from "../../redux/hooks";
+import {useAppSelector} from "../../redux/hooks";
 import {Router, useHistory, Link, Switch, Route, useRouteMatch} from "react-router-dom";
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
-import {SyntheticEvent, useEffect, useState} from "react";
-import {updateCurrentUserThunk} from "../../redux/users/thunkActions";
+import {useState} from "react";
 import {PublicationsPage} from "./WorkspacePages/PublicationsPage";
 import {CommunicationsPage} from "./WorkspacePages/CommunicationsPage";
 import {NotificationsPage} from "./WorkspacePages/NotificationsPage";
@@ -15,15 +14,8 @@ const WorkspacePage = () => {
 
     const [value, setValue] = useState(0);
     const history = useHistory()
-    const dispatch = useAppDispatch()
     const {path, url} = useRouteMatch();
     const isAuthorized = useAppSelector(state => state.authReducer.isAuthorized);
-
-    useEffect(() => {
-        if (isAuthorized) {
-            dispatch(updateCurrentUserThunk());
-        }
-    }, [isAuthorized, dispatch, history]);
 
     if (!isAuthorized) {
         history.replace(`${appRoutesNames.SIGN_IN}`)

@@ -15,7 +15,6 @@ const AboutMePage = () => {
                 About me
             </Typography>
 
-            {/*TODO :: copy-paste*/}
             {/*TODO :: show only non-void fields*/}
             {/*TODO :: current styles don't word properly with big texts*/}
 
@@ -37,7 +36,7 @@ const AboutMePage = () => {
             </Box>
             <Box className={classes.infoRow}>
                 <UserInfoTitle title={'Doctoral degree:'}/>
-                <UserInfoText text={userInfo!.personalData.doctoralDegree ? "Y" : "N"}/>
+                <UserInfoText text={userInfo!.personalData.doctorDegree ? "Y" : "N"}/>
             </Box>
             <Box className={classes.infoRow}>
                 <UserInfoTitle title={'Academic degree:'}/>

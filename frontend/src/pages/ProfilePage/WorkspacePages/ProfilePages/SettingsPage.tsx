@@ -1,12 +1,12 @@
 import {
     Box,
     Button,
-    Checkbox,
+    Checkbox, CircularProgress,
     FormControl,
     FormControlLabel,
     FormLabel,
     Radio,
-    RadioGroup
+    RadioGroup, Snackbar
 } from "@material-ui/core";
 import BaseTextField from "../../../../elements/text-fields/BaseTextField";
 import React, {useState} from "react";
@@ -18,6 +18,7 @@ import {updateUserData} from "../../../../redux/users/thunkActions";
 import {useHistory} from "react-router-dom";
 import {UserDTO} from "../../../../infrastructure/http/api/dto/user/UserDTO";
 import TextField from "@material-ui/core/TextField";
+import {Alert} from "@material-ui/lab";
 
 export const SettingsPage = () => {
 
@@ -27,12 +28,13 @@ export const SettingsPage = () => {
     const [, setAlertText] = useState<string | null>(null);
     const history = useHistory()
     const [isChanged, setIsChanged] = useState(false)
+    const [messageOpen, setMessageOpen] = React.useState(false);
 
     const dispatch = useAppDispatch()
     const [info, setInfo] = useState<UserDTO>({
         firstName: userInfo!.personalData.firstName, // ok
         lastName: userInfo!.personalData.lastName, // ok
-        doctorDegree: userInfo!.personalData.doctoralDegree, // doesn't work
+        doctorDegree: userInfo!.personalData.doctorDegree, // doesn't work
         academicDegree: userInfo!.personalData.academicDegree, // ok
         organisations: [], // ok
         about: userInfo!.personalData.about, // ok
@@ -46,8 +48,8 @@ export const SettingsPage = () => {
         dispatch(updateUserData({userDTO: info, userId}))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
-            // .then :: TODO :: setPending
-            // .then :: TODO :: setMessage("updated")
+            .then(() => setMessageOpen(true))
+            .then(() => setIsChanged(false))
             .catch(thunkError => {
                 if (thunkError.name === 'ApiError' && thunkError.description.httpCode === 400) {
                     setAlertText(thunkError.description.message);
@@ -57,39 +59,55 @@ export const SettingsPage = () => {
             })
     }
 
-    const handleFieldChange = (e: any, name: string) => {
-        // TODO :: кнопка должна активироваться только в случае,
-        //  если введенные данные не совпадают с дефолтными
-        setIsChanged(true)
-        setInfo(prevState => (
-            {
-                ...prevState,
-                [name]: e
-            }
-        ))
+    const handleFieldChange = (e: string | boolean, name: keyof UserDTO) => {
+        if (e !== userInfo!.personalData[name]) {
+            setIsChanged(true)
+            setInfo(prevState => (
+                {
+                    ...prevState,
+                    [name]: e
+                }
+            ))
+        } else {
+            setIsChanged(false)
+        }
     }
 
-    const [academicDegreeValue, setAcademicDegreeValue] = React.useState(userInfo?.personalData.academicDegree);
+    const [academicDegreeValue, setAcademicDegreeValue] = useState(userInfo?.personalData.academicDegree);
 
     const handleAcademicDegreeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAcademicDegreeValue((event.target as HTMLInputElement).value);
-        // alert((event.target as HTMLInputElement).value)
-
-        // TODO :: do it differently
-        handleFieldChange((event.target as HTMLInputElement).value, "academicDegree")
+        setAcademicDegreeValue(event.target.value)
+        handleFieldChange(event.target.value, "academicDegree")
     };
 
-    const [hasDoctoralDegree, setHasDoctoralDegree] = React.useState(userInfo!.personalData.doctoralDegree)
+    const [hasDoctoralDegree, setHasDoctoralDegree] = useState(userInfo!.personalData.doctorDegree)
 
     const handleDoctoralDegreeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        alert(event.target.checked)
         setHasDoctoralDegree(event.target.checked);
         handleFieldChange(event.target.checked, "doctorDegree")
     };
 
-    // TODO :: сделать ENUM для name
+    const [loading, setLoading] = useState(false);
+    const [, setSuccess] = useState(false);
+    const timer = React.useRef<number>();
 
-    // TODO :: add pending (кружочек с ожиданием)
+    React.useEffect(() => {
+        return () => {
+            clearTimeout(timer.current);
+        };
+    }, []);
+
+    const handleButtonClick = () => {
+        if (!loading) {
+            setSuccess(false);
+            setLoading(true);
+            timer.current = window.setTimeout(() => {
+                setSuccess(true);
+                setLoading(false);
+            }, 500);
+        }
+    };
+
     return (
         <form onSubmit={onFormSubmit} noValidate>
             <Box>
@@ -112,7 +130,6 @@ export const SettingsPage = () => {
                                handleChange={(e) => handleFieldChange(e, "about")}
                 />
 
-                {/*TODO :: избавиться от копипасты, посмотреть, можно ли по-другому сделать handleChange*/}
                 <Box p={2}>
                     <FormControl component="fieldset">
                         <FormLabel component="legend">Academic degree:</FormLabel>
@@ -130,7 +147,7 @@ export const SettingsPage = () => {
                 <FormControlLabel
                     control={
                         <Checkbox
-                            checked={userInfo!.personalData.doctoralDegree}
+                            checked={hasDoctoralDegree}
                             onChange={handleDoctoralDegreeChange}
                             name="doctoralDegree"
                             color="primary"
@@ -150,14 +167,23 @@ export const SettingsPage = () => {
                     disabled={true}
                 />
 
-                <Button color="primary"
-                        type="submit"
-                        variant="outlined"
-                        className={classes.submitButton}
-                        disabled={!isChanged}>
-                    Save changes
+                <Button
+                    variant="outlined"
+                    onSubmit={handleButtonClick} // ? works onClick, doesn't work onSubmit
+                    type="submit"
+                    color="primary"
+                    className={classes.submitButton}
+                    disabled={!isChanged || loading}
+                >
+                    {loading && <CircularProgress size={24}/>} Save changes
                 </Button>
             </Box>
+
+            <Snackbar open={messageOpen} autoHideDuration={6000} onClose={() => setMessageOpen(false)}>
+                <Alert onClose={() => setMessageOpen(false)} severity="success">
+                    Success!
+                </Alert>
+            </Snackbar>
         </form>
     )
 }

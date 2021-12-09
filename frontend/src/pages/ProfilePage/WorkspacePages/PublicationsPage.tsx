@@ -54,7 +54,7 @@ export const PublicationsPage = () => {
                     ))
                 }
             </List>
-            {/*TODO::button "Create new"*/}
+            {/*TODO :: button "Create new"*/}
         </Box>
     )
 }

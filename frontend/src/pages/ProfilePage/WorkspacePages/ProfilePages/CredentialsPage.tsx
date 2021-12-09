@@ -1,7 +1,6 @@
 import {Box, Button, Typography} from "@material-ui/core";
 import BaseTextField from "../../../../elements/text-fields/BaseTextField";
 import React, {useState} from "react";
-import SubmitButton from "../../../../elements/buttons/SubmitButton";
 import {useProfilePageStyles} from "../../useProfilePageStyles";
 import {useAppSelector} from "../../../../redux/hooks";
 
@@ -16,9 +15,6 @@ export const CredentialsPage = () => {
     }
 
     const handleFieldChange = (e: any) => {
-        // setProtocolName(e.target.value)
-        // TODO :: кнопка должна активироваться только в случае,
-        //  если введенные данные не совпадают с дефолтными
         setIsChanged(true)
     }
 
@@ -28,13 +24,16 @@ export const CredentialsPage = () => {
                 Credentials
             </Typography>
             <Box>
+                <div>
+                    Attention! This page isn't ready yet.
+                </div>
                 <BaseTextField label="Email"
                                name="Email"
                                defaultValue={userInfo?.email}
                                handleChange={handleFieldChange}
                 />
 
-                {/*TODO*/}
+                {/*TODO :: default value*/}
                 <BaseTextField label="Password"
                                name="Password"
                                defaultValue="*****"
