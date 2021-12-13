@@ -4,7 +4,8 @@ import React from "react";
 type BaseTextFieldProps = {
     name: string,
     label: string,
-    handleChange: (newValue: string) => void
+    handleChange?: (newValue: string) => void,
+    defaultValue?: string
 }
 
 const BaseTextField: React.FC<BaseTextFieldProps> = (props) => {
@@ -12,12 +13,11 @@ const BaseTextField: React.FC<BaseTextFieldProps> = (props) => {
         <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             label={props.label}
             name={props.name}
-            // autoComplete="email"
-            onChange={(event) => props.handleChange(event.target.value)}
+            defaultValue={props.defaultValue}
+            onChange={(event) => props.handleChange ? props.handleChange(event.target.value) : {}}
         />
     )
 

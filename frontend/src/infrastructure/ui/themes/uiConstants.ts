@@ -2,7 +2,7 @@ import gfm from "remark-gfm";
 import footnotes from "remark-footnotes";
 
 const uiConstants = {
-    width: '1100px',
+    width: '90%',
     grey: "rgb(80, 80, 80)",
     markdownPlugins: [gfm, footnotes]
 }

@@ -1,6 +1,6 @@
 import {UserInfoView} from "../../infrastructure/http/api/view/social/user/UserInfoView";
 import {createSlice} from "@reduxjs/toolkit";
-import {updateCurrentUserThunk, USER_ACTION_TYPE_PREFIX} from "./thunkActions";
+import {updateCurrentUserThunk, updateUserData, USER_ACTION_TYPE_PREFIX} from "./thunkActions";
 import {loggedOut} from "../auth/slice";
 
 const initState: { userInfo: UserInfoView | null } = {
@@ -19,6 +19,9 @@ const usersSlice = createSlice({
             .addCase(loggedOut, (state) => {
                 state.userInfo = null;
             })
+            .addCase(updateUserData.fulfilled, ((state, action) => {
+                state.userInfo = action.payload
+            }))
     }
 })
 
