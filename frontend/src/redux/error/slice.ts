@@ -14,7 +14,6 @@ const errorSlice = createSlice({
     initialState: initState,
     reducers: {
         setError(state, action: PayloadAction<AppErrorDescription>) {
-            console.log("asdasdas")
             state.errorOccurred = action.payload;
         },
         hideError(state) {

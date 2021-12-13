@@ -11,7 +11,7 @@ export const CredentialsPage = () => {
     const [isChanged, setIsChanged] = useState(false)
 
     const handleSubmit = () => {
-        // TODO
+        // TODO :: send a request to the backend
     }
 
     const handleFieldChange = (e: any) => {

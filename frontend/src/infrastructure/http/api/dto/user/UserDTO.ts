@@ -5,6 +5,7 @@ export type UserDTO = {
     academicDegree: string,
     organisations: [],
     about: string,
+    // Open Researcher and Contributor ID
     orcid: string,
     researchId: string
 };

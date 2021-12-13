@@ -16,7 +16,7 @@ const AboutMePage = () => {
             </Typography>
 
             {/*TODO :: show only non-void fields*/}
-            {/*TODO :: current styles don't word properly with big texts*/}
+            {/*TODO :: current styles don't work properly with big texts*/}
 
             <Box className={classes.infoRow}>
                 <UserInfoTitle title={'First name:'}/>
