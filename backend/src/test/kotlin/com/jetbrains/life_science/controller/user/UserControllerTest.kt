@@ -308,7 +308,7 @@ internal class UserControllerTest : ApiTest() {
     fun `update user data without enough rights`() {
         // Prepare data & action
         val userDto = UserPersonalDataDTO(
-            true, "BACHELOR", listOf(),
+            "Evgenii", "Ivanov", true, "BACHELOR", listOf(),
             "Some interesting info", null, null
         )
         val userId = 2L
@@ -335,11 +335,11 @@ internal class UserControllerTest : ApiTest() {
         assertNotNull(credentials.userPersonalData)
 
         // Prepare data
+        val userData = credentials.userPersonalData!!
         val userDto = UserPersonalDataDTO(
-            true, "BACHELOR", listOf(),
+            userData.firstName, userData.lastName, true, "BACHELOR", listOf(),
             "Some interesting info", null, null
         )
-        val userData = credentials.userPersonalData!!
         val expectedView = UserFullView(
             id = credentials.id,
             email = credentials.email,
@@ -379,7 +379,7 @@ internal class UserControllerTest : ApiTest() {
         val userId = 1L
         val accessToken = loginAccessToken("email@email.ru", "password")
         val userDto = UserPersonalDataDTO(
-            true, "BACHELOR239", listOf(),
+            "Evgenii", "Ivanov", true, "BACHELOR239", listOf(),
             "Some interesting info", null, null
         )
 

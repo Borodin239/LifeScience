@@ -13,6 +13,7 @@ import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
 import {patchEmailConfirmationThunk, signInThunk} from "../../../redux/auth/thunkActions";
 import FormSubmitLoader from "../../../elements/Loaders/CenteredLoader";
 import handleThunkErrorBase from "../../../redux/utils/handleThunkErrorBase";
+import apiConstants from "../../../infrastructure/http/api/apiConstants";
 
 
 export const SignInForm: React.FC = () => {
@@ -55,10 +56,11 @@ export const SignInForm: React.FC = () => {
             .catch(thunkError => {
                 setIsPending(false);
 
-                if (thunkError.name === 'ApiError' && (thunkError.description.httpCode === 400 || thunkError.description.systemCode === 401005
-                    || thunkError.description.systemCode === 401006
+                if (thunkError.name === 'ApiError' && (thunkError.description.httpCode === 400
+                    || thunkError.description.systemCode === apiConstants.errors.WRONG_CREDENTIALS
+                    || thunkError.description.systemCode === apiConstants.errors.UNCHECKED_EMAIL
                 )) {
-                    if (thunkError.description.systemCode === 401006) {
+                    if (thunkError.description.systemCode === apiConstants.errors.UNCHECKED_EMAIL) {
                         setIsEmailConfirmationRequired(true);
                     } else {
                         setIsEmailConfirmationRequired(false);

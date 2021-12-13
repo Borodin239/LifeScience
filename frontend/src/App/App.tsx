@@ -17,8 +17,9 @@ import './App.css'
 import ProtocolPage from "../pages/ProtocolPage/ProtocolPage";
 import CreateProtocolPage from "../pages/CreateProtocolPage/CreateProtocolPage";
 import DraftProtocolPage from "../pages/DraftProtocolPage/DraftProtocolPage";
-import {EmailConfirmationPage} from "../pages/EmailConfirmationPage/EmailConfirmationPage";
 import WorkspacePage from "../pages/ProfilePage/WorkspacePage";
+import {EmailConfirmationPage} from "../pages/messagePages/EmailConfirmationPage";
+import {TokenValidationPage} from "../pages/messagePages/TokenValidationPage";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -56,11 +57,18 @@ function App() {
                                            render={() => <CategoryPage/>}/>
                                     <Route exact path={`${appRoutesNames.CREATE_PROTOCOL}/:approachId(\\d{1,11})/:sourceProtocolId(\\d{1,11})?`}
                                            render={() => <CreateProtocolPage/>}/>
-                                    <Route exact path={appRoutesNames.SIGN_IN} render={() => <SignInForm/>}/>
-                                    <Route exact path={appRoutesNames.SIGN_UP} render={() => <SignUpForm/>}/>
-                                    <Route exact path={appRoutesNames.SEARCH} render={() => <SearchPage/>}/>
-                                    <Route path={appRoutesNames.PROFILE} render={() => <WorkspacePage/>}/>
-                                    <Route exact path={`${appRoutesNames.DRAFT_PROTOCOLS}/:protocolId(\\d{1,11})`} render={() => <DraftProtocolPage/>}/>
+                                    <Route exact path={appRoutesNames.SIGN_IN}
+                                           render={() => <SignInForm/>}/>
+                                    <Route exact path={appRoutesNames.SIGN_UP}
+                                           render={() => <SignUpForm/>}/>
+                                    <Route exact path={appRoutesNames.SEARCH}
+                                           render={() => <SearchPage/>}/>
+                                    <Route path={appRoutesNames.PROFILE}
+                                           render={() => <WorkspacePage/>}/>
+                                    <Route exact path={`${appRoutesNames.DRAFT_PROTOCOLS}/:protocolId(\\d{1,11})`}
+                                           render={() => <DraftProtocolPage/>}/>
+                                    <Route exact path={`${appRoutesNames.TOKEN_VALIDATION}/:token`}
+                                           render={() => <TokenValidationPage/>}/>
                                     <Route exact path="/error"
                                            render={() => <ErrorPage errorCode="400" message="ErrorPage"/>}/>
 

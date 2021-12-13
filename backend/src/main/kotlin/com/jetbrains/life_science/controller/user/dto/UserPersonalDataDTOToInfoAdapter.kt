@@ -8,6 +8,10 @@ class UserPersonalDataDTOToInfoAdapter(
     dto: UserPersonalDataDTO
 ) : UserPersonalDataInfo {
 
+    override val firstName = dto.firstName
+
+    override val lastName = dto.lastName
+
     private val academicDegreeMap: Map<String, AcademicDegree> = AcademicDegree.values().associateBy { it.name }
 
     override val doctorDegree = dto.doctorDegree

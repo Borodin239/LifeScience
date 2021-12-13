@@ -91,7 +91,7 @@ class UserController(
         return approachViewMapper.toViewsShort(draftApproach)
     }
 
-    @Operation(summary = "Returns full information about user of interest")
+    @Operation(summary = "Updates user personal data")
     @PatchMapping("/{userId}/data")
     fun updatePersonalData(
         @PathVariable userId: Long,
