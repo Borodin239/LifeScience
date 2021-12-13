@@ -11,10 +11,10 @@ class WebConfig : WebMvcConfigurer {
         registry.addViewController("/{x:[\\w\\-]+}")
             .setViewName("forward:/")
 
-        registry.addViewController("/{x:^(?!api$).*$}/**/{y:[\\w\\-]+}")
+        registry.addViewController("/{x:^(?!api$).*$}/*/{y:[\\w\\-]+}")
             .setViewName("forward:/")
 
-        registry.addViewController("/{x:^(?!swagger-ui$).*$}/**/{y:[\\w\\-]+}")
+        registry.addViewController("/{x:^(?!swagger-ui$).*$}/*/{y:[\\w\\-]+}")
             .setViewName("forward:/")
     }
 }
