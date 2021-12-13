@@ -6,15 +6,15 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name = "verification_tokens")
+@Table(name = "verification_token")
 class VerificationToken(
     @Id
     @GeneratedValue(
         strategy = GenerationType.SEQUENCE,
-        generator = "credentials_seq"
+        generator = "verification_token_seq"
     )
     @SequenceGenerator(
-        name = "credentials_seq",
+        name = "verification_token_seq",
         allocationSize = 1
     )
     val id: Long,

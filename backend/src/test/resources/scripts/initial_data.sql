@@ -16,6 +16,8 @@ values (1, 'Alex', 'R', 1, 1);
 insert into users (id, first_name, last_name)
 values (2, 'Ben', 'S');
 insert into users (id, first_name, last_name)
+values (3, 'Ann', 'T');
+insert into users (id, first_name, last_name)
 values (4, 'Regular', 'RS');
 alter sequence user_personal_data_seq restart with 5;
 
@@ -27,10 +29,10 @@ insert into credentials (id, email, password, user_personal_data_id, enabled)
 values (2, 'admin@gmail.ru', '$2a$10$qL3JuO4sEC7h9bw1Me9Kn.cnJGmK5dp68MI3B0ynKrJXvDy/iRG86', 2, true);
 -- login=simple@gmail.ru, password=user123, role = user
 insert into credentials (id, email, password, user_personal_data_id, enabled)
-values (3, 'simple@gmail.ru', '$2a$10$deGk.zxpc23BWE7Upb89IOG1eELe3cK0RIA0h91aB/wjLFOkE/a8.', null, true);
--- login=regular@gmail.ru, password=user123, role = user
+values (3, 'simple@gmail.ru', '$2a$10$deGk.zxpc23BWE7Upb89IOG1eELe3cK0RIA0h91aB/wjLFOkE/a8.', 3, true);
+-- login=inactive@gmail.ru, password=user123, role = user
 insert into credentials (id, email, password, user_personal_data_id, enabled)
-values (4, 'regular@gmail.ru', '$2a$10$deGk.zxpc23BWE7Upb89IOG1eELe3cK0RIA0h91aB/wjLFOkE/a8.', 4, true);
+values (4, 'inactive@gmail.ru', '$2a$10$deGk.zxpc23BWE7Upb89IOG1eELe3cK0RIA0h91aB/wjLFOkE/a8.', 4, false);
 -- nextId = 4
 alter sequence credentials_seq restart with 5;
 
@@ -40,6 +42,8 @@ insert into users_roles (user_id, role_id)
 values (2, 2);
 insert into users_roles (user_id, role_id)
 values (3, 1);
+insert into users_roles (user_id, role_id)
+values (4, 1);
 
 insert into category (id, creation_date, name)
 values (1, parsedatetime('17-09-2020 00:00:00.00', 'dd-MM-yyyy hh:mm:ss.SS'), 'catalog 1');

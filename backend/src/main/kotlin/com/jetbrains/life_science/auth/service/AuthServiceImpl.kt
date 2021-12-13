@@ -3,6 +3,7 @@ package com.jetbrains.life_science.auth.service
 import com.jetbrains.life_science.auth.jwt.JWTService
 import com.jetbrains.life_science.auth.refresh.entity.RefreshTokenCode
 import com.jetbrains.life_science.auth.refresh.service.RefreshTokenService
+import com.jetbrains.life_science.exception.auth.DisabledAccountException
 import com.jetbrains.life_science.exception.auth.InvalidCredentialsException
 import com.jetbrains.life_science.user.credentials.entity.Credentials
 import com.jetbrains.life_science.user.credentials.service.CredentialsService
@@ -52,7 +53,7 @@ class AuthServiceImpl(
         } catch (exception: Exception) {
             logger.info("Bad credentials", exception)
             if (exception is DisabledException) {
-                throw exception
+                throw DisabledAccountException(authInfo.email)
             } else {
                 throw InvalidCredentialsException()
             }

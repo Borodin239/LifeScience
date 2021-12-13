@@ -7,10 +7,13 @@ import {loggedIn} from "./slice";
 import {AppDispatch} from "../store/store";
 import {ApiError} from "../../infrastructure/common/exceptions/ApiError";
 import onThunkError from "../utils/onThunkError";
+import {SECTION_ACTION_TYPE_PREFIX} from "../section/thunkActions";
 
 export enum AuthActionThunkTypes {
     SIGN_IN = "/signIn",
-    SIGN_UP = "/signUp"
+    SIGN_UP = "/signUp",
+    RESEND_EMAIL = "/confirmation/resend",
+    VALIDATE_TOKEN = "/confirmation"
 }
 
 // prefix
@@ -50,10 +53,43 @@ export const signUpThunk = createAsyncThunk<
     `${AUTH_ACTION_TYPE_PREFIX}${AuthActionThunkTypes.SIGN_UP}`,
     async (dto: SignUpDto, thunkAPI) => {
         try {
-            const response = await authApi.signUp(dto);
-            thunkAPI.dispatch(loggedIn(response.data.accessToken));
+            await authApi.signUp(dto);
+            // thunkAPI.dispatch(loggedIn(response.data.accessToken));
         } catch (err) {
             return onThunkError(err, thunkAPI);
         }
     }
 )
+export const patchEmailConfirmationThunk = createAsyncThunk<
+    any,
+    SignInDto["email"],
+    {
+        rejectValue: ApiError
+    }>(
+    `${SECTION_ACTION_TYPE_PREFIX}${AuthActionThunkTypes.RESEND_EMAIL}`,
+    async (email, thunkAPI) => {
+        try {
+            await authApi.resend(email);
+        } catch (err) {
+            return onThunkError(err, thunkAPI);
+        }
+    }
+)
+
+export const patchTokenValidationThunk = createAsyncThunk<
+    void,
+    string,
+    {
+        rejectValue: ApiError
+    }>(
+    `${SECTION_ACTION_TYPE_PREFIX}${AuthActionThunkTypes.VALIDATE_TOKEN}`,
+    async (token, thunkAPI) => {
+        try {
+            return await authApi.validate_token(token);
+        } catch (err) {
+            return onThunkError(err, thunkAPI);
+        }
+    }
+)
+
+

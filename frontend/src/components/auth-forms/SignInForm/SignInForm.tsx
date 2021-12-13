@@ -10,9 +10,10 @@ import SubmitButton from "../../../elements/buttons/SubmitButton";
 import FormTitle from "../../../elements/typographies/FormTitle";
 import {useAppDispatch} from "../../../redux/hooks";
 import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
-import {signInThunk} from "../../../redux/auth/thunkActions";
+import {patchEmailConfirmationThunk, signInThunk} from "../../../redux/auth/thunkActions";
 import FormSubmitLoader from "../../../elements/Loaders/CenteredLoader";
 import handleThunkErrorBase from "../../../redux/utils/handleThunkErrorBase";
+import apiConstants from "../../../infrastructure/http/api/apiConstants";
 
 
 export const SignInForm: React.FC = () => {
@@ -26,9 +27,20 @@ export const SignInForm: React.FC = () => {
 
     const [isPending, setIsPending] = useState(false);
     const [alertText, setAlertText] = useState<string | null>(null);
+    const [isEmailConfirmationRequired, setIsEmailConfirmationRequired] = useState<boolean>(false);
 
     const handleSignUpClick = () => {
         history.replace(appRoutesNames.SIGN_UP);
+    }
+
+    const handleSendEmailClick = (event: React.FormEvent) => {
+        event.preventDefault();
+        dispatch(patchEmailConfirmationThunk(email))
+            .unwrap()
+            .then(() => history.push(appRoutesNames.EMAIL_CONFIRMATION))
+            .catch(thunkError => {
+                    handleThunkErrorBase(thunkError, history, dispatch);
+            })
     }
 
     const onFormSubmit = (event: React.FormEvent) => {
@@ -44,14 +56,22 @@ export const SignInForm: React.FC = () => {
             .catch(thunkError => {
                 setIsPending(false);
 
-                if (thunkError.name === 'ApiError' && (thunkError.description.httpCode === 400 || thunkError.description.systemCode === 401005)) {
+                if (thunkError.name === 'ApiError' && (thunkError.description.httpCode === 400
+                    || thunkError.description.systemCode === apiConstants.errors.WRONG_CREDENTIALS
+                    || thunkError.description.systemCode === apiConstants.errors.UNCHECKED_EMAIL
+                )) {
+                    if (thunkError.description.systemCode === apiConstants.errors.UNCHECKED_EMAIL) {
+                        setIsEmailConfirmationRequired(true);
+                    } else {
+                        setIsEmailConfirmationRequired(false);
+                    }
                     setAlertText(thunkError.description.message);
                 } else {
                     handleThunkErrorBase(thunkError, history, dispatch);
                 }
             })
         // || err.description.systemCode === 401005
-        // тк редирект тут без finaally, потому что компонент уже unmounted
+        // тк редирект тут без finally, потому что компонент уже unmounted
         // .finally(() => setIsPending(false));
     }
 
@@ -67,6 +87,9 @@ export const SignInForm: React.FC = () => {
                     {alertText}
                 </Alert>}
             </form>
+            {isEmailConfirmationRequired && <Typography onClick={handleSendEmailClick} className={classes.redirect}>
+                {"Didn't get your email? Resend verification link"}
+            </Typography>}
             {!isPending && <Typography onClick={handleSignUpClick} className={classes.redirect}>
                 {"Don't have an account? Sign Up"}
             </Typography>}

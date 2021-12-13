@@ -1,6 +1,7 @@
 package com.jetbrains.life_science.replicator.deserializer.credentials
 
 import com.jetbrains.life_science.auth.refresh.repository.RefreshTokenRepository
+import com.jetbrains.life_science.auth.verification.repository.VerificationTokenRepository
 import com.jetbrains.life_science.replicator.enities.CredentialsStorageEntity
 import com.jetbrains.life_science.user.credentials.entity.Credentials
 import com.jetbrains.life_science.user.credentials.factory.CredentialsFactory
@@ -18,7 +19,8 @@ class CredentialsReplicator(
     private val credentialsRepository: CredentialsRepository,
     private val credentialsService: CredentialsService,
     private val credentialsFactory: CredentialsFactory,
-    private val entityManager: EntityManager
+    private val entityManager: EntityManager,
+    private val verificationTokenRepository: VerificationTokenRepository
 ) {
 
     lateinit var admin: Credentials
@@ -30,6 +32,7 @@ class CredentialsReplicator(
                 "alter sequence user_personal_data_seq restart with 1;\n"
         )
             .executeUpdate()
+        verificationTokenRepository.deleteAll()
         refreshTokenRepository.deleteAll()
         credentialsRepository.deleteAll()
     }

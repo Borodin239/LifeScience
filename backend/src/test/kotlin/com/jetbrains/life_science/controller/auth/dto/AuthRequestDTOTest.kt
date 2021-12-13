@@ -1,7 +1,7 @@
 package com.jetbrains.life_science.controller.auth.dto
 
-import com.jetbrains.life_science.util.emailRegexLite
-import com.jetbrains.life_science.util.passwordRegex
+import com.jetbrains.life_science.util.emailRegexpLite
+import com.jetbrains.life_science.util.passwordRegexp
 import com.jetbrains.life_science.util.regex.assertMatches
 import com.jetbrains.life_science.util.regex.assertNotMatches
 import org.junit.jupiter.api.Test
@@ -10,7 +10,7 @@ internal class AuthRequestDTOTest {
 
     @Test
     fun `test password regex validation`() {
-        val regex = passwordRegex.toRegex()
+        val regex = passwordRegexp.toRegex()
         checkPasswordMatches(regex)
         checkPasswordNotMatches(regex)
     }
@@ -40,7 +40,7 @@ internal class AuthRequestDTOTest {
 
     @Test
     fun `test lite email regex validation`() {
-        val regex = emailRegexLite.toRegex()
+        val regex = emailRegexpLite.toRegex()
         regex.assertNotMatches(
             "abc",
             "abc@",

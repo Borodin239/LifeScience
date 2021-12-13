@@ -5,7 +5,7 @@ val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions.useIR = true
 
 plugins {
-    id("org.springframework.boot") version "2.4.11"
+    id("org.springframework.boot") version "2.6.1"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
     kotlin("jvm") version "1.4.31"
@@ -18,6 +18,8 @@ plugins {
 group = "com.jetbrains"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
+// Log4J2 Vulnerability fix
+extra["log4j2.version"] = "2.15.0"
 
 repositories {
     mavenCentral()
@@ -26,32 +28,32 @@ repositories {
 dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.5")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
     implementation("io.jsonwebtoken:jjwt-api:0.11.2")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.5")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
 
-    implementation("org.junit.jupiter:junit-jupiter:5.8.0")
+    implementation("org.junit.jupiter:junit-jupiter:5.8.2")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test:5.5.1")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
+    testImplementation("org.subethamail:subethasmtp:3.1.7")
+    testImplementation("com.h2database:h2:2.0.202")
 
-    testImplementation("com.h2database:h2:1.4.200")
-
-    implementation("org.springdoc:springdoc-openapi-webmvc-core:1.5.10")
-    implementation("org.springdoc:springdoc-openapi-ui:1.5.10")
+    implementation("org.springdoc:springdoc-openapi-webmvc-core:1.5.12")
+    implementation("org.springdoc:springdoc-openapi-ui:1.5.12")
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation(group = "org.springframework.data", name = "spring-data-elasticsearch", version = "4.1.7")
+    implementation(group = "org.springframework.data", name = "spring-data-elasticsearch", version = "4.3.0")
 
     implementation(group = "org.springframework.boot", name = "spring-boot-starter-validation")
     implementation(group = "org.postgresql", name = "postgresql")

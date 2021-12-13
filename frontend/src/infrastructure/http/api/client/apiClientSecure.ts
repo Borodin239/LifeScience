@@ -3,6 +3,7 @@ import {authApi} from "../methods/authApi";
 import transformAxiosError from "../utils/transformAxiosError";
 import {developmentLog} from "../../../common/developmentLog";
 import {getAccessToken, setAccessToken} from "../utils/tokenUtils";
+import apiConstants from "../apiConstants";
 
 const apiClientSecure = axios.create({
     withCredentials: true,
@@ -18,7 +19,8 @@ apiClientSecure.interceptors.response.use((config) => {
         return config
     }, async (error) => {
         const originalRequest = error.config;
-        if (error.response && [401003, 401004].includes(error.response.data?.systemCode)) {
+        if (error.response && [apiConstants.errors.INVALID_ACCESS_TOKEN,
+            apiConstants.errors.EXPIRED_ACCESS_TOKEN].includes(error.response.data?.systemCode)) {
             try {
                 developmentLog("Potential auth error, trying to refresh... ");
                 const response = await authApi.refresh();

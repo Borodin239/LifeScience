@@ -13,6 +13,7 @@ import com.jetbrains.life_science.section.service.SectionService
 import com.jetbrains.life_science.user.credentials.entity.Credentials
 import com.jetbrains.life_science.user.credentials.service.CredentialsService
 import com.jetbrains.life_science.user.data.service.UserPersonalDataService
+import io.swagger.v3.oas.annotations.Operation
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -33,6 +34,7 @@ class DraftApproachController(
     val sectionService: SectionService
 ) {
 
+    @Operation(summary = "Returns DraftApproach of interest")
     @GetMapping("/{approachId}")
     fun getApproach(
         @PathVariable approachId: Long,
@@ -46,6 +48,7 @@ class DraftApproachController(
         )
     }
 
+    @Operation(summary = "Creates new DraftApproach")
     @PostMapping
     fun create(
         @RequestBody dto: DraftApproachDTO,
@@ -60,6 +63,7 @@ class DraftApproachController(
         )
     }
 
+    @Operation(summary = "Deletes an existing DraftApproach")
     @DeleteMapping("/{approachId}")
     fun delete(
         @PathVariable approachId: Long,
@@ -74,6 +78,7 @@ class DraftApproachController(
         draftApproachService.delete(approachId)
     }
 
+    @Operation(summary = "Adds new participant to an existing DraftApproach")
     @PostMapping("/{approachId}/participants")
     fun addParticipant(
         @PathVariable approachId: Long,
@@ -86,6 +91,7 @@ class DraftApproachController(
         draftApproachService.addParticipant(approach.id, userCredentials)
     }
 
+    @Operation(summary = "Deletes an existing participant from the existing DraftApproach")
     @DeleteMapping("/{approachId}/participants/{participantId}")
     fun deleteParticipant(
         @PathVariable approachId: Long,

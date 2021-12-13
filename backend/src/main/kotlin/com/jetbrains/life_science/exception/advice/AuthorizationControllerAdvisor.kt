@@ -1,16 +1,11 @@
 package com.jetbrains.life_science.exception.advice
 
-import com.jetbrains.life_science.exception.auth.ExpiredAccessTokenException
-import com.jetbrains.life_science.exception.auth.ExpiredRefreshTokenException
-import com.jetbrains.life_science.exception.auth.InvalidAccessTokenException
-import com.jetbrains.life_science.exception.auth.InvalidCredentialsException
-import com.jetbrains.life_science.exception.auth.InvalidRefreshTokenException
+import com.jetbrains.life_science.exception.auth.*
 import com.jetbrains.life_science.exception.handler.ApiExceptionView
 import com.jetbrains.life_science.exception.maker.makeExceptionView
 import com.jetbrains.life_science.exception.request.UserAlreadyExistsException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.security.authentication.DisabledException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
@@ -65,10 +60,26 @@ class AuthorizationControllerAdvisor {
         )
     }
 
-    @ExceptionHandler(DisabledException::class)
-    fun handleDisabledException(exception: DisabledException): ResponseEntity<ApiExceptionView> {
+    @ExceptionHandler(DisabledAccountException::class)
+    fun handleDisabledException(exception: DisabledAccountException): ResponseEntity<ApiExceptionView> {
         return ResponseEntity(
-            makeExceptionView(401_006),
+            makeExceptionView(401_006, exception.email),
+            HttpStatus.UNAUTHORIZED
+        )
+    }
+
+    @ExceptionHandler(InvalidVerificationTokenException::class)
+    fun handleInvalidVerificationTokenException(exception: InvalidVerificationTokenException): ResponseEntity<ApiExceptionView> {
+        return ResponseEntity(
+            makeExceptionView(401_007),
+            HttpStatus.UNAUTHORIZED
+        )
+    }
+
+    @ExceptionHandler(ExpiredVerificationTokenException::class)
+    fun handleExpiredVerificationTokenException(exception: ExpiredVerificationTokenException): ResponseEntity<ApiExceptionView> {
+        return ResponseEntity(
+            makeExceptionView(401_008),
             HttpStatus.UNAUTHORIZED
         )
     }

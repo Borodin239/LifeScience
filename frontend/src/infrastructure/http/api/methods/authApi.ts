@@ -12,5 +12,11 @@ export const authApi = {
     },
     refresh() {
         return apiClientDefault.patch(apiConstants.routes.auth.REFRESH);
+    },
+    resend(email: string) {
+        return apiClientDefault.patch(apiConstants.routes.auth.RESEND, {email});
+    },
+    validate_token(token: string) {
+        return apiClientDefault.patch(`${apiConstants.routes.auth.VALIDATE_TOKEN}/${token}`);
     }
 }
