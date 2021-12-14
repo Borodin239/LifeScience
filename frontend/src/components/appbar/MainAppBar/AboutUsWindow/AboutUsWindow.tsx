@@ -13,11 +13,11 @@ import Slide from '@material-ui/core/Slide';
 import {TransitionProps} from "@material-ui/core/transitions";
 
 const Transition = React.forwardRef(function Transition(props: TransitionProps, ref: React.Ref<unknown>) {
-    return <Slide direction="down" timeout={{ appear: 500, enter: 300, exit: 500 }} ref={ref} {...props}/>;
+    return <Slide direction="down" timeout={{appear: 500, enter: 300, exit: 500}} ref={ref} {...props}/>;
 });
 
 const SimpleDialog: React.FC<propTypes> = (props) => {
-
+    const classes = useAboutUsWindowStyles();
     const {onClose, open} = props;
     const handleClose = () => {
         onClose();
@@ -31,22 +31,32 @@ const SimpleDialog: React.FC<propTypes> = (props) => {
             disableBackdropClick={true}
             TransitionComponent={Transition}>
             <DialogTitle>
-                <Box display="flex" alignItems="right">
+                <Box display="flex">
                     <Box flexGrow={1}/>
-                    <IconButton onClick={onClose} edge={"end"}>
+                    <IconButton onClick={onClose}>
                         <CloseIcon/>
                     </IconButton>
                 </Box>
             </DialogTitle>
             <AboutUsPanel/>
+            <Box display="flex">
+                <Box flexGrow={0.5}/>
+                <Button className={classes.closeButton} onClick={onClose}>
+                    Close
+                </Button>
+            </Box>
         </Dialog>
     );
 }
 
-type propTypes = {
-    open: boolean,
-    onClose: () => void
-};
+type propTypes =
+    {
+        open: boolean,
+        onClose
+            :
+            () => void
+    }
+    ;
 
 const AboutUsWindow: React.FC = () => {
 
