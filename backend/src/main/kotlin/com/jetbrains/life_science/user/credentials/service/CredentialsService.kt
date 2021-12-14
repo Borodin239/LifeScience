@@ -50,9 +50,9 @@ class CredentialsService(
         }
     }
 
-    fun validateUser(id: Long) {
+    fun validateUser(id: Long): Credentials {
         val credentials = getById(id)
         credentials.enabled = true
-        credentialsRepository.save(credentials)
+        return credentialsRepository.save(credentials)
     }
 }

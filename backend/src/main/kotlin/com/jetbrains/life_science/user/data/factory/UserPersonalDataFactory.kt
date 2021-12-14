@@ -49,6 +49,8 @@ class UserPersonalDataFactory(
         organisations: List<Organisation>,
         userPersonalData: UserPersonalData
     ): UserPersonalData {
+        userPersonalData.firstName = updateInfo.firstName
+        userPersonalData.lastName = updateInfo.lastName
         userPersonalData.academicDegree = updateInfo.academicDegree
         userPersonalData.doctorDegree = updateInfo.doctorDegree
         userPersonalData.orcid = updateInfo.orcid

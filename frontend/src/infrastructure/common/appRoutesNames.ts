@@ -10,7 +10,8 @@ const appRoutesNames = {
     PROFILE: '/profile',
     CREATE_PROTOCOL: '/create-protocol',
     DRAFT_PROTOCOLS: '/draft-protocols',
-    EMAIL_CONFIRMATION: '/confirm-registration'
+    EMAIL_CONFIRMATION: '/confirm-registration',
+    TOKEN_VALIDATION: '/confirmation'
 }
 
 Object.freeze(appRoutesNames);
