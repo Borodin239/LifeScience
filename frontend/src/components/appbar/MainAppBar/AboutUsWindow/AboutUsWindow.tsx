@@ -4,7 +4,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import {propTypes} from "react-markdown";
 import useAboutUsWindowStyles from "./useAboutUsWindowStyles";
-import InfoPanel from "../../../landing-page/InfoPanel/InfoPanel";
+import AboutUsPanel from "./AboutUsPanel";
 import Box from "@material-ui/core/Box"
 
 import IconButton from '@material-ui/core/IconButton';
@@ -29,8 +29,7 @@ const SimpleDialog: React.FC<propTypes> = (props) => {
             open={open} maxWidth='lg'
             fullWidth={true}
             disableBackdropClick={true}
-            TransitionComponent={Transition}
-        >
+            TransitionComponent={Transition}>
             <DialogTitle>
                 <Box display="flex" alignItems="right">
                     <Box flexGrow={1}/>
@@ -39,7 +38,7 @@ const SimpleDialog: React.FC<propTypes> = (props) => {
                     </IconButton>
                 </Box>
             </DialogTitle>
-            <InfoPanel/>
+            <AboutUsPanel/>
         </Dialog>
     );
 }
@@ -65,7 +64,7 @@ const AboutUsWindow: React.FC = () => {
     return (
         <div>
             <Button className={classes.signButton} onClick={handleClickOpen}>
-                About us
+                About
             </Button>
             <SimpleDialog
                 open={open}
