@@ -9,15 +9,28 @@ import Box from "@material-ui/core/Box"
 
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Slide from '@material-ui/core/Slide';
+import {TransitionProps} from "@material-ui/core/transitions";
+
+const Transition = React.forwardRef(function Transition(props: TransitionProps, ref: React.Ref<unknown>) {
+    return <Slide direction="down" timeout={{ appear: 500, enter: 300, exit: 500 }} ref={ref} {...props}/>;
+});
 
 const SimpleDialog: React.FC<propTypes> = (props) => {
+
     const {onClose, open} = props;
     const handleClose = () => {
         onClose();
     };
 
     return (
-        <Dialog onClose={handleClose} open={open} maxWidth='lg' fullWidth={true} disableBackdropClick={true}>
+        <Dialog
+            onClose={handleClose}
+            open={open} maxWidth='lg'
+            fullWidth={true}
+            disableBackdropClick={true}
+            TransitionComponent={Transition}
+        >
             <DialogTitle>
                 <Box display="flex" alignItems="right">
                     <Box flexGrow={1}/>
