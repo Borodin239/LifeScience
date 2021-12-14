@@ -15,9 +15,9 @@ import SearchPage from "../pages/SearchPage/SearchPage";
 import {Box} from "@material-ui/core";
 import './App.css'
 import ProtocolPage from "../pages/ProtocolPage/ProtocolPage";
-import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import CreateProtocolPage from "../pages/CreateProtocolPage/CreateProtocolPage";
 import DraftProtocolPage from "../pages/DraftProtocolPage/DraftProtocolPage";
+import WorkspacePage from "../pages/ProfilePage/WorkspacePage";
 import {EmailConfirmationPage} from "../pages/messagePages/EmailConfirmationPage";
 import {TokenValidationPage} from "../pages/messagePages/TokenValidationPage";
 
@@ -64,8 +64,8 @@ function App() {
                                            render={() => <SignUpForm/>}/>
                                     <Route exact path={appRoutesNames.SEARCH}
                                            render={() => <SearchPage/>}/>
-                                    <Route exact path={appRoutesNames.PROFILE}
-                                           render={() => <ProfilePage/>}/>
+                                    <Route path={appRoutesNames.PROFILE}
+                                           render={() => <WorkspacePage/>}/>
                                     <Route exact path={`${appRoutesNames.DRAFT_PROTOCOLS}/:protocolId(\\d{1,11})`}
                                            render={() => <DraftProtocolPage/>}/>
                                     <Route exact path={`${appRoutesNames.TOKEN_VALIDATION}/:token`}
