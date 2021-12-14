@@ -5,7 +5,7 @@ val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions.useIR = true
 
 plugins {
-    id("org.springframework.boot") version "2.6.1"
+    id("org.springframework.boot") version "2.5.7"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
     kotlin("jvm") version "1.4.31"
@@ -53,7 +53,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-ui:1.5.12")
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation(group = "org.springframework.data", name = "spring-data-elasticsearch", version = "4.3.0")
+    implementation(group = "org.springframework.data", name = "spring-data-elasticsearch", version = "4.2.7")
 
     implementation(group = "org.springframework.boot", name = "spring-boot-starter-validation")
     implementation(group = "org.postgresql", name = "postgresql")
