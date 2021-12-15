@@ -4,10 +4,9 @@ import uiConstants from "../../../infrastructure/ui/themes/uiConstants";
 export const useUserInfoTitleStyles = makeStyles((theme) => ({
     titleContainer: {
         width: theme.spacing(15),
-
     },
     title: {
-        fontSize: '18px',
+        fontSize: '16px',
         color: uiConstants.grey,
     }
 
