@@ -21,7 +21,6 @@ import WorkspacePage from "../pages/ProfilePage/WorkspacePage";
 import {EmailConfirmationPage} from "../pages/messagePages/EmailConfirmationPage";
 import {TokenValidationPage} from "../pages/messagePages/TokenValidationPage";
 
-
 function App() {
     // const dispatch = useAppDispatch();
     //

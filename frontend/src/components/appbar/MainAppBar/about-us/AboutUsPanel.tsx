@@ -19,20 +19,20 @@ const AboutUsPanel = () => {
             <Divider className={classes.divider}/>
             <Box>
                 <Box>
-                    <img src={lens} className={classes.imgStyles}/>
+                    <img src={lens} alt={"description lens"} className={classes.imgStyles}/>
                     <Typography className={classes.textContainerImportant}>
                         SEARCH
                         <br/>
                         Find methods and protocols by name, object and application
                     </Typography>
                 </Box>
-                <img src={hat} className={classes.imgStyles}/>
+                <img src={hat} alt={"description hat"} className={classes.imgStyles}/>
                 <Typography className={classes.textContainerImportant}>
                     STUDY
                     <br/>
                     Learn new methods and techniques
                 </Typography>
-                <img src={arrows} className={classes.imgStyles}/>
+                <img src={arrows} alt={"description arrows"} className={classes.imgStyles}/>
                 <Typography className={classes.textContainerImportant}>
                     EXCHANGE
                     <br/>

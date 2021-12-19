@@ -2,10 +2,9 @@ import * as React from 'react';
 import Button from '@material-ui/core/Button';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import {propTypes} from "react-markdown";
 import useAboutUsWindowStyles from "./useAboutUsWindowStyles";
 import AboutUsPanel from "./AboutUsPanel";
-import Box from "@material-ui/core/Box"
+import Box from "@material-ui/core/Box";
 
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
@@ -16,7 +15,7 @@ const Transition = React.forwardRef(function Transition(props: TransitionProps, 
     return <Slide direction="down" timeout={{appear: 500, enter: 300, exit: 500}} ref={ref} {...props}/>;
 });
 
-const SimpleDialog: React.FC<propTypes> = (props) => {
+const AboutUsDialog: React.FC<aboutUsTypes> = (props) => {
     const classes = useAboutUsWindowStyles();
     const {onClose, open} = props;
     const handleClose = () => {
@@ -49,14 +48,10 @@ const SimpleDialog: React.FC<propTypes> = (props) => {
     );
 }
 
-type propTypes =
-    {
-        open: boolean,
-        onClose
-            :
-            () => void
-    }
-    ;
+type aboutUsTypes = {
+    open: boolean,
+    onClose: () => void
+};
 
 const AboutUsWindow: React.FC = () => {
 
@@ -67,7 +62,7 @@ const AboutUsWindow: React.FC = () => {
         setOpen(true);
     };
 
-    const handleClose = () => {
+    const handleClickClose = () => {
         setOpen(false);
     };
 
@@ -76,9 +71,9 @@ const AboutUsWindow: React.FC = () => {
             <Button className={classes.signButton} onClick={handleClickOpen}>
                 About
             </Button>
-            <SimpleDialog
+            <AboutUsDialog
                 open={open}
-                onClose={handleClose}
+                onClose={handleClickClose}
             />
         </div>
     );

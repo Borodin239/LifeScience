@@ -14,8 +14,7 @@ const useAboutUsWindowStyles = makeStyles((theme: Theme) =>
             margin: theme.spacing(0, 0, 3, 0),
             border: "1px solid " + theme.palette.common.black,
             height: '44px',
-            fontSize: '22px',
-
+            fontSize: '22px'
         },
 
         signButton: {

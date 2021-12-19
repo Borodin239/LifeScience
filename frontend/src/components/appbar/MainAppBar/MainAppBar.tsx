@@ -11,7 +11,7 @@ import MainSearch from "./MainSearch/MainSearch";
 import UnauthorizedProfile from "./profile/UnauthorizedProfile/UnauthorizedProfile";
 import AuthorizedProfilePreview from "./profile/AuthorizedProfilePreview";
 import {updateCurrentUserThunk} from "../../../redux/users/thunkActions";
-import AboutUsWindow from "./AboutUsWindow/AboutUsWindow";
+import AboutUsWindow from "./about-us/AboutUsWindow";
 
 const MainAppBar: React.FC = () => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -19,7 +19,6 @@ const MainAppBar: React.FC = () => {
     const classes = useMainAppBarStyles();
     const history = useHistory();
     const dispatch = useAppDispatch();
-
 
     const isAuthorized = useAppSelector(state => state.authReducer.isAuthorized);
 
@@ -32,7 +31,6 @@ const MainAppBar: React.FC = () => {
     const handleHomeClick = useCallback(() => {
         history.push(appRoutesNames.HOME);
     }, [history]);
-
 
     const handleProfileMenuOpen = useCallback((event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -53,13 +51,11 @@ const MainAppBar: React.FC = () => {
                         JetScience
                     </Typography>
                     <MainSearch/>
-
                     <div className={classes.grow}/>
                     {isAuthorized ? <AuthorizedProfilePreview handleProfileMenuOpen={handleProfileMenuOpen}/> :
                         <UnauthorizedProfile/>}
                     <AboutUsWindow></AboutUsWindow>
                 </Toolbar>
-
             </AppBar>
             <MainAppBarProfileMenu anchorEl={anchorEl} handleMenuClose={handleMenuClose}/>
         </div>
