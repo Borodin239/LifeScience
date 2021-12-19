@@ -20,7 +20,7 @@ const MainAppBarProfileMenu: React.FC<MainAppBarProfileMenuProps> = (props) => {
     const history = useHistory()
 
     const handleProfileClick = () => {
-        history.push(`${appRoutesNames.PROFILE}`)
+        history.push(`${appRoutesNames.PROFILE}/profile`)
         props.handleMenuClose()
     }
 

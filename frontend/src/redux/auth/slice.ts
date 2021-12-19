@@ -4,7 +4,7 @@ import {removeAccessToken, setAccessToken} from "../../infrastructure/http/api/u
 export const AUTH_ACTION_TYPE_PREFIX = 'auth';
 
 const initState: { isAuthorized: boolean } = {
-    isAuthorized: false,
+    isAuthorized: false
 };
 
 const authSlice = createSlice({
