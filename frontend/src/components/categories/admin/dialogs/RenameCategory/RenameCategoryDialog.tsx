@@ -17,22 +17,15 @@ const RenameCategoryDialog: React.FC<CategoryDialogProps> = ({isOpen, onClose}) 
     const [alertText, setAlertText] = useState<string | null>(null)
     const history = useHistory()
     const id = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).pop()
+    const [newName, setNewName] = useState<string>('')
 
-    const handleRenameClick = (e: MouseEvent<HTMLButtonElement>) => {
+    const handleRenameClick = () => {
         dispatch(updateCategory({
             categoryInfo: {
-                name: "string",
-                aliases: [
-                    {
-                        alias: "string"
-                    }
-                ],
-                parentsToAdd: [
-                    0
-                ],
-                parentsToDelete: [
-                    0
-                ]
+                name: newName,
+                aliases: [],
+                parentsToAdd: [],
+                parentsToDelete: []
             }, id: id!
         }))
             .unwrap()
@@ -50,7 +43,7 @@ const RenameCategoryDialog: React.FC<CategoryDialogProps> = ({isOpen, onClose}) 
     return (
         <Dialog open={isOpen} onClose={() => { onClose(); setAlertText(null) }} classes={{paper: classes.paper}}>
             <DialogTitle>Rename category</DialogTitle>
-            <TextField variant="outlined" placeholder="Enter new name"/>
+            <TextField variant="outlined" placeholder="Enter new name" onChange={(e) => setNewName(e.target.value)}/>
             <Button className={classes.submit} onClick={handleRenameClick}>Rename</Button>
             {alertText &&
             <Alert severity="error" style={{marginTop: 10}}>

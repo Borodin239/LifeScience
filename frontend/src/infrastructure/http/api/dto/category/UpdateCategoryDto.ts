@@ -3,6 +3,6 @@ import {AliasDto} from "../aliases/AliasDto";
 export type UpdateCategoryDto = {
     name: string,
     aliases: AliasDto[],
-    parentsToAdd: [number],
-    parentsToDelete: [number]
+    parentsToAdd: [number] | [],
+    parentsToDelete: [number] | []
 }
