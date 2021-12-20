@@ -78,7 +78,7 @@ export const getCategoryPathsThunk = createAsyncThunk<PathUnitView[], // что 
     }
 )
 
-export const createCategory = createAsyncThunk<PathUnitView[], // TODO :: актуальная версия
+export const createCategory = createAsyncThunk<PathUnitView[],
     CreateCategoryDto,
     {
         dispatch: AppDispatch,
@@ -88,10 +88,9 @@ export const createCategory = createAsyncThunk<PathUnitView[], // TODO :: акт
     `${CATEGORIES_ACTION_TYPE_PREFIX}${CategoriesActionThunkTypes.CREATE_CATEGORY}`,
     async (categoryInfo, thunkAPI) => {
         try {
-            const response = await categoriesApi.createCategory(categoryInfo);
-            // const pathList = response.data[0]
-            // TODO
+            await categoriesApi.createCategory(categoryInfo);
         } catch (err) {
+            console.log(err)
             return onThunkError(err, thunkAPI);
         }
     }
@@ -108,7 +107,6 @@ export const deleteCategory = createAsyncThunk<never,
     async (id, thunkAPI) => {
         try {
             await categoriesApi.deleteCategory(id);
-            // TODO
         } catch (err) {
             return onThunkError(err, thunkAPI);
         }
@@ -125,8 +123,7 @@ export const updateCategory = createAsyncThunk<CategoryInfoView,
     `${CATEGORIES_ACTION_TYPE_PREFIX}${CategoriesActionThunkTypes.UPDATE_CATEGORY}`,
     async ({categoryInfo, id}, thunkAPI) => {
         try {
-            const response = await categoriesApi.updateCategory(categoryInfo, id);
-            // TODO
+            await categoriesApi.updateCategory(categoryInfo, id);
         } catch (err) {
             return onThunkError(err, thunkAPI);
         }

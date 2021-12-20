@@ -9,6 +9,8 @@ import {createCategory} from "../../../../../redux/categories/thunkActions";
 import {CreateCategoryDto} from "../../../../../infrastructure/http/api/dto/category/CreateCategoryDto";
 import {useAppDispatch, useAppSelector} from "../../../../../redux/hooks";
 import {useHistory} from "react-router-dom";
+import apiConstants from "../../../../../infrastructure/http/api/apiConstants";
+import Alert from "@material-ui/lab/Alert";
 
 export type CategoryDialogProps = {
     isOpen: boolean,
@@ -21,13 +23,13 @@ const CreateCategoryDialog: React.FC<CategoryDialogProps> = (props) => {
 
     const classes = useStyles()
     const dispatch = useAppDispatch()
-    const [, setAlertText] = useState<string | null>(null)
+    const [alertText, setAlertText] = useState<string | null>(null)
     const [categoryName, setCategoryName] = useState<string>('')
     const history = useHistory()
-    const parentId = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).reverse()[1]
+    const id = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).pop()
 
-    const handleCreateClick = () => {
-        //preloader
+    const handleCreateClick = (event: React.FormEvent) => {
+        event.preventDefault();
         dispatch(createCategory({
             name: categoryName,
             aliases: [
@@ -35,10 +37,11 @@ const CreateCategoryDialog: React.FC<CategoryDialogProps> = (props) => {
                     alias: "string"
                 }
             ],
-            initialParentId: parentId!
+            initialParentId: id!
         }))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
+            .then(() => props.onClose())
             .catch(thunkError => {
                 if (thunkError.name === 'ApiError' && thunkError.description.httpCode === 400) {
                     setAlertText(thunkError.description.message);
@@ -46,14 +49,18 @@ const CreateCategoryDialog: React.FC<CategoryDialogProps> = (props) => {
                     handleThunkErrorBase(thunkError, history, dispatch);
                 }
             })
-        props.onClose()
     }
 
     return (
-        <Dialog open={props.isOpen} onClose={props.onClose} classes={{paper: classes.paper}}>
+        <Dialog open={props.isOpen} onClose={() => { props.onClose(); setAlertText(null) }} classes={{paper: classes.paper}} style={{width: '100%'}}>
             <DialogTitle>Create new category</DialogTitle>
-            <TextField variant='outlined' placeholder={"Enter category name"} onChange={(e) => setCategoryName(e.target.value)}/>
-            <Button className={classes.submit} onClick={() => handleCreateClick()}>Create</Button>
+            <TextField variant='outlined' placeholder={"Enter category name"}
+                       onChange={(e) => setCategoryName(e.target.value)}/>
+            <Button className={classes.submit} onClick={(e) => handleCreateClick(e)}>Create</Button>
+            {alertText &&
+            <Alert severity="error" style={{marginTop: 10}}>
+                {alertText}
+            </Alert>}
         </Dialog>
     )
 }

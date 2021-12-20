@@ -8,6 +8,8 @@ import {deleteCategory} from "../../../../../redux/categories/thunkActions";
 import splitThunkPayload from "../../../../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../../../../redux/utils/handleThunkErrorBase";
 import {useHistory} from "react-router-dom";
+import apiConstants from "../../../../../infrastructure/http/api/apiConstants";
+import Alert from "@material-ui/lab/Alert";
 
 const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({isOpen, onClose}) => {
 
@@ -15,13 +17,15 @@ const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({isOpen, onClose}) 
     const dispatch = useAppDispatch()
     const id = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).pop()
     const history = useHistory()
-    const [, setAlertText] = useState<string | null>(null)
+    const [alertText, setAlertText] = useState<string | null>(null)
+    const parentId = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).reverse()[1]
 
     const handleDeleteButton = () => {
-        //preloader
         dispatch(deleteCategory(id!))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
+            .then(() => history.replace(`${apiConstants.routes.categories.INITIAL}/${parentId}`))
+            .then(() => onClose())
             .catch(thunkError => {
                 if (thunkError.name === 'ApiError' && thunkError.description.httpCode === 400) {
                     setAlertText(thunkError.description.message);
@@ -29,11 +33,10 @@ const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({isOpen, onClose}) 
                     handleThunkErrorBase(thunkError, history, dispatch);
                 }
             })
-        onClose()
     }
 
     return (
-        <Dialog open={isOpen} onClose={onClose} classes={{paper: classes.paper}}>
+        <Dialog open={isOpen} onClose={() => { onClose(); setAlertText(null) }} classes={{paper: classes.paper}}>
             <DialogTitle>
                 Are you sure you want to delete this category?
             </DialogTitle>
@@ -41,10 +44,14 @@ const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({isOpen, onClose}) 
                 <Button className={classes.yesButton} onClick={handleDeleteButton}>
                     Yes
                 </Button>
-                <Button onClick={onClose} className={classes.noButton}>
+                <Button onClick={() => { onClose(); setAlertText(null) }} className={classes.noButton}>
                     No, go back
                 </Button>
             </Box>
+            {alertText &&
+            <Alert severity="error" style={{marginTop: 10}}>
+                {alertText}
+            </Alert>}
         </Dialog>
     )
 }

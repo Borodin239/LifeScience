@@ -2,6 +2,7 @@ import apiClientDefault from "../client/apiClientDefault";
 import apiConstants from "../apiConstants";
 import {CreateCategoryDto} from "../dto/category/CreateCategoryDto";
 import {UpdateCategoryDto} from "../dto/category/UpdateCategoryDto";
+import apiClientSecure from "../client/apiClientSecure";
 
 export const categoriesApi = {
     getById(id: number) {
@@ -17,14 +18,14 @@ export const categoriesApi = {
     },
 
     createCategory(categoryInfo: CreateCategoryDto) {
-        return apiClientDefault.post(apiConstants.routes.categories.INITIAL, categoryInfo)
+        return apiClientSecure.post(apiConstants.routes.categories.INITIAL, categoryInfo)
     },
 
     deleteCategory(id: string) {
-        return apiClientDefault.delete(`${apiConstants.routes.categories.INITIAL}/${id}`)
+        return apiClientSecure.delete(`${apiConstants.routes.categories.INITIAL}/${id}`)
     },
 
     updateCategory(categoryInfo: UpdateCategoryDto, id: string) {
-        return apiClientDefault.patch(`${apiConstants.routes.categories.INITIAL}/${id}`, categoryInfo)
+        return apiClientSecure.patch(`${apiConstants.routes.categories.INITIAL}/${id}`, categoryInfo)
     }
 }
