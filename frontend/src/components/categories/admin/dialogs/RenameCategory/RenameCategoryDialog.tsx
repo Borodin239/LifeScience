@@ -1,4 +1,4 @@
-import React, {MouseEvent, useState} from "react";
+import React, {useState} from "react";
 import {CategoryDialogProps} from "../CreateCategory/CreateCategoryDialog";
 import {Dialog, DialogTitle, TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
