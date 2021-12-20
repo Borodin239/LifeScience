@@ -17,7 +17,6 @@ const RenameCategoryDialog: React.FC<CategoryDialogProps> = ({isOpen, onClose}) 
     const [alertText, setAlertText] = useState<string | null>(null)
     const history = useHistory()
     const id = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).pop()
-    const parentId = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).reverse()[1]
 
     const handleRenameClick = (e: MouseEvent<HTMLButtonElement>) => {
         dispatch(updateCategory({
