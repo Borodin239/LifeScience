@@ -9,6 +9,7 @@ import {updateCategory} from "../../../../../redux/categories/thunkActions";
 import splitThunkPayload from "../../../../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../../../../redux/utils/handleThunkErrorBase";
 import Alert from "@material-ui/lab/Alert";
+import apiConstants from "../../../../../infrastructure/http/api/apiConstants";
 
 const RenameCategoryDialog: React.FC<CategoryDialogProps> = ({isOpen, onClose}) => {
 
@@ -18,6 +19,7 @@ const RenameCategoryDialog: React.FC<CategoryDialogProps> = ({isOpen, onClose}) 
     const history = useHistory()
     const id = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).pop()
     const [newName, setNewName] = useState<string>('')
+    const parentId = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).reverse()[1]
 
     const handleRenameClick = () => {
         dispatch(updateCategory({
@@ -31,6 +33,7 @@ const RenameCategoryDialog: React.FC<CategoryDialogProps> = ({isOpen, onClose}) 
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then(() => onClose())
+            .then(() => history.replace(`${apiConstants.routes.categories.INITIAL}/${parentId}`)) // TODO
             .catch(thunkError => {
                 if (thunkError.name === 'ApiError' && thunkError.description.httpCode === 400) {
                     setAlertText(thunkError.description.message);
