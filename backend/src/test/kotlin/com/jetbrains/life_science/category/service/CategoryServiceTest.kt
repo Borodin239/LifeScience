@@ -171,26 +171,11 @@ class CategoryServiceTest {
     }
 
     /**
-     * Try to update non-existing category.
-     * It should throw CategoryNotEmptyException.
+     *
      */
     @Test
     fun `update non-empty category test`() {
-        // Prepare
-        val info = makeCategoryUpdateInfo(
-            id = 1,
-            name = "changed name",
-            aliases = listOf(
-                "le name"
-            ),
-            parentsToAddIds = listOf(),
-            parentsToDeleteIds = listOf()
-        )
-
-        // Action & Assert
-        assertThrows<CategoryNotEmptyException> {
-            service.updateCategory(info)
-        }
+        // TODO:: update when will the terms of reference appear
     }
 
     @Test
@@ -254,25 +239,6 @@ class CategoryServiceTest {
         // Action & Assert
         assertThrows<CategoryParentNotFoundException> {
             service.createCategory(info)
-        }
-    }
-
-    @Test
-    fun `remove all parents test`() {
-        // Prepare
-        val info = makeCategoryUpdateInfo(
-            id = 5,
-            name = "changed name",
-            aliases = listOf(
-                "le name"
-            ),
-            parentsToAddIds = listOf(),
-            parentsToDeleteIds = listOf(2, 4)
-        )
-
-        // Action & Assert
-        assertThrows<CategoryNoParentsException> {
-            service.updateCategory(info)
         }
     }
 
