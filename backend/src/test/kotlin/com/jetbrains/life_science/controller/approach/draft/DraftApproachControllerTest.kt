@@ -1,8 +1,8 @@
 package com.jetbrains.life_science.controller.approach.draft
 
 import com.jetbrains.life_science.ApiTest
-import com.jetbrains.life_science.controller.approach.draft.dto.DraftApproachAddParticipantDTO
-import com.jetbrains.life_science.controller.approach.draft.dto.DraftApproachDTO
+import com.jetbrains.life_science.controller.approach.dto.ApproachAddParticipantDTO
+import com.jetbrains.life_science.controller.approach.dto.ApproachDTO
 import com.jetbrains.life_science.controller.approach.draft.view.DraftApproachView
 import com.jetbrains.life_science.controller.category.view.CategoryShortView
 import com.jetbrains.life_science.controller.user.view.UserShortView
@@ -107,7 +107,7 @@ internal class DraftApproachControllerTest : ApiTest() {
     @Test
     fun `create method with base sections test`() {
         val loginAccessToken = loginAccessToken("email@email.ru", "password")
-        val dto = DraftApproachDTO(
+        val dto = ApproachDTO(
             name = "approach Z",
             initialCategoryId = 1
         )
@@ -137,7 +137,7 @@ internal class DraftApproachControllerTest : ApiTest() {
     @Test
     fun `create method with wrong initial parent category id`() {
         val loginAccessToken = loginAccessToken("email@email.ru", "password")
-        val dto = DraftApproachDTO(
+        val dto = ApproachDTO(
             name = "approach Z",
             initialCategoryId = 199
         )
@@ -158,7 +158,7 @@ internal class DraftApproachControllerTest : ApiTest() {
     @Test
     fun `create method by regular user failure test`() {
         val loginAccessToken = loginAccessToken("email@email.ru", "password")
-        val dto = DraftApproachDTO(
+        val dto = ApproachDTO(
             name = "approach Z",
             initialCategoryId = 199
         )
@@ -176,7 +176,7 @@ internal class DraftApproachControllerTest : ApiTest() {
     @Test
     fun `add participant test`() {
         val loginAccessToken = loginAccessToken("email@email.ru", "password")
-        val dto = DraftApproachAddParticipantDTO("admin@gmail.ru")
+        val dto = ApproachAddParticipantDTO("admin@gmail.ru")
 
         postRequestAuthorized(makePath("1/participants"), dto, loginAccessToken)
         val approach = getViewAuthorized<DraftApproachView>(makePath(1), loginAccessToken)
@@ -207,7 +207,7 @@ internal class DraftApproachControllerTest : ApiTest() {
     @Test
     fun `add to participants by regular user`() {
         val loginAccessToken = loginAccessToken("simple@gmail.ru", "user123")
-        val dto = DraftApproachAddParticipantDTO("admin@gmail.ru")
+        val dto = ApproachAddParticipantDTO("admin@gmail.ru")
 
         val request = postRequestAuthorized(makePath("1/participants"), dto, loginAccessToken)
 
@@ -224,7 +224,7 @@ internal class DraftApproachControllerTest : ApiTest() {
      */
     @Test
     fun `add to participants by anonymous user`() {
-        val dto = DraftApproachAddParticipantDTO("email3@email.ru")
+        val dto = ApproachAddParticipantDTO("email3@email.ru")
 
         val request = postRequest(makePath("1/participants"), dto)
 

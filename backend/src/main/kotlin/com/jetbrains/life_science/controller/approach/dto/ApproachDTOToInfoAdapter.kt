@@ -1,11 +1,11 @@
-package com.jetbrains.life_science.controller.approach.draft.dto
+package com.jetbrains.life_science.controller.approach.dto
 
 import com.jetbrains.life_science.category.entity.Category
 import com.jetbrains.life_science.container.approach.service.ApproachInfo
 import com.jetbrains.life_science.user.credentials.entity.Credentials
 
-class DraftApproachDTOToInfoAdapter(
-    dto: DraftApproachDTO,
+class ApproachDTOToInfoAdapter(
+    dto: ApproachDTO,
     initialCategory: Category,
     override val owner: Credentials
 ) : ApproachInfo {
