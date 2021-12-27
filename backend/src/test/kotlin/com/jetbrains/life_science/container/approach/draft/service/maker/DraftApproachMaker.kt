@@ -1,6 +1,5 @@
 package com.jetbrains.life_science.container.approach.draft.service.maker
 
-import com.jetbrains.life_science.container.approach.service.DraftApproachInfo
 import com.jetbrains.life_science.category.entity.Category
 import com.jetbrains.life_science.user.credentials.entity.Credentials
 
