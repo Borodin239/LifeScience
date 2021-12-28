@@ -5,6 +5,7 @@ import com.jetbrains.life_science.controller.approach.dto.ApproachAddParticipant
 import com.jetbrains.life_science.controller.approach.dto.ApproachDTO
 import com.jetbrains.life_science.controller.approach.draft.view.DraftApproachView
 import com.jetbrains.life_science.controller.category.view.CategoryShortView
+import com.jetbrains.life_science.controller.section.view.SectionShortView
 import com.jetbrains.life_science.controller.user.view.UserShortView
 import com.jetbrains.life_science.review.request.repository.PublishApproachRequestRepository
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -38,7 +39,9 @@ internal class DraftApproachControllerTest : ApiTest() {
                 CategoryShortView(1, "catalog 1", timeOf(2020, 9, 17)),
                 CategoryShortView(2, "catalog 2", timeOf(2020, 10, 17))
             ),
-            sections = emptyList(),
+            sections = listOf(
+                SectionShortView(id = 1, name = "general 1")
+            ),
             participants = listOf(
                 UserShortView(id = 1, fullName = "Alex"),
                 UserShortView(id = 4, fullName = "Regular")
@@ -48,6 +51,23 @@ internal class DraftApproachControllerTest : ApiTest() {
         val approach = getViewAuthorized<DraftApproachView>(makePath(1), loginAccessToken)
 
         assertEquals(expectedView, approach)
+    }
+
+    /**
+     * We should get an error with 403 code
+     */
+    @Test
+    fun `get draft approach without enough rights test`() {
+        // Prepare data
+        val loginAccessToken = loginAccessToken("simple@gmail.ru", "user123")
+
+        // Action
+        val request = getAuthorized(makePath(1), loginAccessToken)
+        val exceptionView = getApiExceptionView(403, request)
+
+        // Assert
+        assertEquals(403_000, exceptionView.systemCode)
+        assertTrue(exceptionView.arguments.isEmpty())
     }
 
     /**
@@ -188,7 +208,9 @@ internal class DraftApproachControllerTest : ApiTest() {
                 CategoryShortView(1, "catalog 1", timeOf(2020, 9, 17)),
                 CategoryShortView(2, "catalog 2", timeOf(2020, 10, 17))
             ),
-            sections = emptyList(),
+            sections = listOf(
+                SectionShortView(id = 1, name = "general 1")
+            ),
             participants = listOf(
                 UserShortView(id = 1, fullName = "Alex"),
                 UserShortView(id = 4, fullName = "Regular"),
@@ -252,7 +274,9 @@ internal class DraftApproachControllerTest : ApiTest() {
                 CategoryShortView(1, "catalog 1", timeOf(2020, 9, 17)),
                 CategoryShortView(2, "catalog 2", timeOf(2020, 10, 17))
             ),
-            sections = emptyList(),
+            sections = listOf(
+                SectionShortView(id = 1, name = "general 1")
+            ),
             participants = listOf(
                 UserShortView(id = 1, fullName = "Alex"),
                 UserShortView(id = 4, fullName = "Regular")
