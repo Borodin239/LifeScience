@@ -3,9 +3,9 @@ package com.jetbrains.life_science.controller.approach.draft
 import com.jetbrains.life_science.category.service.CategoryService
 import com.jetbrains.life_science.container.approach.entity.DraftApproach
 import com.jetbrains.life_science.container.approach.service.DraftApproachService
-import com.jetbrains.life_science.controller.approach.draft.dto.DraftApproachAddParticipantDTO
-import com.jetbrains.life_science.controller.approach.draft.dto.DraftApproachDTO
-import com.jetbrains.life_science.controller.approach.draft.dto.DraftApproachDTOToInfoAdapter
+import com.jetbrains.life_science.controller.approach.dto.ApproachAddParticipantDTO
+import com.jetbrains.life_science.controller.approach.dto.ApproachDTO
+import com.jetbrains.life_science.controller.approach.dto.ApproachDTOToInfoAdapter
 import com.jetbrains.life_science.controller.approach.draft.view.DraftApproachView
 import com.jetbrains.life_science.controller.approach.draft.view.DraftApproachViewMapper
 import com.jetbrains.life_science.exception.auth.ForbiddenOperationException
@@ -51,11 +51,11 @@ class DraftApproachController(
     @Operation(summary = "Creates new DraftApproach")
     @PostMapping
     fun create(
-        @RequestBody dto: DraftApproachDTO,
+        @RequestBody dto: ApproachDTO,
         @AuthenticationPrincipal author: Credentials
     ): DraftApproachView {
         val category = categoryService.getById(dto.initialCategoryId)
-        val info = DraftApproachDTOToInfoAdapter(dto, category, author)
+        val info = ApproachDTOToInfoAdapter(dto, category, author)
         val approach = draftApproachService.create(info)
         return viewMapper.toView(
             draftApproach = approach,
@@ -82,7 +82,7 @@ class DraftApproachController(
     @PostMapping("/{approachId}/participants")
     fun addParticipant(
         @PathVariable approachId: Long,
-        @RequestBody dto: DraftApproachAddParticipantDTO,
+        @RequestBody dto: ApproachAddParticipantDTO,
         @AuthenticationPrincipal author: Credentials
     ) {
         val userCredentials = credentialsService.getByEmail(dto.email)

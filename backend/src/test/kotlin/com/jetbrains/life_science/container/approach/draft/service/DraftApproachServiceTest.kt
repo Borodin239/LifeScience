@@ -1,9 +1,12 @@
 package com.jetbrains.life_science.container.approach.draft.service
 
-import com.jetbrains.life_science.container.approach.draft.service.maker.makeDraftApproachInfo
 import com.jetbrains.life_science.container.approach.entity.DraftApproach
 import com.jetbrains.life_science.container.approach.service.DraftApproachService
 import com.jetbrains.life_science.category.service.CategoryService
+import com.jetbrains.life_science.container.approach.maker.makeApproachInfo
+import com.jetbrains.life_science.container.approach.utilities.assertContainsCategory
+import com.jetbrains.life_science.container.approach.utilities.assertContainsSection
+import com.jetbrains.life_science.container.approach.utilities.assertNotContainsSection
 import com.jetbrains.life_science.exception.not_found.ApproachNotFoundException
 import com.jetbrains.life_science.exception.request.RemoveOwnerFromParticipantsException
 import com.jetbrains.life_science.section.service.SectionService
@@ -43,7 +46,7 @@ class DraftApproachServiceTest {
         // Prepare data
         val category = categoryService.getById(1)
         val owner = credentialsService.getById(1L)
-        val info = makeDraftApproachInfo(
+        val info = makeApproachInfo(
             id = 0L,
             name = "bradford",
             aliases = mutableListOf("bradford second name"),
@@ -111,7 +114,7 @@ class DraftApproachServiceTest {
         // Prepare data
         val category = categoryService.getById(1)
         val owner = credentialsService.getById(1L)
-        val info = makeDraftApproachInfo(
+        val info = makeApproachInfo(
             id = 1L,
             name = "updated name",
             aliases = mutableListOf("new alias"),
@@ -144,7 +147,7 @@ class DraftApproachServiceTest {
         // Prepare data
         val category = categoryService.getById(1)
         val owner = credentialsService.getById(1L)
-        val info = makeDraftApproachInfo(
+        val info = makeApproachInfo(
             id = 666L,
             name = "updated name",
             aliases = mutableListOf(),
@@ -335,23 +338,11 @@ class DraftApproachServiceTest {
         }
     }
 
-    private fun assertContainsSection(draftApproach: DraftApproach, sectionId: Long) {
-        assertTrue(draftApproach.sections.any { it.id == sectionId })
-    }
-
-    private fun assertNotContainsSection(draftApproach: DraftApproach, sectionId: Long) {
-        assertFalse(draftApproach.sections.any { it.id == sectionId })
-    }
-
     private fun assertContainsParticipant(draftApproach: DraftApproach, userId: Long) {
         assertTrue(draftApproach.participants.any { it.id == userId })
     }
 
     private fun assertNotContainsParticipant(draftApproach: DraftApproach, userId: Long) {
         assertFalse(draftApproach.participants.any { it.id == userId })
-    }
-
-    private fun assertContainsCategory(draftApproach: DraftApproach, categoryId: Long) {
-        assertTrue(draftApproach.categories.any { it.id == categoryId })
     }
 }

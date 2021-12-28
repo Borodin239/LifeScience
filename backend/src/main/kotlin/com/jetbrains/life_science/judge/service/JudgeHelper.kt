@@ -14,10 +14,10 @@ class JudgeHelper(
     val applicationEventPublisher: ApplicationEventPublisher
 ) {
     @Value("\${verdictLimit}")
-    val verdictLimit = 10
+    val verdictLimit = 0
 
     @Value("\${approveLimit}")
-    val approveLimit = 7
+    val approveLimit = 0
 
     fun approveRequest(request: ReviewRequest, service: JudgeExecutorService, event: JudgeDecisionApproveEvent) {
         // Delete publish request
