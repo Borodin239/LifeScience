@@ -1,15 +1,12 @@
-import React, {MouseEvent, useState} from "react";
-import {Dialog, DialogTitle, Snackbar, TextField} from "@material-ui/core";
+import React, {useState} from "react";
+import {Dialog, DialogTitle, TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import {useStyles} from "../dialog-styles";
-import {updateUserData} from "../../../../../redux/users/thunkActions";
 import splitThunkPayload from "../../../../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../../../../redux/utils/handleThunkErrorBase";
 import {createCategory} from "../../../../../redux/categories/thunkActions";
-import {CreateCategoryDto} from "../../../../../infrastructure/http/api/dto/category/CreateCategoryDto";
 import {useAppDispatch, useAppSelector} from "../../../../../redux/hooks";
 import {useHistory} from "react-router-dom";
-import apiConstants from "../../../../../infrastructure/http/api/apiConstants";
 import Alert from "@material-ui/lab/Alert";
 
 export type CategoryDialogProps = {

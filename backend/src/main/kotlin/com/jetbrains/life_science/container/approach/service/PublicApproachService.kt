@@ -8,6 +8,8 @@ import com.jetbrains.life_science.section.entity.Section
 interface PublicApproachService : ContainsSections {
     fun get(id: Long): PublicApproach
 
+    fun create(info: ApproachInfo): PublicApproach
+
     fun create(approach: DraftApproach): PublicApproach
 
     fun getAllByOwnerId(ownerId: Long): List<PublicApproach>
