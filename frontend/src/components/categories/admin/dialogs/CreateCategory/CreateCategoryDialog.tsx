@@ -26,18 +26,17 @@ const CreateCategoryDialog: React.FC<CategoryDialogProps> = (props) => {
     const [alertText, setAlertText] = useState<string | null>(null)
     const [categoryName, setCategoryName] = useState<string>('')
     const history = useHistory()
-    const id = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).pop()
 
     const handleCreateClick = (event: React.FormEvent) => {
         event.preventDefault();
         dispatch(createCategory({
-            name: categoryName,
+            name: categoryName.trim(),
             aliases: [
                 {
                     alias: "string"
                 }
             ],
-            initialParentId: id!
+            initialParentId: props.categoryId.toString()
         }))
             .unwrap()
             .then(payload => splitThunkPayload(payload))

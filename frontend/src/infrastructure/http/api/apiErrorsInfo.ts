@@ -15,13 +15,13 @@ export const apiErrorsInfo: ReadonlyMap<number, ApiErrorInfoSetup> = new Map([
         messagePattern: "Email '$0' is already in use"
     }],
     [apiConstants.errors.REGULAR_EXPRESSION_VALIDATION_FAILED, {
-        messagePattern: "Server validation error: $0"
+        messagePattern: "Validation error: $0"
     }],
     [apiConstants.errors.INVALID_REFRESH_TOKEN, {
         messagePattern: "Invalid refresh token"
     }],
     [apiConstants.errors.EXPIRED_REFRESH_TOKEN, {
-        messagePattern: "Expired refresh token"
+        messagePattern: "Expired refresh token. Please re-login"
     }],
     [apiConstants.errors.INVALID_ACCESS_TOKEN, {
         messagePattern: "Invalid access token"
