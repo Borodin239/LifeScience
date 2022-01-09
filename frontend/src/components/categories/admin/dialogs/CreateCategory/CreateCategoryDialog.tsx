@@ -5,13 +5,14 @@ import {useStyles} from "../dialog-styles";
 import splitThunkPayload from "../../../../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../../../../redux/utils/handleThunkErrorBase";
 import {createCategory} from "../../../../../redux/categories/thunkActions";
-import {useAppDispatch, useAppSelector} from "../../../../../redux/hooks";
+import {useAppDispatch} from "../../../../../redux/hooks";
 import {useHistory} from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 
 export type CategoryDialogProps = {
     isOpen: boolean,
     categoryId: number,
+    categoryName?: string,
     onClose: () => void,
 }
 //todo move this type somewhere

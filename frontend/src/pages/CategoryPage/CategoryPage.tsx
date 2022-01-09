@@ -151,7 +151,8 @@ const CategoryPage = () => {
                         <Box className={classes.upperBar}>
                             <GlobalUserLocation/>
                             {(userRoles && userRoles.includes("ROLE_ADMIN")) ?
-                                <CategoryAdminSettings categoryId={parseInt(categoryId)}/> : null}
+                                <CategoryAdminSettings categoryId={parseInt(categoryId)}
+                                                       categoryName={categoryName!}/> : null}
                         </Box>
                     )
             }
