@@ -17,6 +17,8 @@ insert into draft_approach_participants (draft_approach_id, participants_id) val
 insert into draft_approach_participants (draft_approach_id, participants_id) values (2, 1);
 insert into draft_approach_participants (draft_approach_id, participants_id) values (3, 1);
 
+insert into draft_approach_sections (draft_approach_id, sections_id) values (1, 1);
+
 insert into draft_approach_aliases (draft_approach_id, aliases)
 values (1, 'approach 1 alias');
 insert into draft_approach_aliases (draft_approach_id, aliases)

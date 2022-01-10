@@ -14,7 +14,7 @@ const transformAxiosError = (error: AxiosError) => {
             message: createApiErrorMessage(error.response.data as ApiErrorView)
         } as ApiErrorDescription)
 
-        developmentLog(`Created ApiError: ${apiError}. Desription: ${JSON.stringify(apiError.description)}`);
+        developmentLog(`Created ApiError: ${apiError}. Description: ${JSON.stringify(apiError.description)}`);
 
         return apiError;
     }

@@ -4,7 +4,6 @@ import com.jetbrains.life_science.category.entity.Category
 import com.jetbrains.life_science.category.factory.CategoryFactory
 import com.jetbrains.life_science.category.repository.CategoryRepository
 import com.jetbrains.life_science.category.search.service.CategorySearchUnitService
-import com.jetbrains.life_science.exception.category.CategoryNoParentsException
 import com.jetbrains.life_science.exception.category.CategoryNotEmptyException
 import com.jetbrains.life_science.exception.category.CategoryNotFoundException
 import com.jetbrains.life_science.exception.category.CategoryParentNotFoundException
@@ -38,14 +37,8 @@ class CategoryServiceImpl(
     }
 
     private fun updateParents(categoryInfo: CategoryUpdateInfo, category: Category) {
-        if (!category.isEmpty) {
-            throw CategoryNotEmptyException(category.id)
-        }
         deleteParents(category, categoryInfo.parentsToDeleteIds)
         addParents(category, categoryInfo.parentsToAddIds)
-        if (category.parents.isEmpty()) {
-            throw CategoryNoParentsException()
-        }
     }
 
     private fun addParents(category: Category, idsToAdd: List<Long>) {

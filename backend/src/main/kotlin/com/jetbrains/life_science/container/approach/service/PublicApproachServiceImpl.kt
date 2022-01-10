@@ -25,6 +25,15 @@ class PublicApproachServiceImpl(
         return repository.getAllByOwnerId(ownerId)
     }
 
+    override fun create(info: ApproachInfo): PublicApproach {
+        val publicApproach = factory.create(info)
+        // Add approach to the category
+        publicApproach.categories.forEach { it.approaches.add(publicApproach) }
+        val savedPublicApproach = repository.save(publicApproach)
+        searchUnitService.createSearchUnit(savedPublicApproach)
+        return savedPublicApproach
+    }
+
     override fun create(approach: DraftApproach): PublicApproach {
         val publicApproach = factory.create(approach)
         val savedPublicApproach = repository.save(publicApproach)

@@ -20,12 +20,12 @@ class DraftApproachServiceImpl(
         }
     }
 
-    override fun create(info: DraftApproachInfo): DraftApproach {
+    override fun create(info: ApproachInfo): DraftApproach {
         val draftApproach = factory.create(info)
         return repository.save(draftApproach)
     }
 
-    override fun update(info: DraftApproachInfo): DraftApproach {
+    override fun update(info: ApproachInfo): DraftApproach {
         val draftApproach = get(info.id)
         factory.setParams(draftApproach, info)
         return repository.save(draftApproach)

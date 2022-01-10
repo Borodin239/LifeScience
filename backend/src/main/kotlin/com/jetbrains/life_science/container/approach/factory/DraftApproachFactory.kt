@@ -1,14 +1,14 @@
 package com.jetbrains.life_science.container.approach.factory
 
 import com.jetbrains.life_science.container.approach.entity.DraftApproach
-import com.jetbrains.life_science.container.approach.service.DraftApproachInfo
+import com.jetbrains.life_science.container.approach.service.ApproachInfo
 import com.jetbrains.life_science.util.UTCZone
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
 @Component
 class DraftApproachFactory {
-    fun create(info: DraftApproachInfo): DraftApproach {
+    fun create(info: ApproachInfo): DraftApproach {
         return DraftApproach(
             id = 0,
             name = info.name,
@@ -22,7 +22,7 @@ class DraftApproachFactory {
         )
     }
 
-    fun setParams(draftApproach: DraftApproach, info: DraftApproachInfo) {
+    fun setParams(draftApproach: DraftApproach, info: ApproachInfo) {
         draftApproach.name = info.name
         draftApproach.aliases = info.aliases.toMutableList()
         draftApproach.tags = info.tags.toMutableList()
