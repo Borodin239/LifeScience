@@ -39,7 +39,7 @@ const CreateCategoryDialog: React.FC<CategoryDialogProps> = (props) => {
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then(() => props.onClose())
-            .then(() => document.location.reload())
+            .then(() => document.location.reload()) // TODO ::
             .catch(thunkError => {
                 if (thunkError.name === 'ApiError' && thunkError.description.httpCode === 400) {
                     setAlertText(thunkError.description.message);
