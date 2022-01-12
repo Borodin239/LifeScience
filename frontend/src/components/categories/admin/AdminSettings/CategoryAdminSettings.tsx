@@ -8,7 +8,7 @@ import CreateCategoryDialog from "../dialogs/CreateCategory/CreateCategoryDialog
 import DeleteCategoryDialog from "../dialogs/DeleteCategory/DeleteCategoryDialog";
 import RenameCategoryDialog from "../dialogs/RenameCategory/RenameCategoryDialog";
 
-const CategoryAdminSettings: React.FC<{ categoryId: number }> = ({categoryId}) => {
+const CategoryAdminSettings: React.FC<{ categoryId: number, categoryName: string }> = ({categoryId, categoryName}) => {
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -58,9 +58,9 @@ const CategoryAdminSettings: React.FC<{ categoryId: number }> = ({categoryId}) =
                     {renderMenu}
                     <CreateCategoryDialog categoryId={categoryId} isOpen={createDialogOpen}
                                           onClose={handleDialogCloseClick(setCreateDialogOpen)}/>
-                    <DeleteCategoryDialog categoryId={categoryId} isOpen={deleteDialogOpen}
+                    <DeleteCategoryDialog categoryId={categoryId} categoryName={categoryName} isOpen={deleteDialogOpen}
                                           onClose={handleDialogCloseClick(setDeleteDialogOpen)}/>
-                    <RenameCategoryDialog categoryId={categoryId} isOpen={renameDialogOpen}
+                    <RenameCategoryDialog categoryId={categoryId} categoryName={categoryName} isOpen={renameDialogOpen}
                                           onClose={handleDialogCloseClick(setRenameDialogOpen)}/>
                 </> : null
             }
