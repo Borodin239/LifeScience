@@ -52,9 +52,9 @@ const MainAppBar: React.FC = () => {
                     </Typography>
                     <MainSearch/>
                     <div className={classes.grow}/>
+                    <AboutUsWindow></AboutUsWindow>
                     {isAuthorized ? <AuthorizedProfilePreview handleProfileMenuOpen={handleProfileMenuOpen}/> :
                         <UnauthorizedProfile/>}
-                    <AboutUsWindow></AboutUsWindow>
                 </Toolbar>
             </AppBar>
             <MainAppBarProfileMenu anchorEl={anchorEl} handleMenuClose={handleMenuClose}/>
