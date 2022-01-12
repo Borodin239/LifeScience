@@ -4,7 +4,7 @@ import {ApiError} from "../../infrastructure/common/exceptions/ApiError";
 import onThunkError from "../utils/onThunkError";
 import {searchApi} from "../../infrastructure/http/api/search/searchApi";
 import {SearchDto} from "../../infrastructure/http/api/dto/search/SearchDto";
-import {SearchResultView} from "../../infrastructure/http/api/view/search/SearchResultView";
+import {SearchResultView, SearchSuggestResultView} from "../../infrastructure/http/api/view/search/SearchResultView";
 import {developmentLog} from "../../infrastructure/common/developmentLog";
 import apiConstants from "../../infrastructure/http/api/apiConstants";
 import {debounce} from "debounce";
@@ -45,7 +45,7 @@ export const preSearchThunk = createAsyncThunk<void,
             const response = await searchApi.preSearch({text: textPrefix, size: apiConstants.search.SUGGEST_BUNDLE_SIZE});
             developmentLog(`search response: ${JSON.stringify(response)}`);
 
-            dispatch(searchSlice.actions.updateSuggestions((response.data as SearchResultView[]).map(res => res.name)));
+            dispatch(searchSlice.actions.updateSuggestions((response.data as SearchSuggestResultView[]).map(res => res.name)));
         } catch (err) {
             developmentLog(`Suggest failed: ${err}`);
             dispatch(searchSlice.actions.updateSuggestions([]));
