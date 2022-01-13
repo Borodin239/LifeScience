@@ -12,6 +12,8 @@ import org.elasticsearch.client.RequestOptions
 import org.elasticsearch.client.RestHighLevelClient
 import org.elasticsearch.index.query.QueryBuilders
 import org.elasticsearch.search.SearchHit
+import org.elasticsearch.search.aggregations.AggregationBuilders
+import org.elasticsearch.search.aggregations.bucket.terms.Terms
 import org.elasticsearch.search.builder.SearchSourceBuilder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -23,6 +25,7 @@ class SearchServiceImpl(
     val logger = getLogger()
 
     lateinit var searchUnitServices: Map<String, UnitSearchService>
+    val aggregationName = "by_names"
 
     override val supportedTypes: List<SearchUnitType> = listOf(
         SearchUnitType.CATEGORY,
@@ -41,10 +44,10 @@ class SearchServiceImpl(
         return processHits(response)
     }
 
-    override fun suggest(query: SearchQueryInfo): List<SearchResult> {
+    override fun suggest(query: SearchQueryInfo): Terms {
         val request = makeSuggestRequest(query)
         val response = getResponse(request)
-        return processHits(response)
+        return response.aggregations[aggregationName]
     }
 
     private fun processHits(response: SearchResponse) = response.hits
@@ -60,6 +63,7 @@ class SearchServiceImpl(
 
         val searchBuilder = SearchSourceBuilder()
             .query(queryBuilder)
+            .aggregation(AggregationBuilders.terms(aggregationName).field("names.keyword"))
             .from(query.from)
             .size(query.size)
 
@@ -73,7 +77,7 @@ class SearchServiceImpl(
     }
 
     private fun makeRequest(query: SearchQueryInfo): SearchRequest {
-        val tokens = query.text.trim().split("\\s+".toRegex()).map { it.toLowerCase() }
+        val tokens = query.text.trim().split("[\\s-]+".toRegex()).map { it.toLowerCase() }
 
         var shouldContainSetPartQuery = QueryBuilders.boolQuery().minimumShouldMatch((tokens.size * 0.7).toInt())
         var shouldContainNamePartInQuery = QueryBuilders.boolQuery().minimumShouldMatch(1)

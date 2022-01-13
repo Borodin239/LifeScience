@@ -15,19 +15,19 @@ export const apiErrorsInfo: ReadonlyMap<number, ApiErrorInfoSetup> = new Map([
         messagePattern: "Email '$0' is already in use"
     }],
     [apiConstants.errors.REGULAR_EXPRESSION_VALIDATION_FAILED, {
-        messagePattern: "Server validation error: $0"
+        messagePattern: "Validation error: $0"
     }],
     [apiConstants.errors.INVALID_REFRESH_TOKEN, {
         messagePattern: "Invalid refresh token"
     }],
     [apiConstants.errors.EXPIRED_REFRESH_TOKEN, {
-        messagePattern: "Expired refresh token"
+        messagePattern: "Expired refresh token. Please re-login"
     }],
     [apiConstants.errors.INVALID_ACCESS_TOKEN, {
         messagePattern: "Invalid access token"
     }],
     [apiConstants.errors.EXPIRED_ACCESS_TOKEN, {
-        messagePattern: "Expired access token"
+        messagePattern: "Expired access token. Please logout and login. This is a temporary measure, we apologize for the inconvenience"
     }],
     [apiConstants.errors.WRONG_CREDENTIALS, {
         messagePattern: "Wrong login/password"
@@ -38,4 +38,7 @@ export const apiErrorsInfo: ReadonlyMap<number, ApiErrorInfoSetup> = new Map([
     [apiConstants.errors.PERMISSION_DENIED, {
         messagePattern: "No required permissions to perform the operation"
     }],
+    [apiConstants.errors.NON_EMPTY_CATEGORY, {
+        messagePattern: "You can't rename/delete a non-empty category yet."
+    }]
 ]);

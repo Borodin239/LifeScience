@@ -10,7 +10,7 @@ import RenameCategoryDialog from "../dialogs/RenameCategory/RenameCategoryDialog
 import {useHistory} from "react-router-dom";
 import appRoutesNames from "../../../../infrastructure/common/appRoutesNames";
 
-const CategoryAdminSettings: React.FC<{ categoryId: number }> = ({categoryId}) => {
+const CategoryAdminSettings: React.FC<{ categoryId: number, categoryName: string }> = ({categoryId, categoryName}) => {
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const history = useHistory()
@@ -62,9 +62,9 @@ const CategoryAdminSettings: React.FC<{ categoryId: number }> = ({categoryId}) =
                     {renderMenu}
                     <CreateCategoryDialog categoryId={categoryId} isOpen={createDialogOpen}
                                           onClose={handleDialogCloseClick(setCreateDialogOpen)}/>
-                    <DeleteCategoryDialog categoryId={categoryId} isOpen={deleteDialogOpen}
+                    <DeleteCategoryDialog categoryId={categoryId} categoryName={categoryName} isOpen={deleteDialogOpen}
                                           onClose={handleDialogCloseClick(setDeleteDialogOpen)}/>
-                    <RenameCategoryDialog categoryId={categoryId} isOpen={renameDialogOpen}
+                    <RenameCategoryDialog categoryId={categoryId} categoryName={categoryName} isOpen={renameDialogOpen}
                                           onClose={handleDialogCloseClick(setRenameDialogOpen)}/>
                 </> : null
             }

@@ -11,21 +11,20 @@ import {useHistory} from "react-router-dom";
 import apiConstants from "../../../../../infrastructure/http/api/apiConstants";
 import Alert from "@material-ui/lab/Alert";
 
-const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({isOpen, onClose}) => {
+const DeleteCategoryDialog: React.FC<CategoryDialogProps> = (props) => {
 
     const classes = useStyles()
     const dispatch = useAppDispatch()
-    const id = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).pop()
     const history = useHistory()
     const [alertText, setAlertText] = useState<string | null>(null)
     const parentId = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).reverse()[1]
 
     const handleDeleteButton = () => {
-        dispatch(deleteCategory(id!))
+        dispatch(deleteCategory(props.categoryId.toString()))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then(() => history.replace(`${apiConstants.routes.categories.INITIAL}/${parentId}`))
-            .then(() => onClose())
+            .then(() => props.onClose())
             .catch(thunkError => {
                 if (thunkError.name === 'ApiError' && thunkError.description.httpCode === 400) {
                     setAlertText(thunkError.description.message);
@@ -36,15 +35,21 @@ const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({isOpen, onClose}) 
     }
 
     return (
-        <Dialog open={isOpen} onClose={() => { onClose(); setAlertText(null) }} classes={{paper: classes.paper}}>
+        <Dialog open={props.isOpen} onClose={() => {
+            props.onClose();
+            setAlertText(null)
+        }} classes={{paper: classes.paper}}>
             <DialogTitle>
-                Are you sure you want to delete this category?
+                Are you sure you want to delete "{props.categoryName}" category?
             </DialogTitle>
             <Box className={classes.twoButtonsPanel}>
                 <Button className={classes.yesButton} onClick={handleDeleteButton}>
                     Yes
                 </Button>
-                <Button onClick={() => { onClose(); setAlertText(null) }} className={classes.noButton}>
+                <Button onClick={() => {
+                    props.onClose();
+                    setAlertText(null)
+                }} className={classes.noButton}>
                     No, go back
                 </Button>
             </Box>
