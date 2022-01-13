@@ -10,6 +10,8 @@ import handleThunkErrorBase from "../../../../../redux/utils/handleThunkErrorBas
 import {useHistory} from "react-router-dom";
 import apiConstants from "../../../../../infrastructure/http/api/apiConstants";
 import Alert from "@material-ui/lab/Alert";
+import {pathMove} from "../../../../../redux/navigation/slice";
+import {getRedirectionRoute, NavigationUnit} from "../../../../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 
 const DeleteCategoryDialog: React.FC<CategoryDialogProps> = (props) => {
 
@@ -18,12 +20,15 @@ const DeleteCategoryDialog: React.FC<CategoryDialogProps> = (props) => {
     const history = useHistory()
     const [alertText, setAlertText] = useState<string | null>(null)
     const parentId = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).reverse()[1]
+    const parentName = useAppSelector(state => state.navigationReducer.path).map(i => i.name).reverse()[1]
+
 
     const handleDeleteButton = () => {
         dispatch(deleteCategory(props.categoryId.toString()))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
-            .then(() => history.replace(`${apiConstants.routes.categories.INITIAL}/${parentId}`))
+            .then(() => dispatch(pathMove({name: parentName, route: getRedirectionRoute({type: 'category', categoryId: `${parentId}`}), type: 'category'})))
+            .then(() => history.push(`${apiConstants.routes.categories.INITIAL}/${parentId}`))
             .then(() => props.onClose())
             .catch(thunkError => {
                 if (thunkError.name === 'ApiError' && thunkError.description.httpCode === 400) {
