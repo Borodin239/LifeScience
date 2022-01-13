@@ -7,10 +7,13 @@ import Menu from "@material-ui/core/Menu";
 import CreateCategoryDialog from "../dialogs/CreateCategory/CreateCategoryDialog";
 import DeleteCategoryDialog from "../dialogs/DeleteCategory/DeleteCategoryDialog";
 import RenameCategoryDialog from "../dialogs/RenameCategory/RenameCategoryDialog";
+import {useHistory} from "react-router-dom";
+import appRoutesNames from "../../../../infrastructure/common/appRoutesNames";
 
 const CategoryAdminSettings: React.FC<{ categoryId: number }> = ({categoryId}) => {
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const history = useHistory()
 
     const handleSettingsOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -45,6 +48,7 @@ const CategoryAdminSettings: React.FC<{ categoryId: number }> = ({categoryId}) =
             {/*todo add check that this category is empty*/}
             <MenuItem onClick={handleMenuItemClick(setDeleteDialogOpen)}>Delete this category</MenuItem>
             <MenuItem onClick={handleMenuItemClick(setRenameDialogOpen)}>Rename this category</MenuItem>
+            <MenuItem onClick={(() => history.push(`${appRoutesNames.CREATE_APPROACH}/${categoryId}`))}>Create new public approach</MenuItem>
         </Menu>
     )
 
