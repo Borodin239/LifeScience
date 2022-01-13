@@ -1,5 +1,7 @@
 package com.jetbrains.life_science.controller.search
 
+import com.jetbrains.life_science.controller.search.view.SuggestView
+import com.jetbrains.life_science.controller.search.view.SuggestViewMapper
 import com.jetbrains.life_science.search.dto.SearchQueryDTO
 import com.jetbrains.life_science.search.dto.SearchQueryDTOToQueryInfoAdapter
 import com.jetbrains.life_science.search.result.SearchResult
@@ -14,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/search")
 class SearchController(
-    val service: SearchService
+    val service: SearchService,
+    val viewMapper: SuggestViewMapper
 ) {
 
     @Operation(summary = "Searches entities")
@@ -27,9 +30,10 @@ class SearchController(
 
     @Operation(summary = "Searches entities by prefix")
     @PostMapping("/suggest")
-    fun suggest(@Validated @RequestBody queryDTO: SearchQueryDTO): List<SearchResult> {
-        return service.suggest(
+    fun suggest(@Validated @RequestBody queryDTO: SearchQueryDTO): List<SuggestView> {
+        val terms = service.suggest(
             SearchQueryDTOToQueryInfoAdapter(queryDTO, service.supportedTypes)
         )
+        return viewMapper.toViews(terms)
     }
 }

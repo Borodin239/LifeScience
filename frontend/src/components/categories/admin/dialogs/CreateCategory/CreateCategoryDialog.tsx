@@ -5,13 +5,14 @@ import {useStyles} from "../dialog-styles";
 import splitThunkPayload from "../../../../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../../../../redux/utils/handleThunkErrorBase";
 import {createCategory} from "../../../../../redux/categories/thunkActions";
-import {useAppDispatch, useAppSelector} from "../../../../../redux/hooks";
+import {useAppDispatch} from "../../../../../redux/hooks";
 import {useHistory} from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 
 export type CategoryDialogProps = {
     isOpen: boolean,
     categoryId: number,
+    categoryName?: string,
     onClose: () => void,
 }
 //todo move this type somewhere
@@ -23,18 +24,17 @@ const CreateCategoryDialog: React.FC<CategoryDialogProps> = (props) => {
     const [alertText, setAlertText] = useState<string | null>(null)
     const [categoryName, setCategoryName] = useState<string>('')
     const history = useHistory()
-    const id = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).pop()
 
     const handleCreateClick = (event: React.FormEvent) => {
         event.preventDefault();
         dispatch(createCategory({
-            name: categoryName,
+            name: categoryName.trim(),
             aliases: [
                 {
                     alias: "string"
                 }
             ],
-            initialParentId: id!
+            initialParentId: props.categoryId.toString()
         }))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
