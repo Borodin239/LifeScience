@@ -5,6 +5,7 @@ import com.jetbrains.life_science.controller.publisher.dto.PublisherDTO
 import com.jetbrains.life_science.exception.auth.ForbiddenOperationException
 import com.jetbrains.life_science.judge.service.JudgePublishService
 import com.jetbrains.life_science.review.request.service.publish.PublishApproachRequestService
+import com.jetbrains.life_science.review.request.service.publish.PublishProtocolRequestService
 import com.jetbrains.life_science.user.credentials.entity.Credentials
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 class PublisherController(
     val judgePublishService: JudgePublishService,
     val publishApproachRequestService: PublishApproachRequestService,
+    val publishProtocolRequestService: PublishProtocolRequestService,
     val draftApproachService: DraftApproachService
 ) {
     @Operation(summary = "Publish existing draft approach")
@@ -31,5 +33,18 @@ class PublisherController(
         }
         val request = publishApproachRequestService.get(dto.id)
         judgePublishService.judgeApproachPublish(request)
+    }
+
+    @Operation(summary = "Publish existing draft protocol")
+    @PostMapping("/protocol")
+    fun publishProtocol(
+        @AuthenticationPrincipal credentials: Credentials,
+        @RequestBody dto: PublisherDTO
+    ) {
+        if (!credentials.isAdminOrModerator()) {
+            throw ForbiddenOperationException()
+        }
+        val request = publishProtocolRequestService.get(dto.id)
+        judgePublishService.judgeProtocolPublish(request)
     }
 }
