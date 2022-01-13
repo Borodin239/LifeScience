@@ -7,7 +7,7 @@ import javax.validation.constraints.Pattern
 data class CategoryCreationDTO(
     @field:Pattern(
         regexp = categoryNameRegexp,
-        message = "Category name must contain only allowed characters"
+        message = "Category name must contain at least 3 and no more than 60 characters."
     )
     val name: String,
     @field:Valid

@@ -11,28 +11,27 @@ import handleThunkErrorBase from "../../../../../redux/utils/handleThunkErrorBas
 import Alert from "@material-ui/lab/Alert";
 import apiConstants from "../../../../../infrastructure/http/api/apiConstants";
 
-const RenameCategoryDialog: React.FC<CategoryDialogProps> = ({isOpen, onClose}) => {
+const RenameCategoryDialog: React.FC<CategoryDialogProps> = (props) => {
 
     const classes = useStyles()
     const dispatch = useAppDispatch()
     const [alertText, setAlertText] = useState<string | null>(null)
     const history = useHistory()
-    const id = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).pop()
     const [newName, setNewName] = useState<string>('')
     const parentId = useAppSelector(state => state.navigationReducer.path).map(i => i.route.split("/").pop()).reverse()[1]
 
     const handleRenameClick = () => {
         dispatch(updateCategory({
             categoryInfo: {
-                name: newName,
+                name: newName.trim(),
                 aliases: [],
                 parentsToAdd: [],
                 parentsToDelete: []
-            }, id: id!
+            }, id: props.categoryId.toString()
         }))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
-            .then(() => onClose())
+            .then(() => props.onClose())
             .then(() => history.replace(`${apiConstants.routes.categories.INITIAL}/${parentId}`)) // TODO
             .catch(thunkError => {
                 if (thunkError.name === 'ApiError' && thunkError.description.httpCode === 400) {
@@ -44,8 +43,8 @@ const RenameCategoryDialog: React.FC<CategoryDialogProps> = ({isOpen, onClose}) 
     }
 
     return (
-        <Dialog open={isOpen} onClose={() => { onClose(); setAlertText(null) }} classes={{paper: classes.paper}}>
-            <DialogTitle>Rename category</DialogTitle>
+        <Dialog open={props.isOpen} onClose={() => { props.onClose(); setAlertText(null) }} classes={{paper: classes.paper}}>
+            <DialogTitle>Rename "{props.categoryName}" category</DialogTitle>
             <TextField variant="outlined" placeholder="Enter new name" onChange={(e) => setNewName(e.target.value)}/>
             <Button className={classes.submit} onClick={handleRenameClick}>Rename</Button>
             {alertText &&

@@ -310,53 +310,14 @@ internal class SearchServiceTest {
             from = 0,
             size = 100
         )
-        val expectedResults = setOf(
-            CategorySearchResult(
-                categoryId = 2,
-                name = "catalog 1",
-                paths = listOf(
-                    emptyList()
-                )
-            ),
-            CategorySearchResult(
-                categoryId = 3, name = "catalog",
-                paths = listOf(
-                    listOf(
-                        PathUnit(1, "root")
-                    )
-                )
-            ),
-            CategorySearchResult(
-                categoryId = 4, name = "catalog",
-                paths = listOf(
-                    listOf(
-                        PathUnit(1, "root"),
-                        PathUnit(2, "catalog 2")
-                    )
-                )
-            ),
-            CategorySearchResult(
-                categoryId = 5, name = "catalog 1",
-                paths = listOf(
-                    listOf(
-                        PathUnit(1, "root"),
-                        PathUnit(2, "catalog 2")
-                    ),
-                    listOf(
-                        PathUnit(1, "root"),
-                        PathUnit(2, "catalog 2"),
-                        PathUnit(4, "catalog")
-                    )
-                )
-            )
-        )
+        val expectedResults = setOf("catalog 1", "catalog", "catalog 2", "catalog one")
 
         // Action
         val searchLowerCaseResult = service.suggest(searchQueryInfo)
         val searchMixedCaseResult = service.suggest(mixedCaseSearchQueryInfo)
 
         // Assert
-        assertEquals(expectedResults, searchLowerCaseResult.toSet())
-        assertEquals(expectedResults, searchMixedCaseResult.toSet())
+        assertEquals(expectedResults, searchLowerCaseResult.buckets.map { it.key }.toSet())
+        assertEquals(expectedResults, searchMixedCaseResult.buckets.map { it.key }.toSet())
     }
 }

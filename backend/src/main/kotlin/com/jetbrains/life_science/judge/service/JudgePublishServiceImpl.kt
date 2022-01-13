@@ -1,5 +1,7 @@
 package com.jetbrains.life_science.judge.service
 
+import com.jetbrains.life_science.container.approach.service.DraftApproachService
+import com.jetbrains.life_science.container.protocol.service.DraftProtocolService
 import com.jetbrains.life_science.exception.judge.RequestJudgeWrongStateException
 import com.jetbrains.life_science.judge.events.JudgePublishApproachApproveEvent
 import com.jetbrains.life_science.judge.events.JudgePublishApproachRejectEvent
@@ -19,7 +21,9 @@ import javax.transaction.Transactional
 class JudgePublishServiceImpl(
     val publisher: PublisherService,
     val publishApproachRequestService: PublishApproachRequestService,
+    val draftApproachService: DraftApproachService,
     val publishProtocolRequestService: PublishProtocolRequestService,
+    val draftProtocolService: DraftProtocolService,
     val helper: JudgeHelper
 ) : JudgePublishService {
 
@@ -38,6 +42,7 @@ class JudgePublishServiceImpl(
                 publishApproachRequestService,
                 JudgePublishApproachApproveEvent(publicApproach.id)
             )
+            draftApproachService.delete(request.approach.id)
         } else {
             helper.cancelRequest(
                 request,
@@ -62,6 +67,7 @@ class JudgePublishServiceImpl(
                 publishProtocolRequestService,
                 JudgePublishProtocolApproveEvent(publicProtocol.id)
             )
+            draftProtocolService.delete(request.protocol.id)
         } else {
             helper.cancelRequest(
                 request,

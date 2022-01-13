@@ -3,3 +3,7 @@ import {ApproachSearchResultView} from "./ApproachSearchResultView/ApproachSearc
 import {ProtocolSearchResultView} from "./ProtocolSearchResultView/ProtocolSearchResultView";
 
 export type SearchResultView = CategorySearchResultView | ApproachSearchResultView | ProtocolSearchResultView
+
+export type SearchSuggestResultView = {
+    "name": string
+}
