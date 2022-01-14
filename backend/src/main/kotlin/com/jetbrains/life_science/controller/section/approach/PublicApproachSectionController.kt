@@ -2,7 +2,7 @@ package com.jetbrains.life_science.controller.section.approach
 
 import com.jetbrains.life_science.container.approach.entity.PublicApproach
 import com.jetbrains.life_science.container.approach.service.PublicApproachService
-import com.jetbrains.life_science.content.publish.service.ContentService
+import com.jetbrains.life_science.content.version.service.ContentVersionService
 import com.jetbrains.life_science.controller.section.dto.SectionCreationDTO
 import com.jetbrains.life_science.controller.section.dto.SectionCreationDTOToInfoAdapter
 import com.jetbrains.life_science.controller.section.dto.SectionDTO
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*
 class PublicApproachSectionController(
     val publicApproachService: PublicApproachService,
     val sectionService: SectionService,
-    val contentService: ContentService,
+    val contentVersionService: ContentVersionService,
     val viewMapper: SectionViewMapper
 ) {
 
@@ -35,7 +35,7 @@ class PublicApproachSectionController(
         @PathVariable sectionId: Long,
     ): SectionView {
         val section = getSectionSecured(approachId, sectionId)
-        val content = contentService.findBySectionId(sectionId)
+        val content = contentVersionService.findBySectionId(sectionId)
         return viewMapper.toView(section, content?.text)
     }
 
@@ -83,8 +83,9 @@ class PublicApproachSectionController(
         val prevSection = dto.prevSectionId?.let { getSectionSecured(approach.id, it) }
         val info = SectionDTOToInfoAdapter(dto, approach.sections, prevSection)
         val result = sectionService.update(section, info)
+        val content = contentVersionService.findBySectionId(sectionId)
 
-        return viewMapper.toView(result)
+        return viewMapper.toView(result, content?.text)
     }
 
     private fun getApproachSecured(
