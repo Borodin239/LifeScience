@@ -20,5 +20,11 @@ export const sectionApi = {
     },
     getDraftProtocolSection(protocolId: string, sectionId: string) {
         return apiClientSecure.get(`${apiConstants.routes.protocol.BASE}${apiConstants.routes.protocol.DRAFT}/${protocolId}${apiConstants.routes.section.BASE}/${sectionId}`)
-    }
+    },
+    postPublicApproachSection(dto: PostDraftProtocolDto, approachId: string) {
+        return apiClientSecure.post(`${apiConstants.routes.publicApproach.BASE}/${approachId}${apiConstants.routes.section.BASE}`, dto)
+    },
+    patchPublicApproachSection(dto: PatchDraftProtocolSectionDto, approachId: string, sectionId: string) {
+        return apiClientSecure.patch(`${apiConstants.routes.publicApproach.BASE}/${approachId}${apiConstants.routes.section.BASE}/${sectionId}`, dto)
+    },
 }

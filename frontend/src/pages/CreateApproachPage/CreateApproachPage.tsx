@@ -1,15 +1,11 @@
 import {Box, Button, TextField, Typography} from "@material-ui/core";
 import {useHistory, useParams} from "react-router-dom";
-// import {useCreateProtocolPageStyles} from "./useCreateProtocolPageStyles";
 import {useEffect, useState} from "react";
-import CenteredLoader from "../../elements/Loaders/CenteredLoader";
-import {getPublicProtocolThunk, postDraftProtocolThunk} from "../../redux/protocol/thunkActions";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {
-    getProtocolSectionThunk,
-    patchDraftProtocolSectionThunk,
-    postDraftProtocolSectionThunk
+    patchPublicApproachSectionThunk,
+    postPublicApproachSectionThunk
 } from "../../redux/section/thunkActions";
 import handleThunkErrorBase from "../../redux/utils/handleThunkErrorBase";
 import CreateSection from "../../components/create-section/CreateSection";
@@ -17,6 +13,7 @@ import {updateCurrentUserThunk} from "../../redux/users/thunkActions";
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
 import {PostDraftProtocolDto} from "../../infrastructure/http/api/dto/section/PostDraftProtocolDto";
 import {useCreateProtocolPageStyles} from "../CreateProtocolPage/useCreateProtocolPageStyles";
+import {postPublicApproachThunk} from "../../redux/publicApproach/thunkActions";
 
 
 type CreateApproachParams = {
@@ -31,44 +28,39 @@ const CreateApproachPage = () => {
     const dispatch = useAppDispatch();
     const history = useHistory();
 
-    const [isLoading, setIsLoading] = useState(!!initialCategoryId); // no loading when no source protocol
-
     const [text, setText] = useState("");
-    const [sectionName, setSectionName] = useState("");
+    const [approachName, setApproachName] = useState("");
 
     const isAuthorized = useAppSelector(state => state.authReducer.isAuthorized);
 
-    const handleSectionNameChange = (e: any) => {
-        setSectionName(e.target.value)
+    const handleApproachNameChange = (e: any) => {
+        setApproachName(e.target.value)
     }
 
     const handleSubmit = () => {
-        setIsLoading(true)
-        dispatch(
-
-            postDraftProtocolThunk({name: protocolName, approachId: approachId}))
+        dispatch(postPublicApproachThunk({name: approachName, initialCategoryId: parseInt(initialCategoryId)}))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then(payload => {
-                const protocolId = payload.id;
-                const dto = {name: "Protocol", hidden: false} as PostDraftProtocolDto;
-                return dispatch(postDraftProtocolSectionThunk({dto: dto, protocolId: protocolId}))
+                const approachId = payload.id;
+                const dto = {name: "General Info", hidden: true} as PostDraftProtocolDto;
+                return dispatch(postPublicApproachSectionThunk({dto: dto, approachId: approachId}))
                     .unwrap()
                     .then(payload => splitThunkPayload(payload))
                     .then(section => {
                         const dto = {...section, content: text};
-                        return dispatch(patchDraftProtocolSectionThunk({
-                            dto: dto,
-                            protocolId: protocolId,
-                            sectionId: section.id,
-                        }))
+                        return dispatch(
+                            patchPublicApproachSectionThunk({
+                                dto: dto,
+                                approachId: approachId,
+                                sectionId: section.id,
+                            }))
                     })
                     .then(payload => payload.payload)
                     .then(payload => splitThunkPayload(payload))
-                    .then(() => history.push(`${appRoutesNames.DRAFT_PROTOCOLS}/${protocolId}`))
+                    .then(() => history.push(`${appRoutesNames.APPROACHES}/${approachId}`))
             })
             .catch(thunkError => {
-                setIsLoading(false);
                 handleThunkErrorBase(thunkError, history, dispatch);
             });
     }
@@ -84,38 +76,6 @@ const CreateApproachPage = () => {
         history.replace(`${appRoutesNames.SIGN_IN}`)
     }
 
-    // useEffect(() => {
-    //     if (!initialCategoryId) return
-    //     setIsLoading(true);
-    //     dispatch(
-    //
-    //
-    //         getPublicProtocolThunk({approachId: approachId, protocolId: sourceProtocolId}))
-    //         .unwrap()
-    //         .then(payload => splitThunkPayload(payload))
-    //         .then(payload => {
-    //             return payload.sections[0]
-    //         })
-    //         .then(section => {
-    //             return dispatch(getProtocolSectionThunk({
-    //                 approachId: approachId,
-    //                 protocolId: sourceProtocolId,
-    //                 sectionId: section.id
-    //             }))
-    //         })
-    //         .then(payload => payload.payload)
-    //         .then(payload => splitThunkPayload(payload))
-    //         .then(payload => {
-    //             setText(payload.content);
-    //             setIsLoading(false);
-    //         })
-    //         .catch(thunkError => {
-    //             handleThunkErrorBase(thunkError, history, dispatch);
-    //         });
-    // }, [initialCategoryId, dispatch, history])
-    //
-    // if (isLoading) return <CenteredLoader className={classes.loader}/>
-
     return (
         <Box>
             <Box>
@@ -124,9 +84,9 @@ const CreateApproachPage = () => {
                 </Typography>
             </Box>
             <Box className={classes.editor}>
-                <TextField placeholder={"Enter section name"}
-                           onChange={handleSectionNameChange}
-                           value={sectionName}
+                <TextField placeholder={"Enter approach name"}
+                           onChange={handleApproachNameChange}
+                           value={approachName}
                            className={classes.protocolName}/>
                 <CreateSection text={text} setText={setText}/>
             </Box>
@@ -135,7 +95,7 @@ const CreateApproachPage = () => {
                         color="primary"
                         className={classes.submitButton}
                         onClick={handleSubmit}
-                        disabled={!sectionName}>
+                        disabled={!approachName}>
                     Create
                 </Button>
             </Box>
