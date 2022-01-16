@@ -78,7 +78,7 @@ export const getCategoryPathsThunk = createAsyncThunk<PathUnitView[], // что 
     }
 )
 
-export const createCategory = createAsyncThunk<PathUnitView[],
+export const createCategory = createAsyncThunk<PathUnitView,
     CreateCategoryDto,
     {
         dispatch: AppDispatch,
@@ -88,7 +88,9 @@ export const createCategory = createAsyncThunk<PathUnitView[],
     `${CATEGORIES_ACTION_TYPE_PREFIX}${CategoriesActionThunkTypes.CREATE_CATEGORY}`,
     async (categoryInfo, thunkAPI) => {
         try {
-            await categoriesApi.createCategory(categoryInfo);
+            const response = await categoriesApi.createCategory(categoryInfo);
+
+            return response.data as PathUnitView;
         } catch (err) {
             console.log(err)
             return onThunkError(err, thunkAPI);
