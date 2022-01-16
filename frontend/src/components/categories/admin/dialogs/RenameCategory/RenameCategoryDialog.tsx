@@ -9,7 +9,7 @@ import {updateCategory} from "../../../../../redux/categories/thunkActions";
 import splitThunkPayload from "../../../../../redux/utils/splitThunkPayload";
 import handleThunkErrorBase from "../../../../../redux/utils/handleThunkErrorBase";
 import Alert from "@material-ui/lab/Alert";
-import {pathMove} from "../../../../../redux/navigation/slice";
+import {pathMove, ROOT_NAVIGATION_UNIT} from "../../../../../redux/navigation/slice";
 import {getRedirectionRoute} from "../../../../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
 
 const RenameCategoryDialog: React.FC<CategoryDialogProps> = ({
@@ -46,8 +46,13 @@ const RenameCategoryDialog: React.FC<CategoryDialogProps> = ({
                 })))
                 .then(() => setCategoryName(newName))
                 .catch(thunkError => {
-                    if (thunkError.name === 'ApiError' && thunkError.description.httpCode === 400) {
-                        setAlertText(thunkError.description.message);
+                    if (thunkError.name === 'ApiError') {
+                        if (thunkError.description.httpCode === 400) {
+                            setAlertText(thunkError.description.message);
+                        }
+                        if (thunkError.description.httpCode === 404) {
+                            history.push(ROOT_NAVIGATION_UNIT.route);
+                        }
                     } else {
                         handleThunkErrorBase(thunkError, history, dispatch);
                     }
