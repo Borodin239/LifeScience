@@ -9,6 +9,7 @@ import {useAppDispatch} from "../../../../../redux/hooks";
 import {useHistory} from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 import {CategoryView} from "../../../../../infrastructure/http/api/view/category/CategoryView";
+import {ROOT_NAVIGATION_UNIT} from "../../../../../redux/navigation/slice";
 
 export type CategoryDialogProps = {
     isOpen: boolean,
@@ -49,8 +50,13 @@ const CreateCategoryDialog: React.FC<CategoryDialogProps> = ({
             .then(payload => updateCategoryCatalog!(payload))
             .then(() => onClose())
             .catch(thunkError => {
-                if (thunkError.name === 'ApiError' && thunkError.description.httpCode === 400) {
-                    setAlertText(thunkError.description.message);
+                if (thunkError.name === 'ApiError') {
+                    if (thunkError.description.httpCode === 400) {
+                        setAlertText(thunkError.description.message);
+                    }
+                    if (thunkError.description.httpCode === 404) {
+                        history.push(ROOT_NAVIGATION_UNIT.route);
+                    }
                 } else {
                     handleThunkErrorBase(thunkError, history, dispatch);
                 }
