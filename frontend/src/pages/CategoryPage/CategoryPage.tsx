@@ -102,6 +102,10 @@ const CategoryPage = () => {
             });
     }, [createCatalogNode, dispatch, history]);
 
+    const updateCategoryCatalog = (categoryView: CategoryView) => {
+        setCategoryCatalog([createCatalogNode("category", categoryView), ...categoryCatalog])
+    }
+
     useEffect(() => {
         developmentLog(`targetPlotsParams: ${JSON.stringify(categoryId)}`);
 
@@ -152,7 +156,9 @@ const CategoryPage = () => {
                             <GlobalUserLocation/>
                             {(userRoles && userRoles.includes("ROLE_ADMIN")) ?
                                 <CategoryAdminSettings categoryId={parseInt(categoryId)}
-                                                       categoryName={categoryName!}/> : null}
+                                                       categoryName={categoryName!}
+                                                       setCategoryName={setCategoryName}
+                                                       updateCategoryCatalog={updateCategoryCatalog}/> : null}
                         </Box>
                     )
             }

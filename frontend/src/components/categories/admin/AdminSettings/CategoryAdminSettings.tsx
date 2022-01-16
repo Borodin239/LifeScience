@@ -7,10 +7,20 @@ import Menu from "@material-ui/core/Menu";
 import CreateCategoryDialog from "../dialogs/CreateCategory/CreateCategoryDialog";
 import DeleteCategoryDialog from "../dialogs/DeleteCategory/DeleteCategoryDialog";
 import RenameCategoryDialog from "../dialogs/RenameCategory/RenameCategoryDialog";
+import {CategoryView} from "../../../../infrastructure/http/api/view/category/CategoryView";
 import {useHistory} from "react-router-dom";
 import appRoutesNames from "../../../../infrastructure/common/appRoutesNames";
 
-const CategoryAdminSettings: React.FC<{ categoryId: number, categoryName: string }> = ({categoryId, categoryName}) => {
+const CategoryAdminSettings: React.FC<{
+    categoryId: number, categoryName: string, setCategoryName: (categoryName: string) => void,
+    updateCategoryCatalog: (categoryCatalog: CategoryView) => void;
+}> = ({
+          categoryId,
+          categoryName,
+          setCategoryName,
+          updateCategoryCatalog
+      }) => {
+
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const history = useHistory()
@@ -61,11 +71,13 @@ const CategoryAdminSettings: React.FC<{ categoryId: number, categoryName: string
                     </IconButton>
                     {renderMenu}
                     <CreateCategoryDialog categoryId={categoryId} isOpen={createDialogOpen}
-                                          onClose={handleDialogCloseClick(setCreateDialogOpen)}/>
+                                          onClose={handleDialogCloseClick(setCreateDialogOpen)}
+                                          updateCategoryCatalog={updateCategoryCatalog}/>
                     <DeleteCategoryDialog categoryId={categoryId} categoryName={categoryName} isOpen={deleteDialogOpen}
                                           onClose={handleDialogCloseClick(setDeleteDialogOpen)}/>
                     <RenameCategoryDialog categoryId={categoryId} categoryName={categoryName} isOpen={renameDialogOpen}
-                                          onClose={handleDialogCloseClick(setRenameDialogOpen)}/>
+                                          onClose={handleDialogCloseClick(setRenameDialogOpen)}
+                                          setCategoryName={setCategoryName}/>
                 </> : null
             }
         </>
