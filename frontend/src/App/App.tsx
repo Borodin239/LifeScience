@@ -20,6 +20,7 @@ import DraftProtocolPage from "../pages/DraftProtocolPage/DraftProtocolPage";
 import WorkspacePage from "../pages/ProfilePage/WorkspacePage";
 import {EmailConfirmationPage} from "../pages/messagePages/EmailConfirmationPage";
 import {TokenValidationPage} from "../pages/messagePages/TokenValidationPage";
+import CreateApproachPage from "../pages/CreateApproachPage/CreateApproachPage";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -57,6 +58,8 @@ function App() {
                                            render={() => <CategoryPage/>}/>
                                     <Route exact path={`${appRoutesNames.CREATE_PROTOCOL}/:approachId(\\d{1,11})/:sourceProtocolId(\\d{1,11})?`}
                                            render={() => <CreateProtocolPage/>}/>
+                                    <Route exact path={`${appRoutesNames.CREATE_APPROACH}/:initialCategoryId(\\d{1,11})`}
+                                           render={() => <CreateApproachPage/>}/>
                                     <Route exact path={appRoutesNames.SIGN_IN}
                                            render={() => <SignInForm/>}/>
                                     <Route exact path={appRoutesNames.SIGN_UP}

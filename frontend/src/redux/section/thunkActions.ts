@@ -14,7 +14,8 @@ enum SectionActionThunkTypes {
     GET_PROTOCOL_SECTION = "/getProtocolSection",
     PATCH_DRAFT_PROTOCOL_SECTION = "/patchDraftProtocolSection",
     POST_DRAFT_PROTOCOL_SECTION = "/postDraftProtocolSection",
-    GET_DRAFT_PROTOCOL_SECTION = "/getDraftProtocolSection",
+    POST_PUBLIC_APPROACH_SECTION = "/postPublicApproachSection",
+    PATCH_PUBLIC_APPROACH_SECTION = "/patchPublicApproachSection",
 }
 
 type GetApproachSectionArguments = {
@@ -52,8 +53,7 @@ export const getApproachSectionThunk = createAsyncThunk<SectionView, // что �
     }
 )
 
-export const getProtocolSectionThunk = createAsyncThunk<
-    SectionView, // что возвращает при fulfilled
+export const getProtocolSectionThunk = createAsyncThunk<SectionView, // что возвращает при fulfilled
     GetProtocolSectionArguments, // что принимает как аргумент при dispatch
     { // деструктуризация thunkAPI
         dispatch: AppDispatch,
@@ -78,8 +78,7 @@ type PatchDraftProtocolArguments = {
     sectionId: string,
 }
 
-export const patchDraftProtocolSectionThunk = createAsyncThunk<
-    SectionView, // что возвращает при fulfilled
+export const patchDraftProtocolSectionThunk = createAsyncThunk<SectionView, // что возвращает при fulfilled
     PatchDraftProtocolArguments, // что принимает как аргумент при dispatch
     { // деструктуризация thunkAPI
         dispatch: AppDispatch,
@@ -103,8 +102,7 @@ type PostDraftProtocolArguments = {
     protocolId: string,
 }
 
-export const postDraftProtocolSectionThunk = createAsyncThunk<
-    SectionView, // что возвращает при fulfilled
+export const postDraftProtocolSectionThunk = createAsyncThunk<SectionView, // что возвращает при fulfilled
     PostDraftProtocolArguments, // что принимает как аргумент при dispatch
     { // деструктуризация thunkAPI
         dispatch: AppDispatch,
@@ -123,8 +121,7 @@ export const postDraftProtocolSectionThunk = createAsyncThunk<
     }
 )
 
-export const getDraftProtocolSectionThunk = createAsyncThunk<
-    SectionView, // что возвращает при fulfilled
+export const getDraftProtocolSectionThunk = createAsyncThunk<SectionView, // что возвращает при fulfilled
     GetDraftProtocolSectionArguments, // что принимает как аргумент при dispatch
     { // деструктуризация thunkAPI
         dispatch: AppDispatch,
@@ -140,5 +137,53 @@ export const getDraftProtocolSectionThunk = createAsyncThunk<
             return onThunkError(err, thunkAPI);
         }
 
+    }
+)
+
+type PostPublicApproachArguments = {
+    dto: PostDraftProtocolDto,
+    approachId: string,
+}
+
+export const postPublicApproachSectionThunk = createAsyncThunk<SectionView, // что возвращает при fulfilled
+    PostPublicApproachArguments, // что принимает как аргумент при dispatch
+    { // деструктуризация thunkAPI
+        dispatch: AppDispatch,
+        rejectValue: ApiError
+    }>(
+    `${SECTION_ACTION_TYPE_PREFIX}${SectionActionThunkTypes.POST_PUBLIC_APPROACH_SECTION}`,
+    async ({dto, approachId}, thunkAPI) => {
+        try {
+            const response = await sectionApi.postPublicApproachSection(dto, approachId);
+
+            return response.data as SectionView
+        } catch (err) {
+            return onThunkError(err, thunkAPI);
+        }
+
+    }
+)
+
+type PatchPublicApproachArguments = {
+    dto: PatchDraftProtocolSectionDto,
+    approachId: string,
+    sectionId: string,
+}
+
+export const patchPublicApproachSectionThunk = createAsyncThunk<SectionView, // что возвращает при fulfilled
+    PatchPublicApproachArguments, // что принимает как аргумент при dispatch
+    { // деструктуризация thunkAPI
+        dispatch: AppDispatch,
+        rejectValue: ApiError
+    }>(
+    `${SECTION_ACTION_TYPE_PREFIX}${SectionActionThunkTypes.PATCH_PUBLIC_APPROACH_SECTION}`,
+    async ({dto, approachId, sectionId}, thunkAPI) => {
+        try {
+            const response = await sectionApi.patchPublicApproachSection(dto, approachId, sectionId);
+
+            return response.data as SectionView
+        } catch (err) {
+            return onThunkError(err, thunkAPI);
+        }
     }
 )
