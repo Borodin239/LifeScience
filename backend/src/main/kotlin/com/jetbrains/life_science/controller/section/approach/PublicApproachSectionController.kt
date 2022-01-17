@@ -39,7 +39,7 @@ class PublicApproachSectionController(
         return viewMapper.toView(section, content?.text)
     }
 
-    @Operation(summary = "Creates one new PublicApproach section")
+    @Operation(summary = "Create new PublicApproach section")
     @PostMapping
     fun createSection(
         @PathVariable approachId: Long,
@@ -54,7 +54,7 @@ class PublicApproachSectionController(
         return viewMapper.toView(section)
     }
 
-    @Operation(summary = "Deletes an existing PublicApproach section")
+    @Operation(summary = "Delete existed PublicApproach section")
     @DeleteMapping("/{sectionId}")
     fun delete(
         @PathVariable approachId: Long,
@@ -67,7 +67,7 @@ class PublicApproachSectionController(
         sectionService.deleteById(sectionId, approach.sections)
     }
 
-    @Operation(summary = "Updates an existing PublicApproach section")
+    @Operation(summary = "Update existing PublicApproach section.")
     @PatchMapping("/{sectionId}")
     fun updateSection(
         @PathVariable approachId: Long,

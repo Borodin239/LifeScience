@@ -59,16 +59,16 @@ class PublicApproachServiceImpl(
     }
 
     override fun hasSection(id: Long, section: Section): Boolean {
-        exists(id)
+        throwExceptionIfNotExists(id)
         return repository.existsByIdAndSectionsContains(id, section)
     }
 
     override fun hasCoAuthor(id: Long, user: Credentials): Boolean {
-        exists(id)
+        throwExceptionIfNotExists(id)
         return repository.existsByIdAndCoAuthorsContains(id, user)
     }
 
-    private fun exists(id: Long) {
+    private fun throwExceptionIfNotExists(id: Long) {
         if (!repository.existsById(id)) {
             throw ApproachNotFoundException("Public approach with id $id is not found")
         }
