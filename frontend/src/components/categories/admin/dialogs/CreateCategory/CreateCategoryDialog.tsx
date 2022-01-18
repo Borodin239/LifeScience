@@ -8,16 +8,25 @@ import {createCategory} from "../../../../../redux/categories/thunkActions";
 import {useAppDispatch} from "../../../../../redux/hooks";
 import {useHistory} from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
+import {CategoryView} from "../../../../../infrastructure/http/api/view/category/CategoryView";
+import {ROOT_NAVIGATION_UNIT} from "../../../../../redux/navigation/slice";
 
 export type CategoryDialogProps = {
-    isOpen: boolean,
     categoryId: number,
-    categoryName?: string,
     onClose: () => void,
+    isOpen: boolean,
+    updateCategoryCatalog?: (categoryCatalog: CategoryView) => void,
+    categoryName?: string,
+    setCategoryName?: (categoryName: string) => void,
 }
 //todo move this type somewhere
 
-const CreateCategoryDialog: React.FC<CategoryDialogProps> = (props) => {
+const CreateCategoryDialog: React.FC<CategoryDialogProps> = ({
+                                                                 categoryId,
+                                                                 onClose,
+                                                                 isOpen,
+                                                                 updateCategoryCatalog
+                                                             }) => {
 
     const classes = useStyles()
     const dispatch = useAppDispatch()
@@ -34,15 +43,20 @@ const CreateCategoryDialog: React.FC<CategoryDialogProps> = (props) => {
                     alias: "string"
                 }
             ],
-            initialParentId: props.categoryId.toString()
+            initialParentId: categoryId.toString()
         }))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
-            .then(() => props.onClose())
-            .then(() => document.location.reload())
+            .then(payload => updateCategoryCatalog!(payload))
+            .then(() => onClose())
             .catch(thunkError => {
-                if (thunkError.name === 'ApiError' && thunkError.description.httpCode === 400) {
-                    setAlertText(thunkError.description.message);
+                if (thunkError.name === 'ApiError') {
+                    if (thunkError.description.httpCode === 400) {
+                        setAlertText(thunkError.description.message);
+                    }
+                    if (thunkError.description.httpCode === 404) {
+                        history.push(ROOT_NAVIGATION_UNIT.route);
+                    }
                 } else {
                     handleThunkErrorBase(thunkError, history, dispatch);
                 }
@@ -52,15 +66,18 @@ const CreateCategoryDialog: React.FC<CategoryDialogProps> = (props) => {
     return (
         // TODO :: fix onClose
         // TODO :: fix alert-window size
-        <Dialog open={props.isOpen} onClose={() => { props.onClose(); setAlertText(null) }} classes={{paper: classes.paper}} style={{width: '100%'}}>
+        <Dialog open={isOpen} onClose={() => {
+            onClose();
+            setAlertText(null)
+        }} classes={{paper: classes.paper}} style={{width: '100%'}}>
             <DialogTitle>Create new category</DialogTitle>
             <TextField variant='outlined' placeholder={"Enter category name"}
                        onChange={(e) => setCategoryName(e.target.value)}/>
             <Button className={classes.submit} onClick={(e) => handleCreateClick(e)}>Create</Button>
             {alertText &&
-            <Alert severity="error" style={{marginTop: 10}}>
-                {alertText}
-            </Alert>}
+                <Alert severity="error" style={{marginTop: 10}}>
+                    {alertText}
+                </Alert>}
         </Dialog>
     )
 }
