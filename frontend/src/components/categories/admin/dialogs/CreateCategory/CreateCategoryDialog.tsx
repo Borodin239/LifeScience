@@ -17,7 +17,7 @@ export type CategoryDialogProps = {
     isOpen: boolean,
     updateCategoryCatalog?: (categoryCatalog: CategoryView) => void,
     categoryName?: string,
-    setCategoryName?: (categoryName: string) => void
+    setCategoryName?: (categoryName: string) => void;
 }
 //todo move this type somewhere
 
