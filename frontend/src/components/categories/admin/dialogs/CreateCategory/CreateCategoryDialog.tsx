@@ -12,12 +12,12 @@ import {CategoryView} from "../../../../../infrastructure/http/api/view/category
 import {ROOT_NAVIGATION_UNIT} from "../../../../../redux/navigation/slice";
 
 export type CategoryDialogProps = {
-    isOpen: boolean,
     categoryId: number,
-    categoryName?: string,
     onClose: () => void,
+    isOpen: boolean,
+    updateCategoryCatalog?: (categoryCatalog: CategoryView) => void,
+    categoryName?: string,
     setCategoryName?: (categoryName: string) => void,
-    updateCategoryCatalog?: (categoryCatalog: CategoryView) => void;
 }
 //todo move this type somewhere
 
