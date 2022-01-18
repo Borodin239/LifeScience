@@ -11,7 +11,7 @@ const apiClientSecure = axios.create({
 });
 
 apiClientSecure.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${getAccessToken()}`
+    config.headers!.Authorization = `Bearer ${getAccessToken()}`
     return config;
 })
 
