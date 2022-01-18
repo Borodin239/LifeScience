@@ -58,7 +58,7 @@ const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({
             setAlertText(null)
         }} classes={{paper: classes.paper}}>
             <DialogTitle>
-                Are you sure you want to delete the "{categoryName}" category?
+                Are you sure you want to delete "{categoryName}" category?
             </DialogTitle>
             <Box className={classes.twoButtonsPanel}>
                 <Button className={classes.yesButton} onClick={handleDeleteButton}>
