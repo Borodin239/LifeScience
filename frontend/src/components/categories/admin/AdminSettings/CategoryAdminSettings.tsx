@@ -21,6 +21,7 @@ const CategoryAdminSettings: React.FC<{
           updateCategoryCatalog
       }) => {
 
+
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const history = useHistory()
