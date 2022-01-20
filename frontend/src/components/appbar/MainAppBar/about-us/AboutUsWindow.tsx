@@ -25,7 +25,7 @@ const AboutUsWindow: React.FC = () => {
     return (
         <div>
             <Button className={classes.signButton} onClick={handleClickOpen}>
-                About
+                ABOUT
             </Button>
             <Dialog
                 open={open} maxWidth='lg'

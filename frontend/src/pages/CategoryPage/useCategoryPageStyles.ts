@@ -1,9 +1,14 @@
 import {makeStyles} from "@material-ui/core/styles";
+import uiConstants from "../../infrastructure/ui/themes/uiConstants";
 
 export const useCategoryPageStyles = makeStyles((theme) => ({
+    main: {
+        background: uiConstants.mediumBlue,
+        padding: '1rem',
+        // TODO :: заполнить цветом фон до конца страницы
+    },
     upperBar: {
-        margin: theme.spacing(3, 0, 2),
-        width: '100%',
+        padding: theme.spacing(2, 0, 2),
         display: "flex",
         justifyContent: 'space-between',
     },

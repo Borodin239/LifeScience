@@ -19,6 +19,7 @@ export const useMethodPageStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 0, 2)
     },
     mainContainer: {
+        background: 'white',
         position: "relative",
         display: 'flex',
         justifyContent: 'space-between',
@@ -51,6 +52,7 @@ export const useMethodPageStyles = makeStyles((theme) => ({
         // }
     },
     content: {
+        background: 'white',
         marginTop: theme.spacing(1),
         '& img': {
             width: '100%',

@@ -3,11 +3,10 @@ import {alpha, createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 const useSearchTextFieldStyles = makeStyles((theme: Theme) =>
     createStyles({
         searchPaper: {
-            margin: '0 auto',
             marginTop: theme.spacing(1),
             display: 'flex',
             alignItems: 'center',
-            width: '500px',
+            margin: '0 80px 0 80px',
         },
         iconButton: {
             padding: theme.spacing(1),

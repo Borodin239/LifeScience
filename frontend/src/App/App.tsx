@@ -35,7 +35,7 @@ function App() {
 
     const classes = useAppStyles()
     return (
-        <div>
+        <Box className={classes.main}>
             <BrowserRouter>
                 <HandledErrorBoundary>
                     <MainAppBar/>
@@ -82,7 +82,7 @@ function App() {
                     </Switch>
                 </HandledErrorBoundary>
             </BrowserRouter>
-        </div>
+        </Box>
     );
 }
 

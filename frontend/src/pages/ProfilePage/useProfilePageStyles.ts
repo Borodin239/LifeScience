@@ -3,14 +3,14 @@ import uiConstants from "../../infrastructure/ui/themes/uiConstants";
 
 export const useProfilePageStyles = makeStyles((theme) => ({
     avatar: {
-        borderRadius: '5px',
-        height: '200px',
-        width: '200px',
+        // borderRadius: '5px',
+        height: '15rem',
+        width: '15rem',
     },
 
     button: {
         marginTop: theme.spacing(1),
-        height: '50px',
+        height: '40px',
         textDecoration: 'none',
         display: 'flex',
         alignItems: 'center',
@@ -18,9 +18,9 @@ export const useProfilePageStyles = makeStyles((theme) => ({
         fontSize: '22px',
         color: theme.palette.common.white,
         border: 'none',
-        backgroundColor: alpha(theme.palette.primary.main, 1),
+        backgroundColor: uiConstants.mediumBlue,
         '&:hover': {
-            backgroundColor: alpha(theme.palette.primary.main, 0.6),
+            backgroundColor: alpha(uiConstants.mediumBlue, 0.6),
         },
         borderRadius: '10px',
         width: "auto",

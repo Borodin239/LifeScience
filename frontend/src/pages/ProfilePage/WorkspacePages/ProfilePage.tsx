@@ -14,7 +14,7 @@ const ProfilePage = () => {
 
     return (
         <Router history={history}>
-            <Box m={5} display={"flex"}>
+            <Box p={5} display={"flex"}>
                 <Box flexBasis={"column"}>
                     <img src={avatar} className={classes.avatar} alt={'avatar'}/>
                     <Link className={classes.button} to={`${url}/info`}>
@@ -29,7 +29,7 @@ const ProfilePage = () => {
                 </Box>
 
                 <Switch>
-                    <Box paddingLeft={'50px'}>
+                    <Box paddingLeft={5}>
                         <Route exact path={`${path}/`}>
                             <AboutMePage/>
                         </Route>

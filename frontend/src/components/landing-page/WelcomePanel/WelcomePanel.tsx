@@ -17,19 +17,13 @@ const WelcomePanel = () => {
     return (
         <Box className={classes.mainContainer}>
             <Box className={classes.centerContainer}>
-                <Typography variant={'h3'} className={classes.mainName}>
-                    JetScience
-                </Typography>
-                <Typography variant={'h5'}>
-                    is a platform to unite and speed up the science.
-                </Typography>
-                <Button onClick={handleBrowseClick} className={classes.browseButton}>
-                    Browse the catalog
-                </Button>
-                <Typography variant={'h5'} className={classes.orText}>
-                    or
-                </Typography>
-                <SearchTextField placeholder={"Search for method..."}/>
+                {/*<Button onClick={handleBrowseClick} className={classes.browseButton}>*/}
+                {/*    Browse the catalog*/}
+                {/*</Button>*/}
+                {/*<Typography variant={'h5'} className={classes.orText}>*/}
+                {/*    or*/}
+                {/*</Typography>*/}
+                {/*<SearchTextField placeholder={"Search for method..."}/>*/}
             </Box>
         </Box>
     )

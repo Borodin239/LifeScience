@@ -20,11 +20,11 @@ const UnauthorizedProfile: React.FC = () => {
         <div>
             <Button className={classes.signButton}
                     onClick={handleSignInClick}>
-                Sign in
+                SIGN IN
             </Button>
             <Button className={classes.signButton}
                     onClick={handleSignUpClick}>
-                Sign up
+                SIGN UP
             </Button>
         </div>
     );
