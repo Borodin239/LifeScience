@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
         background: uiConstants.lightGrey
     },
     icon: {
-        color: theme.palette.primary.main,
+        // color: theme.palette.primary.main,
+        color: uiConstants.darkBlue,
         paddingRight: theme.spacing(1),
     },
 }), {index: 1});
@@ -38,7 +39,12 @@ const NodeBox = ({node, icon}: NodeBoxProps) => {
                 {icon}
             </Box>
             <Box>
-                <Typography style={{verticalAlign: "middle"}}>
+                <Typography style={{
+                    // TODO :: вынести в classes
+                    verticalAlign: "middle",
+                    color: uiConstants.darkBlue,
+                    textTransform: 'uppercase'
+                }}>
                     {node.name}
                 </Typography>
             </Box>

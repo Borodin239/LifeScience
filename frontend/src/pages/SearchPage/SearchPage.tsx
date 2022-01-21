@@ -56,7 +56,7 @@ const SearchPage = () => {
     }
 
     return (
-        <Box>
+        <Box m={2}>
             <Box className={classes.searchFieldContainer}>
                 <SearchTextField passedClassName={classes.searchField}/>
             </Box>

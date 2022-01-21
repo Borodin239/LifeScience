@@ -6,7 +6,7 @@ const useMenuTabsStyles = makeStyles(() => ({
             flex: '1 1 0px',
             justifyContent: 'space-evenly',
             marginTop: '25px',
-            marginBottom: '-6px'
+            marginBottom: '-1px'
         },
         tab: {
             flexGrow: 1,

@@ -53,5 +53,12 @@ export const useProfilePageStyles = makeStyles((theme) => ({
         "&:hover": {
             textDecoration: "underline",
         }
+    },
+
+    root: {
+        justifyContent: 'center'
+    },
+    scroller: {
+        flexGrow: 0,
     }
 }), {index: 1});

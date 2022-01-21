@@ -5,7 +5,8 @@ export const useInfoPanelStyles = makeStyles((theme) => ({
     mainContainer: {
         width: uiConstants.width,
         margin: 'auto',
-        flexGrow: 1
+        // flexGrow: 1,
+        // background: 'inherit'
     },
     divider: {
         backgroundColor: theme.palette.primary.main,

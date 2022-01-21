@@ -9,6 +9,7 @@ import {NotificationsPage} from "./WorkspacePages/NotificationsPage";
 import ProfilePage from "./WorkspacePages/ProfilePage";
 import {WorkingSpacePage} from "./WorkspacePages/WorkingSpacePage";
 import * as React from "react";
+import {useProfilePageStyles} from "./useProfilePageStyles";
 
 const WorkspacePage = () => {
 
@@ -16,6 +17,7 @@ const WorkspacePage = () => {
     const history = useHistory()
     const {path, url} = useRouteMatch();
     const isAuthorized = useAppSelector(state => state.authReducer.isAuthorized);
+    const classes = useProfilePageStyles()
 
     if (!isAuthorized) {
         history.replace(`${appRoutesNames.SIGN_IN}`)
@@ -28,7 +30,9 @@ const WorkspacePage = () => {
     return (
         <Box flexGrow={1} p={2}>
             <Router history={history}>
-                <Tabs centered value={value} variant="scrollable" onChange={handleChange} indicatorColor={"primary"} scrollButtons={'auto'}>
+                <Tabs classes={{ root: classes.root, scroller: classes.scroller }}
+                    value={value} variant="scrollable" onChange={handleChange} indicatorColor={"primary"}
+                      scrollButtons={'auto'} centered>
                     <Tab label="Profile" to={`${url}/profile`} component={Link}/>
                     <Tab label="Publications" to={`${url}/publications`} component={Link}/>
                     <Tab label="Communications" to={`${url}/communications`} component={Link}/>

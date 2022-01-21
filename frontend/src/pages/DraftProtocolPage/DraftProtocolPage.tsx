@@ -48,7 +48,7 @@ const DraftProtocolPage = () => {
     }
 
     return (
-        <Box>
+        <Box m={2}>
             <Box className={classes.upperBar}>
                 <Typography variant={"h5"}>
                     {protocol.name}
