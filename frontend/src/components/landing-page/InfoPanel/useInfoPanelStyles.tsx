@@ -4,9 +4,7 @@ import uiConstants from "../../../infrastructure/ui/themes/uiConstants";
 export const useInfoPanelStyles = makeStyles((theme) => ({
     mainContainer: {
         width: uiConstants.width,
-        margin: 'auto',
-        // flexGrow: 1,
-        // background: 'inherit'
+        margin: 'auto'
     },
     divider: {
         backgroundColor: theme.palette.primary.main,

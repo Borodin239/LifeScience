@@ -25,8 +25,7 @@ export const useMethodPageStyles = makeStyles((theme) => ({
         position: "relative",
         display: 'flex',
         justifyContent: 'space-between',
-        paddingTop: theme.spacing(2),
-        // flexGrow: 1
+        paddingTop: theme.spacing(2)
     },
     contentContainer: {
         width: '75%',
