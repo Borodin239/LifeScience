@@ -1,7 +1,7 @@
 import uiConstants from "../../../infrastructure/ui/themes/uiConstants";
 import ReactMarkdown from "react-markdown";
 import React from "react";
-import {useMethodPageStyles} from "../../../pages/MethodPage/method-page-styles";
+import {useMethodPageStyles} from "../../../pages/MethodPage/useMethodPageStyles";
 
 
 type MarkdownContainerProps = {

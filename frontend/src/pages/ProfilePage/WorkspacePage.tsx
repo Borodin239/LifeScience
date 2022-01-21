@@ -26,10 +26,9 @@ const WorkspacePage = () => {
     };
 
     return (
-        <Box style={{backgroundColor: 'white'}}>
+        <Box flexGrow={1} p={2}>
             <Router history={history}>
-                <Tabs centered value={value} onChange={handleChange} indicatorColor={"primary"}>
-
+                <Tabs centered value={value} variant="scrollable" onChange={handleChange} indicatorColor={"primary"} scrollButtons={'auto'}>
                     <Tab label="Profile" to={`${url}/profile`} component={Link}/>
                     <Tab label="Publications" to={`${url}/publications`} component={Link}/>
                     <Tab label="Communications" to={`${url}/communications`} component={Link}/>
@@ -39,26 +38,28 @@ const WorkspacePage = () => {
 
                 <Divider light/>
 
-                <Switch>
-                    <Route exact path={`${path}/`}>
-                        <ProfilePage/>
-                    </Route>
-                    <Route path={`${path}/profile`}>
-                        <ProfilePage/>
-                    </Route>
-                    <Route path={`${path}/communications`}>
-                        <CommunicationsPage/>
-                    </Route>
-                    <Route path={`${path}/notifications`}>
-                        <NotificationsPage/>
-                    </Route>
-                    <Route path={`${path}/working-space`}>
-                        <WorkingSpacePage/>
-                    </Route>
-                    <Route path={`${path}/publications`}>
-                        <PublicationsPage/>
-                    </Route>
-                </Switch>
+                <Box flexGrow={1} p={1}>
+                    <Switch>
+                        <Route exact path={`${path}/`}>
+                            <ProfilePage/>
+                        </Route>
+                        <Route path={`${path}/profile`}>
+                            <ProfilePage/>
+                        </Route>
+                        <Route path={`${path}/communications`}>
+                            <CommunicationsPage/>
+                        </Route>
+                        <Route path={`${path}/notifications`}>
+                            <NotificationsPage/>
+                        </Route>
+                        <Route path={`${path}/working-space`}>
+                            <WorkingSpacePage/>
+                        </Route>
+                        <Route path={`${path}/publications`}>
+                            <PublicationsPage/>
+                        </Route>
+                    </Switch>
+                </Box>
             </Router>
         </Box>
     )

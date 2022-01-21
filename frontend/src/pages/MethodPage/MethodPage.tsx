@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {Box, Fade} from "@material-ui/core";
-import {useMethodPageStyles} from "./method-page-styles";
+import {Box, Fade, useMediaQuery} from "@material-ui/core";
+import {useMethodPageStyles} from "./useMethodPageStyles";
 import {useHistory, useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
@@ -86,10 +86,11 @@ const MethodPage: React.FC = () => {
     }
 
     return (
-        <Box>
+        <Box style={{background: 'white', flexGrow: 1, alignItems: 'center'}}>
             <Box className={classes.breadCrumbs}>
                 <GlobalUserLocation/>
             </Box>
+            <Box p={2}>
             {
                 isProtocolListViewed
                     ?
@@ -111,6 +112,7 @@ const MethodPage: React.FC = () => {
                     </Fade>
 
             }
+            </Box>
 
         </Box>
 

@@ -22,7 +22,7 @@ export const useProfilePageStyles = makeStyles((theme) => ({
         '&:hover': {
             backgroundColor: alpha(uiConstants.mediumBlue, 0.6),
         },
-        borderRadius: '10px',
+        borderRadius: '7px',
         width: "auto",
     },
 

@@ -1,4 +1,4 @@
-import {Box} from "@material-ui/core";
+import {Box, useMediaQuery} from "@material-ui/core";
 import {useProfilePageStyles} from "../useProfilePageStyles";
 import {Router, useHistory, Link, Switch, Route, useRouteMatch} from "react-router-dom";
 import {SettingsPage} from "./ProfilePages/SettingsPage";
@@ -12,11 +12,13 @@ const ProfilePage = () => {
     const classes = useProfilePageStyles()
     const {path, url} = useRouteMatch();
 
+    const isDisplaySmall = useMediaQuery('(min-width:600px)')
+
     return (
         <Router history={history}>
-            <Box p={5} display={"flex"}>
-                <Box flexBasis={"column"}>
-                    <img src={avatar} className={classes.avatar} alt={'avatar'}/>
+            <Box p={5} display={"flex"} style={{flexDirection: isDisplaySmall ? "row" : "column", alignItems: 'center'}}>
+                <Box justifyContent={"center"} flexDirection={"column"}>
+                    <img src={avatar} className={classes.avatar} alt={'avatar'} style={{alignSelf: "center"}}/>
                     <Link className={classes.button} to={`${url}/info`}>
                         About me
                     </Link>
@@ -29,7 +31,7 @@ const ProfilePage = () => {
                 </Box>
 
                 <Switch>
-                    <Box paddingLeft={5}>
+                    <Box paddingLeft={2} paddingRight={2}>
                         <Route exact path={`${path}/`}>
                             <AboutMePage/>
                         </Route>

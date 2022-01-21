@@ -5,7 +5,9 @@ export const useCategoryPageStyles = makeStyles((theme) => ({
     main: {
         background: uiConstants.mediumBlue,
         padding: '1rem',
-        // TODO :: заполнить цветом фон до конца страницы
+        flexGrow: 1,
+        display: "flex",
+        flexDirection: 'column'
     },
     upperBar: {
         padding: theme.spacing(2, 0, 2),
