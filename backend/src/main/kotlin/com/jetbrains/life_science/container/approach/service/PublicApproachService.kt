@@ -13,6 +13,8 @@ interface PublicApproachService : ContainsSections {
 
     fun create(approach: DraftApproach): PublicApproach
 
+    fun delete(id: Long)
+
     fun getAllByOwnerId(ownerId: Long): List<PublicApproach>
 
     fun hasCoAuthor(id: Long, user: Credentials): Boolean
