@@ -3,7 +3,6 @@ import uiConstants from "../../../../infrastructure/ui/themes/uiConstants";
 
 export const useAboutUsPanelStyles = makeStyles((theme) => ({
     mainContainer: {
-        height: "1600px",
         width: uiConstants.width,
         margin: 'auto'
     },

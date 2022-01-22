@@ -1,5 +1,5 @@
 import appRoutesNames from "../../../../../infrastructure/common/appRoutesNames";
-import {Button} from "@material-ui/core";
+import {Box, Button} from "@material-ui/core";
 import React from "react";
 import {useHistory} from "react-router-dom";
 import {useUnauthorizedProfileStyles} from "./useUnauthorizedProfileStyles";
@@ -17,16 +17,16 @@ const UnauthorizedProfile: React.FC = () => {
     }
 
     return(
-        <div>
+        <Box display={'flex'}>
             <Button className={classes.signButton}
                     onClick={handleSignInClick}>
-                Sign in
+                SIGN IN
             </Button>
             <Button className={classes.signButton}
                     onClick={handleSignUpClick}>
-                Sign up
+                SIGN UP
             </Button>
-        </div>
+        </Box>
     );
 };
 

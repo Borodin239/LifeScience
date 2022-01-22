@@ -2,6 +2,7 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Breadcrumbs, Typography} from "@material-ui/core";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import {transform} from "lodash";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -17,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             textDecoration: "underline",
         },
+        color: 'white',
+        textTransform: 'uppercase'
     },
     arrow: {
         color: theme.palette.primary.main,

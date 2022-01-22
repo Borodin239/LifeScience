@@ -1,4 +1,4 @@
-import {useMethodPageStyles} from "../../../pages/MethodPage/method-page-styles";
+import {useMethodPageStyles} from "../../../pages/MethodPage/useMethodPageStyles";
 import {Box, Divider} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import React from "react";

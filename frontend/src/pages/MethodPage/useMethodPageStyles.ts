@@ -1,4 +1,5 @@
 import {makeStyles} from "@material-ui/core/styles";
+import uiConstants from "../../infrastructure/ui/themes/uiConstants";
 
 const spaceWidth = 0.3
 const spaceHeight = 2.5
@@ -16,13 +17,15 @@ const sectionSelectionMark = (theme: any) => {
 
 export const useMethodPageStyles = makeStyles((theme) => ({
     breadCrumbs: {
-        margin: theme.spacing(3, 0, 2)
+        padding: theme.spacing(3, 3, 2, 3),
+        background: uiConstants.mediumBlue
     },
     mainContainer: {
+        background: 'white',
         position: "relative",
         display: 'flex',
         justifyContent: 'space-between',
-        marginTop: theme.spacing(2),
+        paddingTop: theme.spacing(2)
     },
     contentContainer: {
         width: '75%',
@@ -51,6 +54,7 @@ export const useMethodPageStyles = makeStyles((theme) => ({
         // }
     },
     content: {
+        background: 'white',
         marginTop: theme.spacing(1),
         '& img': {
             width: '100%',
@@ -90,6 +94,7 @@ export const useMethodPageStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
+        background: "white"
     },
     mainLoader: {
         marginTop: theme.spacing(2),

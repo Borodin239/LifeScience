@@ -2,7 +2,7 @@ import {Box} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import SectionList from "../SectionList/SectionList";
 import React, {useState} from "react";
-import {useMethodPageStyles} from "../../../pages/MethodPage/method-page-styles";
+import {useMethodPageStyles} from "../../../pages/MethodPage/useMethodPageStyles";
 import {RightProtocolsArrow} from "../ProtocolsArrows/ProtocolsArrows";
 import {ApproachPreview} from "../../../infrastructure/http/api/view/approach/ApproachPreview";
 import ApproachContent from "../ContentContainer/ApproachContent";

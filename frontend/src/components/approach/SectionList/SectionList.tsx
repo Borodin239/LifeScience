@@ -1,4 +1,4 @@
-import {useMethodPageStyles} from "../../../pages/MethodPage/method-page-styles";
+import {useMethodPageStyles} from "../../../pages/MethodPage/useMethodPageStyles";
 import Typography from "@material-ui/core/Typography";
 import {Box, Divider, List, ListItem} from "@material-ui/core";
 import React from "react";

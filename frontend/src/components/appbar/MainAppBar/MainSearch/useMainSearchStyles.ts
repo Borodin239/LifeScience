@@ -5,12 +5,14 @@ export const useMainSearchStyles = makeStyles((theme: Theme) => createStyles({
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: alpha(theme.palette.primary.light, 0.55),
-        '&:hover': {
-            backgroundColor: alpha(theme.palette.primary.light, 0.75),
-        },
-        marginLeft: "50px",
-        width: '500px',
+        backgroundColor: "white",
+        // backgroundColor: alpha(theme.palette.primary.light, 0.55),
+        // '&:hover': {
+        //     backgroundColor: alpha(theme.palette.primary.light, 0.75),
+        // },
+        // marginLeft: "50px",
+        width: '70%',
+        margin: 'auto',
     },
     searchIcon: {
         padding: theme.spacing(0, 2),

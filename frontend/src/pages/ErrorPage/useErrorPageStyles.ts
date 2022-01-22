@@ -6,12 +6,13 @@ export const useErrorPageStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
-
-        margin: theme.spacing(1) + ' auto',
+        margin: theme.spacing(5),
+        borderRadius: theme.shape.borderRadius,
+        background: 'white',
         textAlign: 'center',
     },
     toHomeButton: {
-        marginTop: theme.spacing(1),
+        margin: theme.spacing(1),
         border: '1px solid ' + theme.palette.primary.main,
         borderRadius: theme.shape.borderRadius,
         '&:hover' : {

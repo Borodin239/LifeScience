@@ -7,7 +7,7 @@ export const useProtocolListStyles = makeStyles((theme) => ({
         display: "flex",
         position: "relative",
         justifyContent: "space-around",
-        marginTop: theme.spacing(4),
+        paddingTop: theme.spacing(4),
     },
     backToMethod: {
         position: "absolute",
@@ -35,6 +35,7 @@ export const useProtocolListStyles = makeStyles((theme) => ({
         position: "absolute",
         left: 0,
         top: theme.spacing(2),
+        background: 'white'
     },
     protocolBarContainer: {
         display: "flex",

@@ -21,7 +21,7 @@ const useAboutUsWindowStyles = makeStyles((theme: Theme) =>
             display: "inline-block",
             color: theme.palette.common.white,
             fontSize: "1.1rem",
-            fontWeight: 500,
+            fontWeight: "bold",
             lineHeight: 1.5,
             marginRight: theme.spacing(1)
         },

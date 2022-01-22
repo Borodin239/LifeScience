@@ -2,6 +2,7 @@ import React from "react";
 import {alpha, makeStyles} from "@material-ui/core/styles";
 import {CatalogNode} from "./CatalogNodeList";
 import {Box, Typography} from "@material-ui/core";
+import uiConstants from "../../infrastructure/ui/themes/uiConstants";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -13,13 +14,14 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1),
         cursor: "pointer",
         "&:hover": {
-            border: "1px solid " + theme.palette.primary.main,
-            backgroundColor: alpha(theme.palette.primary.main, 0.03)
+            backgroundColor: alpha('rgba(255, 255, 255, 0.47);', 0.2)
         },
-        userSelect: "none"
+        userSelect: "none",
+        background: uiConstants.lightGrey
     },
     icon: {
-        color: theme.palette.primary.main,
+        // color: theme.palette.primary.main,
+        color: uiConstants.darkBlue,
         paddingRight: theme.spacing(1),
     },
 }), {index: 1});
@@ -37,7 +39,12 @@ const NodeBox = ({node, icon}: NodeBoxProps) => {
                 {icon}
             </Box>
             <Box>
-                <Typography style={{verticalAlign: "middle"}}>
+                <Typography style={{
+                    // TODO :: вынести в classes
+                    verticalAlign: "middle",
+                    color: uiConstants.darkBlue,
+                    textTransform: 'uppercase'
+                }}>
                     {node.name}
                 </Typography>
             </Box>
