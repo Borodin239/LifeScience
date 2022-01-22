@@ -6,6 +6,8 @@ import com.jetbrains.life_science.controller.approach.dto.ApproachDTOToInfoAdapt
 import com.jetbrains.life_science.controller.approach.dto.ApproachDTO
 import com.jetbrains.life_science.controller.approach.published.view.PublicApproachView
 import com.jetbrains.life_science.controller.approach.published.view.PublicApproachViewMapper
+import com.jetbrains.life_science.exception.auth.ForbiddenOperationException
+import com.jetbrains.life_science.section.service.SectionService
 import com.jetbrains.life_science.user.credentials.entity.Credentials
 import com.jetbrains.life_science.user.credentials.service.CredentialsService
 import io.swagger.v3.oas.annotations.Operation
@@ -19,7 +21,8 @@ class PublicApproachController(
     val publicApproachService: PublicApproachService,
     val categoryService: CategoryService,
     val credentialsService: CredentialsService,
-    val viewMapper: PublicApproachViewMapper
+    val viewMapper: PublicApproachViewMapper,
+    val sectionService: SectionService
 ) {
 
     @Operation(summary = "Returns PublicApproach of interest")
@@ -40,5 +43,22 @@ class PublicApproachController(
         val info = ApproachDTOToInfoAdapter(dto, category, author)
         val approach = publicApproachService.create(info)
         return viewMapper.toView(approach)
+    }
+
+    @Operation(summary = "Deletes an existing DraftApproach")
+    @DeleteMapping("/{approachId}")
+    fun delete(
+        @PathVariable approachId: Long,
+        @AuthenticationPrincipal user: Credentials
+    ) {
+        val approach = publicApproachService.get(approachId)
+        if (!user.isAdminOrModerator()) {
+            throw ForbiddenOperationException()
+        }
+        approach.sections.toList().forEach {
+            publicApproachService.removeSection(approachId, it)
+            sectionService.deleteById(it.id, emptyList())
+        }
+        publicApproachService.delete(approachId)
     }
 }
