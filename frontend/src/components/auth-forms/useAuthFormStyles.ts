@@ -1,5 +1,4 @@
 import {makeStyles} from "@material-ui/core/styles";
-import uiConstants from "../../infrastructure/ui/themes/uiConstants";
 
 const useAuthFormStyles = makeStyles((theme) => ({
     paper: {

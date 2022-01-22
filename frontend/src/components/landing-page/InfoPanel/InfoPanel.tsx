@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Divider} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import {useInfoPanelStyles} from "./useInfoPanelStyles";
 import Typography from "@material-ui/core/Typography";
 

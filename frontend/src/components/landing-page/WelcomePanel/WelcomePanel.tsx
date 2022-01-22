@@ -1,18 +1,13 @@
 import React from "react";
 import {Box} from "@material-ui/core";
 import {useWelcomePanelStyles} from "./useWelcomePanelStyles";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import {useHistory} from "react-router-dom";
-import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
-import SearchTextField from "../../search/SearchTextField/SearchTextField";
 
 const WelcomePanel = () => {
     const classes = useWelcomePanelStyles()
-    const history = useHistory()
+    /*const history = useHistory()
     const handleBrowseClick = () => {
         history.push(`${appRoutesNames.CATEGORIES}/`)
-    }
+    }*/
 
     return (
         <Box className={classes.mainContainer}>

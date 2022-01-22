@@ -2,7 +2,6 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Box, Typography} from "@material-ui/core";
 import NodeBox from "./NodeBox";
-import uiConstants from "../../infrastructure/ui/themes/uiConstants";
 
 const useStyles = makeStyles((theme) => ({
     container: {
