@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {Box, Fade, useMediaQuery} from "@material-ui/core";
+import {Box, Fade} from "@material-ui/core";
 import {useMethodPageStyles} from "./useMethodPageStyles";
 import {useHistory, useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
