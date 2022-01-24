@@ -79,39 +79,19 @@ class SearchServiceImpl(
     private fun makeRequest(query: SearchQueryInfo): SearchRequest {
         val tokens = query.text.trim().split("[\\s-]+".toRegex()).map { it.toLowerCase() }
 
-        var shouldContainSetPartQuery = QueryBuilders.boolQuery().minimumShouldMatch((tokens.size * 0.7).toInt())
-        var shouldContainNamePartInQuery = QueryBuilders.boolQuery().minimumShouldMatch(1)
+        var shouldContainsAllCategoriesQuery = QueryBuilders.boolQuery().minimumShouldMatch(tokens.size)
 
         for (token in tokens) {
-            shouldContainSetPartQuery =
-                shouldContainSetPartQuery.should(
+            shouldContainsAllCategoriesQuery =
+                shouldContainsAllCategoriesQuery.should(
                     QueryBuilders.constantScoreQuery(
                         QueryBuilders.fuzzyQuery("context", token)
                     ).boost(1.0F)
                 )
-
-            shouldContainNamePartInQuery =
-                shouldContainNamePartInQuery.should(
-                    QueryBuilders.fuzzyQuery("names", token)
-                )
         }
 
-        val queryBuilder = QueryBuilders.boolQuery()
-            .should(
-                QueryBuilders.boolQuery()
-                    .must(
-                        shouldContainSetPartQuery
-                    )
-                    .must(
-                        shouldContainNamePartInQuery
-                    )
-            )
-            .should(
-                QueryBuilders.matchQuery("text", query.text)
-            )
-
         val searchBuilder = SearchSourceBuilder()
-            .query(queryBuilder)
+            .query(shouldContainsAllCategoriesQuery)
             .from(query.from)
             .size(query.size)
 
