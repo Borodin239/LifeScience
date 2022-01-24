@@ -10,6 +10,7 @@ import org.elasticsearch.action.search.SearchRequest
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.client.RequestOptions
 import org.elasticsearch.client.RestHighLevelClient
+import org.elasticsearch.common.lucene.search.function.FunctionScoreQuery
 import org.elasticsearch.index.query.QueryBuilders
 import org.elasticsearch.search.SearchHit
 import org.elasticsearch.search.aggregations.AggregationBuilders
@@ -84,14 +85,15 @@ class SearchServiceImpl(
         for (token in tokens) {
             shouldContainsAllCategoriesQuery =
                 shouldContainsAllCategoriesQuery.should(
-                    QueryBuilders.constantScoreQuery(
+                    QueryBuilders.functionScoreQuery(
                         QueryBuilders.fuzzyQuery("context", token)
-                    ).boost(1.0F)
+                    ).scoreMode(FunctionScoreQuery.ScoreMode.SUM)
                 )
         }
 
         val searchBuilder = SearchSourceBuilder()
             .query(shouldContainsAllCategoriesQuery)
+            .sort("_score")
             .from(query.from)
             .size(query.size)
 
