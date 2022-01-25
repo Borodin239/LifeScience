@@ -26,7 +26,8 @@ class SearchServiceImpl(
     val logger = getLogger()
 
     lateinit var searchUnitServices: Map<String, UnitSearchService>
-    val aggregationName = "by_names"
+    private val aggregationName = "by_names"
+    private val preposition = listOf("of", "as", "in", "on", "by", "to", "a", "the", "an")
 
     override val supportedTypes: List<SearchUnitType> = listOf(
         SearchUnitType.CATEGORY,
@@ -78,7 +79,8 @@ class SearchServiceImpl(
     }
 
     private fun makeRequest(query: SearchQueryInfo): SearchRequest {
-        val tokens = query.text.trim().split("[\\s-]+".toRegex()).map { it.toLowerCase() }
+        val tokens =
+            query.text.trim().split("[\\s-]+".toRegex()).map { it.toLowerCase() }.filter { !preposition.contains(it) }
 
         var shouldContainsAllCategoriesQuery = QueryBuilders.boolQuery().minimumShouldMatch(tokens.size)
 
