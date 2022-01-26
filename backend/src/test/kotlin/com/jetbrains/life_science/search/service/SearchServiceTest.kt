@@ -4,7 +4,6 @@ import com.jetbrains.life_science.category.search.PathUnit
 import com.jetbrains.life_science.search.query.SearchUnitType
 import com.jetbrains.life_science.search.result.approach.ApproachSearchResult
 import com.jetbrains.life_science.search.result.category.CategorySearchResult
-import com.jetbrains.life_science.search.result.content.ContentSearchResult
 import com.jetbrains.life_science.search.result.protocol.ProtocolSearchResult
 import com.jetbrains.life_science.search.service.maker.makeSearchQueryInfo
 import com.jetbrains.life_science.util.populator.ElasticPopulator
@@ -19,7 +18,10 @@ import org.springframework.transaction.annotation.Transactional
 import javax.annotation.PostConstruct
 
 @SpringBootTest
-@Sql("/scripts/initial_data.sql")
+@Sql(
+    "/scripts/initial_data.sql",
+    "/scripts/search/search_data.sql"
+)
 @Transactional
 internal class SearchServiceTest {
 
@@ -133,33 +135,6 @@ internal class SearchServiceTest {
     }
 
     /**
-     * Should find expected content
-     */
-    @Test
-    fun `content search`() {
-        // Prepare
-        val searchQueryInfo = makeSearchQueryInfo(
-            text = "bradford",
-            includeTypes = listOf(SearchUnitType.CONTENT),
-            from = 0,
-            size = 100
-        )
-        val expectedResults = setOf(
-            ContentSearchResult(
-                id = "32281337",
-                text = "bradford assay is my favourite method",
-                sectionId = 15
-            )
-        )
-
-        // Action
-        val searchResults = service.search(searchQueryInfo)
-
-        // Assert
-        assertEquals(expectedResults, searchResults.toSet())
-    }
-
-    /**
      * Should find expected content, category and approach
      */
     @Test
@@ -167,15 +142,11 @@ internal class SearchServiceTest {
         // Prepare
         val searchQueryInfo = makeSearchQueryInfo(
             text = "one",
-            includeTypes = listOf(SearchUnitType.APPROACH, SearchUnitType.CATEGORY, SearchUnitType.CONTENT),
+            includeTypes = listOf(SearchUnitType.APPROACH, SearchUnitType.CATEGORY),
             from = 0,
             size = 100
         )
         val expectedResults = setOf(
-            ApproachSearchResult(
-                publishApproachId = 1,
-                name = "approach one"
-            ),
             CategorySearchResult(
                 categoryId = 2,
                 name = "catalog 1",
@@ -183,10 +154,163 @@ internal class SearchServiceTest {
                     emptyList()
                 )
             ),
-            ContentSearchResult(
-                id = "123",
-                text = "general info text one",
-                sectionId = 1
+            ApproachSearchResult(
+                publishApproachId = 1,
+                name = "approach one"
+            )
+        )
+
+        // Action
+        val searchResult = service.search(searchQueryInfo)
+
+        // Assert
+        assertEquals(expectedResults, searchResult.toSet())
+    }
+
+    /**
+     * Should find expected approaches
+     */
+    @Test
+    fun `search for approaches in several categories 1`() {
+        // Prepare
+        val searchQueryInfo = makeSearchQueryInfo(
+            text = "peptides and proteins analysis qualitative qualitative",
+            includeTypes = listOf(SearchUnitType.APPROACH, SearchUnitType.CATEGORY),
+            from = 0,
+            size = 100
+        )
+        val expectedResults = setOf(
+            ApproachSearchResult(
+                publishApproachId = 7,
+                name = "ELISA"
+            ),
+            ApproachSearchResult(
+                publishApproachId = 6,
+                name = "Western Blotting"
+            ),
+            // Possible misprint in words "qualitative"/"quantitative"
+            ApproachSearchResult(
+                publishApproachId = 4,
+                name = "SDS-Page"
+            ),
+            ApproachSearchResult(
+                publishApproachId = 5,
+                name = "Native Page"
+            ),
+            ApproachSearchResult(
+                publishApproachId = 8,
+                name = "Bradford"
+            )
+        )
+
+        // Action
+        val searchResult = service.search(searchQueryInfo)
+
+        // Assert
+        assertEquals(expectedResults, searchResult.toSet())
+    }
+
+    /**
+     * Should find expected approaches
+     */
+    @Test
+    fun `search for approaches in several categories 2`() {
+        // Prepare
+        val searchQueryInfo = makeSearchQueryInfo(
+            text = "qualitative analysis nucleic acids",
+            includeTypes = listOf(SearchUnitType.APPROACH, SearchUnitType.CATEGORY),
+            from = 0,
+            size = 100
+        )
+        val expectedResults = setOf(
+            ApproachSearchResult(
+                publishApproachId = 13,
+                name = "Real-Time PCR"
+            ),
+            ApproachSearchResult(
+                publishApproachId = 9,
+                name = "Southern Blotting"
+            ),
+            ApproachSearchResult(
+                publishApproachId = 10,
+                name = "Quantitative real time PCR"
+            )
+        )
+
+        // Action
+        val searchResult = service.search(searchQueryInfo)
+
+        // Assert
+        assertEquals(expectedResults, searchResult.toSet())
+    }
+
+    /**
+     * Should find expected approaches
+     */
+    @Test
+    fun `search with preposition 1`() {
+        // Prepare
+        val searchQueryInfo = makeSearchQueryInfo(
+            text = "quantitative analysis of proteins",
+            includeTypes = listOf(SearchUnitType.APPROACH),
+            from = 0,
+            size = 100
+        )
+        val expectedResults = setOf(
+            ApproachSearchResult(
+                publishApproachId = 7,
+                name = "ELISA"
+            ),
+            ApproachSearchResult(
+                publishApproachId = 6,
+                name = "Western Blotting"
+            ),
+            ApproachSearchResult(
+                publishApproachId = 8,
+                name = "Bradford"
+            ),
+            // Possible misprint in words "qualitative"/"quantitative"
+            ApproachSearchResult(
+                publishApproachId = 4,
+                name = "SDS-Page"
+            ),
+            ApproachSearchResult(
+                publishApproachId = 5,
+                name = "Native Page"
+            )
+        )
+
+        // Action
+        val searchResult = service.search(searchQueryInfo)
+
+        // Assert
+        assertEquals(expectedResults, searchResult.toSet())
+    }
+
+    /**
+     * Should find expected approaches
+     */
+    @Test
+    fun `search with preposition 2`() {
+        // Prepare
+        val searchQueryInfo = makeSearchQueryInfo(
+            text = "an analysis of nucleic acids",
+            includeTypes = listOf(SearchUnitType.APPROACH),
+            from = 0,
+            size = 100
+        )
+        val expectedResults = setOf(
+            ApproachSearchResult(
+                publishApproachId = 13,
+                name = "Real-Time PCR"
+            ),
+            ApproachSearchResult(
+                publishApproachId = 9,
+                name = "Southern Blotting"
+            ),
+            ApproachSearchResult(
+                publishApproachId = 10,
+                name = "Quantitative real time PCR"
             )
         )
 
@@ -293,6 +417,62 @@ internal class SearchServiceTest {
         assertEquals(expectedResults, searchResultLowercaseFuzzy.toSet())
         assertEquals(expectedResults, searchResultUppercaseFuzzy.toSet())
         assertEquals(expectedResults, searchResultMix.toSet())
+    }
+
+    /**
+     * Should find expected approaches
+     */
+    @Test
+    fun `dash search 1`() {
+        // Prepare
+        val searchQueryInfo = makeSearchQueryInfo(
+            text = "sds-Page",
+            includeTypes = listOf(SearchUnitType.APPROACH),
+            from = 0,
+            size = 100
+        )
+        val expectedResults = setOf(
+            ApproachSearchResult(
+                publishApproachId = 4,
+                name = "SDS-Page"
+            )
+        )
+
+        // Action
+        val searchResult = service.search(searchQueryInfo)
+
+        // Assert
+        assertEquals(expectedResults, searchResult.toSet())
+    }
+
+    /**
+     * Should find expected approaches
+     */
+    @Test
+    fun `dash search 2`() {
+        // Prepare
+        val searchQueryInfo = makeSearchQueryInfo(
+            text = "real time",
+            includeTypes = listOf(SearchUnitType.APPROACH),
+            from = 0,
+            size = 100
+        )
+        val expectedResults = setOf(
+            ApproachSearchResult(
+                publishApproachId = 13,
+                name = "Real-Time PCR"
+            ),
+            ApproachSearchResult(
+                publishApproachId = 10,
+                name = "Quantitative real time PCR"
+            )
+        )
+
+        // Action
+        val searchResult = service.search(searchQueryInfo)
+
+        // Assert
+        assertEquals(expectedResults, searchResult.toSet())
     }
 
     @Test
