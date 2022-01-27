@@ -61,7 +61,12 @@ class SearchServiceImpl(
         }
 
     private fun makeSuggestRequest(query: SearchQueryInfo): SearchRequest {
-        val queryBuilder = QueryBuilders.prefixQuery("names", query.text.toLowerCase())
+        val tokens = getTokens(query)
+        val queryBuilder = QueryBuilders.boolQuery().minimumShouldMatch(tokens.size)
+
+        for (token in tokens) {
+            queryBuilder.should(QueryBuilders.prefixQuery("names", token))
+        }
 
         val searchBuilder = SearchSourceBuilder()
             .query(queryBuilder)
@@ -79,18 +84,15 @@ class SearchServiceImpl(
     }
 
     private fun makeRequest(query: SearchQueryInfo): SearchRequest {
-        val tokens =
-            query.text.trim().split("[\\s-]+".toRegex()).map { it.toLowerCase() }.filter { !preposition.contains(it) }
-
-        var shouldContainsAllCategoriesQuery = QueryBuilders.boolQuery().minimumShouldMatch(tokens.size)
+        val tokens = getTokens(query, needFilter = true)
+        val shouldContainsAllCategoriesQuery = QueryBuilders.boolQuery().minimumShouldMatch(tokens.size)
 
         for (token in tokens) {
-            shouldContainsAllCategoriesQuery =
-                shouldContainsAllCategoriesQuery.should(
-                    QueryBuilders.functionScoreQuery(
-                        QueryBuilders.fuzzyQuery("context", token)
-                    ).scoreMode(FunctionScoreQuery.ScoreMode.SUM)
-                )
+            shouldContainsAllCategoriesQuery.should(
+                QueryBuilders.functionScoreQuery(
+                    QueryBuilders.fuzzyQuery("context", token)
+                ).scoreMode(FunctionScoreQuery.ScoreMode.SUM)
+            )
         }
 
         val searchBuilder = SearchSourceBuilder()
@@ -102,6 +104,11 @@ class SearchServiceImpl(
         return SearchRequest()
             .source(searchBuilder)
             .indices(*getRequestIndices(query))
+    }
+
+    private fun getTokens(query: SearchQueryInfo, needFilter: Boolean = false): List<String> {
+        val res = query.text.trim().split("[\\s-]+".toRegex()).map { it.toLowerCase() }
+        return if (needFilter) res.filter { !preposition.contains(it) } else res
     }
 
     private fun getRequestIndices(query: SearchQueryInfo) =
