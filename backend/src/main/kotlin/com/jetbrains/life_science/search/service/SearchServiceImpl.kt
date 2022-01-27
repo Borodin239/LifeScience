@@ -107,8 +107,8 @@ class SearchServiceImpl(
     }
 
     private fun getTokens(query: SearchQueryInfo, needFilter: Boolean = false): List<String> {
-        val res =  query.text.trim().split("[\\s-]+".toRegex()).map { it.toLowerCase() }
-        return if (needFilter) res.filter {!preposition.contains(it) } else res
+        val res = query.text.trim().split("[\\s-]+".toRegex()).map { it.toLowerCase() }
+        return if (needFilter) res.filter { !preposition.contains(it) } else res
     }
 
     private fun getRequestIndices(query: SearchQueryInfo) =
