@@ -100,7 +100,7 @@ internal class SearchServiceTest {
             size = 100
         )
         val expectedResults = listOf(
-            ApproachSearchResult(publishApproachId = 3, name = "approach three"),
+            ApproachSearchResult(publishApproachId = 3, approachName = "approach three"),
         )
 
         // Action
@@ -156,7 +156,7 @@ internal class SearchServiceTest {
             ),
             ApproachSearchResult(
                 publishApproachId = 1,
-                name = "approach one"
+                approachName = "approach one"
             )
         )
 
@@ -182,24 +182,24 @@ internal class SearchServiceTest {
         val expectedResults = listOf(
             ApproachSearchResult(
                 publishApproachId = 7,
-                name = "ELISA"
+                approachName = "ELISA"
             ),
             ApproachSearchResult(
                 publishApproachId = 6,
-                name = "Western Blotting"
+                approachName = "Western Blotting"
             ),
             // Possible misprint in words "qualitative"/"quantitative"
             ApproachSearchResult(
                 publishApproachId = 4,
-                name = "SDS-Page"
+                approachName = "SDS-Page"
             ),
             ApproachSearchResult(
                 publishApproachId = 5,
-                name = "Native Page"
+                approachName = "Native Page"
             ),
             ApproachSearchResult(
                 publishApproachId = 8,
-                name = "Bradford"
+                approachName = "Bradford"
             )
         )
 
@@ -225,15 +225,15 @@ internal class SearchServiceTest {
         val expectedResults = listOf(
             ApproachSearchResult(
                 publishApproachId = 9,
-                name = "Southern Blotting"
+                approachName = "Southern Blotting"
             ),
             ApproachSearchResult(
                 publishApproachId = 10,
-                name = "Quantitative real time PCR"
+                approachName = "Quantitative real time PCR"
             ),
             ApproachSearchResult(
                 publishApproachId = 13,
-                name = "Real-Time PCR"
+                approachName = "Real-Time PCR"
             )
         )
 
@@ -259,24 +259,24 @@ internal class SearchServiceTest {
         val expectedResults = listOf(
             ApproachSearchResult(
                 publishApproachId = 7,
-                name = "ELISA"
+                approachName = "ELISA"
             ),
             ApproachSearchResult(
                 publishApproachId = 6,
-                name = "Western Blotting"
+                approachName = "Western Blotting"
             ),
             ApproachSearchResult(
                 publishApproachId = 8,
-                name = "Bradford"
+                approachName = "Bradford"
             ),
             // Possible misprint in words "qualitative"/"quantitative"
             ApproachSearchResult(
                 publishApproachId = 4,
-                name = "SDS-Page"
+                approachName = "SDS-Page"
             ),
             ApproachSearchResult(
                 publishApproachId = 5,
-                name = "Native Page"
+                approachName = "Native Page"
             )
         )
 
@@ -302,15 +302,15 @@ internal class SearchServiceTest {
         val expectedResults = listOf(
             ApproachSearchResult(
                 publishApproachId = 13,
-                name = "Real-Time PCR"
+                approachName = "Real-Time PCR"
             ),
             ApproachSearchResult(
                 publishApproachId = 9,
-                name = "Southern Blotting"
+                approachName = "Southern Blotting"
             ),
             ApproachSearchResult(
                 publishApproachId = 10,
-                name = "Quantitative real time PCR"
+                approachName = "Quantitative real time PCR"
             )
         )
 
@@ -434,7 +434,7 @@ internal class SearchServiceTest {
         val expectedResults = listOf(
             ApproachSearchResult(
                 publishApproachId = 4,
-                name = "SDS-Page"
+                approachName = "SDS-Page"
             )
         )
 
@@ -460,11 +460,11 @@ internal class SearchServiceTest {
         val expectedResults = listOf(
             ApproachSearchResult(
                 publishApproachId = 13,
-                name = "Real-Time PCR"
+                approachName = "Real-Time PCR"
             ),
             ApproachSearchResult(
                 publishApproachId = 10,
-                name = "Quantitative real time PCR"
+                approachName = "Quantitative real time PCR"
             )
         )
 

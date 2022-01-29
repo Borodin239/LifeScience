@@ -7,4 +7,6 @@ data class ProtocolSearchResult(
     val publishProtocolId: Long,
     val approachId: Long,
     val name: String
-) : SearchResult(SearchUnitType.PROTOCOL.presentationName)
+) : SearchResult {
+    override val typeName = SearchUnitType.PROTOCOL.presentationName
+}

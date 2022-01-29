@@ -8,4 +8,6 @@ data class CategorySearchResult(
     val categoryId: Long,
     val name: String,
     val paths: List<Path>
-) : SearchResult(SearchUnitType.CATEGORY.presentationName)
+) : SearchResult {
+    override val typeName: String = SearchUnitType.CATEGORY.presentationName
+}

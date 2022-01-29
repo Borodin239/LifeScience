@@ -70,7 +70,11 @@ class SearchServiceImpl(
 
         val searchBuilder = SearchSourceBuilder()
             .query(queryBuilder)
-            .aggregation(AggregationBuilders.terms(aggregationName).field("names.keyword"))
+            .aggregation(
+                AggregationBuilders.terms(aggregationName).field("names.keyword")
+                    .subAggregation(AggregationBuilders.terms("by_class").field("_class.keyword"))
+                    .subAggregation(AggregationBuilders.terms("by_id").field("id"))
+            )
             .from(query.from)
             .size(query.size)
 

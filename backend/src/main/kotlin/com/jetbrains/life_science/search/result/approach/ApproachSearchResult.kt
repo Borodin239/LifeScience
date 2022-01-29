@@ -1,9 +1,9 @@
 package com.jetbrains.life_science.search.result.approach
 
 import com.jetbrains.life_science.search.query.SearchUnitType
-import com.jetbrains.life_science.search.result.SearchResult
+import com.jetbrains.life_science.search.result.SuggestResult
 
 data class ApproachSearchResult(
     val publishApproachId: Long,
-    val name: String
-) : SearchResult(SearchUnitType.APPROACH.presentationName)
+    val approachName: String
+) : SuggestResult(name = approachName, typeName = SearchUnitType.APPROACH.presentationName)

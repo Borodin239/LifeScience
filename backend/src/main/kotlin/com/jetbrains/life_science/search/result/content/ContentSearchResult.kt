@@ -7,4 +7,6 @@ data class ContentSearchResult(
     val id: String,
     val text: String,
     val sectionId: Long
-) : SearchResult(SearchUnitType.CONTENT.presentationName)
+) : SearchResult {
+    override val typeName = SearchUnitType.CONTENT.presentationName
+}
