@@ -19,28 +19,29 @@ const SearchTextField: React.FC<SearchTextFieldProps> = ({placeholder, passedCla
     const history = useHistory();
     const location = useLocation();
     const dispatch = useAppDispatch();
+    const [query, setQuery] = useState<string[]>([])
 
     useEffect(() => {
-        const queryInUrl = new URLSearchParams(location.search).get(apiConstants.search.query) ?? ""
+        const queryInUrl: string[] = new URLSearchParams(location.search).get(apiConstants.search.query)?.split("|") ?? []
         setQuery(queryInUrl)
     }, [location])
 
-    const [query, setQuery] = useState("");
     const suggestions: string[] = useAppSelector(state => state.searchReducer.suggestions);
 
-    const handleQueryChange = (event: any, value: any) => {
-        // developmentLog(`on input change ${value}`);
-
-        setQuery(value);
+    const handleQueryChange = (event: any, value: string) => {
         if (value.length >= apiConstants.search.MIN_LENGTH) {
             dispatch(preSearchThunk(value));
         }
     }
 
+    const handleChange = (event: any, value: string[]) => {
+        setQuery(value)
+    }
+
     const handleSubmit = (e: any) => {
-        e.preventDefault();
-        if (query.length >= apiConstants.search.MIN_LENGTH) {
-            history.push(`${apiConstants.routes.search.SEARCH}/?${apiConstants.search.query}=${query}`);
+        e.preventDefault()
+        if (query.toString().length >= apiConstants.search.MIN_LENGTH) {
+            history.push(`${apiConstants.routes.search.SEARCH}/?${apiConstants.search.query}=${query.join("|")}`)
         }
     }
 
@@ -49,27 +50,21 @@ const SearchTextField: React.FC<SearchTextFieldProps> = ({placeholder, passedCla
                className={`${classes.searchPaper} ${passedClassName}`}
                onSubmit={handleSubmit}>
             <SearchIcon className={classes.iconButton}/>
-            {/*<InputBase*/}
-            {/*    className={classes.input}*/}
-            {/*    placeholder={placeholder ?? "Search..."}*/}
-            {/*    value={query}*/}
-            {/*    onChange={handleQueryChange}*/}
-            {/*    inputProps={{maxLength: apiConstants.search.MAX_LENGTH}}*/}
-            {/*/>*/}
             <Autocomplete
                 renderInput={(params) => (
                     <TextField {...params} label={null} variant="standard"
-                               inputProps={{ ...params.inputProps, maxLength: apiConstants.search.MAX_LENGTH}}
+                               inputProps={{...params.inputProps, maxLength: apiConstants.search.MAX_LENGTH}}
                                placeholder={placeholder ?? "Search..."}
                     />
                 )}
                 options={suggestions}
-
+                multiple
                 autoComplete={true}
                 freeSolo={true}
                 className={classes.input}
-                value={query}
                 onInputChange={handleQueryChange}
+                value={query}
+                onChange={handleChange}
             />
         </Paper>
     )
