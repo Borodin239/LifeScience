@@ -62,7 +62,7 @@ const SearchPage = () => {
             </Box>
             <Box className={classes.titleContainer}>
                 <Typography variant={"h5"}>
-                    Found {results.length} results for "{query}":
+                    Found {results.length} results for "{query.replaceAll('|', ', ')}":
                 </Typography>
             </Box>
             <Divider className={classes.divider}/>
