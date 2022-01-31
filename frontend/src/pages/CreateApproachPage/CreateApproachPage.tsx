@@ -77,7 +77,7 @@ const CreateApproachPage = () => {
     }
 
     return (
-        <Box>
+        <Box p={2}>
             <Box>
                 <Typography className={classes.title}>
                     Create new approach
