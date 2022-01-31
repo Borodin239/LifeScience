@@ -31,7 +31,9 @@ const SearchPage = () => {
         setQuery(newQuery)
         const dto: SearchDto = {
             text: newQuery,
-            includeTypes: [SearchType.APPROACH]
+            includeTypes: [SearchType.APPROACH],
+            size: 100,
+            from: 0
         }
         dispatch(searchThunk(dto))
             .unwrap()
