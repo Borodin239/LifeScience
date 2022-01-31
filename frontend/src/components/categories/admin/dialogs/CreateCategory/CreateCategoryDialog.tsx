@@ -3,13 +3,12 @@ import {Dialog, DialogTitle, TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import {useStyles} from "../dialog-styles";
 import splitThunkPayload from "../../../../../redux/utils/splitThunkPayload";
-import handleThunkErrorBase from "../../../../../redux/utils/handleThunkErrorBase";
 import {createCategory} from "../../../../../redux/categories/thunkActions";
 import {useAppDispatch} from "../../../../../redux/hooks";
 import {useHistory} from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 import {CategoryView} from "../../../../../infrastructure/http/api/view/category/CategoryView";
-import {ROOT_NAVIGATION_UNIT} from "../../../../../redux/navigation/slice";
+import handleErrors from "../../../handleErrors";
 
 export type CategoryDialogProps = {
     categoryId: number,
@@ -50,16 +49,7 @@ const CreateCategoryDialog: React.FC<CategoryDialogProps> = ({
             .then(payload => updateCategoryCatalog!(payload))
             .then(() => onClose())
             .catch(thunkError => {
-                if (thunkError.name === 'ApiError') {
-                    if (thunkError.description.httpCode === 400) {
-                        setAlertText(thunkError.description.message);
-                    }
-                    if (thunkError.description.httpCode === 404) {
-                        history.push(ROOT_NAVIGATION_UNIT.route);
-                    }
-                } else {
-                    handleThunkErrorBase(thunkError, history, dispatch);
-                }
+                handleErrors(thunkError, history, dispatch, setAlertText)
             })
     }
 

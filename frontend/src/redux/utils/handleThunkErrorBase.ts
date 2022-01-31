@@ -8,8 +8,12 @@ import apiConstants from "../../infrastructure/http/api/apiConstants";
 const handleThunkErrorBase = (error: any, history: any, dispatch: AppDispatch) => {
     if (error.name === 'ApiError') {
         if (error.description.systemCode === apiConstants.errors.INVALID_REFRESH_TOKEN
-            || error.description.systemCode === apiConstants.errors.EXPIRED_REFRESH_TOKEN) {
+            || error.description.systemCode === apiConstants.errors.EXPIRED_REFRESH_TOKEN
+            || error.description.systemCode === apiConstants.errors.EXPIRED_ACCESS_TOKEN) {
             dispatch(loggedOut());
+            if (error.description.systemCode === apiConstants.errors.EXPIRED_ACCESS_TOKEN) {
+                alert('Expired access token. Please sign in again')
+            }
             history.push(appRoutesNames.SIGN_IN);
         } else {
             dispatch(setError({code: error.description.httpCode, message: error.description.message}));
