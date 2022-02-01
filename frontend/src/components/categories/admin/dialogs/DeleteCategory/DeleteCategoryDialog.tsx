@@ -6,12 +6,12 @@ import {useStyles} from "../dialog-styles";
 import {useAppDispatch, useAppSelector} from "../../../../../redux/hooks";
 import {deleteCategory} from "../../../../../redux/categories/thunkActions";
 import splitThunkPayload from "../../../../../redux/utils/splitThunkPayload";
-import handleThunkErrorBase from "../../../../../redux/utils/handleThunkErrorBase";
 import {useHistory} from "react-router-dom";
 import apiConstants from "../../../../../infrastructure/http/api/apiConstants";
 import Alert from "@material-ui/lab/Alert";
-import {pathMove, ROOT_NAVIGATION_UNIT} from "../../../../../redux/navigation/slice";
+import {pathMove} from "../../../../../redux/navigation/slice";
 import {getRedirectionRoute} from "../../../../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
+import handleErrors from "../../../handleErrors";
 
 const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({
                                                                  categoryId,
@@ -38,17 +38,9 @@ const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({
             })))
             .then(() => history.replace(`${apiConstants.routes.categories.INITIAL}/${parentId}`))
             .then(() => onClose())
+            .then(() => setAlertText(null))
             .catch(thunkError => {
-                if (thunkError.name === 'ApiError') {
-                    if (thunkError.description.httpCode === 400) {
-                        setAlertText(thunkError.description.message);
-                    }
-                    if (thunkError.description.httpCode === 404) {
-                        history.push(ROOT_NAVIGATION_UNIT.route);
-                    }
-                } else {
-                    handleThunkErrorBase(thunkError, history, dispatch);
-                }
+                handleErrors(thunkError, history, dispatch, setAlertText)
             })
     }
 
