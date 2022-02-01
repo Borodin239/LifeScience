@@ -48,6 +48,7 @@ const CreateCategoryDialog: React.FC<CategoryDialogProps> = ({
             .then(payload => splitThunkPayload(payload))
             .then(payload => updateCategoryCatalog!(payload))
             .then(() => onClose())
+            .then(() => setAlertText(null))
             .catch(thunkError => {
                 handleErrors(thunkError, history, dispatch, setAlertText)
             })

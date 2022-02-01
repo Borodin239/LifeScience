@@ -39,6 +39,7 @@ const RenameCategoryDialog: React.FC<CategoryDialogProps> = ({
                 .unwrap()
                 .then(payload => splitThunkPayload(payload))
                 .then(() => onClose())
+                .then(() => setAlertText(null))
                 .then(() => dispatch(pathMove({
                     name: newName,
                     route: getRedirectionRoute({type: 'category', categoryId: categoryId.toString()}),

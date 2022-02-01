@@ -38,6 +38,7 @@ const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({
             })))
             .then(() => history.replace(`${apiConstants.routes.categories.INITIAL}/${parentId}`))
             .then(() => onClose())
+            .then(() => setAlertText(null))
             .catch(thunkError => {
                 handleErrors(thunkError, history, dispatch, setAlertText)
             })
