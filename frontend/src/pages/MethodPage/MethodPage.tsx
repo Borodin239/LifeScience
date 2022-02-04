@@ -91,27 +91,27 @@ const MethodPage: React.FC = () => {
                 <GlobalUserLocation/>
             </Box>
             <Box p={2}>
-            {
-                isProtocolListViewed
-                    ?
-                    <Fade in={isProtocolListViewed}>
-                        <Box>
-                            <ProtocolList protocols={approach.protocols}
-                                          approachName={approach.name}
-                                          approachId={approachId}
-                                          handleGoBackClick={handleBackToMethodClick}/>
-                        </Box>
-                    </Fade>
-                    :
-                    <Fade in={!isProtocolListViewed}>
-                        <Box>
-                            <ApproachContainer approach={approach}
-                                               approachId={approachId}
-                                               handleGoToProtocolsClick={handleGoToProtocolsClick}/>
-                        </Box>
-                    </Fade>
+                {
+                    isProtocolListViewed
+                        ?
+                        <Fade in={isProtocolListViewed}>
+                            <Box>
+                                <ProtocolList protocols={approach.protocols}
+                                              approachName={approach.name}
+                                              approachId={approachId}
+                                              handleGoBackClick={handleBackToMethodClick}/>
+                            </Box>
+                        </Fade>
+                        :
+                        <Fade in={!isProtocolListViewed}>
+                            <Box>
+                                <ApproachContainer approach={approach}
+                                                   approachId={approachId}
+                                                   handleGoToProtocolsClick={handleGoToProtocolsClick}/>
+                            </Box>
+                        </Fade>
 
-            }
+                }
             </Box>
 
         </Box>

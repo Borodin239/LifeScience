@@ -1,4 +1,4 @@
-import {Box} from "@material-ui/core";
+import {Box, Button} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import SectionList from "../SectionList/SectionList";
 import React, {useState} from "react";
@@ -6,6 +6,8 @@ import {useMethodPageStyles} from "../../../pages/MethodPage/useMethodPageStyles
 import {RightProtocolsArrow} from "../ProtocolsArrows/ProtocolsArrows";
 import {ApproachPreview} from "../../../infrastructure/http/api/view/approach/ApproachPreview";
 import ApproachContent from "../ContentContainer/ApproachContent";
+import {useAppSelector} from "../../../redux/hooks";
+import DeleteApproachDialog from "./admin/dialogs/DeleteApproachDialog";
 
 
 type ApproachContainerProps = {
@@ -17,6 +19,8 @@ type ApproachContainerProps = {
 const ApproachContainer: React.FC<ApproachContainerProps> = (props) => {
     const {approach, approachId, handleGoToProtocolsClick} = props
     const classes = useMethodPageStyles()
+    const userRoles = useAppSelector(state => state.usersReducer.userInfo?.roles);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
     const [selectedSection, setSelectedSection] = useState(0);
     const handleSectionTitleClick = (index: number) => () => {
@@ -25,6 +29,16 @@ const ApproachContainer: React.FC<ApproachContainerProps> = (props) => {
 
     return (
         <Box>
+            {(userRoles && userRoles.includes("ROLE_ADMIN")) ?
+                <Box>
+                    <Button variant="outlined" color="primary" onClick={() => setDeleteDialogOpen(true)}>
+                        Delete approach
+                    </Button>
+                    <DeleteApproachDialog id={parseInt(approachId)}
+                                          name={approach.name} isOpen={deleteDialogOpen}
+                                          onClose={() => setDeleteDialogOpen(false)}/>
+                </Box>
+                : null}
             <Box className={classes.methodTitleContainer}>
                 <Typography variant={"h5"}>
                     {approach.name}
