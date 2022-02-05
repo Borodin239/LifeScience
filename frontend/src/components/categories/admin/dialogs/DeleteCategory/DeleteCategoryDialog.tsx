@@ -32,10 +32,12 @@ const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then(() => dispatch(pathMove({
-                name: parentName,
-                route: getRedirectionRoute({type: 'category', categoryId: parentId!}),
-                type: 'category'
-            })))
+                    name: parentName,
+                    route: getRedirectionRoute({type: 'category', categoryId: parentId!}),
+                    type: 'category'
+                }))
+            )
+            .then(payload => splitThunkPayload(payload))
             .then(() => history.replace(`${apiConstants.routes.categories.INITIAL}/${parentId}`))
             .then(() => onClose())
             .then(() => setAlertText(null))

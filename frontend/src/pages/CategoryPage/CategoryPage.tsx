@@ -120,11 +120,11 @@ const CategoryPage = () => {
     }, [categoryId, processCategoryWithId, processRoot]);
 
     useEffect(() => {
-        if (isCategoryLoading || !categoryName) {
+        if (!categoryName) {
             return
         }
         const unitRoute = getRedirectionRoute({type: "category", categoryId: categoryId});
-        if (path[path.length - 1]?.route !== unitRoute) {
+        if (categoryId && path[path.length - 1]?.route !== unitRoute) {
             setIsLocationLoading(true)
             dispatch(getCategoryPathsThunk({id: categoryId, name: categoryName}))
                 .unwrap()
@@ -136,7 +136,7 @@ const CategoryPage = () => {
         } else {
             setIsLocationLoading(false)
         }
-    }, [dispatch, path, categoryId, categoryName, isCategoryLoading]);
+    }, [dispatch, categoryName, categoryId]);
 
     if (isCategoryLoading && isLocationLoading) {
         return <CenteredLoader className={classes.upperLoader}/>;
