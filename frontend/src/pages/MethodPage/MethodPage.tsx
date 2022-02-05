@@ -77,7 +77,7 @@ const MethodPage: React.FC = () => {
             .catch(thunkError => {
                 handleThunkErrorBase(thunkError, history, dispatch);
             })
-    }, [approachId, history, dispatch, updateLocation, path]);
+    }, [approachId, history, dispatch, updateLocation]);
 
     const approach = useAppSelector(state => state.approachReducer.approach)
 

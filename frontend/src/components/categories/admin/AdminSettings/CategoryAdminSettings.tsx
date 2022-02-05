@@ -5,11 +5,12 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import CreateCategoryDialog from "../dialogs/CreateCategory/CreateCategoryDialog";
-import DeleteCategoryDialog from "../dialogs/DeleteCategory/DeleteCategoryDialog";
 import RenameCategoryDialog from "../dialogs/RenameCategory/RenameCategoryDialog";
 import {CategoryView} from "../../../../infrastructure/http/api/view/category/CategoryView";
 import {useHistory} from "react-router-dom";
 import appRoutesNames from "../../../../infrastructure/common/appRoutesNames";
+import DeleteDialog from "../../../admin/dialogs/DeleteDialog";
+import {deleteCategory} from "../../../../redux/categories/thunkActions";
 
 const CategoryAdminSettings: React.FC<{
     categoryId: number, categoryName: string, setCategoryName: (categoryName: string) => void,
@@ -58,7 +59,8 @@ const CategoryAdminSettings: React.FC<{
             <MenuItem onClick={handleMenuItemClick(setCreateDialogOpen)}>Create new category</MenuItem>
             <MenuItem onClick={handleMenuItemClick(setDeleteDialogOpen)}>Delete this category</MenuItem>
             <MenuItem onClick={handleMenuItemClick(setRenameDialogOpen)}>Rename this category</MenuItem>
-            <MenuItem onClick={(() => history.push(`${appRoutesNames.CREATE_APPROACH}/${categoryId}`))}>Create new public approach</MenuItem>
+            <MenuItem onClick={(() => history.push(`${appRoutesNames.CREATE_APPROACH}/${categoryId}`))}>Create new
+                public approach</MenuItem>
         </Menu>
     )
 
@@ -73,8 +75,9 @@ const CategoryAdminSettings: React.FC<{
                     <CreateCategoryDialog categoryId={categoryId} isOpen={createDialogOpen}
                                           onClose={handleDialogCloseClick(setCreateDialogOpen)}
                                           updateCategoryCatalog={updateCategoryCatalog}/>
-                    <DeleteCategoryDialog categoryId={categoryId} categoryName={categoryName} isOpen={deleteDialogOpen}
-                                          onClose={handleDialogCloseClick(setDeleteDialogOpen)}/>
+                    <DeleteDialog id={categoryId} name={categoryName} type={'category'}
+                                  onClose={handleDialogCloseClick(setDeleteDialogOpen)}
+                                  isOpen={deleteDialogOpen} deleteType={deleteCategory}/>
                     <RenameCategoryDialog categoryId={categoryId} categoryName={categoryName} isOpen={renameDialogOpen}
                                           onClose={handleDialogCloseClick(setRenameDialogOpen)}
                                           setCategoryName={setCategoryName}/>

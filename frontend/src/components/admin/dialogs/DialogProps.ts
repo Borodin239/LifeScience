@@ -1,14 +1,12 @@
-import {CategoryView} from "../../../infrastructure/http/api/view/category/CategoryView";
+import {AsyncThunk} from "@reduxjs/toolkit";
+import {AppDispatch} from "../../../redux/store/store";
+import {ApiError} from "../../../infrastructure/common/exceptions/ApiError";
 
 export type DialogProps = {
     id: number,
+    name: string,
+    type: "category" | "approach",
     onClose: () => void,
     isOpen: boolean,
-    name?: string,
-    setName?: (categoryName: string) => void,
-    handleDeleteButton: () => void,
-    type: "category" | "approach",
-    updateCategoryCatalog?: (categoryCatalog: CategoryView) => void,
-    alertText: string | null,
-    setAlertText: (alertText: string | null) => void,
+    deleteType: AsyncThunk<never, string, {dispatch: AppDispatch, rejectValue: ApiError}>
 }

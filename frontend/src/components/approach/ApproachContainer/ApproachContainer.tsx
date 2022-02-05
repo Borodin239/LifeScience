@@ -7,7 +7,8 @@ import {RightProtocolsArrow} from "../ProtocolsArrows/ProtocolsArrows";
 import {ApproachPreview} from "../../../infrastructure/http/api/view/approach/ApproachPreview";
 import ApproachContent from "../ContentContainer/ApproachContent";
 import {useAppSelector} from "../../../redux/hooks";
-import DeleteApproachDialog from "./admin/dialogs/DeleteApproachDialog";
+import DeleteDialog from "../../admin/dialogs/DeleteDialog";
+import {deletePublicApproach} from "../../../redux/publicApproach/thunkActions";
 
 
 type ApproachContainerProps = {
@@ -34,9 +35,9 @@ const ApproachContainer: React.FC<ApproachContainerProps> = (props) => {
                     <Button variant="outlined" color="primary" onClick={() => setDeleteDialogOpen(true)}>
                         Delete approach
                     </Button>
-                    <DeleteApproachDialog id={parseInt(approachId)}
-                                          name={approach.name} isOpen={deleteDialogOpen}
-                                          onClose={() => setDeleteDialogOpen(false)}/>
+                    <DeleteDialog id={parseInt(approachId)} name={approach.name} type={'approach'}
+                                  onClose={() => setDeleteDialogOpen(false)} isOpen={deleteDialogOpen}
+                                  deleteType={deletePublicApproach}/>
                 </Box>
                 : null}
             <Box className={classes.methodTitleContainer}>
@@ -49,8 +50,8 @@ const ApproachContainer: React.FC<ApproachContainerProps> = (props) => {
                              selectedSection={selectedSection}
                              handleSectionTitleClick={handleSectionTitleClick}/>
                 <ApproachContent title={approach.sections[selectedSection].name}
-                                  approachId={approachId}
-                                  sectionId={approach.sections[selectedSection].id}/>
+                                 approachId={approachId}
+                                 sectionId={approach.sections[selectedSection].id}/>
                 <Box className={classes.protocolsButtonContainer}>
                     <RightProtocolsArrow text={"Go to protocols"} handleClick={handleGoToProtocolsClick}/>
                 </Box>
