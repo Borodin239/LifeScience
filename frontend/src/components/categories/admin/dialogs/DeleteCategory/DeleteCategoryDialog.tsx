@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {CategoryDialogProps} from "../CreateCategory/CreateCategoryDialog";
 import {Box, Dialog, DialogTitle} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import {useStyles} from "../dialog-styles";
+import {useStyles} from "../useDialogStyles";
 import {useAppDispatch, useAppSelector} from "../../../../../redux/hooks";
 import {deleteCategory} from "../../../../../redux/categories/thunkActions";
 import splitThunkPayload from "../../../../../redux/utils/splitThunkPayload";
