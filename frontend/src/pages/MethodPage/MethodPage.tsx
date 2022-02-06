@@ -77,6 +77,7 @@ const MethodPage: React.FC = () => {
             .catch(thunkError => {
                 handleThunkErrorBase(thunkError, history, dispatch);
             })
+        // eslint-disable-next-line
     }, [approachId, history, dispatch, updateLocation]);
 
     const approach = useAppSelector(state => state.approachReducer.approach)

@@ -136,6 +136,7 @@ const CategoryPage = () => {
         } else {
             setIsLocationLoading(false)
         }
+        // eslint-disable-next-line
     }, [dispatch, categoryName, categoryId]);
 
     if (isCategoryLoading && isLocationLoading) {
