@@ -10,4 +10,7 @@ export const approachApi = {
     postPublicApproach(dto: CreatePublicApproachDto) {
         return apiClientSecure.post(`${apiConstants.routes.publicApproach.BASE}`, dto)
     },
+    deletePublicApproach(approachId: string) {
+        return apiClientSecure.delete(`${apiConstants.routes.publicApproach.BASE}/${approachId}`)
+    },
 }
