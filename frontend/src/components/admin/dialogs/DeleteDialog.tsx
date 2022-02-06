@@ -1,24 +1,25 @@
 import React, {useState} from "react";
-import {CategoryDialogProps} from "../CreateCategory/CreateCategoryDialog";
+import {useStyles} from "../../categories/admin/dialogs/dialog-styles";
 import {Box, Dialog, DialogTitle} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import {useStyles} from "../dialog-styles";
-import {useAppDispatch, useAppSelector} from "../../../../../redux/hooks";
-import {deleteCategory} from "../../../../../redux/categories/thunkActions";
-import splitThunkPayload from "../../../../../redux/utils/splitThunkPayload";
-import {useHistory} from "react-router-dom";
-import apiConstants from "../../../../../infrastructure/http/api/apiConstants";
 import Alert from "@material-ui/lab/Alert";
-import {pathMove} from "../../../../../redux/navigation/slice";
-import {getRedirectionRoute} from "../../../../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
-import handleErrors from "../../../handleErrors";
+import {DialogProps} from "./DialogProps";
+import {useAppDispatch, useAppSelector} from "../../../redux/hooks";
+import {useHistory} from "react-router-dom";
+import splitThunkPayload from "../../../redux/utils/splitThunkPayload";
+import {pathMove} from "../../../redux/navigation/slice";
+import {getRedirectionRoute} from "../../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
+import apiConstants from "../../../infrastructure/http/api/apiConstants";
+import handleErrors from "../../categories/handleErrors";
 
-const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({
-                                                                 categoryId,
-                                                                 onClose,
-                                                                 isOpen,
-                                                                 categoryName
-                                                             }) => {
+const DeleteDialog: React.FC<DialogProps> = ({
+                                                 id,
+                                                 name,
+                                                 type,
+                                                 onClose,
+                                                 isOpen,
+                                                 deleteType
+                                             }) => {
 
     const classes = useStyles()
     const dispatch = useAppDispatch()
@@ -28,14 +29,16 @@ const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({
     const parentName = useAppSelector(state => state.navigationReducer.path).map(i => i.name).reverse()[1]
 
     const handleDeleteButton = () => {
-        dispatch(deleteCategory(categoryId.toString()))
+        dispatch(deleteType(id.toString()))
             .unwrap()
             .then(payload => splitThunkPayload(payload))
             .then(() => dispatch(pathMove({
-                name: parentName,
-                route: getRedirectionRoute({type: 'category', categoryId: parentId!}),
-                type: 'category'
-            })))
+                    name: parentName,
+                    route: getRedirectionRoute({type: 'category', categoryId: parentId!}),
+                    type: 'category'
+                }))
+            )
+            .then(payload => splitThunkPayload(payload))
             .then(() => history.replace(`${apiConstants.routes.categories.INITIAL}/${parentId}`))
             .then(() => onClose())
             .then(() => setAlertText(null))
@@ -50,7 +53,7 @@ const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({
             setAlertText(null)
         }} classes={{paper: classes.paper}}>
             <DialogTitle>
-                Are you sure you want to delete "{categoryName}" category?
+                Are you sure you want to delete "{name}" {type}?
             </DialogTitle>
             <Box className={classes.twoButtonsPanel}>
                 <Button className={classes.yesButton} onClick={handleDeleteButton}>
@@ -70,4 +73,4 @@ const DeleteCategoryDialog: React.FC<CategoryDialogProps> = ({
         </Dialog>
     )
 }
-export default DeleteCategoryDialog
+export default DeleteDialog
