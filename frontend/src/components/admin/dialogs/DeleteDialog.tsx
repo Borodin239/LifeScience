@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {useStyles} from "../../categories/admin/dialogs/dialog-styles";
+import {useStyles} from "../../categories/admin/dialogs/useDialogStyles";
 import {Box, Dialog, DialogTitle} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
