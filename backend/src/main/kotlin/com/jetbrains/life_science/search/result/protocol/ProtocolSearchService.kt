@@ -14,5 +14,5 @@ class ProtocolSearchService : UnitSearchService {
         return ProtocolSearchResult(id.toLong(), approachId.toLong(), names[0].toString())
     }
 
-    override val key = SearchUnitType.PROTOCOL
+    override val key = SearchUnitType.PROTOCOL.presentationName
 }
