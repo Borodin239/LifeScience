@@ -22,6 +22,10 @@ class PublicApproachServiceImpl(
         }
     }
 
+    override fun checkExistsSearchUnitById(id: Long) {
+        searchUnitService.checkExistsById(id)
+    }
+
     override fun getAllByOwnerId(ownerId: Long): List<PublicApproach> {
         return repository.getAllByOwnerId(ownerId)
     }

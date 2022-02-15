@@ -9,8 +9,15 @@ import com.jetbrains.life_science.container.approach.utilities.assertContainsCat
 import com.jetbrains.life_science.container.approach.utilities.assertContainsSection
 import com.jetbrains.life_science.container.approach.utilities.assertNotContainsSection
 import com.jetbrains.life_science.exception.not_found.ApproachNotFoundException
+import com.jetbrains.life_science.exception.search_unit.ApproachSearchUnitNotFoundException
+import com.jetbrains.life_science.search.query.SearchUnitType
+import com.jetbrains.life_science.search.result.approach.ApproachSearchResult
+import com.jetbrains.life_science.search.service.SearchService
+import com.jetbrains.life_science.search.service.maker.makeSearchQueryInfo
 import com.jetbrains.life_science.section.service.SectionService
 import com.jetbrains.life_science.user.credentials.service.CredentialsService
+import com.jetbrains.life_science.util.populator.ElasticPopulator
+import org.elasticsearch.client.RestHighLevelClient
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -19,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.transaction.annotation.Transactional
+import javax.annotation.PostConstruct
 
 @SpringBootTest
 @Sql(
@@ -124,6 +132,41 @@ class PublicApproachServiceTest {
         assertEquals(coAuthorsExpectedCount, publicApproach.coAuthors.size)
         assertContainsCoAuthor(publicApproach, expectedOwnerId)
         assertContainsCoAuthor(publicApproach, secondCoAuthorId)
+    }
+
+    /**
+     * Should delete existing approach
+     */
+    @Test
+    fun `delete existing approach`() {
+        // Prepare data
+        val draftApproach = draftApproachService.get(1L)
+        val publicApproach = service.create(draftApproach)
+
+        // Action
+        service.delete(publicApproach.id)
+
+        // Assert
+        assertThrows<ApproachNotFoundException> {
+            service.get(publicApproach.id)
+        }
+        assertThrows<ApproachSearchUnitNotFoundException> {
+            service.checkExistsSearchUnitById(publicApproach.id)
+        }
+    }
+
+    /**
+     * Should throw PublicApproachNotFound exception
+     */
+    @Test
+    fun `delete not existing approach`() {
+        // Prepare data
+        val draftApproachId = 239L
+
+        // Action & Assert
+        assertThrows<ApproachNotFoundException> {
+            service.delete(draftApproachId)
+        }
     }
 
     /**
