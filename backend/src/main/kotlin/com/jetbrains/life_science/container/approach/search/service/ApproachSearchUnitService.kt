@@ -11,6 +11,4 @@ interface ApproachSearchUnitService {
     fun update(approach: PublicApproach)
 
     fun getContext(approachId: Long): List<String>
-
-    fun checkExistsById(id: Long)
 }

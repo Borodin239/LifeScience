@@ -3,17 +3,16 @@ package com.jetbrains.life_science.container.approach.published.service
 import com.jetbrains.life_science.category.service.CategoryService
 import com.jetbrains.life_science.container.approach.entity.PublicApproach
 import com.jetbrains.life_science.container.approach.maker.makeApproachInfo
+import com.jetbrains.life_science.container.approach.search.repository.ApproachSearchUnitRepository
 import com.jetbrains.life_science.container.approach.service.DraftApproachService
 import com.jetbrains.life_science.container.approach.service.PublicApproachService
 import com.jetbrains.life_science.container.approach.utilities.assertContainsCategory
 import com.jetbrains.life_science.container.approach.utilities.assertContainsSection
 import com.jetbrains.life_science.container.approach.utilities.assertNotContainsSection
 import com.jetbrains.life_science.exception.not_found.ApproachNotFoundException
-import com.jetbrains.life_science.exception.search_unit.ApproachSearchUnitNotFoundException
 import com.jetbrains.life_science.section.service.SectionService
 import com.jetbrains.life_science.user.credentials.service.CredentialsService
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
@@ -45,6 +44,9 @@ class PublicApproachServiceTest {
 
     @Autowired
     lateinit var sectionService: SectionService
+
+    @Autowired
+    lateinit var searchUnitRepository: ApproachSearchUnitRepository
 
     /**
      * Should create new approach
@@ -143,9 +145,7 @@ class PublicApproachServiceTest {
         assertThrows<ApproachNotFoundException> {
             service.get(publicApproach.id)
         }
-        assertThrows<ApproachSearchUnitNotFoundException> {
-            service.checkExistsSearchUnitById(publicApproach.id)
-        }
+        assertFalse(searchUnitRepository.existsById(publicApproach.id))
     }
 
     /**

@@ -46,7 +46,7 @@ class ApproachSearchUnitServiceImpl(
             .context
     }
 
-    override fun checkExistsById(id: Long) {
+    private fun checkExistsById(id: Long) {
         if (!repository.existsById(id)) {
             throw ApproachSearchUnitNotFoundException("Approach search unit not found with id: $id")
         }
