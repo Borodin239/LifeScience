@@ -4,6 +4,7 @@ import com.jetbrains.life_science.category.search.PathUnit
 import com.jetbrains.life_science.search.query.SearchUnitType
 import com.jetbrains.life_science.search.result.approach.ApproachSearchResult
 import com.jetbrains.life_science.search.result.category.CategorySearchResult
+import com.jetbrains.life_science.search.result.category.LightCategorySearchResult
 import com.jetbrains.life_science.search.result.protocol.ProtocolSearchResult
 import com.jetbrains.life_science.search.service.maker.makeSearchQueryInfo
 import com.jetbrains.life_science.util.populator.ElasticPopulator
@@ -484,13 +485,17 @@ internal class SearchServiceTest {
             from = 0,
             size = 100
         )
-        val expectedResults = setOf("catalog 1", "catalog", "catalog 2", "catalog one")
+        val expectedResults = listOf(
+            LightCategorySearchResult(categoryName = "catalog 1"),
+            LightCategorySearchResult(categoryName = "catalog"),
+            LightCategorySearchResult(categoryName = "catalog 2")
+        )
 
         // Action
         val result = service.suggest(searchQueryInfo)
 
         // Assert
-        assertEquals(expectedResults, result.buckets.map { it.key }.toSet())
+        assertEquals(expectedResults, result)
     }
 
     @Test
@@ -508,15 +513,19 @@ internal class SearchServiceTest {
             from = 0,
             size = 10
         )
-        val expectedResults = setOf("catalog", "catalog 1", "catalog 2", "catalog one")
+        val expectedResults = listOf(
+            LightCategorySearchResult(categoryName = "catalog 1"),
+            LightCategorySearchResult(categoryName = "catalog"),
+            LightCategorySearchResult(categoryName = "catalog 2")
+        )
 
         // Action
         val searchUpperCaseResult = service.suggest(upperCaseSearchQueryInfo)
         val searchMixedCaseResult = service.suggest(mixedCaseSearchQueryInfo)
 
         // Assert
-        assertEquals(expectedResults, searchUpperCaseResult.buckets.map { it.key }.toSet())
-        assertEquals(expectedResults, searchMixedCaseResult.buckets.map { it.key }.toSet())
+        assertEquals(expectedResults, searchUpperCaseResult)
+        assertEquals(expectedResults, searchMixedCaseResult)
     }
 
     @Test
@@ -528,13 +537,16 @@ internal class SearchServiceTest {
             from = 0,
             size = 100
         )
-        val expectedResults = setOf("Quantitative real time PCR", "Real-Time PCR")
+        val expectedResults = listOf(
+            ApproachSearchResult(publishApproachId = 10, approachName = "Quantitative real time PCR"),
+            ApproachSearchResult(publishApproachId = 13, approachName = "Real-Time PCR")
+        )
 
         // Action
         val searchLowerCaseResult = service.suggest(searchQueryInfo)
 
         // Assert
-        assertEquals(expectedResults, searchLowerCaseResult.buckets.map { it.key }.toSet())
+        assertEquals(expectedResults, searchLowerCaseResult)
     }
 
     @Test
@@ -546,13 +558,16 @@ internal class SearchServiceTest {
             from = 0,
             size = 100
         )
-        val expectedResults = setOf("Quantitative real time PCR", "Real-Time PCR")
+        val expectedResults = listOf(
+            ApproachSearchResult(publishApproachId = 10, approachName = "Quantitative real time PCR"),
+            ApproachSearchResult(publishApproachId = 13, approachName = "Real-Time PCR")
+        )
 
         // Action
         val searchLowerCaseResult = service.suggest(searchQueryInfo)
 
         // Assert
-        assertEquals(expectedResults, searchLowerCaseResult.buckets.map { it.key }.toSet())
+        assertEquals(expectedResults, searchLowerCaseResult)
     }
 
     @Test
@@ -576,10 +591,7 @@ internal class SearchServiceTest {
         val whiteSpaceSearchResult = service.suggest(whiteSpaceSearchQueryInfo)
 
         // Assert
-        assertEquals(
-            dashSearchResult.buckets.map { it.key },
-            whiteSpaceSearchResult.buckets.map { it.key }
-        )
+        assertEquals(dashSearchResult, whiteSpaceSearchResult)
     }
 
     @Test
@@ -591,12 +603,14 @@ internal class SearchServiceTest {
             from = 0,
             size = 100
         )
-        val expectedResults = listOf("SDS-Page")
+        val expectedResults = listOf(
+            ApproachSearchResult(publishApproachId = 4, approachName = "SDS-Page")
+        )
 
         // Action
         val dashSearchResult = service.suggest(dashSearchQueryInfo)
 
         // Assert
-        assertEquals(expectedResults, dashSearchResult.buckets.map { it.key })
+        assertEquals(expectedResults, dashSearchResult)
     }
 }
