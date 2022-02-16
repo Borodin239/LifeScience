@@ -1,9 +1,10 @@
 package com.jetbrains.life_science.search.result.category
 
 import com.jetbrains.life_science.search.query.SearchUnitType
-import com.jetbrains.life_science.search.result.SuggestResult
+import com.jetbrains.life_science.search.result.SearchResult
 
-class LightCategorySearchResult(categoryName: String) : SuggestResult(
-    name = categoryName,
-    typeName = SearchUnitType.CATEGORY.presentationName
-)
+data class LightCategorySearchResult(
+    val categoryName: String
+) : SearchResult {
+    override val typeName = SearchUnitType.CATEGORY.presentationName
+}
