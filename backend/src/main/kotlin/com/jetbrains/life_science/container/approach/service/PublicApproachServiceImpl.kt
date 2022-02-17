@@ -46,6 +46,7 @@ class PublicApproachServiceImpl(
         val approach = get(id)
         approach.categories.forEach { it.approaches.remove(approach) }
         repository.deleteById(id)
+        searchUnitService.deleteSearchUnitById(id)
     }
 
     override fun addSection(id: Long, section: Section) {
