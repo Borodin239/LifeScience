@@ -5,5 +5,7 @@ import {ProtocolSearchResultView} from "./ProtocolSearchResultView/ProtocolSearc
 export type SearchResultView = CategorySearchResultView | ApproachSearchResultView | ProtocolSearchResultView
 
 export type SearchSuggestResultView = {
-    "name": string
+    "publicApproachId": number,
+    "name": string,
+    "typeName": string
 }

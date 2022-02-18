@@ -41,7 +41,7 @@ const SearchResultList: React.FC<SearchResultListProps> = ({results}) => {
     const handleClick = (result: SearchResultView) => () => {
         switch (result.typeName) {
             case "Approach": {
-                history.push(`${appRoutesNames.APPROACHES}/${result.publishApproachId}`);
+                history.push(`${appRoutesNames.APPROACHES}/${result.publicApproachId}`);
                 return;
             }
             case "Category": {
