@@ -4,6 +4,7 @@ const useSearchTextFieldStyles = makeStyles((theme: Theme) =>
     createStyles({
         searchPaper: {
             marginTop: theme.spacing(1),
+            padding: 3,
             display: 'flex',
             alignItems: 'center',
             margin: '0 80px 0 80px',

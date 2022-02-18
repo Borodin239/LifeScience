@@ -12,7 +12,7 @@ export const MenuTabs = () => {
 
     return (
         <div className={classes.main}>
-            {tabs.map(t => <Link to={t.link} className={classes.tab}>{t.name}</Link>)}
+            {tabs.map((t, index) => <Link to={t.link} className={classes.tab} key={index}>{t.name}</Link>)}
         </div>
     )
 }
