@@ -12,6 +12,7 @@ import org.elasticsearch.client.RequestOptions
 import org.elasticsearch.client.RestHighLevelClient
 import org.elasticsearch.common.lucene.search.function.FunctionScoreQuery
 import org.elasticsearch.index.query.QueryBuilders
+import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder
 import org.elasticsearch.search.SearchHit
 import org.elasticsearch.search.builder.SearchSourceBuilder
 import org.springframework.beans.factory.annotation.Autowired
@@ -54,7 +55,6 @@ class SearchServiceImpl(
             processHit(it, suggest)
         }
         .sortedBy {
-            // TODO:: Try to find #LS-275 error here.
             SearchUnitType.valueOf(it.typeName.toUpperCase()).order
         }
 
@@ -80,20 +80,31 @@ class SearchServiceImpl(
         return client.search(request, RequestOptions.DEFAULT)
     }
 
+    private fun getQueryBuilder(token: String, name: String, boost: Float = 1.0F): FunctionScoreQueryBuilder? {
+        return QueryBuilders
+            .functionScoreQuery(QueryBuilders.fuzzyQuery(name, token))
+            .scoreMode(FunctionScoreQuery.ScoreMode.SUM).boost(boost)
+    }
+
     private fun makeRequest(query: SearchQueryInfo): SearchRequest {
         val tokens = getTokens(query, needFilter = true)
-        val shouldContainsAllCategoriesQuery = QueryBuilders.boolQuery().minimumShouldMatch(tokens.size)
+        val shouldContainsAllTokensQuery = QueryBuilders.boolQuery()
 
         for (token in tokens) {
-            shouldContainsAllCategoriesQuery.should(
-                QueryBuilders.functionScoreQuery(
-                    QueryBuilders.fuzzyQuery("context", token)
-                ).scoreMode(FunctionScoreQuery.ScoreMode.SUM)
+            shouldContainsAllTokensQuery.must(
+                QueryBuilders.boolQuery()
+                    .minimumShouldMatch(1)
+                    .should(
+                        getQueryBuilder(token, name = "context")
+                    )
+                    .should(
+                        getQueryBuilder(token, name = "names", boost = 2F)
+                    )
             )
         }
 
         val searchBuilder = SearchSourceBuilder()
-            .query(shouldContainsAllCategoriesQuery)
+            .query(shouldContainsAllTokensQuery)
             .sort("_score")
             .from(query.from)
             .size(query.size)

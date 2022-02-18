@@ -225,12 +225,12 @@ internal class SearchServiceTest {
         )
         val expectedResults = listOf(
             ApproachSearchResult(
-                publishApproachId = 9,
-                approachName = "Southern Blotting"
-            ),
-            ApproachSearchResult(
                 publishApproachId = 10,
                 approachName = "Quantitative real time PCR"
+            ),
+            ApproachSearchResult(
+                publishApproachId = 9,
+                approachName = "Southern Blotting"
             ),
             ApproachSearchResult(
                 publishApproachId = 13,
