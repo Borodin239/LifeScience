@@ -486,9 +486,9 @@ internal class SearchServiceTest {
             size = 100
         )
         val expectedResults = listOf(
-            LightCategorySearchResult(categoryName = "catalog 1"),
-            LightCategorySearchResult(categoryName = "catalog"),
-            LightCategorySearchResult(categoryName = "catalog 2")
+            LightCategorySearchResult(name = "catalog 1"),
+            LightCategorySearchResult(name = "catalog"),
+            LightCategorySearchResult(name = "catalog 2")
         )
 
         // Action
@@ -514,9 +514,9 @@ internal class SearchServiceTest {
             size = 10
         )
         val expectedResults = listOf(
-            LightCategorySearchResult(categoryName = "catalog 1"),
-            LightCategorySearchResult(categoryName = "catalog"),
-            LightCategorySearchResult(categoryName = "catalog 2")
+            LightCategorySearchResult(name = "catalog 1"),
+            LightCategorySearchResult(name = "catalog"),
+            LightCategorySearchResult(name = "catalog 2")
         )
 
         // Action
