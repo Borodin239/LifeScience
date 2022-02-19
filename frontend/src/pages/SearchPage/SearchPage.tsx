@@ -31,7 +31,9 @@ const SearchPage = () => {
         setQuery(newQuery)
         const dto: SearchDto = {
             text: newQuery,
-            includeTypes: [SearchType.APPROACH]
+            includeTypes: [SearchType.APPROACH],
+            size: 100,
+            from: 0
         }
         dispatch(searchThunk(dto))
             .unwrap()
@@ -62,7 +64,7 @@ const SearchPage = () => {
             </Box>
             <Box className={classes.titleContainer}>
                 <Typography variant={"h5"}>
-                    Found {results.length} results for "{query}":
+                    Found {results.length} results for "{query.replaceAll('|', ', ')}":
                 </Typography>
             </Box>
             <Divider className={classes.divider}/>

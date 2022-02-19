@@ -1,16 +1,16 @@
 import React, {useState} from "react";
 import {CategoryDialogProps} from "../CreateCategory/CreateCategoryDialog";
 import {Dialog, DialogTitle, TextField} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import {useStyles} from "../dialog-styles";
+import {useStyles} from "../useDialogStyles";
 import {useAppDispatch} from "../../../../../redux/hooks";
 import {useHistory} from "react-router-dom";
 import {updateCategory} from "../../../../../redux/categories/thunkActions";
 import splitThunkPayload from "../../../../../redux/utils/splitThunkPayload";
-import handleThunkErrorBase from "../../../../../redux/utils/handleThunkErrorBase";
 import Alert from "@material-ui/lab/Alert";
-import {pathMove, ROOT_NAVIGATION_UNIT} from "../../../../../redux/navigation/slice";
+import {pathMove} from "../../../../../redux/navigation/slice";
 import {getRedirectionRoute} from "../../../../../infrastructure/ui/utils/BreadcrumbsNavigationUtils";
+import handleErrors from "../../../handleErrors";
+import ButtonWithSpinner from "../../../../../elements/buttons/ButtonWithSpinner";
 
 const RenameCategoryDialog: React.FC<CategoryDialogProps> = ({
                                                                  categoryId,
@@ -24,10 +24,12 @@ const RenameCategoryDialog: React.FC<CategoryDialogProps> = ({
     const dispatch = useAppDispatch()
     const [alertText, setAlertText] = useState<string | null>(null)
     const history = useHistory()
-    const [newName, setNewName] = useState<string>('')
+    const [newName, setNewName] = useState<string>(categoryName!)
+    const [isLoading, setIsLoading] = React.useState(false)
 
     const handleRenameClick = () => {
-        if (setCategoryName) {
+        if (setCategoryName && !isLoading) {
+            setIsLoading(true)
             dispatch(updateCategory({
                 categoryInfo: {
                     name: newName.trim(),
@@ -39,37 +41,31 @@ const RenameCategoryDialog: React.FC<CategoryDialogProps> = ({
                 .unwrap()
                 .then(payload => splitThunkPayload(payload))
                 .then(() => onClose())
+                .then(() => setAlertText(null))
                 .then(() => dispatch(pathMove({
                     name: newName,
                     route: getRedirectionRoute({type: 'category', categoryId: categoryId.toString()}),
                     type: 'category'
                 })))
                 .then(() => setCategoryName(newName))
+                .then(() => setIsLoading(false))
                 .catch(thunkError => {
-                    if (thunkError.name === 'ApiError') {
-                        if (thunkError.description.httpCode === 400) {
-                            setAlertText(thunkError.description.message);
-                        }
-                        if (thunkError.description.httpCode === 404) {
-                            history.push(ROOT_NAVIGATION_UNIT.route);
-                        }
-                    } else {
-                        handleThunkErrorBase(thunkError, history, dispatch);
-                    }
+                    handleErrors(thunkError, history, dispatch, setAlertText)
+                    setIsLoading(false)
                 })
         }
     }
 
     return (
-        <Dialog open={isOpen} onClose={() => {
+        <Dialog fullWidth={true} maxWidth={'xs'} open={isOpen} onClose={() => {
             onClose();
             setAlertText(null)
         }} classes={{paper: classes.paper}}>
             <DialogTitle>Rename "{categoryName}" category</DialogTitle>
-            <TextField variant="outlined" placeholder="Enter new name" onChange={(e) =>
+            <TextField variant="outlined" defaultValue={categoryName} onChange={(e) =>
                 setNewName(e.target.value)
             }/>
-            <Button className={classes.submit} onClick={handleRenameClick}>Rename</Button>
+            <ButtonWithSpinner text={'Rename'} isLoading={isLoading} classes={classes} handleClick={handleRenameClick}/>
             {alertText &&
                 <Alert severity="error" style={{marginTop: 10}}>
                     {alertText}

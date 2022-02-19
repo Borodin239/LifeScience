@@ -9,7 +9,8 @@ export const APPROACH_ACTION_TYPE_PREFIX = 'approaches'
 
 enum ApproachActionThunkTypes {
     GET= "/getApproach",
-    POST="/postApproach"
+    POST="/postApproach",
+    DELETE="/deleteApproach"
 }
 
 export const getPublicApproachThunk = createAsyncThunk<
@@ -46,6 +47,23 @@ export const postPublicApproachThunk = createAsyncThunk<
             const response = await approachApi.postPublicApproach(dto);
 
             return response.data as ApproachView;
+        } catch (err) {
+            return onThunkError(err, thunkAPI);
+        }
+    }
+)
+
+export const deletePublicApproach = createAsyncThunk<never,
+    string,
+    {
+        dispatch: AppDispatch,
+        rejectValue: ApiError
+    }>
+(
+    `${APPROACH_ACTION_TYPE_PREFIX}${ApproachActionThunkTypes.DELETE}`,
+    async (id, thunkAPI) => {
+        try {
+            await approachApi.deletePublicApproach(id);
         } catch (err) {
             return onThunkError(err, thunkAPI);
         }
