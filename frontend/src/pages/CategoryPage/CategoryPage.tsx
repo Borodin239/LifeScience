@@ -20,6 +20,7 @@ import {CategoryInfoView} from "../../infrastructure/http/api/view/category/Cate
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import {sortBy} from "lodash";
 import {useCategoryPageStyles} from "./useCategoryPageStyles";
+import Typography from "@material-ui/core/Typography";
 
 const CategoryPage = () => {
     const classes = useCategoryPageStyles()
@@ -168,6 +169,9 @@ const CategoryPage = () => {
                     (
                         <>
                             <CatalogNodeList list={sortedCategoryCatalog} icon={<FolderOutlined/>} type={"Categories"}/>
+                            <Typography color={'textPrimary'}>
+                                Methods - make new styled component
+                            </Typography>
                             <CatalogNodeList list={sortedApproachCatalog} icon={<SubjectIcon/>} type={"Methods"}/>
                         </>
                     )

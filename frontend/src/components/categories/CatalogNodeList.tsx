@@ -1,15 +1,16 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {Box, Typography} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import NodeBox from "./NodeBox";
 
 const useStyles = makeStyles((theme) => ({
     container: {
-      margin: theme.spacing(1, 0, 0, 0),
+        // padding: theme.spacing(1)
+        // margin: theme.spacing(1, 1, 1, 1),
     },
     nodes: {
-        display: "flex",
-        flexWrap: "wrap"
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr 1fr"
     }
 }), {index: 1});
 
@@ -28,9 +29,9 @@ const CatalogNodeList = ({type, icon, list}: CatalogNodeListProps) => {
     const classes = useStyles()
     return (
         <Box className={classes.container}>
-            <Typography color={'textSecondary'}>
-                {type}
-            </Typography>
+            {/*<Typography color={'textSecondary'}>*/}
+            {/*    {type}*/}
+            {/*</Typography>*/}
             <Box className={classes.nodes}>
                 {
                     list.map((node, ind) => <NodeBox key={ind} node={node} icon={icon}/>)

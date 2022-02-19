@@ -1,30 +1,40 @@
 import React from "react";
-import {alpha, makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import {CatalogNode} from "./CatalogNodeList";
 import {Box, Typography} from "@material-ui/core";
 import uiConstants from "../../infrastructure/ui/themes/uiConstants";
+import animal from "../../../src/images/rootCategories/animal.png";
 
 const useStyles = makeStyles((theme) => ({
     container: {
         display: "flex",
         alignItems: "center",
-        border: "1px solid " + alpha(theme.palette.common.black, 0.30),
-        borderRadius: theme.shape.borderRadius,
-        margin: theme.spacing(1, 0, 0, 1),
-        padding: theme.spacing(1),
+        borderRadius: '10px',
+        margin: theme.spacing(1),
+        padding: '0.7rem',
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
         cursor: "pointer",
         "&:hover": {
-            backgroundColor: alpha('rgba(255, 255, 255, 0.47);', 0.2)
+            backgroundColor: uiConstants.lightGrey
         },
         userSelect: "none",
-        background: uiConstants.lightGrey
+        background: uiConstants.nodeBoxLight,
+        justifyContent: 'space-between',
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)'
     },
     icon: {
-        // color: theme.palette.primary.main,
         color: uiConstants.darkBlue,
         paddingRight: theme.spacing(1),
     },
-}), {index: 1});
+    node: {
+        verticalAlign: "middle",
+        color: uiConstants.darkBlue,
+        fontWeight: 'bold',
+        textTransform: 'uppercase'
+    }
+    }
+), {index: 1});
 
 type NodeBoxProps = {
     node: CatalogNode,
@@ -36,15 +46,11 @@ const NodeBox = ({node, icon}: NodeBoxProps) => {
     return (
         <Box className={classes.container} onClick={node.handleClick}>
             <Box className={classes.icon}>
-                {icon}
+                <img src={animal} alt={"animal"}/>
+                {/*{icon}*/}
             </Box>
             <Box>
-                <Typography style={{
-                    // TODO :: вынести в classes
-                    verticalAlign: "middle",
-                    color: uiConstants.darkBlue,
-                    textTransform: 'uppercase'
-                }}>
+                <Typography className={classes.node}>
                     {node.name}
                 </Typography>
             </Box>
