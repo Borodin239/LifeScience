@@ -16,7 +16,7 @@ class CategorySearchUnitServiceImpl(
 ) : CategorySearchUnitService {
     override fun createSearchUnit(category: Category) {
         val parentsSearchUnits = getParentsSearchUnits(category)
-        val context = createContext(category, parentsSearchUnits)
+        val context = createContext(parentsSearchUnits)
         val searchUnit = factory.create(category, context, createPaths(category, parentsSearchUnits))
         repository.save(searchUnit)
     }
@@ -29,7 +29,7 @@ class CategorySearchUnitServiceImpl(
     override fun update(category: Category) {
         checkExistsById(category.id)
         val parentsSearchUnits = getParentsSearchUnits(category)
-        val context = createContext(category, parentsSearchUnits)
+        val context = createContext(parentsSearchUnits)
         val searchUnit = factory.create(category, context, createPaths(category, parentsSearchUnits))
         repository.save(searchUnit)
     }
@@ -52,10 +52,10 @@ class CategorySearchUnitServiceImpl(
         }
     }
 
-    private fun createContext(category: Category, parentsSearchUnits: List<CategorySearchUnit>): List<String> {
-        val context = category.aliases.toMutableSet()
-        context.add(category.name)
+    private fun createContext(parentsSearchUnits: List<CategorySearchUnit>): List<String> {
+        val context = mutableSetOf<String>()
         parentsSearchUnits.forEach {
+            context.addAll(it.names)
             context.addAll(it.context)
         }
         return context.toList()

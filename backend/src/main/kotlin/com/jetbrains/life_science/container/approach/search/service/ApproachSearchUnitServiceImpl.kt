@@ -53,10 +53,11 @@ class ApproachSearchUnitServiceImpl(
     }
 
     private fun createContext(approach: PublicApproach): List<String> {
-        val context = approach.aliases.toMutableSet()
-        context.add(approach.name)
+        val context = mutableListOf<String>()
         approach.categories.forEach {
             if (it.id != 0L) {
+                context.add(it.name)
+                context.addAll(it.aliases)
                 context.addAll(categorySearchUnitService.getContext(it))
             }
         }

@@ -12,9 +12,8 @@ import org.elasticsearch.client.RequestOptions
 import org.elasticsearch.client.RestHighLevelClient
 import org.elasticsearch.common.lucene.search.function.FunctionScoreQuery
 import org.elasticsearch.index.query.QueryBuilders
+import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder
 import org.elasticsearch.search.SearchHit
-import org.elasticsearch.search.aggregations.AggregationBuilders
-import org.elasticsearch.search.aggregations.bucket.terms.Terms
 import org.elasticsearch.search.builder.SearchSourceBuilder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -26,7 +25,6 @@ class SearchServiceImpl(
     val logger = getLogger()
 
     lateinit var searchUnitServices: Map<String, UnitSearchService>
-    private val aggregationName = "by_names"
     private val preposition = listOf("of", "as", "in", "on", "by", "to", "a", "the", "an")
 
     override val supportedTypes: List<SearchUnitType> = listOf(
@@ -37,24 +35,24 @@ class SearchServiceImpl(
 
     @Autowired
     fun register(unitSearchService: List<UnitSearchService>) {
-        searchUnitServices = unitSearchService.associateBy { service -> service.key.presentationName }
+        searchUnitServices = unitSearchService.associateBy { service -> service.key }
     }
 
     override fun search(query: SearchQueryInfo): List<SearchResult> {
         val request = makeRequest(query)
         val response = getResponse(request)
-        return processHits(response)
+        return processHits(response.hits.hits)
     }
 
-    override fun suggest(query: SearchQueryInfo): Terms {
+    override fun suggest(query: SearchQueryInfo): List<SearchResult> {
         val request = makeSuggestRequest(query)
         val response = getResponse(request)
-        return response.aggregations[aggregationName]
+        return processHits(response.hits.distinctBy { it.sourceAsMap["names"] }.toTypedArray(), suggest = true)
     }
 
-    private fun processHits(response: SearchResponse) = response.hits
+    private fun processHits(hits: Array<SearchHit>, suggest: Boolean = false) = hits
         .mapNotNull {
-            processHit(it)
+            processHit(it, suggest)
         }
         .sortedBy {
             SearchUnitType.valueOf(it.typeName.toUpperCase()).order
@@ -70,7 +68,6 @@ class SearchServiceImpl(
 
         val searchBuilder = SearchSourceBuilder()
             .query(queryBuilder)
-            .aggregation(AggregationBuilders.terms(aggregationName).field("names.keyword"))
             .from(query.from)
             .size(query.size)
 
@@ -83,20 +80,31 @@ class SearchServiceImpl(
         return client.search(request, RequestOptions.DEFAULT)
     }
 
+    private fun getQueryBuilder(token: String, name: String, boost: Float = 1.0F): FunctionScoreQueryBuilder? {
+        return QueryBuilders
+            .functionScoreQuery(QueryBuilders.fuzzyQuery(name, token))
+            .scoreMode(FunctionScoreQuery.ScoreMode.SUM).boost(boost)
+    }
+
     private fun makeRequest(query: SearchQueryInfo): SearchRequest {
         val tokens = getTokens(query, needFilter = true)
-        val shouldContainsAllCategoriesQuery = QueryBuilders.boolQuery().minimumShouldMatch(tokens.size)
+        val shouldContainsAllTokensQuery = QueryBuilders.boolQuery()
 
         for (token in tokens) {
-            shouldContainsAllCategoriesQuery.should(
-                QueryBuilders.functionScoreQuery(
-                    QueryBuilders.fuzzyQuery("context", token)
-                ).scoreMode(FunctionScoreQuery.ScoreMode.SUM)
+            shouldContainsAllTokensQuery.must(
+                QueryBuilders.boolQuery()
+                    .minimumShouldMatch(1)
+                    .should(
+                        getQueryBuilder(token, name = "context")
+                    )
+                    .should(
+                        getQueryBuilder(token, name = "names", boost = 2F)
+                    )
             )
         }
 
         val searchBuilder = SearchSourceBuilder()
-            .query(shouldContainsAllCategoriesQuery)
+            .query(shouldContainsAllTokensQuery)
             .sort("_score")
             .from(query.from)
             .size(query.size)
@@ -114,11 +122,12 @@ class SearchServiceImpl(
     private fun getRequestIndices(query: SearchQueryInfo) =
         query.includeTypes.map { it.indexName }.toTypedArray()
 
-    private fun processHit(hit: SearchHit): SearchResult? {
+    private fun processHit(hit: SearchHit, suggest: Boolean): SearchResult? {
         try {
             val content: Map<String, Any> = hit.sourceAsMap
             val id = hit.id
-            val type = content.getOrThrow("_class") { "Type not found at hit: $hit" }
+            var type = content.getOrThrow("_class") { "Type not found at hit: $hit" }
+            if (suggest && type == SearchUnitType.CATEGORY.presentationName) type = "Light$type"
             val service = searchUnitServices[type] ?: return null
             return service.process(id, content)
         } catch (e: Exception) {

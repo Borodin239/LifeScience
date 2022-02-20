@@ -40,5 +40,11 @@ export const apiErrorsInfo: ReadonlyMap<number, ApiErrorInfoSetup> = new Map([
     }],
     [apiConstants.errors.NON_EMPTY_CATEGORY, {
         messagePattern: "You can't rename/delete a non-empty category yet."
+    }],
+    [apiConstants.errors.APPROACH_NOT_FOUND, {
+        messagePattern: "Approach not found."
+    }],
+    [apiConstants.errors.SECTION_NOT_FOUND, {
+        messagePattern: "Section not found."
     }]
 ]);
