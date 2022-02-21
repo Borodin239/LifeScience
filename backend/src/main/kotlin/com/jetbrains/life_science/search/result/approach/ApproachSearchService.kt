@@ -13,5 +13,5 @@ class ApproachSearchService : UnitSearchService {
         return ApproachSearchResult(id.toLong(), names[0].toString())
     }
 
-    override val key = SearchUnitType.APPROACH
+    override val key = SearchUnitType.APPROACH.presentationName
 }

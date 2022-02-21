@@ -14,5 +14,5 @@ class ContentSearchService : UnitSearchService {
         return ContentSearchResult(id, text, sectionId.toLong())
     }
 
-    override val key = SearchUnitType.CONTENT
+    override val key = SearchUnitType.CONTENT.presentationName
 }

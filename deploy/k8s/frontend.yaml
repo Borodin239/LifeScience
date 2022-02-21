@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: upscience
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: upscience
+  template:
+    metadata:
+      labels:
+        app: upscience
+    spec:
+      containers:
+      - name: frontend
+        image: registry.jetbrains.team/p/up-science/upscience/frontend:k8s_014
+        ports:
+        - containerPort: 8080
+        env:
+        - name: GIT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: secret-storage
+              key: git-username
+        - name: GIT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-storage
+              key: git-password
+#        - name: REACT_APP_MODE
+#          valueFrom:
+#            secretKeyRef:
+#              name: secret-storage
+#              key: react.app.mode
+#        - name: REACT_APP_BASE_URL
+#          valueFrom:
+#            secretKeyRef:
+#              name: secret-storage
+#              key: react.app.base.url
+        - name: REACT_APP_MODE
+          value: "test"
+        - name: REACT_APP_BASE_URL
+          value: "https://upscience.eu-west-1.eks.intellij.net"
+        - name: APP_PORT
+          value: "8080"
+      imagePullSecrets:
+        - name: space-registry
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: upscience
+spec:
+  type: ClusterIP
+  selector:
+    app: upscience
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-eu-west-1-eks-intellij-net-dns
+  labels:
+    app: upscience
+  name: upscience
+spec:
+  tls:
+  - secretName: upscience-eu-west-1-eks-intellij-net-tls
+    hosts:
+    - upscience.eu-west-1.eks.intellij.net
+  rules:
+    - host: upscience.eu-west-1.eks.intellij.net
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: upscience
+              port:
+                number: 80

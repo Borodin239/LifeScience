@@ -4,6 +4,8 @@ import com.jetbrains.life_science.search.query.SearchUnitType
 import com.jetbrains.life_science.search.result.SearchResult
 
 data class ApproachSearchResult(
-    val publishApproachId: Long,
+    val publicApproachId: Long,
     val name: String
-) : SearchResult(SearchUnitType.APPROACH.presentationName)
+) : SearchResult {
+    override val typeName = SearchUnitType.APPROACH.presentationName
+}

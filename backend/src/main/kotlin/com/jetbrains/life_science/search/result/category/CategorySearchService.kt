@@ -25,5 +25,5 @@ class CategorySearchService : UnitSearchService {
         return CategorySearchResult(id.toLong(), names[0], paths)
     }
 
-    override val key = SearchUnitType.CATEGORY
+    override val key = SearchUnitType.CATEGORY.presentationName
 }
