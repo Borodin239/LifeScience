@@ -1,55 +1,56 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
 import {CatalogNode} from "./CatalogNodeList";
-import {Box, Typography} from "@material-ui/core";
-import uiConstants from "../../infrastructure/ui/themes/uiConstants";
-import animal from "../../../src/images/rootCategories/animal.png";
+import {Box, Icon, Typography} from "@material-ui/core";
+import human from "../../../src/images/rootCategories/human.svg";
+import FolderOpenIcon from "@material-ui/icons/FolderOpen";
+import animal from "../../../src/images/rootCategories/animal.svg";
+import bacteria from "../../../src/images/rootCategories/bacteria.svg";
+import cell from "../../../src/images/rootCategories/cell.svg";
+import cell_culture from "../../../src/images/rootCategories/cell_culture.svg";
+import molecule from "../../../src/images/rootCategories/molecule.svg";
+import organ from "../../../src/images/rootCategories/organ.svg";
+import organelle from "../../../src/images/rootCategories/organelle.svg";
+import plant from "../../../src/images/rootCategories/plant.svg";
+import tissue from "../../../src/images/rootCategories/tissue.svg";
+import virus from "../../../src/images/rootCategories/viruses.svg";
+import insect from "../../../src/images/rootCategories/insect.svg";
+import useNodeBoxStyles from "./useNodeBoxStyles";
 
-const useStyles = makeStyles((theme) => ({
-    container: {
-        display: "flex",
-        alignItems: "center",
-        borderRadius: '10px',
-        margin: theme.spacing(1),
-        padding: '0.7rem',
-        marginLeft: theme.spacing(2),
-        marginRight: theme.spacing(2),
-        cursor: "pointer",
-        "&:hover": {
-            backgroundColor: uiConstants.lightGrey
-        },
-        userSelect: "none",
-        background: uiConstants.nodeBoxLight,
-        justifyContent: 'space-between',
-        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)'
-    },
-    icon: {
-        color: uiConstants.darkBlue,
-        paddingRight: theme.spacing(1),
-    },
-    node: {
-        verticalAlign: "middle",
-        color: uiConstants.darkBlue,
-        fontWeight: 'bold',
-        textTransform: 'uppercase'
-    }
-    }
-), {index: 1});
+const imagesMap = new Map([
+    ["animal", animal],
+    ["bacteria", bacteria],
+    ["cell culture", cell_culture],
+    ["human", human],
+    ["molecule", molecule],
+    ["organ", organ],
+    ["plant", plant],
+    ["tissue", tissue],
+    ["virus", virus],
+    ["cell", cell],
+    ["organelle", organelle],
+    ["insect", insect],
+]);
 
 type NodeBoxProps = {
     node: CatalogNode,
-    icon: JSX.Element
+    isRootCategory: boolean
 }
 
-const NodeBox = ({node, icon}: NodeBoxProps) => {
-    const classes = useStyles()
+const NodeBox = ({node, isRootCategory}: NodeBoxProps) => {
+    const classes = useNodeBoxStyles()
     return (
         <Box className={classes.container} onClick={node.handleClick}>
-            <Box className={classes.icon}>
-                <img src={animal} alt={"animal"}/>
-                {/*{icon}*/}
-            </Box>
-            <Box>
+
+            {isRootCategory && imagesMap.get(node.name.toLowerCase())
+                ?
+                <Icon fontSize={'large'} classes={{root: classes.iconRoot}}>
+                    <img className={classes.imageIcon} src={imagesMap.get(node.name.toLowerCase())} alt={node.name}/>
+                </Icon>
+                :
+                <FolderOpenIcon/>
+            }
+
+            <Box className={classes.sign}>
                 <Typography className={classes.node}>
                     {node.name}
                 </Typography>
@@ -57,4 +58,5 @@ const NodeBox = ({node, icon}: NodeBoxProps) => {
         </Box>
     )
 }
+
 export default NodeBox

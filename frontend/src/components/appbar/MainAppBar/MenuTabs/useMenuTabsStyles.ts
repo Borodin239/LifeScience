@@ -9,6 +9,7 @@ const useMenuTabsStyles = makeStyles(() => ({
             marginBottom: '-1px'
         },
         tab: {
+            textTransform: "uppercase",
             flexGrow: 1,
             marginLeft: '-50px',
             padding: '5px',
@@ -22,7 +23,7 @@ const useMenuTabsStyles = makeStyles(() => ({
             textDecoration: 'none',
             display: 'flex',
             justifyContent: 'center',
-            alignItems:'center',
+            alignItems: 'center',
             ...["#2B337D", "#C2B778", "#E97679", "#BE75AC", "#666AB3"].reduce((acc, cur, i) => ({
                 ...acc,
                 [`&:nth-child(${i + 1})`]:

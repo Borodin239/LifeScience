@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import HandledErrorBoundary from "../components/boundary/HandledErrorBoundary";
@@ -12,7 +12,7 @@ import HomePage from "../pages/HomePage/HomePage";
 import MethodPage from "../pages/MethodPage/MethodPage";
 import {useAppStyles} from "./useAppStyles";
 import SearchPage from "../pages/SearchPage/SearchPage";
-import {Box} from "@material-ui/core";
+import {Box, createTheme, ThemeProvider} from "@material-ui/core";
 import './App.css'
 import ProtocolPage from "../pages/ProtocolPage/ProtocolPage";
 import CreateProtocolPage from "../pages/CreateProtocolPage/CreateProtocolPage";
@@ -21,7 +21,6 @@ import WorkspacePage from "../pages/ProfilePage/WorkspacePage";
 import {EmailConfirmationPage} from "../pages/messagePages/EmailConfirmationPage";
 import {TokenValidationPage} from "../pages/messagePages/TokenValidationPage";
 import CreateApproachPage from "../pages/CreateApproachPage/CreateApproachPage";
-import {createTheme, ThemeProvider} from '@material-ui/core';
 import uiConstants from "../infrastructure/ui/themes/uiConstants";
 
 const theme = createTheme({
@@ -32,6 +31,9 @@ const theme = createTheme({
         secondary: {
             main: uiConstants.mediumBlue
         }
+    },
+    typography: {
+        fontFamily: 'Open Sans',
     }
 });
 

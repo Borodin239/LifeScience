@@ -5,12 +5,20 @@ import NodeBox from "./NodeBox";
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        // padding: theme.spacing(1)
-        // margin: theme.spacing(1, 1, 1, 1),
+        padding: theme.spacing(1),
+        margin: theme.spacing(1, 1, 1, 1),
+        alignSelf: 'center',
+        maxWidth: '80vw',
+        minWidth: '80vw'
     },
-    nodes: {
+    rootNodes: {
         display: "grid",
         gridTemplateColumns: "1fr 1fr 1fr"
+    },
+    nodes: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start"
     }
 }), {index: 1});
 
@@ -20,21 +28,17 @@ export type CatalogNode = {
 }
 
 export type CatalogNodeListProps = {
-    type: string,
-    icon: JSX.Element,
+    isRootCategory: boolean,
     list: CatalogNode[]
 }
 
-const CatalogNodeList = ({type, icon, list}: CatalogNodeListProps) => {
+const CatalogNodeList = ({list, isRootCategory}: CatalogNodeListProps) => {
     const classes = useStyles()
     return (
         <Box className={classes.container}>
-            {/*<Typography color={'textSecondary'}>*/}
-            {/*    {type}*/}
-            {/*</Typography>*/}
-            <Box className={classes.nodes}>
+            <Box className={isRootCategory ? classes.rootNodes : classes.nodes}>
                 {
-                    list.map((node, ind) => <NodeBox key={ind} node={node} icon={icon}/>)
+                    list.map((node, ind) => <NodeBox key={ind} node={node} isRootCategory={isRootCategory}/>)
                 }
             </Box>
         </Box>

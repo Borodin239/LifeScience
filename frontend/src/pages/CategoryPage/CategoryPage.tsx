@@ -3,8 +3,6 @@ import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
 import {useHistory, useParams} from "react-router-dom";
 import {Box} from "@material-ui/core";
 import CatalogNodeList, {CatalogNode} from "../../components/categories/CatalogNodeList";
-import SubjectIcon from "@material-ui/icons/Subject";
-import {FolderOutlined} from "@material-ui/icons";
 import CategoryAdminSettings from "../../components/categories/admin/AdminSettings/CategoryAdminSettings";
 import {developmentLog} from "../../infrastructure/common/developmentLog";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
@@ -160,7 +158,9 @@ const CategoryPage = () => {
                                 <CategoryAdminSettings categoryId={parseInt(categoryId)}
                                                        categoryName={categoryName!}
                                                        setCategoryName={setCategoryName}
-                                                       updateCategoryCatalog={updateCategoryCatalog}/> : null}
+                                                       updateCategoryCatalog={updateCategoryCatalog}
+                                                       isVoid={categoryCatalog.length === 0}
+                                /> : null}
                         </Box>
                     )
             }
@@ -168,11 +168,17 @@ const CategoryPage = () => {
                 isCategoryLoading ? <CenteredLoader/> :
                     (
                         <>
-                            <CatalogNodeList list={sortedCategoryCatalog} icon={<FolderOutlined/>} type={"Categories"}/>
-                            <Typography color={'textPrimary'}>
-                                Methods - make new styled component
-                            </Typography>
-                            <CatalogNodeList list={sortedApproachCatalog} icon={<SubjectIcon/>} type={"Methods"}/>
+                            <CatalogNodeList list={sortedCategoryCatalog}
+                                             isRootCategory={categoryName === ROOT_NAVIGATION_UNIT.name}/>
+
+                            {categoryName !== ROOT_NAVIGATION_UNIT.name &&
+                                <>
+                                    <Typography style={{color: 'white'}}>
+                                        METHODS
+                                    </Typography>
+                                    <CatalogNodeList list={sortedApproachCatalog} isRootCategory={false}/>
+                                </>
+                            }
                         </>
                     )
             }
