@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: registry.jetbrains.team/p/up-science/upscience/frontend:k8s_014
+        image: registry.jetbrains.team/p/up-science/upscience/frontend:latest
         ports:
         - containerPort: 8080
         env:

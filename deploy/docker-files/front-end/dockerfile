@@ -6,7 +6,7 @@ LABEL description="Image for front-end of UpScience/LifeScience/JetScience proje
 
 # config container
 ENV REACT_APP_MODE test
-ENV REACT_APP_BASE_URL https://upscience-eu-west-1.eks.intellij.net
+ENV REACT_APP_BASE_URL https://upscience.eu-west-1.eks.intellij.net
 ENV APP_PORT 8080
 ARG REACT_APP_MODE
 ARG REACT_APP_BASE_URL
