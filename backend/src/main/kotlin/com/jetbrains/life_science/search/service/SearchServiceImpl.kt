@@ -87,11 +87,11 @@ class SearchServiceImpl(
     }
 
     private fun makeRequest(query: SearchQueryInfo): SearchRequest {
-        val tokens = getTokens(query, needFilter = true)
+        val tokens = getTokens(query)
         val shouldContainsAllTokensQuery = QueryBuilders.boolQuery()
 
         for (token in tokens) {
-            val minimalMatch = if (preposition.contains(token)) 0 else 1
+            val minimalMatch = if (preposition.contains(token)) 1 else 2
             shouldContainsAllTokensQuery.must(
                 QueryBuilders.boolQuery()
                     .minimumShouldMatch(minimalMatch)
@@ -101,6 +101,7 @@ class SearchServiceImpl(
                     .should(
                         getQueryBuilder(token, name = "names", boost = 2F)
                     )
+                    .should(QueryBuilders.matchAllQuery().boost(0F))
             )
         }
 
@@ -116,9 +117,8 @@ class SearchServiceImpl(
             .indices(*getRequestIndices(query))
     }
 
-    private fun getTokens(query: SearchQueryInfo, needFilter: Boolean = false): List<String> {
-        val res = query.text.trim().split("[\\s-,|]+".toRegex()).map { it.toLowerCase() }
-        return /* if (needFilter) res.filter { !preposition.contains(it) } else */ res
+    private fun getTokens(query: SearchQueryInfo): List<String> {
+        return query.text.trim().split("[\\s-,|]+".toRegex()).map { it.toLowerCase() }
     }
 
     private fun getRequestIndices(query: SearchQueryInfo) =
