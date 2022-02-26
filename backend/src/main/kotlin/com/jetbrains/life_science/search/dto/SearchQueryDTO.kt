@@ -8,7 +8,7 @@ import javax.validation.constraints.PositiveOrZero
 data class SearchQueryDTO(
 
     @field:Length.List(
-        Length(min = 1, message = "minimum message length is 1 characters"),
+        Length(min = 2, message = "minimum message length is 2 characters"),
         Length(max = 77, message = "maximum message length is 77 characters")
     )
     val text: String,

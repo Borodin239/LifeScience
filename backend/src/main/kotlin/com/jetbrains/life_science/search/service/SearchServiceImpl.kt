@@ -1,9 +1,12 @@
 package com.jetbrains.life_science.search.service
 
+import com.jetbrains.life_science.container.approach.service.PublicApproachService
+import com.jetbrains.life_science.exception.not_found.ApproachNotFoundException
 import com.jetbrains.life_science.search.query.SearchQueryInfo
 import com.jetbrains.life_science.search.query.SearchUnitType
 import com.jetbrains.life_science.search.result.SearchResult
 import com.jetbrains.life_science.search.result.UnitSearchService
+import com.jetbrains.life_science.search.result.approach.ApproachSearchResult
 import com.jetbrains.life_science.util.getLogger
 import com.jetbrains.life_science.util.getOrThrow
 import org.elasticsearch.action.search.SearchRequest
@@ -24,6 +27,8 @@ class SearchServiceImpl(
 ) : SearchService {
     val logger = getLogger()
 
+    @Autowired
+    lateinit var publicApproachService: PublicApproachService
     lateinit var searchUnitServices: Map<String, UnitSearchService>
     private val preposition = listOf("of", "as", "in", "on", "by", "to", "a", "the", "an")
 
@@ -39,6 +44,15 @@ class SearchServiceImpl(
     }
 
     override fun search(query: SearchQueryInfo): List<SearchResult> {
+        try {
+            if (query.text.toLongOrNull() != null) return listOf(
+                ApproachSearchResult(
+                    query.text.toLong(),
+                    publicApproachService.get(query.text.toLong()).name
+                )
+            )
+        } catch (_: ApproachNotFoundException) {
+        }
         val request = makeRequest(query)
         val response = getResponse(request)
         return processHits(response.hits.hits)
@@ -80,7 +94,11 @@ class SearchServiceImpl(
         return client.search(request, RequestOptions.DEFAULT)
     }
 
-    private fun getQueryBuilder(token: String, name: String, boost: Float = 1.0F): FunctionScoreQueryBuilder? {
+    private fun getQueryBuilder(
+        token: String,
+        name: String,
+        boost: Float = 1.0F
+    ): FunctionScoreQueryBuilder? {
         return QueryBuilders
             .functionScoreQuery(QueryBuilders.fuzzyQuery(name, token))
             .scoreMode(FunctionScoreQuery.ScoreMode.SUM).boost(boost)
