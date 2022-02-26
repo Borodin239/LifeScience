@@ -2,7 +2,7 @@ import {Box, useMediaQuery} from "@material-ui/core";
 import {useProfilePageStyles} from "../useProfilePageStyles";
 import {Router, useHistory, Link, Switch, Route, useRouteMatch} from "react-router-dom";
 import {SettingsPage} from "./ProfilePages/SettingsPage";
-import avatar from "../../../images/male_profile_avatar.jpg"
+import avatar from "../../../images/profile-svgrepo-com.svg"
 import {CredentialsPage} from "./ProfilePages/CredentialsPage";
 import AboutMePage from "./ProfilePages/AboutMePage";
 
@@ -17,7 +17,7 @@ const ProfilePage = () => {
     return (
         <Router history={history}>
             <Box p={5} display={"flex"} style={{flexDirection: isDisplaySmall ? "row" : "column", alignItems: 'center'}}>
-                <Box justifyContent={"center"} flexDirection={"column"}>
+                <Box justifyContent={"center"} flexDirection={"column"} alignSelf={'flex-start'}>
                     <img src={avatar} className={classes.avatar} alt={'avatar'} style={{alignSelf: "center"}}/>
                     <Link className={classes.button} to={`${url}/info`}>
                         About me

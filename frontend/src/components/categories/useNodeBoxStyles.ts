@@ -6,11 +6,10 @@ const useNodeBoxStyles = makeStyles((theme) => ({
             display: "flex",
             alignItems: "center",
             borderRadius: '10px',
-            margin: theme.spacing(1),
+            marginRight: theme.spacing(3),
+            marginBottom: theme.spacing(2),
             padding: '0.3rem 0.6rem 0.3rem 0.6rem',
             height: '3rem',
-            marginLeft: theme.spacing(3),
-            marginRight: theme.spacing(3),
             cursor: "pointer",
             "&:hover": {
                 backgroundColor: uiConstants.lightGrey
@@ -30,8 +29,6 @@ const useNodeBoxStyles = makeStyles((theme) => ({
             fontWeight: 'bolder',
             textTransform: 'uppercase'
         },
-
-
         imageIcon: {
             display: 'flex',
             height: 'inherit',
@@ -41,8 +38,6 @@ const useNodeBoxStyles = makeStyles((theme) => ({
             textAlign: 'center',
         },
         sign: {
-            // fontWeight: 10,
-            // fontSize: '200px',
             flexGrow: 1,
             textAlign: "center"
         },

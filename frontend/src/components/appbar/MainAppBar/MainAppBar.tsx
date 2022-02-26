@@ -11,8 +11,7 @@ import UnauthorizedProfile from "./profile/UnauthorizedProfile/UnauthorizedProfi
 import AuthorizedProfilePreview from "./profile/AuthorizedProfilePreview";
 import {updateCurrentUserThunk} from "../../../redux/users/thunkActions";
 import AboutUsWindow from "./about-us/AboutUsWindow";
-import SearchTextField from "../../search/SearchTextField/SearchTextField";
-import { MenuTabs } from './MenuTabs/MenuTabs';
+import {MenuTabs} from './MenuTabs/MenuTabs';
 
 const MainAppBar: React.FC = () => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -58,7 +57,7 @@ const MainAppBar: React.FC = () => {
                 </Toolbar>
             </AppBar>
             <MainAppBarProfileMenu anchorEl={anchorEl} handleMenuClose={handleMenuClose}/>
-            <SearchTextField placeholder={"Search..."}/>
+            {/*<SearchTextField placeholder={"Search..."}/>*/}
             {/*<MainSearch/>*/}
             <MenuTabs/>
         </div>

@@ -3,11 +3,8 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Box} from "@material-ui/core";
 import NodeBox from "./NodeBox";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     container: {
-        padding: theme.spacing(1),
-        margin: theme.spacing(1, 1, 1, 1),
-        alignSelf: 'center',
         maxWidth: '80vw',
         minWidth: '80vw'
     },
@@ -35,7 +32,7 @@ export type CatalogNodeListProps = {
 const CatalogNodeList = ({list, isRootCategory}: CatalogNodeListProps) => {
     const classes = useStyles()
     return (
-        <Box className={classes.container}>
+        <Box className={classes.container} alignSelf={isRootCategory ? "center" : "inherit"}>
             <Box className={isRootCategory ? classes.rootNodes : classes.nodes}>
                 {
                     list.map((node, ind) => <NodeBox key={ind} node={node} isRootCategory={isRootCategory}/>)

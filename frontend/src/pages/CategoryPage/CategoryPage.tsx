@@ -18,7 +18,8 @@ import {CategoryInfoView} from "../../infrastructure/http/api/view/category/Cate
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import {sortBy} from "lodash";
 import {useCategoryPageStyles} from "./useCategoryPageStyles";
-import Typography from "@material-ui/core/Typography";
+import ApproachesList from "../../components/categories/approaches/ApproachesList";
+import SearchTextField from "../../components/search/SearchTextField/SearchTextField";
 
 const CategoryPage = () => {
     const classes = useCategoryPageStyles()
@@ -164,6 +165,8 @@ const CategoryPage = () => {
                         </Box>
                     )
             }
+            <Box className={classes.container}>
+                <SearchTextField placeholder={"Search..."} passedClassName={classes.search}/>
             {
                 isCategoryLoading ? <CenteredLoader/> :
                     (
@@ -171,17 +174,13 @@ const CategoryPage = () => {
                             <CatalogNodeList list={sortedCategoryCatalog}
                                              isRootCategory={categoryName === ROOT_NAVIGATION_UNIT.name}/>
 
-                            {categoryName !== ROOT_NAVIGATION_UNIT.name &&
-                                <>
-                                    <Typography style={{color: 'white'}}>
-                                        METHODS
-                                    </Typography>
-                                    <CatalogNodeList list={sortedApproachCatalog} isRootCategory={false}/>
-                                </>
+                            {approachCatalog.length !== 0 &&
+                                <ApproachesList list={sortedApproachCatalog}/>
                             }
                         </>
                     )
             }
+            </Box>
         </Box>
     )
 }
