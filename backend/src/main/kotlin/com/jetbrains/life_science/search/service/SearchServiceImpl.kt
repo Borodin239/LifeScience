@@ -20,6 +20,7 @@ import org.elasticsearch.search.SearchHit
 import org.elasticsearch.search.builder.SearchSourceBuilder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.lang.NumberFormatException
 
 @Service
 class SearchServiceImpl(
@@ -45,16 +46,13 @@ class SearchServiceImpl(
 
     override fun search(query: SearchQueryInfo): List<SearchResult> {
         try {
-            if (query.text.trim().toLongOrNull() != null) {
-                return listOf(
-                    ApproachSearchResult(
-                        query.text.toLong(),
-                        publicApproachService.get(query.text.toLong()).name
-                    )
-                )
-            }
+            val id = query.text.trim().toLong()
+            return listOf(
+                ApproachSearchResult(id, publicApproachService.get(id).name)
+            )
         } catch (_: ApproachNotFoundException) {
             return listOf()
+        } catch (_: NumberFormatException) {
         }
         val request = makeRequest(query)
         val response = getResponse(request)
