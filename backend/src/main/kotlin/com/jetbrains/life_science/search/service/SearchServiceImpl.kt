@@ -45,13 +45,16 @@ class SearchServiceImpl(
 
     override fun search(query: SearchQueryInfo): List<SearchResult> {
         try {
-            if (query.text.toLongOrNull() != null) return listOf(
-                ApproachSearchResult(
-                    query.text.toLong(),
-                    publicApproachService.get(query.text.toLong()).name
+            if (query.text.toLongOrNull() != null) {
+                return listOf(
+                    ApproachSearchResult(
+                        query.text.toLong(),
+                        publicApproachService.get(query.text.toLong()).name
+                    )
                 )
-            )
+            }
         } catch (_: ApproachNotFoundException) {
+            return listOf()
         }
         val request = makeRequest(query)
         val response = getResponse(request)
