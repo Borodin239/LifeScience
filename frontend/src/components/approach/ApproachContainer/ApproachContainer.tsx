@@ -49,7 +49,7 @@ const ApproachContainer: React.FC<ApproachContainerProps> = (props) => {
                 <SectionList sections={approach.sections}
                              selectedSection={selectedSection}
                              handleSectionTitleClick={handleSectionTitleClick}/>
-                {approach.sections.length != 0 &&
+                {approach.sections.length !== 0 &&
                     <ApproachContent title={approach.sections[selectedSection].name}
                                      approachId={approachId}
                                      sectionId={approach.sections[selectedSection].id}/>}
