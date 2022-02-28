@@ -49,9 +49,10 @@ const ApproachContainer: React.FC<ApproachContainerProps> = (props) => {
                 <SectionList sections={approach.sections}
                              selectedSection={selectedSection}
                              handleSectionTitleClick={handleSectionTitleClick}/>
-                <ApproachContent title={approach.sections[selectedSection].name}
-                                 approachId={approachId}
-                                 sectionId={approach.sections[selectedSection].id}/>
+                {approach.sections.length != 0 &&
+                    <ApproachContent title={approach.sections[selectedSection].name}
+                                     approachId={approachId}
+                                     sectionId={approach.sections[selectedSection].id}/>}
                 <Box className={classes.protocolsButtonContainer}>
                     <RightProtocolsArrow text={"Go to protocols"} handleClick={handleGoToProtocolsClick}/>
                 </Box>
