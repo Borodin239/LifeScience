@@ -45,7 +45,7 @@ class SearchServiceImpl(
 
     override fun search(query: SearchQueryInfo): List<SearchResult> {
         try {
-            if (query.text.toLongOrNull() != null) {
+            if (query.text.trim().toLongOrNull() != null) {
                 return listOf(
                     ApproachSearchResult(
                         query.text.toLong(),
