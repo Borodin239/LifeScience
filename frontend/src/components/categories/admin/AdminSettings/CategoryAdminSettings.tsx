@@ -14,12 +14,13 @@ import {deleteCategory} from "../../../../redux/categories/thunkActions";
 
 const CategoryAdminSettings: React.FC<{
     categoryId: number, categoryName: string, setCategoryName: (categoryName: string) => void,
-    updateCategoryCatalog: (categoryCatalog: CategoryView) => void;
+    updateCategoryCatalog: (categoryCatalog: CategoryView) => void, isVoid: boolean
 }> = ({
           categoryId,
           categoryName,
           setCategoryName,
-          updateCategoryCatalog
+          updateCategoryCatalog,
+          isVoid
       }) => {
 
 
@@ -59,8 +60,9 @@ const CategoryAdminSettings: React.FC<{
             <MenuItem onClick={handleMenuItemClick(setCreateDialogOpen)}>Create new category</MenuItem>
             <MenuItem onClick={handleMenuItemClick(setDeleteDialogOpen)}>Delete this category</MenuItem>
             <MenuItem onClick={handleMenuItemClick(setRenameDialogOpen)}>Rename this category</MenuItem>
-            <MenuItem onClick={(() => history.push(`${appRoutesNames.CREATE_APPROACH}/${categoryId}`))}>Create new
-                public approach</MenuItem>
+            {isVoid &&
+                <MenuItem onClick={(() => history.push(`${appRoutesNames.CREATE_APPROACH}/${categoryId}`))}>Create new
+                    public approach</MenuItem>}
         </Menu>
     )
 

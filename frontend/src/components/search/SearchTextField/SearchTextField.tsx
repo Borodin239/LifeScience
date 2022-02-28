@@ -39,9 +39,9 @@ const SearchTextField: React.FC<SearchTextFieldProps> = ({placeholder, passedCla
         }
     }
 
-    const handleChange = (event: React.ChangeEvent<{}>, value: (string | SearchSuggestResultView)[]) => {
+    const handleChange = (event: React.ChangeEvent<{}>, value: any[]) => {
         let lastItem = value[value.length - 1]
-        if (lastItem instanceof Object && lastItem.hasOwnProperty('publicApproachId')) {
+        if (lastItem.hasOwnProperty('publicApproachId')) {
             history.push(`${appRoutesNames.APPROACHES}/${lastItem.publicApproachId}`);
         }
         setQuery(value.map(x => getOptionName(x)))

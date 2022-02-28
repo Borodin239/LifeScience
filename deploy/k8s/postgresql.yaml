@@ -1,0 +1,10 @@
+apiVersion: "jetbrains.com/v1"
+kind: Database
+metadata:
+  # Uncomment 2 lines below for production databases. Controller will keep data in case of kubernetes object deletion.
+  #   annotations:
+  #     jetbrains.com/deletion-policy: abandon
+  name: upscience-db
+spec:
+  databaseType: postgresql
+  secretName: upscience-db-creds

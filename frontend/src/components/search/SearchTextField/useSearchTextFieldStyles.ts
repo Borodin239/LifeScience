@@ -7,7 +7,7 @@ const useSearchTextFieldStyles = makeStyles((theme: Theme) =>
             padding: 3,
             display: 'flex',
             alignItems: 'center',
-            margin: '0 80px 0 80px',
+            // margin: '0 80px 0 80px',
         },
         iconButton: {
             padding: theme.spacing(1),

@@ -3,8 +3,6 @@ import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
 import {useHistory, useParams} from "react-router-dom";
 import {Box} from "@material-ui/core";
 import CatalogNodeList, {CatalogNode} from "../../components/categories/CatalogNodeList";
-import SubjectIcon from "@material-ui/icons/Subject";
-import {FolderOutlined} from "@material-ui/icons";
 import CategoryAdminSettings from "../../components/categories/admin/AdminSettings/CategoryAdminSettings";
 import {developmentLog} from "../../infrastructure/common/developmentLog";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
@@ -20,6 +18,8 @@ import {CategoryInfoView} from "../../infrastructure/http/api/view/category/Cate
 import CenteredLoader from "../../elements/Loaders/CenteredLoader";
 import {sortBy} from "lodash";
 import {useCategoryPageStyles} from "./useCategoryPageStyles";
+import ApproachesList from "../../components/categories/approaches/ApproachesList";
+import SearchTextField from "../../components/search/SearchTextField/SearchTextField";
 
 const CategoryPage = () => {
     const classes = useCategoryPageStyles()
@@ -159,19 +159,28 @@ const CategoryPage = () => {
                                 <CategoryAdminSettings categoryId={parseInt(categoryId)}
                                                        categoryName={categoryName!}
                                                        setCategoryName={setCategoryName}
-                                                       updateCategoryCatalog={updateCategoryCatalog}/> : null}
+                                                       updateCategoryCatalog={updateCategoryCatalog}
+                                                       isVoid={categoryCatalog.length === 0}
+                                /> : null}
                         </Box>
                     )
             }
+            <Box className={classes.container}>
+                <SearchTextField placeholder={"Search..."} passedClassName={classes.search}/>
             {
                 isCategoryLoading ? <CenteredLoader/> :
                     (
                         <>
-                            <CatalogNodeList list={sortedCategoryCatalog} icon={<FolderOutlined/>} type={"Categories"}/>
-                            <CatalogNodeList list={sortedApproachCatalog} icon={<SubjectIcon/>} type={"Methods"}/>
+                            <CatalogNodeList list={sortedCategoryCatalog}
+                                             isRootCategory={categoryName === ROOT_NAVIGATION_UNIT.name}/>
+
+                            {approachCatalog.length !== 0 &&
+                                <ApproachesList list={sortedApproachCatalog}/>
+                            }
                         </>
                     )
             }
+            </Box>
         </Box>
     )
 }
