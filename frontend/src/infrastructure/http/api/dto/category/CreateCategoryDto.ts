@@ -1,6 +1,7 @@
 import { AliasDto } from "../aliases/AliasDto";
 
-export type CreateCreationDto = {
+export type CreateCategoryDto = {
     name: string,
-    aliases: AliasDto[]
+    aliases: AliasDto[],
+    initialParentId: string
 }

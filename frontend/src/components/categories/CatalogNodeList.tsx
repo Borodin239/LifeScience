@@ -1,15 +1,21 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {Box, Typography} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import NodeBox from "./NodeBox";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     container: {
-      margin: theme.spacing(1, 0, 0, 0),
+        maxWidth: '80vw',
+        minWidth: '80vw'
+    },
+    rootNodes: {
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr 1fr"
     },
     nodes: {
         display: "flex",
-        flexWrap: "wrap"
+        flexDirection: "column",
+        alignItems: "flex-start"
     }
 }), {index: 1});
 
@@ -19,21 +25,17 @@ export type CatalogNode = {
 }
 
 export type CatalogNodeListProps = {
-    type: string,
-    icon: JSX.Element,
+    isRootCategory: boolean,
     list: CatalogNode[]
 }
 
-const CatalogNodeList = ({type, icon, list}: CatalogNodeListProps) => {
+const CatalogNodeList = ({list, isRootCategory}: CatalogNodeListProps) => {
     const classes = useStyles()
     return (
-        <Box className={classes.container}>
-            <Typography>
-                {type}
-            </Typography>
-            <Box className={classes.nodes}>
+        <Box className={classes.container} alignSelf={isRootCategory ? "center" : "inherit"}>
+            <Box className={isRootCategory ? classes.rootNodes : classes.nodes}>
                 {
-                    list.map((node, ind) => <NodeBox key={ind} node={node} icon={icon}/>)
+                    list.map((node, ind) => <NodeBox key={ind} node={node} isRootCategory={isRootCategory}/>)
                 }
             </Box>
         </Box>

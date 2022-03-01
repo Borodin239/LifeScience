@@ -2,11 +2,8 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
 const useMainAppBarStyles = makeStyles((theme: Theme) =>
     createStyles({
-        main: {
-            backgroundColor: theme.palette.primary.main,
-        },
         appbar: {
-            width: "1100px",
+            backgroundColor: 'inherit',
             margin: "auto",
             boxShadow: 'none',
         },
@@ -15,6 +12,7 @@ const useMainAppBarStyles = makeStyles((theme: Theme) =>
         },
         homeLink: {
             cursor: "pointer",
+            fontWeight: "bold"
         }
     }),
 );

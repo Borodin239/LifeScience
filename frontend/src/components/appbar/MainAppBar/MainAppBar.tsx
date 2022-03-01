@@ -7,11 +7,11 @@ import {useAppDispatch, useAppSelector} from "../../../redux/hooks";
 import useMainAppBarStyles from "./useMainAppBarStyles";
 import appRoutesNames from "../../../infrastructure/common/appRoutesNames";
 import MainAppBarProfileMenu from "./MainAppBarProfileMenu";
-import MainSearch from "./MainSearch/MainSearch";
 import UnauthorizedProfile from "./profile/UnauthorizedProfile/UnauthorizedProfile";
 import AuthorizedProfilePreview from "./profile/AuthorizedProfilePreview";
 import {updateCurrentUserThunk} from "../../../redux/users/thunkActions";
-
+import AboutUsWindow from "./about-us/AboutUsWindow";
+import {MenuTabs} from './MenuTabs/MenuTabs';
 
 const MainAppBar: React.FC = () => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -32,7 +32,6 @@ const MainAppBar: React.FC = () => {
         history.push(appRoutesNames.HOME);
     }, [history]);
 
-
     const handleProfileMenuOpen = useCallback((event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     }, []);
@@ -42,7 +41,7 @@ const MainAppBar: React.FC = () => {
     }, []);
 
     return (
-        <div className={classes.main}>
+        <div>
             <AppBar position="static" className={classes.appbar}>
                 <Toolbar>
                     <Typography className={classes.homeLink}
@@ -51,16 +50,16 @@ const MainAppBar: React.FC = () => {
                                 onClick={handleHomeClick}>
                         JetScience
                     </Typography>
-
-                    <MainSearch/>
-
                     <div className={classes.grow}/>
-
+                    <AboutUsWindow/>
                     {isAuthorized ? <AuthorizedProfilePreview handleProfileMenuOpen={handleProfileMenuOpen}/> :
                         <UnauthorizedProfile/>}
                 </Toolbar>
             </AppBar>
             <MainAppBarProfileMenu anchorEl={anchorEl} handleMenuClose={handleMenuClose}/>
+            {/*<SearchTextField placeholder={"Search..."}/>*/}
+            {/*<MainSearch/>*/}
+            <MenuTabs/>
         </div>
     );
 }

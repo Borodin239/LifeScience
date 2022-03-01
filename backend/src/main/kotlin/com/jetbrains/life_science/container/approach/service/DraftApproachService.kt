@@ -9,9 +9,9 @@ interface DraftApproachService : ContainsSections {
 
     fun get(id: Long): DraftApproach
 
-    fun create(info: DraftApproachInfo): DraftApproach
+    fun create(info: ApproachInfo): DraftApproach
 
-    fun update(info: DraftApproachInfo): DraftApproach
+    fun update(info: ApproachInfo): DraftApproach
 
     fun delete(draftApproachId: Long)
 

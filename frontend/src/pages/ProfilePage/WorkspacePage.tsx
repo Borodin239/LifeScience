@@ -1,4 +1,4 @@
-import {Divider, Tab, Tabs} from "@material-ui/core";
+import {Box, Divider, Tab, Tabs} from "@material-ui/core";
 import {useAppSelector} from "../../redux/hooks";
 import {Router, useHistory, Link, Switch, Route, useRouteMatch} from "react-router-dom";
 import appRoutesNames from "../../infrastructure/common/appRoutesNames";
@@ -9,6 +9,7 @@ import {NotificationsPage} from "./WorkspacePages/NotificationsPage";
 import ProfilePage from "./WorkspacePages/ProfilePage";
 import {WorkingSpacePage} from "./WorkspacePages/WorkingSpacePage";
 import * as React from "react";
+import {useProfilePageStyles} from "./useProfilePageStyles";
 
 const WorkspacePage = () => {
 
@@ -16,6 +17,7 @@ const WorkspacePage = () => {
     const history = useHistory()
     const {path, url} = useRouteMatch();
     const isAuthorized = useAppSelector(state => state.authReducer.isAuthorized);
+    const classes = useProfilePageStyles()
 
     if (!isAuthorized) {
         history.replace(`${appRoutesNames.SIGN_IN}`)
@@ -26,39 +28,44 @@ const WorkspacePage = () => {
     };
 
     return (
-        <Router history={history} >
-            <Tabs centered value={value} onChange={handleChange} indicatorColor={"primary"}>
+        <Box flexGrow={1} p={2}>
+            <Router history={history}>
+                <Tabs classes={{ root: classes.root, scroller: classes.scroller }}
+                    value={value} variant="scrollable" onChange={handleChange} indicatorColor={"primary"}
+                      scrollButtons={'auto'} centered>
+                    <Tab label="Profile" to={`${url}/profile`} component={Link}/>
+                    <Tab label="Publications" to={`${url}/publications`} component={Link}/>
+                    <Tab label="Communications" to={`${url}/communications`} component={Link}/>
+                    <Tab label="Notifications" to={`${url}/notifications`} component={Link}/>
+                    <Tab label="Working space" to={`${url}/working-space`} component={Link}/>
+                </Tabs>
 
-                <Tab label="Profile" to={`${url}/profile`} component={Link}/>
-                <Tab label="Publications" to={`${url}/publications`} component={Link}/>
-                <Tab label="Communications" to={`${url}/communications`} component={Link}/>
-                <Tab label="Notifications" to={`${url}/notifications`} component={Link}/>
-                <Tab label="Working space" to={`${url}/working-space`} component={Link}/>
-            </Tabs>
+                <Divider light/>
 
-            <Divider light/>
-
-            <Switch>
-                <Route exact path={`${path}/`}>
-                    <ProfilePage/>
-                </Route>
-                <Route path={`${path}/profile`}>
-                    <ProfilePage/>
-                </Route>
-                <Route path={`${path}/communications`}>
-                    <CommunicationsPage/>
-                </Route>
-                <Route path={`${path}/notifications`}>
-                    <NotificationsPage/>
-                </Route>
-                <Route path={`${path}/working-space`}>
-                    <WorkingSpacePage/>
-                </Route>
-                <Route path={`${path}/publications`}>
-                    <PublicationsPage/>
-                </Route>
-            </Switch>
-        </Router>
+                <Box flexGrow={1} p={1}>
+                    <Switch>
+                        <Route exact path={`${path}/`}>
+                            <ProfilePage/>
+                        </Route>
+                        <Route path={`${path}/profile`}>
+                            <ProfilePage/>
+                        </Route>
+                        <Route path={`${path}/communications`}>
+                            <CommunicationsPage/>
+                        </Route>
+                        <Route path={`${path}/notifications`}>
+                            <NotificationsPage/>
+                        </Route>
+                        <Route path={`${path}/working-space`}>
+                            <WorkingSpacePage/>
+                        </Route>
+                        <Route path={`${path}/publications`}>
+                            <PublicationsPage/>
+                        </Route>
+                    </Switch>
+                </Box>
+            </Router>
+        </Box>
     )
 }
 

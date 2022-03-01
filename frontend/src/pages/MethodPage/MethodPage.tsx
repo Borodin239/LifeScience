@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {Box, Fade} from "@material-ui/core";
-import {useMethodPageStyles} from "./method-page-styles";
+import {useMethodPageStyles} from "./useMethodPageStyles";
 import {useHistory, useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";
@@ -77,7 +77,8 @@ const MethodPage: React.FC = () => {
             .catch(thunkError => {
                 handleThunkErrorBase(thunkError, history, dispatch);
             })
-    }, [approachId, history, dispatch, updateLocation, path]);
+        // eslint-disable-next-line
+    }, [approachId, history, dispatch, updateLocation]);
 
     const approach = useAppSelector(state => state.approachReducer.approach)
 
@@ -86,31 +87,33 @@ const MethodPage: React.FC = () => {
     }
 
     return (
-        <Box>
+        <Box style={{background: 'white', flexGrow: 1, alignItems: 'center'}}>
             <Box className={classes.breadCrumbs}>
                 <GlobalUserLocation/>
             </Box>
-            {
-                isProtocolListViewed
-                    ?
-                    <Fade in={isProtocolListViewed}>
-                        <Box>
-                            <ProtocolList protocols={approach.protocols}
-                                          approachName={approach.name}
-                                          approachId={approachId}
-                                          handleGoBackClick={handleBackToMethodClick}/>
-                        </Box>
-                    </Fade>
-                    :
-                    <Fade in={!isProtocolListViewed}>
-                        <Box>
-                            <ApproachContainer approach={approach}
-                                               approachId={approachId}
-                                               handleGoToProtocolsClick={handleGoToProtocolsClick}/>
-                        </Box>
-                    </Fade>
+            <Box p={2}>
+                {
+                    isProtocolListViewed
+                        ?
+                        <Fade in={isProtocolListViewed}>
+                            <Box>
+                                <ProtocolList protocols={approach.protocols}
+                                              approachName={approach.name}
+                                              approachId={approachId}
+                                              handleGoBackClick={handleBackToMethodClick}/>
+                            </Box>
+                        </Fade>
+                        :
+                        <Fade in={!isProtocolListViewed}>
+                            <Box>
+                                <ApproachContainer approach={approach}
+                                                   approachId={approachId}
+                                                   handleGoToProtocolsClick={handleGoToProtocolsClick}/>
+                            </Box>
+                        </Fade>
 
-            }
+                }
+            </Box>
 
         </Box>
 

@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      securityContext:
+        runAsUser: 33
+      containers:
+        - name: backend
+          image: registry.jetbrains.team/p/up-science/upscience/backend:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: GIT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: secret-storage
+                  key: git-username
+            - name: GIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-storage
+                  key: git-password
+            - name: spring.datasource.url
+              valueFrom:
+                secretKeyRef:
+                  name: secret-storage
+                  key: spring.datasource.url
+            - name: spring.datasource.username
+              valueFrom:
+                secretKeyRef:
+                  name: secret-storage
+                  key: spring.datasource.username
+            - name: spring.datasource.password
+              valueFrom:
+                secretKeyRef:
+                  name: secret-storage
+                  key: spring.datasource.password
+            - name: spring.elasticsearch.rest.uris
+              valueFrom:
+                secretKeyRef:
+                  name: secret-storage
+                  key: spring.elasticsearch.rest.uris
+            - name: spring.elasticsearch.rest.username
+              valueFrom:
+                secretKeyRef:
+                  name: secret-storage
+                  key: spring.elasticsearch.rest.username
+            - name: spring.elasticsearch.rest.password
+              valueFrom:
+                secretKeyRef:
+                  name: secret-storage
+                  key: spring.elasticsearch.rest.password
+            - name: confirmation.path
+              valueFrom:
+                secretKeyRef:
+                  name: secret-storage
+                  key: confirmation.path
+            - name: APP_PORT
+              value: "8080"
+      imagePullSecrets:
+        - name: space-registry
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: backend
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

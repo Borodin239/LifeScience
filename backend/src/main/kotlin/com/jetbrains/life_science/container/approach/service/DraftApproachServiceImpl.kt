@@ -20,19 +20,19 @@ class DraftApproachServiceImpl(
         }
     }
 
-    override fun create(info: DraftApproachInfo): DraftApproach {
+    override fun create(info: ApproachInfo): DraftApproach {
         val draftApproach = factory.create(info)
         return repository.save(draftApproach)
     }
 
-    override fun update(info: DraftApproachInfo): DraftApproach {
+    override fun update(info: ApproachInfo): DraftApproach {
         val draftApproach = get(info.id)
         factory.setParams(draftApproach, info)
         return repository.save(draftApproach)
     }
 
     override fun delete(draftApproachId: Long) {
-        exists(draftApproachId)
+        throwExceptionIfNotExists(draftApproachId)
         repository.deleteById(draftApproachId)
     }
 
@@ -58,7 +58,7 @@ class DraftApproachServiceImpl(
     }
 
     override fun hasParticipant(draftApproachId: Long, user: Credentials): Boolean {
-        exists(draftApproachId)
+        throwExceptionIfNotExists(draftApproachId)
         return repository.existsByIdAndParticipantsContains(draftApproachId, user)
     }
 
@@ -83,11 +83,11 @@ class DraftApproachServiceImpl(
     }
 
     override fun hasSection(id: Long, section: Section): Boolean {
-        exists(id)
+        throwExceptionIfNotExists(id)
         return repository.existsByIdAndSectionsContains(id, section)
     }
 
-    private fun exists(draftApproachId: Long) {
+    private fun throwExceptionIfNotExists(draftApproachId: Long) {
         if (!repository.existsById(draftApproachId)) {
             throw ApproachNotFoundException("Draft approach with id $draftApproachId is not found")
         }

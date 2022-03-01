@@ -5,11 +5,14 @@ import InfoPanel from "../../components/landing-page/InfoPanel/InfoPanel";
 
 const HomePage: React.FC = () => {
     return (
-        <Box>
+        <Box style={{
+            flexGrow: 1,
+            background: 'inherit',
+            zIndex: 100
+        }}>
             <WelcomePanel/>
             <InfoPanel/>
         </Box>
     )
 }
-
 export default HomePage

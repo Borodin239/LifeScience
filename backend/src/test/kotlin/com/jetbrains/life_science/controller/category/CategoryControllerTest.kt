@@ -215,29 +215,6 @@ internal class CategoryControllerTest : ApiTest() {
     }
 
     /**
-     * The test checks for an exception in case of an attempt to remove all parents from a category.
-     *
-     * Expected 400 http code and 400_002 system code result
-     * with requested category id in view arguments.
-     */
-    @Test
-    fun `all parents deleted test`() {
-        val accessToken = loginAccessToken("admin@gmail.ru", "password")
-
-        val categoryUpdateDTO = CategoryUpdateDTO(
-            name = "changed name",
-            aliases = emptyList(),
-            parentsToAdd = listOf(), parentsToDelete = listOf(2, 4)
-        )
-
-        val request = patchRequestAuthorized(makePath("/5"), categoryUpdateDTO, accessToken)
-        val exceptionView = getApiExceptionView(400, request)
-
-        assertEquals(400_002, exceptionView.systemCode)
-        assertTrue(exceptionView.arguments.isEmpty())
-    }
-
-    /**
      * The test checks for an exception in case of an attempt to add non-existent parent.
      *
      * Expected 404 http code and 404_002 system code result

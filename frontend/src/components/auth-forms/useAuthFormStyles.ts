@@ -2,12 +2,14 @@ import {makeStyles} from "@material-ui/core/styles";
 
 const useAuthFormStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(6),
+        color: theme.palette.text.primary,
+        backgroundColor: 'white',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         padding: '10px',
-        border: '1px solid ' + theme.palette.primary.main,
+        // border: '1px solid ' + theme.palette.primary.main,
         borderRadius: theme.shape.borderRadius,
     },
     form: {

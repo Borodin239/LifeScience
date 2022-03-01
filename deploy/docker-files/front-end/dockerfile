@@ -1,0 +1,32 @@
+# FRONT-END
+FROM node:14 as builder
+LABEL description="Image for front-end of UpScience/LifeScience/JetScience project" \
+      maintainer="Vladimir Orlov <vladimir.orlov@jetbrains.com>" \
+      source="https://github.com/JetBrains/JetScience"
+
+# config container
+ENV REACT_APP_MODE test
+ENV REACT_APP_BASE_URL https://upscience.eu-west-1.eks.intellij.net
+ENV APP_PORT 8080
+ARG REACT_APP_MODE
+ARG REACT_APP_BASE_URL
+ARG APP_PORT
+
+WORKDIR /src
+ARG GIT_USERNAME
+ARG GIT_PASSWORD
+RUN git clone https://$GIT_USERNAME:$GIT_PASSWORD@github.com/JetBrains/JetScience.git
+
+## build frontend
+WORKDIR /src/JetScience/frontend
+COPY --chown=33:33 package*.json ./
+RUN npm install
+COPY --chown=33:33 . .
+RUN npm run build
+
+#nginx
+FROM nginxinc/nginx-unprivileged:1.16.1-alpine
+COPY --chown=33:33 --from=builder /src/JetScience/frontend/build /usr/share/nginx/html
+EXPOSE 8080
+USER 33
+CMD ["nginx", "-g", "daemon off;"]

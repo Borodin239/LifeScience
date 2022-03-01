@@ -17,6 +17,8 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             textDecoration: "underline",
         },
+        color: 'white',
+        textTransform: 'uppercase'
     },
     arrow: {
         color: theme.palette.primary.main,

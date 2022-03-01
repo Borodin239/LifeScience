@@ -112,7 +112,7 @@ const CreateProtocolPage = () => {
     if (isLoading) return <CenteredLoader className={classes.loader}/>
 
     return (
-        <Box>
+        <Box p={2}>
             <Box>
                 <Typography className={classes.title}>
                     Create new protocol

@@ -2,19 +2,162 @@
   {
     "_class": "Approach",
     "id": 1,
-    "names": ["approach one", "approach one second name"],
-    "context": ["catalog 1", "catalog 2", "approach one", "approach one second name"]
+    "names": [
+      "approach one",
+      "approach one second name"
+    ],
+    "context": [
+      "approach one",
+      "approach one second name",
+      "catalog 1",
+      "catalog 2",
+      "approach one",
+      "approach one second name"
+    ]
   },
   {
     "_class": "Approach",
     "id": 2,
-    "names": ["approach two", "approach two second name"],
-    "context": ["catalog 1", "catalog 2", "approach two", "approach two second name"]
+    "names": [
+      "approach two",
+      "approach two second name"
+    ],
+    "context": [
+      "approach two",
+      "approach two second name",
+      "catalog 1",
+      "catalog 2",
+      "approach two",
+      "approach two second name"
+    ]
   },
   {
     "_class": "Approach",
     "id": 3,
-    "names": ["approach three"],
-    "context": ["catalog 1", "catalog 2", "approach three"]
+    "names": [
+      "approach three"
+    ],
+    "context": [
+      "approach three",
+      "catalog 1",
+      "catalog 2",
+      "approach three"
+    ]
+  },
+  {
+    "_class": "Approach",
+    "id": 4,
+    "names": [
+      "SDS-Page"
+    ],
+    "context": [
+      "SDS-Page",
+      "Qualitative analysis",
+      "Analysis",
+      "Proteins and peptides",
+      "Molecules"
+    ]
+  },
+  {
+    "_class": "Approach",
+    "id": 5,
+    "names": [
+      "Native Page"
+    ],
+    "context": [
+      "Native Page",
+      "Qualitative analysis",
+      "Analysis",
+      "Proteins and peptides",
+      "Molecules"
+    ]
+  },
+  {
+    "_class": "Approach",
+    "id": 6,
+    "names": [
+      "Western Blotting"
+    ],
+    "context": [
+      "Western Blotting",
+      "Qualitative analysis",
+      "Analysis",
+      "Proteins and peptides",
+      "Molecules",
+      "Quantitative analysis"
+    ]
+  },
+  {
+    "_class": "Approach",
+    "id": 7,
+    "names": [
+      "ELISA"
+    ],
+    "context": [
+      "ELISA",
+      "Qualitative analysis",
+      "Analysis",
+      "Proteins and peptides",
+      "Molecules",
+      "Quantitative analysis"
+    ]
+  },
+  {
+    "_class": "Approach",
+    "id": 8,
+    "names": [
+      "Bradford"
+    ],
+    "context": [
+      "Bradford",
+      "Quantitative analysis",
+      "Analysis",
+      "Proteins and peptides",
+      "Molecules"
+    ]
+  },
+  {
+    "_class" : "Approach",
+    "id" : 9,
+    "names" : [
+      "Southern Blotting"
+    ],
+    "context" : [
+      "Southern Blotting",
+      "Qualitative analysis",
+      "Analysis",
+      "Nucleic acids",
+      "Molecules",
+      "Quantitative analysis"
+    ]
+  },
+  {
+    "_class" : "Approach",
+    "id" : 10,
+    "names" : [
+      "Quantitative real time PCR"
+    ],
+    "context" : [
+      "Quantitative real time PCR",
+      "Qualitative analysis",
+      "Analysis",
+      "Nucleic acids",
+      "Molecules",
+      "Quantitative analysis"
+    ]
+  },
+  {
+    "_class" : "Approach",
+    "id" : 13,
+    "names" : [
+      "Real-Time PCR"
+    ],
+    "context" : [
+      "Real-Time PCR",
+      "Qualitative analysis",
+      "Analysis",
+      "Nucleic acids",
+      "Molecules"
+    ]
   }
 ]

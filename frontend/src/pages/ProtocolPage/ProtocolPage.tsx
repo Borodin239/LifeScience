@@ -1,7 +1,7 @@
 import {Box, Typography} from "@material-ui/core";
 import GlobalUserLocation from "../../components/navigation/GlobalUserLocation";
 import React, {useEffect, useState} from "react";
-import {useMethodPageStyles} from "../MethodPage/method-page-styles";
+import {useMethodPageStyles} from "../MethodPage/useMethodPageStyles";
 import {LeftProtocolsArrow} from "../../components/approach/ProtocolsArrows/ProtocolsArrows";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import splitThunkPayload from "../../redux/utils/splitThunkPayload";

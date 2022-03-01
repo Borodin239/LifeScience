@@ -49,7 +49,7 @@ const ProtocolList: React.FC<ProtocolListProps> = (props) => {
     const classes = useProtocolListStyles()
 
     return (
-        <Box>
+        <Box style={{background: 'white'}}>
             <Box className={classes.upperBar}>
                 <Box className={classes.backToMethod}>
                     <LeftProtocolsArrow text={"Back to method"} handleClick={handleGoBackClick}/>

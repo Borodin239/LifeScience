@@ -36,9 +36,6 @@ class PublisherServiceImpl(
             draftApproach
         )
 
-        // Delete draft entity
-        draftApproachService.delete(draftApproach.id)
-
         // Publish sections in public entity
         publishSections(publicApproach.sections)
 
@@ -48,7 +45,6 @@ class PublisherServiceImpl(
         return publicApproach
     }
 
-    @Transactional
     override fun publishDraftProtocol(draftProtocol: DraftProtocol): PublicProtocol {
 
         // Create public entity
@@ -56,11 +52,11 @@ class PublisherServiceImpl(
             draftProtocol
         )
 
-        // Delete draft entity
-        draftProtocolService.delete(draftProtocol.id)
+        // Publish sections
+        publishSections(draftProtocol.sections)
 
-        // Publish sections in public entity
-        publishSections(publicProtocol.sections)
+        // Add a link with approach
+        publicProtocol.approach.protocols.add(publicProtocol)
 
         return publicProtocol
     }

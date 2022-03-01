@@ -31,7 +31,9 @@ const SearchPage = () => {
         setQuery(newQuery)
         const dto: SearchDto = {
             text: newQuery,
-            includeTypes: [SearchType.APPROACH, SearchType.CATEGORY, SearchType.PROTOCOL]
+            includeTypes: [SearchType.APPROACH],
+            size: 100,
+            from: 0
         }
         dispatch(searchThunk(dto))
             .unwrap()
@@ -56,13 +58,13 @@ const SearchPage = () => {
     }
 
     return (
-        <Box>
+        <Box m={2}>
             <Box className={classes.searchFieldContainer}>
                 <SearchTextField passedClassName={classes.searchField}/>
             </Box>
             <Box className={classes.titleContainer}>
                 <Typography variant={"h5"}>
-                    Found {results.length} results for "{query}":
+                    Found {results.length} results for "{query.replaceAll('|', ', ')}":
                 </Typography>
             </Box>
             <Divider className={classes.divider}/>

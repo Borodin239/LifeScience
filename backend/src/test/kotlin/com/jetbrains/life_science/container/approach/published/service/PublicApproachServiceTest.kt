@@ -1,18 +1,22 @@
 package com.jetbrains.life_science.container.approach.published.service
 
-import com.jetbrains.life_science.category.search.service.CategorySearchUnitService
+import com.jetbrains.life_science.category.service.CategoryService
 import com.jetbrains.life_science.container.approach.entity.PublicApproach
-import com.jetbrains.life_science.container.approach.search.service.ApproachSearchUnitService
+import com.jetbrains.life_science.container.approach.maker.makeApproachInfo
+import com.jetbrains.life_science.container.approach.search.repository.ApproachSearchUnitRepository
 import com.jetbrains.life_science.container.approach.service.DraftApproachService
 import com.jetbrains.life_science.container.approach.service.PublicApproachService
+import com.jetbrains.life_science.container.approach.utilities.assertContainsCategory
+import com.jetbrains.life_science.container.approach.utilities.assertContainsSection
+import com.jetbrains.life_science.container.approach.utilities.assertNotContainsSection
 import com.jetbrains.life_science.exception.not_found.ApproachNotFoundException
 import com.jetbrains.life_science.section.service.SectionService
+import com.jetbrains.life_science.user.credentials.service.CredentialsService
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.transaction.annotation.Transactional
 
@@ -26,11 +30,11 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class PublicApproachServiceTest {
 
-    @MockBean
-    lateinit var categorySearchUnitService: CategorySearchUnitService
+    @Autowired
+    lateinit var categoryService: CategoryService
 
-    @MockBean
-    lateinit var approachSearchUnitService: ApproachSearchUnitService
+    @Autowired
+    lateinit var credentialsService: CredentialsService
 
     @Autowired
     lateinit var service: PublicApproachService
@@ -40,6 +44,9 @@ class PublicApproachServiceTest {
 
     @Autowired
     lateinit var sectionService: SectionService
+
+    @Autowired
+    lateinit var searchUnitRepository: ApproachSearchUnitRepository
 
     /**
      * Should create new approach
@@ -67,6 +74,37 @@ class PublicApproachServiceTest {
     }
 
     /**
+     * Should create new public approach
+     */
+    @Test
+    fun `create new public approach without review`() {
+        // Prepare data
+        val category = categoryService.getById(1)
+        val owner = credentialsService.getById(1L)
+        val info = makeApproachInfo(
+            id = 0L,
+            name = "bradford",
+            aliases = mutableListOf("bradford second name"),
+            tags = listOf(),
+            categories = listOf(
+                category
+            ),
+            owner = owner
+        )
+
+        // Action
+        val createdApproach = service.create(info)
+        val publicApproach = service.get(createdApproach.id)
+
+        // Assert
+        assertEquals(info.name, publicApproach.name)
+        assertEquals(info.tags, publicApproach.tags)
+        assertEquals(info.aliases, publicApproach.aliases)
+        assertContainsCoAuthor(publicApproach, owner.id)
+        assertContainsCategory(publicApproach, category.id)
+    }
+
+    /**
      * Should get existing approach
      */
     @Test
@@ -89,6 +127,39 @@ class PublicApproachServiceTest {
         assertEquals(coAuthorsExpectedCount, publicApproach.coAuthors.size)
         assertContainsCoAuthor(publicApproach, expectedOwnerId)
         assertContainsCoAuthor(publicApproach, secondCoAuthorId)
+    }
+
+    /**
+     * Should delete existing approach
+     */
+    @Test
+    fun `delete existing approach`() {
+        // Prepare data
+        val draftApproach = draftApproachService.get(1L)
+        val publicApproach = service.create(draftApproach)
+
+        // Action
+        service.delete(publicApproach.id)
+
+        // Assert
+        assertThrows<ApproachNotFoundException> {
+            service.get(publicApproach.id)
+        }
+        assertFalse(searchUnitRepository.existsById(publicApproach.id))
+    }
+
+    /**
+     * Should throw PublicApproachNotFound exception
+     */
+    @Test
+    fun `delete not existing approach`() {
+        // Prepare data
+        val draftApproachId = 239L
+
+        // Action & Assert
+        assertThrows<ApproachNotFoundException> {
+            service.delete(draftApproachId)
+        }
     }
 
     /**
@@ -171,17 +242,5 @@ class PublicApproachServiceTest {
 
     private fun assertContainsCoAuthor(publicApproach: PublicApproach, userId: Long) {
         assertTrue(publicApproach.coAuthors.any { it.id == userId })
-    }
-
-    private fun assertContainsCategory(publicApproach: PublicApproach, categoryId: Long) {
-        assertTrue(publicApproach.categories.any { it.id == categoryId })
-    }
-
-    private fun assertContainsSection(publicApproach: PublicApproach, sectionId: Long) {
-        assertTrue(publicApproach.sections.any { it.id == sectionId })
-    }
-
-    private fun assertNotContainsSection(publicApproach: PublicApproach, sectionId: Long) {
-        assertFalse(publicApproach.sections.any { it.id == sectionId })
     }
 }

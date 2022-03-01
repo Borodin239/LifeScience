@@ -1,5 +1,5 @@
 package com.jetbrains.life_science.search.result
 
-abstract class SearchResult(
+interface SearchResult {
     val typeName: String
-)
+}

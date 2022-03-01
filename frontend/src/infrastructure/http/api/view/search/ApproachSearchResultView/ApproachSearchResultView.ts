@@ -1,5 +1,5 @@
 export type ApproachSearchResultView = {
-    "publishApproachId": string,
+    "publicApproachId": string,
     "name": string,
     "typeName": "Approach",
 }
