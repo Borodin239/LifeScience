@@ -323,6 +323,48 @@ internal class SearchServiceTest {
     }
 
     /**
+     * Should find expected approaches
+     */
+    @Test
+    fun `search with preposition 3`() {
+        // Prepare
+        val searchQueryInfo = makeSearchQueryInfo(
+            text = "and",
+            includeTypes = listOf(SearchUnitType.APPROACH),
+            from = 0,
+            size = 100
+        )
+        val expectedResults = listOf(
+            ApproachSearchResult(
+                publicApproachId = 8,
+                name = "Bradford"
+            ),
+            ApproachSearchResult(
+                publicApproachId = 4,
+                name = "SDS-Page"
+            ),
+            ApproachSearchResult(
+                publicApproachId = 5,
+                name = "Native Page"
+            ),
+            ApproachSearchResult(
+                publicApproachId = 7,
+                name = "ELISA"
+            ),
+            ApproachSearchResult(
+                publicApproachId = 6,
+                name = "Western Blotting"
+            )
+        )
+
+        // Action
+        val searchResult = service.search(searchQueryInfo)
+
+        // Assert
+        assertEquals(expectedResults, searchResult)
+    }
+
+    /**
      * Should find expected categories with fuzzy request
      */
     @Test

@@ -1,9 +1,12 @@
 package com.jetbrains.life_science.search.service
 
+import com.jetbrains.life_science.container.approach.service.PublicApproachService
+import com.jetbrains.life_science.exception.not_found.ApproachNotFoundException
 import com.jetbrains.life_science.search.query.SearchQueryInfo
 import com.jetbrains.life_science.search.query.SearchUnitType
 import com.jetbrains.life_science.search.result.SearchResult
 import com.jetbrains.life_science.search.result.UnitSearchService
+import com.jetbrains.life_science.search.result.approach.ApproachSearchResult
 import com.jetbrains.life_science.util.getLogger
 import com.jetbrains.life_science.util.getOrThrow
 import org.elasticsearch.action.search.SearchRequest
@@ -17,6 +20,7 @@ import org.elasticsearch.search.SearchHit
 import org.elasticsearch.search.builder.SearchSourceBuilder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.lang.NumberFormatException
 
 @Service
 class SearchServiceImpl(
@@ -24,6 +28,8 @@ class SearchServiceImpl(
 ) : SearchService {
     val logger = getLogger()
 
+    @Autowired
+    lateinit var publicApproachService: PublicApproachService
     lateinit var searchUnitServices: Map<String, UnitSearchService>
     private val preposition = listOf("of", "as", "in", "on", "by", "to", "a", "the", "an")
 
@@ -39,6 +45,15 @@ class SearchServiceImpl(
     }
 
     override fun search(query: SearchQueryInfo): List<SearchResult> {
+        try {
+            val id = query.text.trim().toLong()
+            return listOf(
+                ApproachSearchResult(id, publicApproachService.get(id).name)
+            )
+        } catch (_: ApproachNotFoundException) {
+            return listOf()
+        } catch (_: NumberFormatException) {
+        }
         val request = makeRequest(query)
         val response = getResponse(request)
         return processHits(response.hits.hits)
@@ -80,31 +95,38 @@ class SearchServiceImpl(
         return client.search(request, RequestOptions.DEFAULT)
     }
 
-    private fun getQueryBuilder(token: String, name: String, boost: Float = 1.0F): FunctionScoreQueryBuilder? {
+    private fun getQueryBuilder(
+        token: String,
+        name: String,
+        boost: Float = 1.0F
+    ): FunctionScoreQueryBuilder? {
         return QueryBuilders
             .functionScoreQuery(QueryBuilders.fuzzyQuery(name, token))
             .scoreMode(FunctionScoreQuery.ScoreMode.SUM).boost(boost)
     }
 
     private fun makeRequest(query: SearchQueryInfo): SearchRequest {
-        val tokens = getTokens(query, needFilter = true)
+        val tokens = getTokens(query)
         val shouldContainsAllTokensQuery = QueryBuilders.boolQuery()
 
         for (token in tokens) {
+            val minimalMatch = if (preposition.contains(token)) 1 else 2
             shouldContainsAllTokensQuery.must(
                 QueryBuilders.boolQuery()
-                    .minimumShouldMatch(1)
+                    .minimumShouldMatch(minimalMatch)
                     .should(
                         getQueryBuilder(token, name = "context")
                     )
                     .should(
                         getQueryBuilder(token, name = "names", boost = 2F)
                     )
+                    .should(QueryBuilders.matchAllQuery().boost(0F))
             )
         }
 
         val searchBuilder = SearchSourceBuilder()
             .query(shouldContainsAllTokensQuery)
+            .minScore(0.1F)
             .sort("_score")
             .from(query.from)
             .size(query.size)
@@ -114,9 +136,8 @@ class SearchServiceImpl(
             .indices(*getRequestIndices(query))
     }
 
-    private fun getTokens(query: SearchQueryInfo, needFilter: Boolean = false): List<String> {
-        val res = query.text.trim().split("[\\s-,|]+".toRegex()).map { it.toLowerCase() }
-        return if (needFilter) res.filter { !preposition.contains(it) } else res
+    private fun getTokens(query: SearchQueryInfo): List<String> {
+        return query.text.trim().split("[\\s-,|]+".toRegex()).map { it.toLowerCase() }
     }
 
     private fun getRequestIndices(query: SearchQueryInfo) =
