@@ -1,16 +1,23 @@
 import {alpha, makeStyles} from "@material-ui/core/styles";
+import uiConstants from "../../infrastructure/ui/themes/uiConstants";
 
 export const useMessagePagesStyle = makeStyles((theme) => ({
-    container : {
-        margin: theme.spacing(1) + ' auto',
+    container: {
+        padding: theme.spacing(3),
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        margin: theme.spacing(5),
+        borderRadius: uiConstants.borderRadius,
+        background: 'white',
         textAlign: 'center',
-        marginTop: '5rem',
     },
     toSignUpFormButton: {
         marginTop: theme.spacing(1),
         border: '1px solid ' + theme.palette.primary.main,
         borderRadius: theme.shape.borderRadius,
-        '&:hover' : {
+        '&:hover': {
             backgroundColor: alpha(theme.palette.primary.main, 0.10),
         }
     },
