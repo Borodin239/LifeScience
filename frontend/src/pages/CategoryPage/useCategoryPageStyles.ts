@@ -26,7 +26,7 @@ export const useCategoryPageStyles = makeStyles((theme) => ({
     },
     search: {
         background: uiConstants.nodeBoxLight,
-        borderRadius: '10px',
+        borderRadius: uiConstants.borderRadius,
         margin: '0 0 30px 0'
     },
 }), {index: 1});
